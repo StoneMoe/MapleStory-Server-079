@@ -19,10 +19,10 @@
 -- Table structure for table `accounts`
 --
 
-DROP TABLE IF EXISTS `accounts`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `accounts` (
+CREATE TABLE IF NOT EXISTS `accounts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL DEFAULT '',
   `password` varchar(128) NOT NULL DEFAULT '',
@@ -82,10 +82,10 @@ UNLOCK TABLES;
 -- Table structure for table `accounts_info`
 --
 
-DROP TABLE IF EXISTS `accounts_info`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `accounts_info` (
+CREATE TABLE IF NOT EXISTS `accounts_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `accId` int(11) NOT NULL DEFAULT '0',
   `worldId` int(11) NOT NULL DEFAULT '0',
@@ -122,10 +122,10 @@ UNLOCK TABLES;
 -- Table structure for table `achievements`
 --
 
-DROP TABLE IF EXISTS `achievements`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `achievements` (
+CREATE TABLE IF NOT EXISTS `achievements` (
   `achievementid` int(9) NOT NULL DEFAULT '0',
   `charid` int(9) NOT NULL DEFAULT '0',
   `accountid` int(11) NOT NULL DEFAULT '0',
@@ -146,10 +146,10 @@ UNLOCK TABLES;
 -- Table structure for table `aclog`
 --
 
-DROP TABLE IF EXISTS `aclog`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `aclog` (
+CREATE TABLE IF NOT EXISTS `aclog` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `accid` int(10) unsigned NOT NULL,
   `bossid` varchar(20) CHARACTER SET utf8 NOT NULL,
@@ -171,10 +171,10 @@ UNLOCK TABLES;
 -- Table structure for table `alliances`
 --
 
-DROP TABLE IF EXISTS `alliances`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `alliances` (
+CREATE TABLE IF NOT EXISTS `alliances` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(13) NOT NULL,
   `leaderid` int(11) NOT NULL,
@@ -207,10 +207,10 @@ UNLOCK TABLES;
 -- Table structure for table `androids`
 --
 
-DROP TABLE IF EXISTS `androids`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `androids` (
+CREATE TABLE IF NOT EXISTS `androids` (
   `id` int(11) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
@@ -229,10 +229,10 @@ UNLOCK TABLES;
 -- Table structure for table `auth_server_channel`
 --
 
-DROP TABLE IF EXISTS `auth_server_channel`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `auth_server_channel` (
+CREATE TABLE IF NOT EXISTS `auth_server_channel` (
   `channelid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `world` int(11) NOT NULL DEFAULT '0',
   `number` int(11) DEFAULT NULL,
@@ -255,10 +255,10 @@ UNLOCK TABLES;
 -- Table structure for table `auth_server_channel_ip`
 --
 
-DROP TABLE IF EXISTS `auth_server_channel_ip`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `auth_server_channel_ip` (
+CREATE TABLE IF NOT EXISTS `auth_server_channel_ip` (
   `channelconfigid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `channelid` int(10) unsigned NOT NULL DEFAULT '0',
   `name` tinytext NOT NULL,
@@ -282,10 +282,10 @@ UNLOCK TABLES;
 -- Table structure for table `auth_server_cs`
 --
 
-DROP TABLE IF EXISTS `auth_server_cs`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `auth_server_cs` (
+CREATE TABLE IF NOT EXISTS `auth_server_cs` (
   `CashShopServerId` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `key` varchar(40) NOT NULL,
   `world` int(11) unsigned NOT NULL DEFAULT '0',
@@ -307,10 +307,10 @@ UNLOCK TABLES;
 -- Table structure for table `auth_server_login`
 --
 
-DROP TABLE IF EXISTS `auth_server_login`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `auth_server_login` (
+CREATE TABLE IF NOT EXISTS `auth_server_login` (
   `loginserverid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `key` varchar(40) NOT NULL DEFAULT '',
   `world` int(11) NOT NULL DEFAULT '0',
@@ -332,10 +332,10 @@ UNLOCK TABLES;
 -- Table structure for table `auth_server_mts`
 --
 
-DROP TABLE IF EXISTS `auth_server_mts`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `auth_server_mts` (
+CREATE TABLE IF NOT EXISTS `auth_server_mts` (
   `MTSServerId` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `key` varchar(40) NOT NULL,
   `world` int(11) unsigned NOT NULL DEFAULT '0',
@@ -357,10 +357,10 @@ UNLOCK TABLES;
 -- Table structure for table `bbs_replies`
 --
 
-DROP TABLE IF EXISTS `bbs_replies`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `bbs_replies` (
+CREATE TABLE IF NOT EXISTS `bbs_replies` (
   `replyid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `threadid` int(10) unsigned NOT NULL,
   `postercid` int(10) unsigned NOT NULL,
@@ -384,10 +384,10 @@ UNLOCK TABLES;
 -- Table structure for table `bbs_threads`
 --
 
-DROP TABLE IF EXISTS `bbs_threads`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `bbs_threads` (
+CREATE TABLE IF NOT EXISTS `bbs_threads` (
   `threadid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `postercid` int(10) unsigned NOT NULL,
   `name` varchar(26) NOT NULL DEFAULT '',
@@ -413,10 +413,10 @@ UNLOCK TABLES;
 -- Table structure for table `blocklogin`
 --
 
-DROP TABLE IF EXISTS `blocklogin`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `blocklogin` (
+CREATE TABLE IF NOT EXISTS `blocklogin` (
   `account` varchar(255) DEFAULT NULL,
   `blocktime` varchar(255) DEFAULT NULL,
   `unblocktime` varchar(255) DEFAULT NULL,
@@ -438,10 +438,10 @@ UNLOCK TABLES;
 -- Table structure for table `bosslog`
 --
 
-DROP TABLE IF EXISTS `bosslog`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `bosslog` (
+CREATE TABLE IF NOT EXISTS `bosslog` (
   `bosslogid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `characterid` int(10) unsigned NOT NULL,
   `bossid` varchar(20) CHARACTER SET gbk NOT NULL,
@@ -467,10 +467,10 @@ UNLOCK TABLES;
 -- Table structure for table `bossrank`
 --
 
-DROP TABLE IF EXISTS `bossrank`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `bossrank` (
+CREATE TABLE IF NOT EXISTS `bossrank` (
   `cid` bigint(20) DEFAULT NULL,
   `cname` varchar(255) DEFAULT NULL,
   `bossname` varchar(255) DEFAULT NULL,
@@ -493,10 +493,10 @@ UNLOCK TABLES;
 -- Table structure for table `bplog`
 --
 
-DROP TABLE IF EXISTS `bplog`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `bplog` (
+CREATE TABLE IF NOT EXISTS `bplog` (
   `bplogid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `characterid` int(10) unsigned NOT NULL,
   `bpid` varchar(20) NOT NULL,
@@ -518,10 +518,10 @@ UNLOCK TABLES;
 -- Table structure for table `buddies`
 --
 
-DROP TABLE IF EXISTS `buddies`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `buddies` (
+CREATE TABLE IF NOT EXISTS `buddies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `characterid` int(11) NOT NULL,
   `buddyid` int(11) NOT NULL,
@@ -546,10 +546,10 @@ UNLOCK TABLES;
 -- Table structure for table `cashshop_items`
 --
 
-DROP TABLE IF EXISTS `cashshop_items`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `cashshop_items` (
+CREATE TABLE IF NOT EXISTS `cashshop_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `category` int(11) NOT NULL,
   `subcategory` int(11) NOT NULL,
@@ -581,10 +581,10 @@ UNLOCK TABLES;
 -- Table structure for table `cashshop_limit_sell`
 --
 
-DROP TABLE IF EXISTS `cashshop_limit_sell`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `cashshop_limit_sell` (
+CREATE TABLE IF NOT EXISTS `cashshop_limit_sell` (
   `serial` int(11) NOT NULL,
   `amount` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`serial`) USING BTREE
@@ -604,10 +604,10 @@ UNLOCK TABLES;
 -- Table structure for table `cashshop_menuitems`
 --
 
-DROP TABLE IF EXISTS `cashshop_menuitems`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `cashshop_menuitems` (
+CREATE TABLE IF NOT EXISTS `cashshop_menuitems` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `category` int(11) NOT NULL,
   `subcategory` int(11) NOT NULL,
@@ -639,10 +639,10 @@ UNLOCK TABLES;
 -- Table structure for table `cashshop_modified_items`
 --
 
-DROP TABLE IF EXISTS `cashshop_modified_items`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `cashshop_modified_items` (
+CREATE TABLE IF NOT EXISTS `cashshop_modified_items` (
   `serial` int(11) NOT NULL,
   `discount_price` int(11) NOT NULL DEFAULT '-1',
   `mark` tinyint(1) NOT NULL DEFAULT '-1',
@@ -676,10 +676,10 @@ UNLOCK TABLES;
 -- Table structure for table `cashshop_modified_items2`
 --
 
-DROP TABLE IF EXISTS `cashshop_modified_items2`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `cashshop_modified_items2` (
+CREATE TABLE IF NOT EXISTS `cashshop_modified_items2` (
   `serial` int(11) NOT NULL,
   `name` varchar(70) NOT NULL,
   `discount_price` int(11) NOT NULL DEFAULT '0',
@@ -714,10 +714,10 @@ UNLOCK TABLES;
 -- Table structure for table `character_slots`
 --
 
-DROP TABLE IF EXISTS `character_slots`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `character_slots` (
+CREATE TABLE IF NOT EXISTS `character_slots` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `accid` int(11) NOT NULL DEFAULT '0',
   `worldid` int(11) NOT NULL DEFAULT '0',
@@ -740,10 +740,10 @@ UNLOCK TABLES;
 -- Table structure for table `characters`
 --
 
-DROP TABLE IF EXISTS `characters`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `characters` (
+CREATE TABLE IF NOT EXISTS `characters` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `accountid` int(11) NOT NULL DEFAULT '0',
   `world` tinyint(1) NOT NULL DEFAULT '0',
@@ -853,10 +853,10 @@ UNLOCK TABLES;
 -- Table structure for table `cheatlog`
 --
 
-DROP TABLE IF EXISTS `cheatlog`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `cheatlog` (
+CREATE TABLE IF NOT EXISTS `cheatlog` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `characterid` int(11) NOT NULL DEFAULT '0',
   `offense` tinytext NOT NULL,
@@ -881,10 +881,10 @@ UNLOCK TABLES;
 -- Table structure for table `cquestdata1`
 --
 
-DROP TABLE IF EXISTS `cquestdata1`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `cquestdata1` (
+CREATE TABLE IF NOT EXISTS `cquestdata1` (
   `questid` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(13) NOT NULL DEFAULT '',
   `npcid` int(11) NOT NULL DEFAULT '0',
@@ -907,10 +907,10 @@ UNLOCK TABLES;
 -- Table structure for table `cquestdata2`
 --
 
-DROP TABLE IF EXISTS `cquestdata2`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `cquestdata2` (
+CREATE TABLE IF NOT EXISTS `cquestdata2` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `questid` int(11) NOT NULL DEFAULT '0',
   `itemreward` int(11) NOT NULL DEFAULT '0',
@@ -936,10 +936,10 @@ UNLOCK TABLES;
 -- Table structure for table `cquestprogress`
 --
 
-DROP TABLE IF EXISTS `cquestprogress`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `cquestprogress` (
+CREATE TABLE IF NOT EXISTS `cquestprogress` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `charid` int(11) NOT NULL DEFAULT '0',
   `questid` int(11) NOT NULL DEFAULT '0',
@@ -963,10 +963,10 @@ UNLOCK TABLES;
 -- Table structure for table `cqueststatus`
 --
 
-DROP TABLE IF EXISTS `cqueststatus`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `cqueststatus` (
+CREATE TABLE IF NOT EXISTS `cqueststatus` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `charid` int(11) NOT NULL DEFAULT '0',
   `questid` int(11) NOT NULL DEFAULT '0',
@@ -988,10 +988,10 @@ UNLOCK TABLES;
 -- Table structure for table `csequipment`
 --
 
-DROP TABLE IF EXISTS `csequipment`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `csequipment` (
+CREATE TABLE IF NOT EXISTS `csequipment` (
   `inventoryequipmentid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `inventoryitemid` int(10) unsigned NOT NULL DEFAULT '0',
   `upgradeslots` int(11) NOT NULL DEFAULT '0',
@@ -1043,10 +1043,10 @@ UNLOCK TABLES;
 -- Table structure for table `csitems`
 --
 
-DROP TABLE IF EXISTS `csitems`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `csitems` (
+CREATE TABLE IF NOT EXISTS `csitems` (
   `inventoryitemid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `characterid` int(11) DEFAULT NULL,
   `accountid` int(10) DEFAULT NULL,
@@ -1089,10 +1089,10 @@ UNLOCK TABLES;
 -- Table structure for table `dojorankings`
 --
 
-DROP TABLE IF EXISTS `dojorankings`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `dojorankings` (
+CREATE TABLE IF NOT EXISTS `dojorankings` (
   `id` int(11) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
@@ -1111,10 +1111,10 @@ UNLOCK TABLES;
 -- Table structure for table `drop_data`
 --
 
-DROP TABLE IF EXISTS `drop_data`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `drop_data` (
+CREATE TABLE IF NOT EXISTS `drop_data` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `dropperid` int(11) NOT NULL,
   `itemid` int(11) NOT NULL DEFAULT '0',
@@ -1141,10 +1141,10 @@ UNLOCK TABLES;
 -- Table structure for table `drop_data_global`
 --
 
-DROP TABLE IF EXISTS `drop_data_global`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `drop_data_global` (
+CREATE TABLE IF NOT EXISTS `drop_data_global` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `continent` int(11) NOT NULL,
   `dropType` tinyint(1) NOT NULL DEFAULT '0',
@@ -1173,10 +1173,10 @@ UNLOCK TABLES;
 -- Table structure for table `drop_data_vana`
 --
 
-DROP TABLE IF EXISTS `drop_data_vana`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `drop_data_vana` (
+CREATE TABLE IF NOT EXISTS `drop_data_vana` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `dropperid` int(11) NOT NULL,
   `flags` set('is_mesos') NOT NULL DEFAULT '',
@@ -1204,10 +1204,10 @@ UNLOCK TABLES;
 -- Table structure for table `dueyequipment`
 --
 
-DROP TABLE IF EXISTS `dueyequipment`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `dueyequipment` (
+CREATE TABLE IF NOT EXISTS `dueyequipment` (
   `inventoryequipmentid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `inventoryitemid` int(10) unsigned NOT NULL DEFAULT '0',
   `upgradeslots` int(11) NOT NULL DEFAULT '0',
@@ -1255,10 +1255,10 @@ UNLOCK TABLES;
 -- Table structure for table `dueyitems`
 --
 
-DROP TABLE IF EXISTS `dueyitems`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `dueyitems` (
+CREATE TABLE IF NOT EXISTS `dueyitems` (
   `inventoryitemid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `characterid` int(11) DEFAULT NULL,
   `accountid` int(10) DEFAULT NULL,
@@ -1297,10 +1297,10 @@ UNLOCK TABLES;
 -- Table structure for table `dueypackages`
 --
 
-DROP TABLE IF EXISTS `dueypackages`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `dueypackages` (
+CREATE TABLE IF NOT EXISTS `dueypackages` (
   `PackageId` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `RecieverId` int(10) NOT NULL,
   `SenderName` varchar(15) NOT NULL,
@@ -1325,10 +1325,10 @@ UNLOCK TABLES;
 -- Table structure for table `eventstats`
 --
 
-DROP TABLE IF EXISTS `eventstats`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `eventstats` (
+CREATE TABLE IF NOT EXISTS `eventstats` (
   `eventstatid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `event` varchar(30) NOT NULL,
   `instance` varchar(30) NOT NULL,
@@ -1352,10 +1352,10 @@ UNLOCK TABLES;
 -- Table structure for table `famelog`
 --
 
-DROP TABLE IF EXISTS `famelog`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `famelog` (
+CREATE TABLE IF NOT EXISTS `famelog` (
   `famelogid` int(11) NOT NULL AUTO_INCREMENT,
   `characterid` int(11) NOT NULL DEFAULT '0',
   `characterid_to` int(11) NOT NULL DEFAULT '0',
@@ -1379,10 +1379,10 @@ UNLOCK TABLES;
 -- Table structure for table `families`
 --
 
-DROP TABLE IF EXISTS `families`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `families` (
+CREATE TABLE IF NOT EXISTS `families` (
   `familyid` int(11) NOT NULL AUTO_INCREMENT,
   `leaderid` int(11) NOT NULL DEFAULT '0',
   `notice` varchar(255) NOT NULL DEFAULT '',
@@ -1403,10 +1403,10 @@ UNLOCK TABLES;
 -- Table structure for table `fatigue`
 --
 
-DROP TABLE IF EXISTS `fatigue`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `fatigue` (
+CREATE TABLE IF NOT EXISTS `fatigue` (
   `id` int(11) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
@@ -1425,10 +1425,10 @@ UNLOCK TABLES;
 -- Table structure for table `fishing_rewards`
 --
 
-DROP TABLE IF EXISTS `fishing_rewards`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `fishing_rewards` (
+CREATE TABLE IF NOT EXISTS `fishing_rewards` (
   `itemid` int(11) NOT NULL,
   `chance` int(11) NOT NULL,
   `expiration` int(11) DEFAULT '0',
@@ -1449,10 +1449,10 @@ UNLOCK TABLES;
 -- Table structure for table `forum_reply`
 --
 
-DROP TABLE IF EXISTS `forum_reply`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `forum_reply` (
+CREATE TABLE IF NOT EXISTS `forum_reply` (
   `rid` int(4) NOT NULL AUTO_INCREMENT,
   `tid` int(4) DEFAULT NULL,
   `cid` int(4) DEFAULT NULL,
@@ -1476,10 +1476,10 @@ UNLOCK TABLES;
 -- Table structure for table `forum_section`
 --
 
-DROP TABLE IF EXISTS `forum_section`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `forum_section` (
+CREATE TABLE IF NOT EXISTS `forum_section` (
   `id` int(4) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT 'null',
   PRIMARY KEY (`id`) USING BTREE
@@ -1499,10 +1499,10 @@ UNLOCK TABLES;
 -- Table structure for table `forum_thread`
 --
 
-DROP TABLE IF EXISTS `forum_thread`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `forum_thread` (
+CREATE TABLE IF NOT EXISTS `forum_thread` (
   `tid` int(4) NOT NULL AUTO_INCREMENT,
   `sid` int(4) DEFAULT NULL,
   `tname` varchar(255) DEFAULT NULL,
@@ -1528,10 +1528,10 @@ UNLOCK TABLES;
 -- Table structure for table `game_poll_reply`
 --
 
-DROP TABLE IF EXISTS `game_poll_reply`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `game_poll_reply` (
+CREATE TABLE IF NOT EXISTS `game_poll_reply` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `AccountId` int(10) unsigned NOT NULL,
   `SelectAns` tinyint(5) unsigned NOT NULL DEFAULT '0',
@@ -1552,10 +1552,10 @@ UNLOCK TABLES;
 -- Table structure for table `gifts`
 --
 
-DROP TABLE IF EXISTS `gifts`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `gifts` (
+CREATE TABLE IF NOT EXISTS `gifts` (
   `giftid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `recipient` int(11) NOT NULL DEFAULT '0',
   `from` varchar(13) NOT NULL DEFAULT '',
@@ -1580,10 +1580,10 @@ UNLOCK TABLES;
 -- Table structure for table `gmlog`
 --
 
-DROP TABLE IF EXISTS `gmlog`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `gmlog` (
+CREATE TABLE IF NOT EXISTS `gmlog` (
   `gmlogid` int(11) NOT NULL AUTO_INCREMENT,
   `cid` int(11) NOT NULL DEFAULT '0',
   `command` tinytext NOT NULL,
@@ -1607,10 +1607,10 @@ UNLOCK TABLES;
 -- Table structure for table `guilds`
 --
 
-DROP TABLE IF EXISTS `guilds`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `guilds` (
+CREATE TABLE IF NOT EXISTS `guilds` (
   `guildid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `leader` int(10) unsigned NOT NULL DEFAULT '0',
   `GP` int(11) NOT NULL DEFAULT '0',
@@ -1645,10 +1645,10 @@ UNLOCK TABLES;
 -- Table structure for table `hiredmerch`
 --
 
-DROP TABLE IF EXISTS `hiredmerch`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `hiredmerch` (
+CREATE TABLE IF NOT EXISTS `hiredmerch` (
   `PackageId` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `characterid` int(10) unsigned DEFAULT '0',
   `accountid` int(10) unsigned DEFAULT NULL,
@@ -1674,10 +1674,10 @@ UNLOCK TABLES;
 -- Table structure for table `hiredmerchequipment`
 --
 
-DROP TABLE IF EXISTS `hiredmerchequipment`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `hiredmerchequipment` (
+CREATE TABLE IF NOT EXISTS `hiredmerchequipment` (
   `inventoryequipmentid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `inventoryitemid` int(10) unsigned NOT NULL DEFAULT '0',
   `upgradeslots` int(11) NOT NULL DEFAULT '0',
@@ -1728,10 +1728,10 @@ UNLOCK TABLES;
 -- Table structure for table `hiredmerchitems`
 --
 
-DROP TABLE IF EXISTS `hiredmerchitems`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `hiredmerchitems` (
+CREATE TABLE IF NOT EXISTS `hiredmerchitems` (
   `inventoryitemid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `characterid` int(11) DEFAULT NULL,
   `accountid` int(10) DEFAULT NULL,
@@ -1773,10 +1773,10 @@ UNLOCK TABLES;
 -- Table structure for table `htsquads`
 --
 
-DROP TABLE IF EXISTS `htsquads`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `htsquads` (
+CREATE TABLE IF NOT EXISTS `htsquads` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `channel` int(10) unsigned NOT NULL,
   `leaderid` int(10) unsigned NOT NULL DEFAULT '0',
@@ -1799,10 +1799,10 @@ UNLOCK TABLES;
 -- Table structure for table `hypay`
 --
 
-DROP TABLE IF EXISTS `hypay`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `hypay` (
+CREATE TABLE IF NOT EXISTS `hypay` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `accname` varchar(25) NOT NULL DEFAULT '',
   `pay` int(11) NOT NULL DEFAULT '0',
@@ -1826,10 +1826,10 @@ UNLOCK TABLES;
 -- Table structure for table `inventoryequipment`
 --
 
-DROP TABLE IF EXISTS `inventoryequipment`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `inventoryequipment` (
+CREATE TABLE IF NOT EXISTS `inventoryequipment` (
   `inventoryequipmentid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `inventoryitemid` int(10) unsigned NOT NULL DEFAULT '0',
   `upgradeslots` tinyint(3) unsigned NOT NULL DEFAULT '0',
@@ -1881,10 +1881,10 @@ UNLOCK TABLES;
 -- Table structure for table `inventoryitems`
 --
 
-DROP TABLE IF EXISTS `inventoryitems`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `inventoryitems` (
+CREATE TABLE IF NOT EXISTS `inventoryitems` (
   `inventoryitemid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `characterid` int(11) DEFAULT NULL,
   `accountid` int(10) DEFAULT NULL,
@@ -1924,10 +1924,10 @@ UNLOCK TABLES;
 -- Table structure for table `inventorylog`
 --
 
-DROP TABLE IF EXISTS `inventorylog`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `inventorylog` (
+CREATE TABLE IF NOT EXISTS `inventorylog` (
   `inventorylogid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `inventoryitemid` int(10) unsigned NOT NULL DEFAULT '0',
   `msg` tinytext NOT NULL,
@@ -1950,10 +1950,10 @@ UNLOCK TABLES;
 -- Table structure for table `inventoryslot`
 --
 
-DROP TABLE IF EXISTS `inventoryslot`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `inventoryslot` (
+CREATE TABLE IF NOT EXISTS `inventoryslot` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `characterid` int(10) unsigned DEFAULT NULL,
   `equip` tinyint(3) unsigned DEFAULT NULL,
@@ -1979,10 +1979,10 @@ UNLOCK TABLES;
 -- Table structure for table `invitecodedata`
 --
 
-DROP TABLE IF EXISTS `invitecodedata`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `invitecodedata` (
+CREATE TABLE IF NOT EXISTS `invitecodedata` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(255) NOT NULL,
   `user` varchar(255) DEFAULT NULL,
@@ -2006,10 +2006,10 @@ UNLOCK TABLES;
 -- Table structure for table `ipbans`
 --
 
-DROP TABLE IF EXISTS `ipbans`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ipbans` (
+CREATE TABLE IF NOT EXISTS `ipbans` (
   `ipbanid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `ip` varchar(40) NOT NULL DEFAULT '',
   PRIMARY KEY (`ipbanid`) USING BTREE
@@ -2029,10 +2029,10 @@ UNLOCK TABLES;
 -- Table structure for table `ipvotelog`
 --
 
-DROP TABLE IF EXISTS `ipvotelog`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ipvotelog` (
+CREATE TABLE IF NOT EXISTS `ipvotelog` (
   `vid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `accid` varchar(45) NOT NULL DEFAULT '0',
   `ipaddress` varchar(30) NOT NULL DEFAULT '127.0.0.1',
@@ -2055,10 +2055,10 @@ UNLOCK TABLES;
 -- Table structure for table `keymap`
 --
 
-DROP TABLE IF EXISTS `keymap`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `keymap` (
+CREATE TABLE IF NOT EXISTS `keymap` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `characterid` int(11) NOT NULL DEFAULT '0',
   `key` tinyint(3) unsigned NOT NULL DEFAULT '0',
@@ -2084,10 +2084,10 @@ UNLOCK TABLES;
 -- Table structure for table `loginlog`
 --
 
-DROP TABLE IF EXISTS `loginlog`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `loginlog` (
+CREATE TABLE IF NOT EXISTS `loginlog` (
   `account` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `logintype` varchar(255) DEFAULT NULL,
@@ -2110,10 +2110,10 @@ UNLOCK TABLES;
 -- Table structure for table `macbans`
 --
 
-DROP TABLE IF EXISTS `macbans`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `macbans` (
+CREATE TABLE IF NOT EXISTS `macbans` (
   `macbanid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `mac` varchar(30) NOT NULL,
   PRIMARY KEY (`macbanid`) USING HASH,
@@ -2134,10 +2134,10 @@ UNLOCK TABLES;
 -- Table structure for table `macbans2`
 --
 
-DROP TABLE IF EXISTS `macbans2`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `macbans2` (
+CREATE TABLE IF NOT EXISTS `macbans2` (
   `macbanid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `mac` varchar(30) NOT NULL,
   PRIMARY KEY (`macbanid`) USING HASH,
@@ -2158,10 +2158,10 @@ UNLOCK TABLES;
 -- Table structure for table `macfilters`
 --
 
-DROP TABLE IF EXISTS `macfilters`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `macfilters` (
+CREATE TABLE IF NOT EXISTS `macfilters` (
   `macfilterid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `filter` varchar(30) NOT NULL,
   PRIMARY KEY (`macfilterid`) USING BTREE
@@ -2181,10 +2181,10 @@ UNLOCK TABLES;
 -- Table structure for table `maple_level_kneel`
 --
 
-DROP TABLE IF EXISTS `maple_level_kneel`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `maple_level_kneel` (
+CREATE TABLE IF NOT EXISTS `maple_level_kneel` (
   `id` int(11) NOT NULL,
   `current_level` int(10) DEFAULT NULL,
   `current_count` bigint(255) DEFAULT NULL,
@@ -2207,10 +2207,10 @@ UNLOCK TABLES;
 -- Table structure for table `monsterbook`
 --
 
-DROP TABLE IF EXISTS `monsterbook`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `monsterbook` (
+CREATE TABLE IF NOT EXISTS `monsterbook` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `charid` int(10) unsigned NOT NULL DEFAULT '0',
   `cardid` int(10) unsigned NOT NULL DEFAULT '0',
@@ -2235,10 +2235,10 @@ UNLOCK TABLES;
 -- Table structure for table `moonlightachievements`
 --
 
-DROP TABLE IF EXISTS `moonlightachievements`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `moonlightachievements` (
+CREATE TABLE IF NOT EXISTS `moonlightachievements` (
   `id` int(11) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
@@ -2257,10 +2257,10 @@ UNLOCK TABLES;
 -- Table structure for table `mountdata`
 --
 
-DROP TABLE IF EXISTS `mountdata`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `mountdata` (
+CREATE TABLE IF NOT EXISTS `mountdata` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `characterid` int(10) unsigned DEFAULT NULL,
   `Level` int(3) unsigned NOT NULL DEFAULT '0',
@@ -2284,10 +2284,10 @@ UNLOCK TABLES;
 -- Table structure for table `mts_cart`
 --
 
-DROP TABLE IF EXISTS `mts_cart`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `mts_cart` (
+CREATE TABLE IF NOT EXISTS `mts_cart` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `characterid` int(11) NOT NULL DEFAULT '0',
   `itemid` int(11) NOT NULL DEFAULT '0',
@@ -2308,10 +2308,10 @@ UNLOCK TABLES;
 -- Table structure for table `mts_items`
 --
 
-DROP TABLE IF EXISTS `mts_items`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `mts_items` (
+CREATE TABLE IF NOT EXISTS `mts_items` (
   `id` int(11) NOT NULL,
   `tab` tinyint(1) NOT NULL DEFAULT '1',
   `price` int(11) NOT NULL DEFAULT '0',
@@ -2335,10 +2335,10 @@ UNLOCK TABLES;
 -- Table structure for table `mtsequipment`
 --
 
-DROP TABLE IF EXISTS `mtsequipment`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `mtsequipment` (
+CREATE TABLE IF NOT EXISTS `mtsequipment` (
   `inventoryequipmentid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `inventoryitemid` int(10) unsigned NOT NULL DEFAULT '0',
   `upgradeslots` int(11) NOT NULL DEFAULT '0',
@@ -2386,10 +2386,10 @@ UNLOCK TABLES;
 -- Table structure for table `mtsitems`
 --
 
-DROP TABLE IF EXISTS `mtsitems`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `mtsitems` (
+CREATE TABLE IF NOT EXISTS `mtsitems` (
   `inventoryitemid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `characterid` int(11) DEFAULT NULL,
   `accountid` int(10) DEFAULT NULL,
@@ -2428,10 +2428,10 @@ UNLOCK TABLES;
 -- Table structure for table `mtstransfer`
 --
 
-DROP TABLE IF EXISTS `mtstransfer`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `mtstransfer` (
+CREATE TABLE IF NOT EXISTS `mtstransfer` (
   `inventoryitemid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `characterid` int(11) DEFAULT NULL,
   `accountid` int(10) DEFAULT NULL,
@@ -2470,10 +2470,10 @@ UNLOCK TABLES;
 -- Table structure for table `mtstransferequipment`
 --
 
-DROP TABLE IF EXISTS `mtstransferequipment`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `mtstransferequipment` (
+CREATE TABLE IF NOT EXISTS `mtstransferequipment` (
   `inventoryequipmentid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `inventoryitemid` int(10) unsigned NOT NULL DEFAULT '0',
   `upgradeslots` int(11) NOT NULL DEFAULT '0',
@@ -2521,10 +2521,10 @@ UNLOCK TABLES;
 -- Table structure for table `mulungdojo`
 --
 
-DROP TABLE IF EXISTS `mulungdojo`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `mulungdojo` (
+CREATE TABLE IF NOT EXISTS `mulungdojo` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `charid` int(11) NOT NULL DEFAULT '0',
   `stage` tinyint(3) NOT NULL DEFAULT '0',
@@ -2545,10 +2545,10 @@ UNLOCK TABLES;
 -- Table structure for table `notes`
 --
 
-DROP TABLE IF EXISTS `notes`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `notes` (
+CREATE TABLE IF NOT EXISTS `notes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `to` varchar(15) NOT NULL DEFAULT '',
   `from` varchar(15) NOT NULL DEFAULT '',
@@ -2572,10 +2572,10 @@ UNLOCK TABLES;
 -- Table structure for table `nxcode`
 --
 
-DROP TABLE IF EXISTS `nxcode`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `nxcode` (
+CREATE TABLE IF NOT EXISTS `nxcode` (
   `code` varchar(30) NOT NULL,
   `valid` int(11) NOT NULL DEFAULT '1',
   `user` varchar(15) DEFAULT NULL,
@@ -2599,10 +2599,10 @@ UNLOCK TABLES;
 -- Table structure for table `onetimelog`
 --
 
-DROP TABLE IF EXISTS `onetimelog`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `onetimelog` (
+CREATE TABLE IF NOT EXISTS `onetimelog` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `characterid` int(10) unsigned NOT NULL,
   `log` varchar(20) CHARACTER SET utf8 NOT NULL,
@@ -2624,10 +2624,10 @@ UNLOCK TABLES;
 -- Table structure for table `pets`
 --
 
-DROP TABLE IF EXISTS `pets`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pets` (
+CREATE TABLE IF NOT EXISTS `pets` (
   `petid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(13) DEFAULT NULL,
   `level` int(3) unsigned NOT NULL,
@@ -2653,10 +2653,10 @@ UNLOCK TABLES;
 -- Table structure for table `player_reward`
 --
 
-DROP TABLE IF EXISTS `player_reward`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `player_reward` (
+CREATE TABLE IF NOT EXISTS `player_reward` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
   `player_id` int(11) DEFAULT NULL,
   `p_id` int(11) DEFAULT NULL,
@@ -2680,10 +2680,10 @@ UNLOCK TABLES;
 -- Table structure for table `playernpcs`
 --
 
-DROP TABLE IF EXISTS `playernpcs`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `playernpcs` (
+CREATE TABLE IF NOT EXISTS `playernpcs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(15) NOT NULL,
   `hair` int(11) NOT NULL,
@@ -2718,10 +2718,10 @@ UNLOCK TABLES;
 -- Table structure for table `playernpcs_equip`
 --
 
-DROP TABLE IF EXISTS `playernpcs_equip`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `playernpcs_equip` (
+CREATE TABLE IF NOT EXISTS `playernpcs_equip` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `npcid` int(11) NOT NULL,
   `equipid` int(11) NOT NULL,
@@ -2748,10 +2748,10 @@ UNLOCK TABLES;
 -- Table structure for table `prizelog`
 --
 
-DROP TABLE IF EXISTS `prizelog`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `prizelog` (
+CREATE TABLE IF NOT EXISTS `prizelog` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `accid` int(10) unsigned NOT NULL,
   `bossid` varchar(20) CHARACTER SET utf8 NOT NULL,
@@ -2772,10 +2772,10 @@ UNLOCK TABLES;
 -- Table structure for table `pvpstats`
 --
 
-DROP TABLE IF EXISTS `pvpstats`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pvpstats` (
+CREATE TABLE IF NOT EXISTS `pvpstats` (
   `pvpstatsid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `accountid` int(11) NOT NULL DEFAULT '0',
   `watk` int(11) NOT NULL DEFAULT '0',
@@ -2809,10 +2809,10 @@ UNLOCK TABLES;
 -- Table structure for table `questactions`
 --
 
-DROP TABLE IF EXISTS `questactions`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `questactions` (
+CREATE TABLE IF NOT EXISTS `questactions` (
   `questactionid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `questid` int(11) NOT NULL DEFAULT '0',
   `status` int(11) NOT NULL DEFAULT '0',
@@ -2834,10 +2834,10 @@ UNLOCK TABLES;
 -- Table structure for table `questinfo`
 --
 
-DROP TABLE IF EXISTS `questinfo`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `questinfo` (
+CREATE TABLE IF NOT EXISTS `questinfo` (
   `questinfoid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `characterid` int(11) NOT NULL DEFAULT '0',
   `quest` int(6) NOT NULL DEFAULT '0',
@@ -2861,10 +2861,10 @@ UNLOCK TABLES;
 -- Table structure for table `questrequirements`
 --
 
-DROP TABLE IF EXISTS `questrequirements`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `questrequirements` (
+CREATE TABLE IF NOT EXISTS `questrequirements` (
   `questrequirementid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `questid` int(11) NOT NULL DEFAULT '0',
   `status` int(11) NOT NULL DEFAULT '0',
@@ -2886,10 +2886,10 @@ UNLOCK TABLES;
 -- Table structure for table `queststatus`
 --
 
-DROP TABLE IF EXISTS `queststatus`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `queststatus` (
+CREATE TABLE IF NOT EXISTS `queststatus` (
   `queststatusid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `characterid` int(11) NOT NULL DEFAULT '0',
   `quest` int(6) NOT NULL DEFAULT '0',
@@ -2917,10 +2917,10 @@ UNLOCK TABLES;
 -- Table structure for table `queststatusmobs`
 --
 
-DROP TABLE IF EXISTS `queststatusmobs`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `queststatusmobs` (
+CREATE TABLE IF NOT EXISTS `queststatusmobs` (
   `queststatusmobid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `queststatusid` int(10) unsigned NOT NULL DEFAULT '0',
   `mob` int(11) NOT NULL DEFAULT '0',
@@ -2944,10 +2944,10 @@ UNLOCK TABLES;
 -- Table structure for table `reactordrops`
 --
 
-DROP TABLE IF EXISTS `reactordrops`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `reactordrops` (
+CREATE TABLE IF NOT EXISTS `reactordrops` (
   `reactordropid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `reactorid` int(11) NOT NULL,
   `itemid` int(11) NOT NULL,
@@ -2972,7 +2972,7 @@ UNLOCK TABLES;
 -- Temporary table structure for view `readable_cheatlog`
 --
 
-DROP TABLE IF EXISTS `readable_cheatlog`;
+
 /*!50001 DROP VIEW IF EXISTS `readable_cheatlog`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
@@ -2991,7 +2991,7 @@ SET character_set_client = @saved_cs_client;
 -- Temporary table structure for view `readable_last_hour_cheatlog`
 --
 
-DROP TABLE IF EXISTS `readable_last_hour_cheatlog`;
+
 /*!50001 DROP VIEW IF EXISTS `readable_last_hour_cheatlog`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
@@ -3007,10 +3007,10 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `regrocklocations`
 --
 
-DROP TABLE IF EXISTS `regrocklocations`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `regrocklocations` (
+CREATE TABLE IF NOT EXISTS `regrocklocations` (
   `trockid` int(11) NOT NULL AUTO_INCREMENT,
   `characterid` int(11) DEFAULT NULL,
   `mapid` int(11) DEFAULT NULL,
@@ -3032,10 +3032,10 @@ UNLOCK TABLES;
 -- Table structure for table `reports`
 --
 
-DROP TABLE IF EXISTS `reports`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `reports` (
+CREATE TABLE IF NOT EXISTS `reports` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `reporttime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `reporterid` int(11) NOT NULL,
@@ -3060,10 +3060,10 @@ UNLOCK TABLES;
 -- Table structure for table `rings`
 --
 
-DROP TABLE IF EXISTS `rings`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `rings` (
+CREATE TABLE IF NOT EXISTS `rings` (
   `ringid` int(11) NOT NULL AUTO_INCREMENT,
   `partnerRingId` int(11) NOT NULL DEFAULT '0',
   `partnerChrId` int(11) NOT NULL DEFAULT '0',
@@ -3086,10 +3086,10 @@ UNLOCK TABLES;
 -- Table structure for table `savedlocations`
 --
 
-DROP TABLE IF EXISTS `savedlocations`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `savedlocations` (
+CREATE TABLE IF NOT EXISTS `savedlocations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `characterid` int(11) NOT NULL,
   `locationtype` int(11) NOT NULL DEFAULT '0',
@@ -3113,10 +3113,10 @@ UNLOCK TABLES;
 -- Table structure for table `shopitems`
 --
 
-DROP TABLE IF EXISTS `shopitems`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `shopitems` (
+CREATE TABLE IF NOT EXISTS `shopitems` (
   `shopitemid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `shopid` int(10) unsigned NOT NULL,
   `itemid` int(11) NOT NULL,
@@ -3141,10 +3141,10 @@ UNLOCK TABLES;
 -- Table structure for table `shops`
 --
 
-DROP TABLE IF EXISTS `shops`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `shops` (
+CREATE TABLE IF NOT EXISTS `shops` (
   `shopid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `npcid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`shopid`) USING BTREE
@@ -3165,10 +3165,10 @@ UNLOCK TABLES;
 -- Table structure for table `skillmacros`
 --
 
-DROP TABLE IF EXISTS `skillmacros`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `skillmacros` (
+CREATE TABLE IF NOT EXISTS `skillmacros` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `characterid` int(11) NOT NULL DEFAULT '0',
   `position` tinyint(11) NOT NULL DEFAULT '0',
@@ -3194,10 +3194,10 @@ UNLOCK TABLES;
 -- Table structure for table `skills`
 --
 
-DROP TABLE IF EXISTS `skills`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `skills` (
+CREATE TABLE IF NOT EXISTS `skills` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `skillid` int(11) NOT NULL DEFAULT '0',
   `characterid` int(11) NOT NULL DEFAULT '0',
@@ -3224,10 +3224,10 @@ UNLOCK TABLES;
 -- Table structure for table `skills_cooldowns`
 --
 
-DROP TABLE IF EXISTS `skills_cooldowns`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `skills_cooldowns` (
+CREATE TABLE IF NOT EXISTS `skills_cooldowns` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `charid` int(11) NOT NULL,
   `SkillID` int(11) NOT NULL,
@@ -3251,10 +3251,10 @@ UNLOCK TABLES;
 -- Table structure for table `speedruns`
 --
 
-DROP TABLE IF EXISTS `speedruns`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `speedruns` (
+CREATE TABLE IF NOT EXISTS `speedruns` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `type` varchar(13) NOT NULL,
   `leader` varchar(13) NOT NULL,
@@ -3278,10 +3278,10 @@ UNLOCK TABLES;
 -- Table structure for table `storages`
 --
 
-DROP TABLE IF EXISTS `storages`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `storages` (
+CREATE TABLE IF NOT EXISTS `storages` (
   `storageid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `accountid` int(11) NOT NULL DEFAULT '0',
   `slots` int(11) NOT NULL DEFAULT '0',
@@ -3306,10 +3306,10 @@ UNLOCK TABLES;
 -- Table structure for table `trocklocations`
 --
 
-DROP TABLE IF EXISTS `trocklocations`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `trocklocations` (
+CREATE TABLE IF NOT EXISTS `trocklocations` (
   `trockid` int(11) NOT NULL AUTO_INCREMENT,
   `characterid` int(11) DEFAULT NULL,
   `mapid` int(11) DEFAULT NULL,
@@ -3331,10 +3331,10 @@ UNLOCK TABLES;
 -- Table structure for table `uselog`
 --
 
-DROP TABLE IF EXISTS `uselog`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `uselog` (
+CREATE TABLE IF NOT EXISTS `uselog` (
   `account` varchar(255) DEFAULT NULL,
   `ip` varchar(255) DEFAULT NULL,
   `time` varchar(255) DEFAULT NULL,
@@ -3358,10 +3358,10 @@ UNLOCK TABLES;
 -- Table structure for table `wishlist`
 --
 
-DROP TABLE IF EXISTS `wishlist`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `wishlist` (
+CREATE TABLE IF NOT EXISTS `wishlist` (
   `characterid` int(11) NOT NULL,
   `sn` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED;
@@ -3381,10 +3381,10 @@ UNLOCK TABLES;
 -- Table structure for table `wz_customlife`
 --
 
-DROP TABLE IF EXISTS `wz_customlife`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `wz_customlife` (
+CREATE TABLE IF NOT EXISTS `wz_customlife` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `dataid` int(11) NOT NULL,
   `f` int(11) NOT NULL,
@@ -3416,10 +3416,10 @@ UNLOCK TABLES;
 -- Table structure for table `wz_mobskilldata`
 --
 
-DROP TABLE IF EXISTS `wz_mobskilldata`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `wz_mobskilldata` (
+CREATE TABLE IF NOT EXISTS `wz_mobskilldata` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `skillid` int(11) NOT NULL,
   `level` int(11) NOT NULL,
@@ -3456,10 +3456,10 @@ UNLOCK TABLES;
 -- Table structure for table `wz_npcnamedata`
 --
 
-DROP TABLE IF EXISTS `wz_npcnamedata`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `wz_npcnamedata` (
+CREATE TABLE IF NOT EXISTS `wz_npcnamedata` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `npc` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
@@ -3481,10 +3481,10 @@ UNLOCK TABLES;
 -- Table structure for table `wz_oxdata`
 --
 
-DROP TABLE IF EXISTS `wz_oxdata`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `wz_oxdata` (
+CREATE TABLE IF NOT EXISTS `wz_oxdata` (
   `questionset` smallint(6) NOT NULL DEFAULT '0',
   `questionid` smallint(6) NOT NULL DEFAULT '0',
   `question` varchar(200) NOT NULL DEFAULT '',
@@ -3508,10 +3508,10 @@ UNLOCK TABLES;
 -- Table structure for table `wz_questdata`
 --
 
-DROP TABLE IF EXISTS `wz_questdata`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `wz_questdata` (
+CREATE TABLE IF NOT EXISTS `wz_questdata` (
   `id` int(11) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
@@ -3530,10 +3530,10 @@ UNLOCK TABLES;
 -- Table structure for table `zaksquads`
 --
 
-DROP TABLE IF EXISTS `zaksquads`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `zaksquads` (
+CREATE TABLE IF NOT EXISTS `zaksquads` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `channel` int(10) unsigned NOT NULL,
   `leaderid` int(10) unsigned NOT NULL DEFAULT '0',
