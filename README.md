@@ -53,3 +53,10 @@ Error initalizing the encryption cipher. Make sure you're using the Unlimited St
 
 解决：解压`UnlimitedJCEPolicy.tar`，覆盖掉`jdk1.7.0_75/jre/lib/security`中的jar文件
 
+
+# docker使用
+docker build -t my-mxd .
+docker run -itd  -e IP=111.229.73.111  -e MYSQL_ROOT_PASSWORD=rain2314 my-mxd
+
+进入容器后运行
+sh /MapleStory-Server-079/start.sh
