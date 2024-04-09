@@ -1,63 +1,62 @@
-# MapleStory079·şÎñ¶Ë
+# MapleStory079æœåŠ¡ç«¯
 
-## ËµÃ÷
+## è¯´æ˜
 
-±¾ÏîÄ¿À´Ô´ÓÚGitHubµÄ[MapleStory](https://github.com/aoaostar/MapleStory)¡£
+æœ¬é¡¹ç›®æ¥æºäºGitHubçš„[MapleStory](https://github.com/aoaostar/MapleStory)ã€‚
 
-Windows°æÊ¹ÓÃphpStudy¼¯³É»·¾³£¬¶ÔĞ¡°×±È½ÏÓÑºÃ£¬²»¹ı°üº¬Ì«¶àÈßÓàµÄ¶«Î÷ÁË¡£
+Windowsç‰ˆä½¿ç”¨phpStudyé›†æˆç¯å¢ƒï¼Œå¯¹å°ç™½æ¯”è¾ƒå‹å¥½ï¼Œä¸è¿‡åŒ…å«å¤ªå¤šå†—ä½™çš„ä¸œè¥¿äº†ã€‚
 
-·ÖÏíÈıÆª½Ì³Ì£¬ÓĞÓÃ¿ÉÒÔ¸ø¸östar»òÕßÆÀÂÛ£¬Ò²¿ÉÒÔ¼ÓºÃÓÑË½ÁÄ
+åˆ†äº«ä¸‰ç¯‡æ•™ç¨‹ï¼Œæœ‰ç”¨å¯ä»¥ç»™ä¸ªstaræˆ–è€…è¯„è®ºï¼Œä¹Ÿå¯ä»¥åŠ å¥½å‹ç§èŠ
 
-1. [Ã°ÏÕµºË½·ş´î½¨»ù´¡](https://blog.afauria.xyz/2022/09/01/geek-2022-09-01-%E5%86%92%E9%99%A9%E5%B2%9B%E7%A7%81%E6%9C%8D%E6%90%AD%E5%BB%BA%E5%9F%BA%E7%A1%80/)
-2. [Ã°ÏÕµºË½·ş´î½¨v079](https://blog.afauria.xyz/2022/09/02/geek-2022-09-02-%E5%86%92%E9%99%A9%E5%B2%9B%E7%A7%81%E6%9C%8D%E6%90%AD%E5%BB%BAv079/)
-3. [Ã°ÏÕµºË½·ş´î½¨v176](https://blog.afauria.xyz/2022/09/08/geek-2022-09-08-%E5%86%92%E9%99%A9%E5%B2%9B%E7%A7%81%E6%9C%8D%E6%90%AD%E5%BB%BAv176/)
+1. [å†’é™©å²›ç§æœæ­å»ºåŸºç¡€](https://blog.afauria.xyz/2022/09/01/geek-2022-09-01-%E5%86%92%E9%99%A9%E5%B2%9B%E7%A7%81%E6%9C%8D%E6%90%AD%E5%BB%BA%E5%9F%BA%E7%A1%80/)
+2. [å†’é™©å²›ç§æœæ­å»ºv079](https://blog.afauria.xyz/2022/09/02/geek-2022-09-02-%E5%86%92%E9%99%A9%E5%B2%9B%E7%A7%81%E6%9C%8D%E6%90%AD%E5%BB%BAv079/)
+3. [å†’é™©å²›ç§æœæ­å»ºv176](https://blog.afauria.xyz/2022/09/08/geek-2022-09-08-%E5%86%92%E9%99%A9%E5%B2%9B%E7%A7%81%E6%9C%8D%E6%90%AD%E5%BB%BAv176/)
 
-## ÎÄ¼ş
+## æ–‡ä»¶
 
-* scripts£º½Å±¾
-* wz£ºÃ°ÏÕµºÑ¹ËõÎÄ¼ş£¬´æ´¢×ÊÔ´
-* maple.jar£º·şÎñ¶Ë´ò°üÎÄ¼ş£¬°ÑÒÀÀµ¿âÒ²´ò°üµ½Ò»¸öjarÀïÃæÁË
-* config£ºÅäÖÃÎÄ¼ş£¬»¹ÊÇ±È½ÏÇåÎúµÄ
-* src£º·şÎñ¶Ë´úÂë
-* UnlimitedJCEPolicy.tar£ºĞŞ¸´¼ÓÃÜËã·¨ÎÊÌâ
-* [JDK1.7 armv7ÏÂÔØ](https://www.oracle.com/java/technologies/javase/javase7-archive-downloads.html)
+* scriptsï¼šè„šæœ¬
+* wzï¼šå†’é™©å²›å‹ç¼©æ–‡ä»¶ï¼Œå­˜å‚¨èµ„æº
+* maple.jarï¼šæœåŠ¡ç«¯æ‰“åŒ…æ–‡ä»¶ï¼ŒæŠŠä¾èµ–åº“ä¹Ÿæ‰“åŒ…åˆ°ä¸€ä¸ªjaré‡Œé¢äº†
+* configï¼šé…ç½®æ–‡ä»¶ï¼Œè¿˜æ˜¯æ¯”è¾ƒæ¸…æ™°çš„
+* srcï¼šæœåŠ¡ç«¯ä»£ç 
+* UnlimitedJCEPolicy.tarï¼šä¿®å¤åŠ å¯†ç®—æ³•é—®é¢˜
+* [JDK1.7 armv7ä¸‹è½½](https://www.oracle.com/java/technologies/javase/javase7-archive-downloads.html)
 
-## ĞŞ¸Ä¼ÇÂ¼
+## ä¿®æ”¹è®°å½•
 
-* Fix£ºÉ¾µôÁË²Ö¿âÖĞµÄJDK£¬ÒòÎªCPU¼Ü¹¹²»Ò»¶¨ÊÊÓÃ£¬¶øÇÒÓĞµÄ¿ÉÄÜÒÑ¾­°²×°¹ıJDKÁË
-* Fix£ºĞŞ¸´ÁËÓÎÏ·¼üÎ»Çå¿Õ¡¢ÉÌ³¡ÎŞ·´Ó¦ÎÊÌâ¡£
+* Fixï¼šåˆ æ‰äº†ä»“åº“ä¸­çš„JDKï¼Œå› ä¸ºCPUæ¶æ„ä¸ä¸€å®šé€‚ç”¨ï¼Œè€Œä¸”æœ‰çš„å¯èƒ½å·²ç»å®‰è£…è¿‡JDKäº†
+* Fixï¼šä¿®å¤äº†æ¸¸æˆé”®ä½æ¸…ç©ºã€å•†åœºæ— ååº”é—®é¢˜ã€‚
 
-## ¶Ë¿ÚºÅ
+## ç«¯å£å·
 
-1. 9595£ºµÇÂ¼¶Ë¿ÚºÅ
-2. 8600£ºÉÌ³Ç¶Ë¿ÚºÅ
-3. 2525~2530£ºÆµµÀ¶Ë¿ÚºÅ
+1. 9595ï¼šç™»å½•ç«¯å£å·
+2. 8600ï¼šå•†åŸç«¯å£å·
+3. 2525~2530ï¼šé¢‘é“ç«¯å£å·
 
-## Ê¹ÓÃ²½Öè
+## ä½¿ç”¨æ­¥éª¤
 
-1. °²×°JDK1.7ºÍMySQL£¬ÅäÖÃ»·¾³±äÁ¿¡££¨×¢ÒâCPU¼Ü¹¹£©
-2. ´´½¨Êı¾İ¿â£º`create database maplestory_079`
-3. µ¼ÈëSQL±í½á¹¹£º`source <path>/ms_20210813_234816.sql`
-4. ĞŞ¸Ä`config/db.properties`ÅäÖÃ£ºÈ·ÈÏÓÃ»§ÃûºÍÃÜÂë£¬Êı¾İ¿âÃû³ÆÊÇ·ñÕıÈ·
-5. ĞŞ¸Ä`config/server.properties`£º½«`127.0.0.1`¸ÄÎª±¾»úIP
-6. ÔËĞĞ`./start.sh`Æô¶¯·şÎñ¶Ë
-7. ÏÂÔØ079¿Í»§¶Ë£¬Ö¸¶¨·şÎñÆ÷IPµØÖ·ºÍ¶Ë¿ÚºÅ
+1. å®‰è£…JDK1.7å’ŒMySQLï¼Œé…ç½®ç¯å¢ƒå˜é‡ã€‚ï¼ˆæ³¨æ„CPUæ¶æ„ï¼‰
+2. åˆ›å»ºæ•°æ®åº“ï¼š`create database maplestory_079`
+3. å¯¼å…¥SQLè¡¨ç»“æ„ï¼š`source <path>/ms_20210813_234816.sql`
+4. ä¿®æ”¹`config/db.properties`é…ç½®ï¼šç¡®è®¤ç”¨æˆ·åå’Œå¯†ç ï¼Œæ•°æ®åº“åç§°æ˜¯å¦æ­£ç¡®
+5. ä¿®æ”¹`config/server.properties`ï¼šå°†`127.0.0.1`æ”¹ä¸ºæœ¬æœºIP
+6. è¿è¡Œ`./start.sh`å¯åŠ¨æœåŠ¡ç«¯
+7. ä¸‹è½½079å®¢æˆ·ç«¯ï¼ŒæŒ‡å®šæœåŠ¡å™¨IPåœ°å€å’Œç«¯å£å·
 
-## ÎÊÌâ
+## é—®é¢˜
 
-### ¼ÓÃÜËã·¨Òì³£
+### åŠ å¯†ç®—æ³•å¼‚å¸¸
 
 ```shell
 Error initalizing the encryption cipher. Make sure you're using the Unlimited Strength crptography jar files.
 ```
 
-½â¾ö£º½âÑ¹`UnlimitedJCEPolicy.tar`£¬¸²¸Çµô`jdk1.7.0_75/jre/lib/security`ÖĞµÄjarÎÄ¼ş
+è§£å†³ï¼šè§£å‹`UnlimitedJCEPolicy.tar`ï¼Œè¦†ç›–æ‰`jdk1.7.0_75/jre/lib/security`ä¸­çš„jaræ–‡ä»¶
 
 
-# dockerÊ¹ÓÃ
-docker build -t my-mxd .
-docker run -itd  -e IP=111.229.73.111  -e MYSQL_ROOT_PASSWORD=rain2314 my-mxd
-docker run -itd -p 6350:6350 -p 8600:8600 -p 9595:9595 -p 2525:2525 -p 2526:2526 -p 2527:2527 -p 2528:2528 -p 2529:2529 -p 2530:2530 -e IP=111.229.73.111  -e MYSQL_ROOT_PASSWORD=rain2314 -v /data/mysql/data:/var/lib/mysql   my-mxd
+# dockerä½¿ç”¨
+docker run -itd -p 6350:6350 -p 8600:8600 -p 9595:9595 -p 2525:2525 -p 2526:2526 -p 2527:2527 -p 2528:2528 -p 2529:2529 -p 2530:2530 -e IP=111.229.0.0  -e MYSQL_ROOT_PASSWORD=mysql-pwd -v /data/mysql/data:/var/lib/mysql morty2333/mxd079:1.0.0
 
-½øÈëÈİÆ÷ºóÔËĞĞ
-sh /MapleStory-Server-079/start.sh
+IPä¸ºå…¬ç½‘åœ°å€ï¼Œå¿…é¡»ä¿®æ”¹
+MYSQL_ROOT_PASSWORDä¸ºè‡ªå®šä¹‰mysql rootå¯†ç 
+/data/mysql/data ä¸ºmysqlæ•°æ®ç›®å½•çš„æœ¬åœ°æ˜ å°„ï¼Œå¯è‡ªè¡Œä¿®æ”¹
