@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:5.7.30
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: maplestory@R00t1.
+      MYSQL_DATABASE: maplestory
+      MYSQL_USER: maplestory
+      MYSQL_PASSWORD: maplestory
+    ports:
+      - "3306:3306"
+  server:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: oms/cms079
+    ports:
+      - "2525-2530:2525-2530"
+      - "6350:6350"
+      - "8600:8600"
+      - "9595:9595"
