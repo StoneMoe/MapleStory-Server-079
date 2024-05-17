@@ -290,6 +290,7 @@ public class MapleShop
         MapleShop.rechargeableItems.add(2070012);
         MapleShop.rechargeableItems.add(2070013);
         MapleShop.rechargeableItems.add(2070015);
+        /* Cause client crash
         MapleShop.rechargeableItems.add(2070016);
         MapleShop.rechargeableItems.add(2070019);
         MapleShop.rechargeableItems.add(2070020);
@@ -298,6 +299,7 @@ public class MapleShop
         MapleShop.rechargeableItems.add(2070024);
         MapleShop.rechargeableItems.add(2070025);
         MapleShop.rechargeableItems.add(2070026);
+         */
         MapleShop.rechargeableItems.add(2330000);
         MapleShop.rechargeableItems.add(2330001);
         MapleShop.rechargeableItems.add(2330002);
