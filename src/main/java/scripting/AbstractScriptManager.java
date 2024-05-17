@@ -67,6 +67,7 @@ public abstract class AbstractScriptManager {
     }
 
     static {
+        System.setProperty("nashorn.args","--no-deprecation-warning"); // TODO: replace with newer engine
         sem = new ScriptEngineManager();
     }
 }

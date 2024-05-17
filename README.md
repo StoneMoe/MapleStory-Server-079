@@ -43,17 +43,6 @@ Windows版使用phpStudy集成环境，对小白比较友好，不过包含太�
 6. 运行`./start.sh`启动服务端
 7. 下载079客户端，指定服务器IP地址和端口号
 
-## 问题
-
-### 加密算法异常
-
-```shell
-Error initalizing the encryption cipher. Make sure you're using the Unlimited Strength crptography jar files.
-```
-
-解决：解压`UnlimitedJCEPolicy.tar`，覆盖掉`jdk1.7.0_75/jre/lib/security`中的jar文件
-
-
 # docker使用
 docker run -itd -p 6350:6350 -p 8600:8600 -p 9595:9595 -p 2525:2525 -p 2526:2526 -p 2527:2527 -p 2528:2528 -p 2529:2529 -p 2530:2530 -e IP=111.229.0.0  -e MYSQL_ROOT_PASSWORD=mysql-pwd -v /data/mysql/data:/var/lib/mysql morty2333/mxd079:1.0.0
 

@@ -2,9 +2,6 @@ FROM  mysql:5.7.42-oracle  as base
 RUN curl -L https://mirrors.huaweicloud.com/java/jdk/7u80-b15/jdk-7u80-linux-x64.tar.gz -o /tmp/jdk-7u80-linux-x64.tar.gz
 RUN tar -xf /tmp/jdk-7u80-linux-x64.tar.gz -C /usr/local
 
-ADD UnlimitedJCEPolicy.tar /tmp
-RUN mv  -f  /tmp/UnlimitedJCEPolicy/* /usr/local/jdk1.7.0_80/jre/lib/security/
-
 RUN mkdir  /usr/local/MapleStory-Server-079
 ADD bin  /usr/local/MapleStory-Server-079/bin
 ADD config   /usr/local/MapleStory-Server-079/config

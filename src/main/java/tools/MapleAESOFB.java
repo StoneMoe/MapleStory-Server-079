@@ -70,7 +70,9 @@ public class MapleAESOFB
         } catch (NoSuchAlgorithmException|javax.crypto.NoSuchPaddingException e) {
             System.err.println("ERROR" + e);
         } catch (InvalidKeyException e) {
-            System.err.println("Error initalizing the encryption cipher.  Make sure you're using the Unlimited Strength cryptography jar files.");
+            System.err.println("Failed to initialize encryption cipher");
+            System.err.println("Make sure you're using Unlimited Strength Jurisdiction Policy");
+            System.err.println("See https://www.oracle.com/java/technologies/javase-jce-all-downloads.html");
         }
         setIv(iv);
         this.mapleVersion = (short)(mapleVersion >> 8 & 0xFF | mapleVersion << 8 & 0xFF00);
