@@ -1,4 +1,6 @@
 .vscode/
 .dist/
-out/
 .idea/
+
+out/
+target
