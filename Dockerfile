@@ -10,7 +10,7 @@ ADD bin  /usr/local/MapleStory-Server-079/bin
 ADD config   /usr/local/MapleStory-Server-079/config
 ADD scripts   /usr/local/MapleStory-Server-079/scripts
 COPY start.sh  /usr/local/MapleStory-Server-079/
-COPY ms_20210813_234816.sql  /usr/local/MapleStory-Server-079/
+COPY docs/ms_20210813_234816.sql  /usr/local/MapleStory-Server-079/
 RUN mkdir /usr/local/MapleStory-Server-079/logs
 RUN chmod -R 777  /usr/local/MapleStory-Server-079
 
