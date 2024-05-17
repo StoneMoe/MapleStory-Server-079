@@ -7,10 +7,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class DatabaseConnection
@@ -115,6 +112,33 @@ public class DatabaseConnection
             DatabaseConnection.dbUrl = DatabaseConnection.dbProps.getProperty("url");
             DatabaseConnection.dbUser = DatabaseConnection.dbProps.getProperty("username");
             DatabaseConnection.dbPass = DatabaseConnection.dbProps.getProperty("password");
+
+            var params = new HashMap<String, String>();
+            params.put("serverTimezone", "UTC");
+            params.put("autoReconnect", "true");
+            params.put("characterEncoding", "UTF-8");
+            params.put("zeroDateTimeBehavior", "convertToNull");
+            var parts = DatabaseConnection.dbUrl.split("\\?");
+            if (parts.length > 1) {
+                var paramParts = parts[1].split("&");
+                for (var part: paramParts)
+                {
+                    var split = part.split("=");
+                    if (params.containsKey(split[0])) {
+                        continue;
+                    }
+
+                    params.put(split[0], split[1]);
+                }
+            }
+
+            var paramStrings = new ArrayList<String>();
+            for (var key: params.keySet())
+            {
+                paramStrings.add(key + "=" + params.get(key));
+            }
+            DatabaseConnection.dbUrl = parts[0] + "?" + String.join("&", paramStrings);
+
             try {
                 DatabaseConnection.connectionTimeOut = Long.parseLong(DatabaseConnection.dbProps.getProperty("timeout"));
             }
