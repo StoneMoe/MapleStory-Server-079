@@ -45,13 +45,13 @@ public class Start
     private MapleClient c;
 
     public static void main(final String[] args) throws InterruptedException {
-        String homePath = System.getProperty("homePath");
-        String scriptsPath = System.getProperty("scriptsPath");
-        String wzPath = System.getProperty("wzPath");
-        System.setProperty("server_property_file_path", homePath + "/server.properties");
-        System.setProperty("server_property_db_path", homePath + "/db.properties");
-        System.setProperty("server_property_shop_path", homePath + "/shop.properties");
-        System.setProperty("server_property_fish_path", homePath + "/fish.properties");
+        String cfgPath = System.getProperty("homePath", "./config");
+        String scriptsPath = System.getProperty("scriptsPath", "./scripts");
+        String wzPath = System.getProperty("wzPath", "./scripts/wz");
+        System.setProperty("server_property_file_path", cfgPath + "/server.properties");
+        System.setProperty("server_property_db_path", cfgPath + "/db.properties");
+        System.setProperty("server_property_shop_path", cfgPath + "/shop.properties");
+        System.setProperty("server_property_fish_path", cfgPath + "/fish.properties");
         System.setProperty("wzPath", wzPath);
         System.setProperty("scripts_path", scriptsPath);
         System.setProperty("server_name", "冒险岛");
