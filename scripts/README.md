@@ -1,2 +1,2 @@
 # scripts
-scriptes and wz files
+scripts and wz files
