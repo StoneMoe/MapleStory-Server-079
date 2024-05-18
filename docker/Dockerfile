@@ -24,8 +24,12 @@ COPY --from=build /app/logs /app/logs
 COPY --from=build /app/docs/ms_20210813_234816.sql /app/
 
 RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list && \
-    apt update && \
-    apt install -y mariadb-client
+    apt-get update && \
+    apt-get install -y mariadb-client \
+    sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list && \
+    apt-get update && \
+    apt-get install -y vim && \
+    apt-get clean
 
 ENV MYSQL_USER=maplestory
 ENV MYSQL_PASSWORD=maplestory
