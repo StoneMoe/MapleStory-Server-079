@@ -453,7 +453,7 @@ public class MapleClient implements Serializable
     
     private Calendar getTempBanCalendar(final ResultSet rs) throws SQLException {
         final Calendar lTempban = Calendar.getInstance();
-        if (rs.getLong("tempban") == 0L) {
+        if (rs.getTimestamp("tempban") == null) {
             lTempban.setTimeInMillis(0L);
             return lTempban;
         }
