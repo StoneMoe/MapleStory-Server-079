@@ -52,10 +52,11 @@ public class SpeedRunner
         final Map<Integer, String> rett = new LinkedHashMap<Integer, String>();
         final ResultSet rs = ps.executeQuery();
         int rank = 1;
-        boolean changed;
-        for (boolean cont = changed = rs.next(); cont; cont = rs.next()) {
+        boolean changed = false;
+        while (rs.next()) {
             this.addSpeedRunData(ret, rett, rs.getString("members"), rs.getString("leader"), rank, rs.getString("timestring"));
             ++rank;
+            changed = true;
         }
         rs.close();
         ps.close();
