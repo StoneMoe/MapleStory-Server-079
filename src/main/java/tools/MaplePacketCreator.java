@@ -3633,10 +3633,10 @@ public class MaplePacketCreator {
         for (final BuddyEntry buddy : buddylist) {
             if (buddy.isVisible()) {
                 mplew.writeInt(buddy.getCharacterId());
-                mplew.writeAsciiString(StringUtil.getRightPaddedStr(buddy.getName(), '\0', 12));
-                mplew.writeInt(0);
+                mplew.writeAsciiString(StringUtil.getRightPaddedStr(buddy.getName(), '\0', 13));
+                mplew.write(0);
                 mplew.writeInt((buddy.getChannel() == -1) ? -1 : (buddy.getChannel() - 1));
-                mplew.writeAsciiString(StringUtil.getRightPaddedStr(buddy.getGroup(), '\0', 16));
+                mplew.writeAsciiString(StringUtil.getRightPaddedStr(buddy.getGroup(), '\0', 17));
                 mplew.writeInt(0);
             }
         }
