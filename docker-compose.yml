@@ -14,7 +14,7 @@ services:
   server:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: docker/Dockerfile
     image: oms/cms079
     environment:
       MYSQL_ROOT_PASSWORD: maplestory@R00t1.

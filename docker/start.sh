@@ -24,10 +24,10 @@ else
     echo "Database contains tables. No need for data import."
 fi
 
-sed -i "s/mysql_user/${MYSQL_USER}/g"  /app/config/db.properties
-sed -i "s/mysql_host/${MYSQL_HOST}/g"  /app/config/db.properties
-sed -i "s/mysql_password/${MYSQL_PASSWORD}/g"  /app/config/db.properties
-sed -i "s/mysql_database/${MYSQL_DATABASE}/g"  /app/config/db.properties
-sed -i "s/public_ip/${PUBLIC_IP}/g" /app/config/server.properties
+sed -i "s/placeholder_mysql_user/${MYSQL_USER}/g"  /app/config/db.properties
+sed -i "s/placeholder_mysql_host/${MYSQL_HOST}/g"  /app/config/db.properties
+sed -i "s/placeholder_mysql_password/${MYSQL_PASSWORD}/g"  /app/config/db.properties
+sed -i "s/placeholder_mysql_database/${MYSQL_DATABASE}/g"  /app/config/db.properties
+sed -i "s/placeholder_public_ip/${PUBLIC_IP}/g" /app/config/server.properties
 
 java -jar /app/MapleStory_Server.jar -DhomePath=/app/config/ -DscriptsPath=/app/scripts/ -DwzPath=/app/scripts/wz/ -Xms512m -Xmx2048m -XX:PermSize=256m -XX:MaxPermSize=512m -XX:MaxNewSize=512m server.Start
