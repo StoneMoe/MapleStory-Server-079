@@ -4746,7 +4746,7 @@ public class MaplePacketCreator
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
         mplew.write(73);
         mplew.writeInt(npcid);
-        if (!rs.first()) {
+        if (!rs.last()) {
             mplew.writeInt(0);
             return mplew.getPacket();
         }
