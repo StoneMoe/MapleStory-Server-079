@@ -56,7 +56,7 @@ public class MapleGuild implements Serializable
     public static void displayGuildRanks(final MapleClient c, final int npcid) {
         try {
             final Connection con = DatabaseConnection.getConnection();
-            final PreparedStatement ps = con.prepareStatement("SELECT `name`, `GP`, `logoBG`, `logoBGColor`, `logo`, `logoColor` FROM guilds ORDER BY `GP` DESC LIMIT 50", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            final PreparedStatement ps = con.prepareStatement("SELECT `name`, `GP`, `logoBG`, `logoBGColor`, `logo`, `logoColor` FROM guilds ORDER BY `GP` DESC LIMIT 50", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             final ResultSet rs = ps.executeQuery();
             c.getSession().write(MaplePacketCreator.showGuildRanks(npcid, rs));
             ps.close();
@@ -68,7 +68,7 @@ public class MapleGuild implements Serializable
     public static void meso(final MapleClient c, final int npcid) {
         try {
             final Connection con = DatabaseConnection.getConnection();
-            final PreparedStatement ps = con.prepareStatement("SELECT `name`,`meso`,`vip`, `level`FROM characters ORDER BY `meso` DESC LIMIT 100", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            final PreparedStatement ps = con.prepareStatement("SELECT `name`,`meso`,`vip`, `level`FROM characters ORDER BY `meso` DESC LIMIT 100", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             final ResultSet rs = ps.executeQuery();
             c.getSession().write(MaplePacketCreator.showMesoRanks(npcid, rs));
             ps.close();
@@ -81,7 +81,7 @@ public class MapleGuild implements Serializable
         try {
             final Connection con = DatabaseConnection.getConnection();
             ResultSet rs;
-            try (final PreparedStatement ps = con.prepareStatement("select `name`, ((`level` * 15) + CASE WHEN fame < 0 THEN 0 ELSE fame END + (maxhp / 50) + (maxmp / 50) + str + dex + luk + `int`) AS `data`, `level`, meso from characters order by `data` desc LIMIT 100", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+            try (final PreparedStatement ps = con.prepareStatement("select `name`, ((`level` * 15) + CASE WHEN fame < 0 THEN 0 ELSE fame END + (maxhp / 50) + (maxmp / 50) + str + dex + luk + `int`) AS `data`, `level`, meso from characters order by `data` desc LIMIT 100", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
                 rs = ps.executeQuery();
                 c.getSession().write(MaplePacketCreator.showCustomRanks(npcid, rs));
             }
@@ -96,7 +96,7 @@ public class MapleGuild implements Serializable
         try {
             final Connection con = DatabaseConnection.getConnection();
             ResultSet rs;
-            try (final PreparedStatement ps = con.prepareStatement("select `name`, `PGMaxDamage` AS `data`, `level`, meso from characters order by `data` desc LIMIT 100", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+            try (final PreparedStatement ps = con.prepareStatement("select `name`, `PGMaxDamage` AS `data`, `level`, meso from characters order by `data` desc LIMIT 100", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
                 rs = ps.executeQuery();
                 c.getSession().write(MaplePacketCreator.showCustomRanks(npcid, rs));
             }
@@ -111,7 +111,7 @@ public class MapleGuild implements Serializable
         try {
             final Connection con = DatabaseConnection.getConnection();
             ResultSet rs;
-            try (final PreparedStatement ps = con.prepareStatement("select `name`, totalOnlineTime AS `data`, `level`, meso from characters order by `data` desc LIMIT 100", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+            try (final PreparedStatement ps = con.prepareStatement("select `name`, totalOnlineTime AS `data`, `level`, meso from characters order by `data` desc LIMIT 100", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
                 rs = ps.executeQuery();
                 c.getSession().write(MaplePacketCreator.showCustomRanks(npcid, rs));
             }
@@ -125,7 +125,7 @@ public class MapleGuild implements Serializable
     public static void displayLevelRanks(final MapleClient c, final int npcid) {
         try {
             final Connection con = DatabaseConnection.getConnection();
-            final PreparedStatement ps = con.prepareStatement("SELECT `name`, `vip`, `level`, `meso` FROM characters ORDER BY `level` DESC LIMIT 100", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            final PreparedStatement ps = con.prepareStatement("SELECT `name`, `vip`, `level`, `meso` FROM characters ORDER BY `level` DESC LIMIT 100", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             final ResultSet rs = ps.executeQuery();
             c.getSession().write(MaplePacketCreator.showLevelRanks(npcid, rs));
             ps.close();
@@ -138,7 +138,7 @@ public class MapleGuild implements Serializable
         try {
             final Connection con = DatabaseConnection.getConnection();
             ResultSet rs;
-            try (final PreparedStatement ps = con.prepareStatement("select `name`, beans AS `data`, `level`, meso from characters order by `data` desc LIMIT 100", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+            try (final PreparedStatement ps = con.prepareStatement("select `name`, beans AS `data`, `level`, meso from characters order by `data` desc LIMIT 100", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
                 rs = ps.executeQuery();
                 c.getSession().write(MaplePacketCreator.showCustomRanks(npcid, rs));
             }
@@ -152,7 +152,7 @@ public class MapleGuild implements Serializable
     public static void VIP排行(final MapleClient c, final int npcid) {
         try {
             final Connection con = DatabaseConnection.getConnection();
-            final PreparedStatement ps = con.prepareStatement("SELECT `name`, `vip`, `level`, `meso` FROM characters ORDER BY `vip` DESC LIMIT 100", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            final PreparedStatement ps = con.prepareStatement("SELECT `name`, `vip`, `level`, `meso` FROM characters ORDER BY `vip` DESC LIMIT 100", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             final ResultSet rs = ps.executeQuery();
             c.getSession().write(MaplePacketCreator.showVipRanks(npcid, rs));
             ps.close();
@@ -164,7 +164,7 @@ public class MapleGuild implements Serializable
     public static void MapleMSpvpdeaths(final MapleClient c, final int npcid) {
         try {
             final Connection con = DatabaseConnection.getConnection();
-            final PreparedStatement ps = con.prepareStatement("SELECT `name`, `pvpdeaths`, `str`, `dex`, `int`, `luk` FROM characters ORDER BY `pvpdeaths` DESC LIMIT 20", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            final PreparedStatement ps = con.prepareStatement("SELECT `name`, `pvpdeaths`, `str`, `dex`, `int`, `luk` FROM characters ORDER BY `pvpdeaths` DESC LIMIT 20", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             final ResultSet rs = ps.executeQuery();
             c.getSession().write(MaplePacketCreator.MapleMSpvpdeaths(npcid, rs));
             ps.close();
@@ -178,7 +178,7 @@ public class MapleGuild implements Serializable
     public static void MapleMSpvpkills(final MapleClient c, final int npcid) {
         try {
             final Connection con = DatabaseConnection.getConnection();
-            final PreparedStatement ps = con.prepareStatement("SELECT `name`, `pvpkills`, `str`, `dex`, `int`, `luk` FROM characters ORDER BY `pvpkills` WHERE gm < 1  DESC LIMIT 100", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            final PreparedStatement ps = con.prepareStatement("SELECT `name`, `pvpkills`, `str`, `dex`, `int`, `luk` FROM characters ORDER BY `pvpkills` WHERE gm < 1  DESC LIMIT 100", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             final ResultSet rs = ps.executeQuery();
             c.getSession().write(MaplePacketCreator.MapleMSpvpkills(npcid, rs));
             ps.close();
@@ -192,7 +192,7 @@ public class MapleGuild implements Serializable
     public static void 人气排行(final MapleClient c, final int npcid) {
         try {
             final Connection con = DatabaseConnection.getConnection();
-            final PreparedStatement ps = con.prepareStatement("SELECT `name`, `fame`, `level`, `meso` FROM characters ORDER BY `fame` DESC LIMIT 100", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            final PreparedStatement ps = con.prepareStatement("SELECT `name`, `fame`, `level`, `meso` FROM characters ORDER BY `fame` DESC LIMIT 100", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             final ResultSet rs = ps.executeQuery();
             c.getSession().write(MaplePacketCreator.showRQRanks(npcid, rs));
             ps.close();
@@ -499,7 +499,7 @@ public class MapleGuild implements Serializable
     public static void 杀怪排行榜(final MapleClient c, final int npcid) {
         try {
             final Connection con = DatabaseConnection.getConnection();
-            final PreparedStatement ps = con.prepareStatement("SELECT `name`, `shaguai`, `str`, `dex`, `int`, `luk` FROM characters ORDER BY `shaguai` DESC LIMIT 100", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            final PreparedStatement ps = con.prepareStatement("SELECT `name`, `shaguai`, `str`, `dex`, `int`, `luk` FROM characters ORDER BY `shaguai` DESC LIMIT 100", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             final ResultSet rs = ps.executeQuery();
             c.getSession().write(MaplePacketCreator.杀怪排行榜(npcid, rs));
             ps.close();

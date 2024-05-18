@@ -64,7 +64,7 @@ public class AutoRegister
             return;
         }
         try {
-            final PreparedStatement ipc = con.prepareStatement("SELECT macs FROM accounts WHERE macs = ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            final PreparedStatement ipc = con.prepareStatement("SELECT macs FROM accounts WHERE macs = ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ipc.setString(1, macs);
             final ResultSet rs = ipc.executeQuery();
             if (!rs.first() || (rs.last() && rs.getRow() < 100)) {

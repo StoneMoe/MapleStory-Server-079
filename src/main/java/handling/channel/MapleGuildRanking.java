@@ -85,7 +85,7 @@ public class MapleGuildRanking
     public static void MapleMSpvpdeaths(final MapleClient c, final int npcid) {
         try {
             final Connection con = DatabaseConnection.getConnection();
-            final PreparedStatement ps = con.prepareStatement("SELECT `name`, `pvpdeaths`, `str`, `dex`, `int`, `luk` FROM characters ORDER BY `pvpdeaths` DESC LIMIT 20", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            final PreparedStatement ps = con.prepareStatement("SELECT `name`, `pvpdeaths`, `str`, `dex`, `int`, `luk` FROM characters ORDER BY `pvpdeaths` DESC LIMIT 20", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             final ResultSet rs = ps.executeQuery();
             c.getSession().write(MaplePacketCreator.MapleMSpvpdeaths(npcid, rs));
             ps.close();
@@ -99,7 +99,7 @@ public class MapleGuildRanking
     public static void MapleMSpvpkills(final MapleClient c, final int npcid) {
         try {
             final Connection con = DatabaseConnection.getConnection();
-            final PreparedStatement ps = con.prepareStatement("SELECT `name`, `pvpkills`, `str`, `dex`, `int`, `luk` FROM characters WHERE gm < 1 ORDER BY `pvpkills`  DESC LIMIT 100", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            final PreparedStatement ps = con.prepareStatement("SELECT `name`, `pvpkills`, `str`, `dex`, `int`, `luk` FROM characters WHERE gm < 1 ORDER BY `pvpkills`  DESC LIMIT 100", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             final ResultSet rs = ps.executeQuery();
             c.getSession().write(MaplePacketCreator.MapleMSpvpkills(npcid, rs));
             ps.close();
