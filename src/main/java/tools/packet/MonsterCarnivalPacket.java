@@ -27,7 +27,7 @@ public class MonsterCarnivalPacket
         mplew.writeShort(0);
         if (ServerConstants.PACKET_ERROR_OFF) {
             final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR(" 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+            ERROR.setPACKET_ERROR("MonsterCarnivalPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -43,7 +43,7 @@ public class MonsterCarnivalPacket
         mplew.writeMapleAsciiString(name);
         if (ServerConstants.PACKET_ERROR_OFF) {
             final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR(" 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+            ERROR.setPACKET_ERROR("MonsterCarnivalPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -64,7 +64,7 @@ public class MonsterCarnivalPacket
         mplew.writeShort(totalCP);
         if (ServerConstants.PACKET_ERROR_OFF) {
             final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR(" 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+            ERROR.setPACKET_ERROR("MonsterCarnivalPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -80,7 +80,7 @@ public class MonsterCarnivalPacket
         mplew.writeMapleAsciiString(name);
         if (ServerConstants.PACKET_ERROR_OFF) {
             final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR(" 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+            ERROR.setPACKET_ERROR("MonsterCarnivalPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }

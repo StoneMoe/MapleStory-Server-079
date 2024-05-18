@@ -267,7 +267,7 @@ public class ChannelServer implements Serializable
             this.dropRate = Integer.parseInt(ServerProperties.getProperty("RoyMS.Drop"));
             this.BossdropRate = Integer.parseInt(ServerProperties.getProperty("RoyMS.BDrop"));
             this.cashRate = Integer.parseInt(ServerProperties.getProperty("RoyMS.Cash"));
-            this.serverMessage = ServerProperties.getProperty("RoyMS.EventMessage");
+            this.serverMessage = ServerProperties.getProperty("RoyMS.ServerMessage");
             this.serverName = ServerProperties.getProperty("RoyMS.ServerName");
             this.flags = Integer.parseInt(ServerProperties.getProperty("RoyMS.WFlags", "0"));
             this.adminOnly = Boolean.parseBoolean(ServerProperties.getProperty("RoyMS.Admin", "false"));
