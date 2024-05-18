@@ -17,6 +17,7 @@ services:
       dockerfile: Dockerfile
     image: oms/cms079
     environment:
+      MYSQL_ROOT_PASSWORD: maplestory@R00t1.
       MYSQL_HOST: db
       MYSQL_DATABASE: maplestory
       MYSQL_USER: maplestory
@@ -27,3 +28,5 @@ services:
       - "6350:6350"
       - "8600:8600"
       - "9595:9595"
+    depends_on:
+      - db
