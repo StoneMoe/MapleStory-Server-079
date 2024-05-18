@@ -15,7 +15,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: cms/cms079
+    image: oms/cms079
     environment:
       MYSQL_HOST: db
       MYSQL_DATABASE: maplestory
