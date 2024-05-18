@@ -56,7 +56,7 @@ public class MapleGuild implements Serializable
     public static void displayGuildRanks(final MapleClient c, final int npcid) {
         try {
             final Connection con = DatabaseConnection.getConnection();
-            final PreparedStatement ps = con.prepareStatement("SELECT `name`, `GP`, `logoBG`, `logoBGColor`, `logo`, `logoColor` FROM guilds ORDER BY `GP` DESC LIMIT 50");
+            final PreparedStatement ps = con.prepareStatement("SELECT `name`, `GP`, `logoBG`, `logoBGColor`, `logo`, `logoColor` FROM guilds ORDER BY `GP` DESC LIMIT 50", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             final ResultSet rs = ps.executeQuery();
             c.getSession().write(MaplePacketCreator.showGuildRanks(npcid, rs));
             ps.close();
