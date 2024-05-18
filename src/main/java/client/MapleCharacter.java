@@ -5046,7 +5046,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     public void showNote() {
         try {
             final Connection con = DatabaseConnection.getConnection();
-            final PreparedStatement ps = con.prepareStatement("SELECT * FROM notes WHERE `to`=?", 1005, 1008);
+            final PreparedStatement ps = con.prepareStatement("SELECT * FROM notes WHERE `to`=?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ps.setString(1, this.getName());
             final ResultSet rs = ps.executeQuery();
             rs.last();

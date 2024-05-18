@@ -56,7 +56,7 @@ public class MapleGuildAlliance implements Serializable
             PreparedStatement ps = con.prepareStatement("SELECT id FROM alliances WHERE name = ?");
             ps.setString(1, name);
             ResultSet rs = ps.executeQuery();
-            if (rs.first()) {
+            if (rs.next()) {
                 rs.close();
                 ps.close();
                 return ret;
@@ -91,7 +91,7 @@ public class MapleGuildAlliance implements Serializable
             final PreparedStatement ps = con.prepareStatement("SELECT * FROM alliances WHERE id = ?");
             ps.setInt(1, id);
             final ResultSet rs = ps.executeQuery();
-            if (!rs.first()) {
+            if (!rs.next()) {
                 rs.close();
                 ps.close();
                 this.allianceid = -1;

@@ -53,7 +53,7 @@ public class SpeedRunner
         final ResultSet rs = ps.executeQuery();
         int rank = 1;
         boolean changed;
-        for (boolean cont = changed = rs.first(); cont; cont = rs.next()) {
+        for (boolean cont = changed = rs.next(); cont; cont = rs.next()) {
             this.addSpeedRunData(ret, rett, rs.getString("members"), rs.getString("leader"), rank, rs.getString("timestring"));
             ++rank;
         }

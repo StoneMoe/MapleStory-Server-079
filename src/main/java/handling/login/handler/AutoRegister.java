@@ -22,7 +22,7 @@ public class AutoRegister
             final PreparedStatement ps = con.prepareStatement("SELECT name FROM accounts WHERE name = ?");
             ps.setString(1, login);
             final ResultSet rs = ps.executeQuery();
-            if (rs.first()) {
+            if (rs.next()) {
                 accountExists = true;
             }
             rs.close();
@@ -41,7 +41,7 @@ public class AutoRegister
             final PreparedStatement ps = con.prepareStatement("SELECT name FROM accounts WHERE id = ?");
             ps.setInt(1, id);
             final ResultSet rs = ps.executeQuery();
-            if (rs.first()) {
+            if (rs.next()) {
                 accountExists = true;
             }
             rs.close();
@@ -64,7 +64,7 @@ public class AutoRegister
             return;
         }
         try {
-            final PreparedStatement ipc = con.prepareStatement("SELECT macs FROM accounts WHERE macs = ?");
+            final PreparedStatement ipc = con.prepareStatement("SELECT macs FROM accounts WHERE macs = ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ipc.setString(1, macs);
             final ResultSet rs = ipc.executeQuery();
             if (!rs.first() || (rs.last() && rs.getRow() < 100)) {
