@@ -3675,7 +3675,7 @@ public class MaplePacketCreator
                 mplew.writeAsciiString(StringUtil.getRightPaddedStr(buddy.getName(), '\0', 13));
                 mplew.write(0);
                 mplew.writeInt((buddy.getChannel() == -1) ? -1 : (buddy.getChannel() - 1));
-                mplew.writeAsciiString(StringUtil.getRightPaddedStr("中", '\0', 17));
+                mplew.writeAsciiString(StringUtil.getRightPaddedStr(buddy.getGroup(), '\0', 17));
             }
         }
         for (int x = 0; x < buddylist.size(); ++x) {
