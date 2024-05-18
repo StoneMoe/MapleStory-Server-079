@@ -1,29 +1,31 @@
-FROM  mysql:5.7.42-oracle  as base
-RUN curl -L https://mirrors.huaweicloud.com/java/jdk/7u80-b15/jdk-7u80-linux-x64.tar.gz -o /tmp/jdk-7u80-linux-x64.tar.gz
-RUN tar -xf /tmp/jdk-7u80-linux-x64.tar.gz -C /usr/local
+FROM openjdk:11-jdk as build
 
-RUN mkdir  /usr/local/MapleStory-Server-079
-ADD bin  /usr/local/MapleStory-Server-079/bin
-ADD config   /usr/local/MapleStory-Server-079/config
-ADD scripts   /usr/local/MapleStory-Server-079/scripts
-COPY start.sh  /usr/local/MapleStory-Server-079/
-COPY docs/ms_20210813_234816.sql  /usr/local/MapleStory-Server-079/
-RUN mkdir /usr/local/MapleStory-Server-079/logs
-RUN chmod -R 777  /usr/local/MapleStory-Server-079
+RUN apt-get update && \
+    apt-get install -y maven
 
+WORKDIR /app
+COPY . /app
+RUN mvn clean package
 
-FROM mysql:5.7.42-oracle
-RUN yum install  -y  net-tools vim
+FROM openjdk:11-jdk
 
-ARG MYSQL_ROOT_PASSWORD
-ARG IP
+WORKDIR /app
+COPY --from=build /app/target/cms079-1.0-SNAPSHOT-jar-with-dependencies.jar /app/MapleStory_Server.jar
+COPY --from=build /app/config /app/config
+COPY --from=build /app/config/docker/db.properties /app/config/
+COPY --from=build /app/config/docker/server.properties /app/config/
+COPY --from=build /app/scripts /app/scripts
+COPY --from=build /app/logs /app/logs
+COPY --from=build /app/docs/ms_20210813_234816.sql /app/
+COPY --from=build /app/start.sh /app/
 
-COPY --from=base /usr/local/jdk1.7.0_80 /usr/local/jdk1.7.0_80
-COPY --from=base /usr/local/MapleStory-Server-079 /usr/local/MapleStory-Server-079
+RUN apt update && \
+    apt install -y mariadb-client
 
-ENV JAVA_HOME /usr/local/jdk1.7.0_80
-ENV PATH $JAVA_HOME/bin:$PATH
-ENV CLASSPATH  .:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+ENV MYSQL_USER=maplestory
+ENV MYSQL_PASSWORD=maplestory
+ENV MYSQL_DATABASE=maplestory
+ENV MYSQL_HOST=db
+ENV IP=127.0.0.1
 
-RUN sed '430 a         nohup sh /usr/local/MapleStory-Server-079/start.sh &' -i /usr/local/bin/docker-entrypoint.sh
-
+ENTRYPOINT ["bash", "/app/start.sh"]

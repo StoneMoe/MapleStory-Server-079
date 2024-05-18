@@ -1,28 +1,19 @@
-echo "
-+----------------------------------------------------------------------
-|                   冒险岛079 FOR CentOS/Ubuntu/Debian
-+----------------------------------------------------------------------
-"
+#! /bin/bash
 
-echo "mysql服务是否启动"
-while true
-do
-	port=`netstat -antp | grep "3306"`
-  if [ -n "$port" ]; then
-		echo "mysql服务已经启动"
-		break;
-	fi
-	sleep 5
-done
+TABLE_COUNT=$(mysql -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" -h"${MYSQL_HOST}" -se"SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = '${MYSQL_DATABASE}';")
 
-echo ${MYSQL_ROOT_PASSWORD} > /tmp/pwd
-echo ${IP} > /tmp/ip
+if [ "$TABLE_COUNT" -eq 0 ]; then
+    echo "No tables found in '${MYSQL_DATABASE}' database. Starting data import..."
+    mysql -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" -e "use ${MYSQL_DATABASE};source /app/ms_20210813_234816.sql;"
 
-mysql -uroot -p"${MYSQL_ROOT_PASSWORD}" -e "CREATE DATABASE IF NOT EXISTS maplestory_079"
-mysql -uroot -p"${MYSQL_ROOT_PASSWORD}" -e "use maplestory_079;source /usr/local/MapleStory-Server-079/ms_20210813_234816.sql;"
+else
+    echo "Database contains tables. No need for data import."
+fi
 
+sed -i "s/mysql_user/${MYSQL_USER}/g"  /app/config/db.properties
+sed -i "s/mysql_host/${MYSQL_HOST}/g"  /app/config/db.properties
+sed -i "s/mysql_password/${MYSQL_PASSWORD}/g"  /app/config/db.properties
+sed -i "s/mysql_database/${MYSQL_DATABASE}/g"  /app/config/db.properties
+sed -i "s/public_ip/${PUBLIC_IP}/g" /app/config/server.properties
 
-sed -i "s/afauria/${MYSQL_ROOT_PASSWORD}/g"  /usr/local/MapleStory-Server-079/config/db.properties
-sed -i "s/127.0.0.1/${IP}/g" /usr/local/MapleStory-Server-079/config/server.properties
-
-nohup java -cp /usr/local/MapleStory-Server-079/bin/maple.jar -server -DhomePath=/usr/local/MapleStory-Server-079/config/ -DscriptsPath=/usr/local/MapleStory-Server-079/scripts/ -DwzPath=/usr/local/MapleStory-Server-079/scripts/wz -Xms512m -Xmx2048m -XX:PermSize=256m -XX:MaxPermSize=512m -XX:MaxNewSize=512m server.Start  > /usr/local/MapleStory-Server-079/logs/maple.log &
+java -cp /MapleStory_Server.jar -server -DhomePath=/app/config/ -DscriptsPath=/app/scripts/ -DwzPath=/app/scripts/wz/ -Xms512m -Xmx2048m -XX:PermSize=256m -XX:MaxPermSize=512m -XX:MaxNewSize=512m server.Start

@@ -14,8 +14,14 @@ services:
   server:
     build:
       context: .
-      dockerfile: ./Dockerfile
-    image: oms/cms079
+      dockerfile: Dockerfile
+    image: cms/cms079
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: maplestory
+      MYSQL_USER: maplestory
+      MYSQL_PASSWORD: maplestory
+      PUBLIC_IP: 127.0.0.1
     ports:
       - "2525-2530:2525-2530"
       - "6350:6350"
