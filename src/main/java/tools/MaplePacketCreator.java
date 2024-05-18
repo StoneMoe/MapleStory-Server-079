@@ -3676,6 +3676,7 @@ public class MaplePacketCreator
                 mplew.write(0);
                 mplew.writeInt((buddy.getChannel() == -1) ? -1 : (buddy.getChannel() - 1));
                 mplew.writeAsciiString(StringUtil.getRightPaddedStr(buddy.getGroup(), '\0', 17));
+                mplew.writeInt(0);
             }
         }
         for (int x = 0; x < buddylist.size(); ++x) {
@@ -3703,7 +3704,7 @@ public class MaplePacketCreator
         mplew.write(5);
         mplew.write(0);
         mplew.writeShort(0);
-        mplew.writeAsciiString(StringUtil.getRightPaddedStr("DefaultGroupName", '\0', 17));
+        mplew.writeAsciiString(StringUtil.getRightPaddedStr("群未定", '\0', 17));
         mplew.write(0);
         if (ServerConstants.PACKET_ERROR_OFF) {
             final ServerConstants ERROR = new ServerConstants();
@@ -6460,7 +6461,7 @@ public class MaplePacketCreator
         mplew.write(5);
         mplew.write(0);
         mplew.writeShort(0);
-        mplew.writeAsciiString(StringUtil.getRightPaddedStr("DefaultGroupName", '\0', 17));
+        mplew.writeAsciiString(StringUtil.getRightPaddedStr("群未定", '\0', 17));
         mplew.write(0);
         if (ServerConstants.PACKET_ERROR_OFF) {
             final ServerConstants ERROR = new ServerConstants();

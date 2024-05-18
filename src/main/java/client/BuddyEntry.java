@@ -55,7 +55,7 @@ public class BuddyEntry
     public BuddyEntry(final String name, final int characterId, final String group, final int channel, final boolean visible, final int level, final int job) {
         this.name = name;
         this.characterId = characterId;
-        this.group = "Group";
+        this.group = group;
         this.channel = channel;
         this.visible = visible;
         this.level = level;
@@ -107,7 +107,7 @@ public class BuddyEntry
     }
     
     public void setGroup(final String newGroup) {
-        this.group = "Group";
+        this.group = newGroup;
     }
     
     @Override
