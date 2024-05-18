@@ -15,6 +15,7 @@ import handling.world.CheaterData;
 import handling.world.World;
 import handling.world.family.MapleFamily;
 import handling.world.guild.MapleGuild;
+import lombok.extern.slf4j.Slf4j;
 import scripting.EventManager;
 import scripting.NPCScriptManager;
 import scripting.PortalScriptManager;
@@ -44,6 +45,7 @@ import java.util.List;
 import java.util.*;
 import java.util.concurrent.ScheduledFuture;
 
+@Slf4j
 public class AdminCommand {
     public static ServerConstants.PlayerGMRank getPlayerLevelRequired() {
         return ServerConstants.PlayerGMRank.ADMIN;
@@ -78,7 +80,6 @@ public class AdminCommand {
 
     public static class 给所有人点卷 extends CashEveryone {
     }
-
 
 
     public static class 刷新地图 extends ReloadMap {
@@ -1245,7 +1246,6 @@ public class AdminCommand {
             return "!选择活动 - 选择活动";
         }
     }
-
 
 
     public static class RemoveItem extends CommandExecute {
@@ -2865,7 +2865,7 @@ public class AdminCommand {
                     sampler.save(fw, 1, 10);
                 }
             } catch (IOException e) {
-                System.err.println("Error saving profile" + e);
+                log.error("Error saving profile" + e);
             }
             sampler.reset();
             return 1;
@@ -3483,7 +3483,7 @@ public class AdminCommand {
             try {
                 con = DatabaseConnection.getConnection();
             } catch (Exception ex) {
-                System.out.println(ex);
+                log.info("Err during get database connection", ex);
                 return 0;
             }
             try (final PreparedStatement ps = con.prepareStatement("INSERT INTO accounts (name, password) VALUES (?, ?)")) {
@@ -3492,7 +3492,7 @@ public class AdminCommand {
                 ps.executeUpdate();
                 ps.close();
             } catch (SQLException ex2) {
-                System.out.println(ex2);
+                log.info("Err during inserting", ex2);
                 return 0;
             }
             c.getPlayer().dropMessage("[注册完成]账号: " + acc + " 密码: " + password);

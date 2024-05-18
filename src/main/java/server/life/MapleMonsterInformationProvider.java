@@ -3,6 +3,8 @@ package server.life;
 import client.inventory.MapleInventoryType;
 import constants.GameConstants;
 import database.DatabaseConnection;
+import lombok.extern.slf4j.Slf4j;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,26 +15,26 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class MapleMonsterInformationProvider
-{
+@Slf4j
+public class MapleMonsterInformationProvider {
     private static final MapleMonsterInformationProvider instance;
     private final Map<Integer, List<MonsterDropEntry>> drops;
     private final List<MonsterGlobalDropEntry> globaldrops;
-    
+
     public static MapleMonsterInformationProvider getInstance() {
         return MapleMonsterInformationProvider.instance;
     }
-    
+
     protected MapleMonsterInformationProvider() {
         this.drops = new HashMap<Integer, List<MonsterDropEntry>>();
         this.globaldrops = new ArrayList<MonsterGlobalDropEntry>();
         this.retrieveGlobal();
     }
-    
+
     public List<MonsterGlobalDropEntry> getGlobalDrop() {
         return this.globaldrops;
     }
-    
+
     public void retrieveGlobal() {
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -45,11 +47,9 @@ public class MapleMonsterInformationProvider
             }
             rs.close();
             ps.close();
-        }
-        catch (SQLException e) {
-            System.err.println("Error retrieving drop" + e);
-        }
-        finally {
+        } catch (SQLException e) {
+            log.error("Error retrieving drop" + e);
+        } finally {
             try {
                 if (ps != null) {
                     ps.close();
@@ -57,11 +57,11 @@ public class MapleMonsterInformationProvider
                 if (rs != null) {
                     rs.close();
                 }
+            } catch (SQLException ex) {
             }
-            catch (SQLException ex) {}
         }
     }
-    
+
     public List<MonsterDropEntry> retrieveDrop(final int monsterId) {
         if (this.drops.containsKey(monsterId)) {
             return this.drops.get(monsterId);
@@ -88,15 +88,12 @@ public class MapleMonsterInformationProvider
                 if (rs != null) {
                     rs.close();
                 }
-            }
-            catch (SQLException ignore) {
+            } catch (SQLException ignore) {
                 return ret;
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             return ret;
-        }
-        finally {
+        } finally {
             try {
                 if (ps != null) {
                     ps.close();
@@ -104,21 +101,20 @@ public class MapleMonsterInformationProvider
                 if (rs != null) {
                     rs.close();
                 }
-            }
-            catch (SQLException ignore2) {
+            } catch (SQLException ignore2) {
                 return ret;
             }
         }
         this.drops.put(monsterId, ret);
         return ret;
     }
-    
+
     public void clearDrops() {
         this.drops.clear();
         this.globaldrops.clear();
         this.retrieveGlobal();
     }
-    
+
     static {
         instance = new MapleMonsterInformationProvider();
     }

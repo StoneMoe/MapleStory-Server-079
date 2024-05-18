@@ -6,11 +6,7 @@ import client.inventory.IItem;
 import client.inventory.ItemFlag;
 import constants.GameConstants;
 import handling.channel.ChannelServer;
-import java.awt.Point;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.ScheduledFuture;
+import lombok.extern.slf4j.Slf4j;
 import server.MapleInventoryManipulator;
 import server.MapleItemInformationProvider;
 import server.Timer;
@@ -20,13 +16,19 @@ import server.maps.MapleMapObjectType;
 import tools.MaplePacketCreator;
 import tools.packet.PlayerShopPacket;
 
-public class HiredMerchant extends AbstractPlayerStore
-{
+import java.awt.*;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.ScheduledFuture;
+
+@Slf4j
+public class HiredMerchant extends AbstractPlayerStore {
     public ScheduledFuture<?> schedule;
     private final List<String> blacklist;
     private int storeid;
     private final long start;
-    
+
     public HiredMerchant(final MapleCharacter owner, final int itemId, final String desc) {
         super(owner, itemId, desc, "", 3);
         this.start = System.currentTimeMillis();
@@ -38,16 +40,16 @@ public class HiredMerchant extends AbstractPlayerStore
             }
         }, 86400000L);
     }
-    
+
     @Override
     public byte getShopType() {
         return 1;
     }
-    
+
     public void setStoreid(final int storeid) {
         this.storeid = storeid;
     }
-    
+
     public List<MaplePlayerShopItem> searchItem(final int itemSearch) {
         final List<MaplePlayerShopItem> itemz = new LinkedList<MaplePlayerShopItem>();
         for (final MaplePlayerShopItem item : this.items) {
@@ -57,7 +59,7 @@ public class HiredMerchant extends AbstractPlayerStore
         }
         return itemz;
     }
-    
+
     @Override
     public void buy(final MapleClient c, final int item, final short quantity) {
         final MaplePlayerShopItem pItem = this.items.get(item);
@@ -65,13 +67,12 @@ public class HiredMerchant extends AbstractPlayerStore
         final IItem newItem = shopItem.copy();
         final short perbundle = newItem.getQuantity();
         final int theQuantity = pItem.price * quantity;
-        newItem.setQuantity((short)(quantity * perbundle));
+        newItem.setQuantity((short) (quantity * perbundle));
         final byte flag = newItem.getFlag();
         if (ItemFlag.KARMA_EQ.check(flag)) {
-            newItem.setFlag((byte)(flag - ItemFlag.KARMA_EQ.getValue()));
-        }
-        else if (ItemFlag.KARMA_USE.check(flag)) {
-            newItem.setFlag((byte)(flag - ItemFlag.KARMA_USE.getValue()));
+            newItem.setFlag((byte) (flag - ItemFlag.KARMA_EQ.getValue()));
+        } else if (ItemFlag.KARMA_USE.check(flag)) {
+            newItem.setFlag((byte) (flag - ItemFlag.KARMA_USE.getValue()));
         }
         if (!c.getPlayer().canHold(newItem.getItemId())) {
             c.getPlayer().dropMessage(1, "背包已满");
@@ -93,19 +94,17 @@ public class HiredMerchant extends AbstractPlayerStore
                 if (chr != null) {
                     chr.dropMessage(-5, "您雇佣商店里面的道具: " + itemText);
                 }
-                System.out.println("[雇佣] " + ((chr != null) ? chr.getName() : this.getOwnerName()) + " 雇佣商店卖出: " + newItem.getItemId() + " - " + itemText + " 价格: " + theQuantity);
-            }
-            else {
+                log.info("[雇佣] " + ((chr != null) ? chr.getName() : this.getOwnerName()) + " 雇佣商店卖出: " + newItem.getItemId() + " - " + itemText + " 价格: " + theQuantity);
+            } else {
                 c.getPlayer().dropMessage(1, "金币不足.");
                 c.getSession().write(MaplePacketCreator.enableActions());
             }
-        }
-        else {
+        } else {
             c.getPlayer().dropMessage(1, "背包已满\r\n请留1格以上位置\r\n在进行购买物品\r\n防止非法复制");
             c.getSession().write(MaplePacketCreator.enableActions());
         }
     }
-    
+
     @Override
     public void closeShop(final boolean saveItems, final boolean remove) {
         if (this.schedule != null) {
@@ -128,7 +127,7 @@ public class HiredMerchant extends AbstractPlayerStore
                     if (map != null) {
                         final List<MapleMapObject> HMS = map.getMapObjectsInRange(new Point(0, 0), Double.POSITIVE_INFINITY, Arrays.asList(MapleMapObjectType.HIRED_MERCHANT));
                         for (final MapleMapObject HM : HMS) {
-                            final HiredMerchant HMM = (HiredMerchant)HM;
+                            final HiredMerchant HMM = (HiredMerchant) HM;
                             if (HMM.getOwnerId() == this.getOwnerId()) {
                                 map.removeMapObject(this);
                             }
@@ -136,58 +135,58 @@ public class HiredMerchant extends AbstractPlayerStore
                     }
                 }
             }
+        } catch (Exception ex) {
         }
-        catch (Exception ex) {}
         this.schedule = null;
     }
-    
+
     public int getTimeLeft() {
-        return (int)((System.currentTimeMillis() - this.start) / 1000L);
+        return (int) ((System.currentTimeMillis() - this.start) / 1000L);
     }
-    
+
     public int getStoreId() {
         return this.storeid;
     }
-    
+
     @Override
     public MapleMapObjectType getType() {
         return MapleMapObjectType.HIRED_MERCHANT;
     }
-    
+
     @Override
     public void sendDestroyData(final MapleClient client) {
         if (this.isAvailable()) {
             client.getSession().write(PlayerShopPacket.destroyHiredMerchant(this.getOwnerId()));
         }
     }
-    
+
     @Override
     public void sendSpawnData(final MapleClient client) {
         if (this.isAvailable()) {
             client.getSession().write(PlayerShopPacket.spawnHiredMerchant(this));
         }
     }
-    
+
     public boolean isInBlackList(final String bl) {
         return this.blacklist.contains(bl);
     }
-    
+
     public void addBlackList(final String bl) {
         this.blacklist.add(bl);
     }
-    
+
     public void removeBlackList(final String bl) {
         this.blacklist.remove(bl);
     }
-    
+
     public void sendBlackList(final MapleClient c) {
         c.getSession().write(PlayerShopPacket.MerchantBlackListView(this.blacklist));
     }
-    
+
     public void sendVisitor(final MapleClient c) {
         c.getSession().write(PlayerShopPacket.MerchantVisitorView(this.visitors));
     }
-    
+
     @Override
     public int getMapId() {
         return this.map;

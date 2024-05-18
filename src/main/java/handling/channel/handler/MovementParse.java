@@ -1,23 +1,16 @@
 package handling.channel.handler;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import server.maps.AnimatedMapleMapObject;
-import server.movement.AbsoluteLifeMovement;
-import server.movement.AranMovement;
-import server.movement.BounceMovement;
-import server.movement.ChairMovement;
-import server.movement.ChangeEquipSpecialAwesome;
-import server.movement.JumpDownMovement;
-import server.movement.LifeMovement;
-import server.movement.LifeMovementFragment;
-import server.movement.RelativeLifeMovement;
-import server.movement.TeleportMovement;
+import server.movement.*;
 import tools.data.input.SeekableLittleEndianAccessor;
 
-public class MovementParse
-{
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Slf4j
+public class MovementParse {
     public static final List<LifeMovementFragment> parseMovement(final SeekableLittleEndianAccessor lea, final int kind) {
         final List<LifeMovementFragment> res = new ArrayList<LifeMovementFragment>();
         final byte numCommands = lea.readByte();
@@ -151,18 +144,18 @@ public class MovementParse
                     break;
                 }
                 default: {
-                    System.out.println("Kind movement: " + 类型 + ", Remaining : " + (numCommands - res.size()) + " New type of movement ID : " + command + ", packet : " + lea.toString(true));
+                    log.info("Kind movement: " + 类型 + ", Remaining : " + (numCommands - res.size()) + " New type of movement ID : " + command + ", packet : " + lea.toString(true));
                     return null;
                 }
             }
         }
         if (numCommands != res.size()) {
-            System.out.println("error in movement");
+            log.info("error in movement");
             return null;
         }
         return res;
     }
-    
+
     public static final void updatePosition(final List<LifeMovementFragment> movement, final AnimatedMapleMapObject target, final int yoffset) {
         for (final LifeMovementFragment move : movement) {
             if (move instanceof LifeMovement) {
@@ -172,7 +165,7 @@ public class MovementParse
                     position2.y += yoffset;
                     target.setPosition(position);
                 }
-                target.setStance(((LifeMovement)move).getNewstate());
+                target.setStance(((LifeMovement) move).getNewstate());
             }
         }
     }

@@ -1,12 +1,7 @@
 package tools.wztosql;
 
 import database.DatabaseConnection;
-import java.io.File;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.LinkedList;
-import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import provider.MapleData;
 import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
@@ -15,14 +10,21 @@ import server.quest.MapleQuestActionType;
 import server.quest.MapleQuestRequirementType;
 import tools.Pair;
 
-public class DumpQuests
-{
+import java.io.File;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.LinkedList;
+import java.util.List;
+
+@Slf4j
+public class DumpQuests {
     private final MapleDataProvider quest;
     protected boolean hadError;
     protected boolean update;
     protected int id;
     private final Connection con;
-    
+
     public DumpQuests(final boolean update) throws Exception {
         this.hadError = false;
         this.update = false;
@@ -34,11 +36,11 @@ public class DumpQuests
             this.hadError = true;
         }
     }
-    
+
     public boolean isHadError() {
         return this.hadError;
     }
-    
+
     public void dumpQuests() throws Exception {
         if (!this.hadError) {
             final PreparedStatement psai = this.con.prepareStatement("INSERT INTO wz_questactitemdata(uniqueid, itemid, count, period, gender, job, jobEx, prop) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
@@ -50,13 +52,11 @@ public class DumpQuests
             final PreparedStatement psa = this.con.prepareStatement("INSERT INTO wz_questactdata(questid, type, name, intStore, applicableJobs, uniqueid) VALUES (?, ?, ?, ?, ?, ?)");
             try {
                 this.dumpQuests(psai, psas, psaq, ps, psr, psq, psa);
-            }
-            catch (Exception e) {
-                System.out.println(this.id + " quest.");
+            } catch (Exception e) {
+                log.info(this.id + " quest.");
                 e.printStackTrace();
                 this.hadError = true;
-            }
-            finally {
+            } finally {
                 psai.executeBatch();
                 psai.close();
                 psas.executeBatch();
@@ -74,13 +74,13 @@ public class DumpQuests
             }
         }
     }
-    
+
     public void delete(final String sql) throws Exception {
         final PreparedStatement ps = this.con.prepareStatement(sql);
         ps.executeUpdate();
         ps.close();
     }
-    
+
     public boolean doesExist(final String sql) throws Exception {
         final PreparedStatement ps = this.con.prepareStatement(sql);
         final ResultSet rs = ps.executeQuery();
@@ -89,7 +89,7 @@ public class DumpQuests
         ps.close();
         return ret;
     }
-    
+
     public void dumpQuests(final PreparedStatement psai, final PreparedStatement psas, final PreparedStatement psaq, final PreparedStatement ps, final PreparedStatement psr, final PreparedStatement psq, final PreparedStatement psa) throws Exception {
         if (!this.update) {
             this.delete("DELETE FROM wz_questdata");
@@ -99,13 +99,13 @@ public class DumpQuests
             this.delete("DELETE FROM wz_questactquestdata");
             this.delete("DELETE FROM wz_questreqdata");
             this.delete("DELETE FROM wz_questpartydata");
-            System.out.println("Deleted wz_questdata successfully.");
+            log.info("Deleted wz_questdata successfully.");
         }
         final MapleData checkz = this.quest.getData("Check.img");
         final MapleData actz = this.quest.getData("Act.img");
         final MapleData infoz = this.quest.getData("QuestInfo.img");
         final MapleData pinfoz = this.quest.getData("PQuest.img");
-        System.out.println("Adding into wz_questdata.....");
+        log.info("Adding into wz_questdata.....");
         int uniqueid = 0;
         for (final MapleData qz : checkz.getChildren()) {
             this.id = Integer.parseInt(qz.getName());
@@ -125,11 +125,9 @@ public class DumpQuests
                         psr.setString(3, req.getName());
                         if (req.getName().equals("fieldEnter")) {
                             psr.setString(4, String.valueOf(MapleDataTool.getIntConvert("0", req, 0)));
-                        }
-                        else if (req.getName().equals("end") || req.getName().equals("startscript") || req.getName().equals("endscript")) {
+                        } else if (req.getName().equals("end") || req.getName().equals("startscript") || req.getName().equals("endscript")) {
                             psr.setString(4, MapleDataTool.getString(req, ""));
-                        }
-                        else {
+                        } else {
                             psr.setString(4, String.valueOf(MapleDataTool.getInt(req, 0)));
                         }
                         final StringBuilder intStore1 = new StringBuilder();
@@ -140,8 +138,7 @@ public class DumpQuests
                             for (int x = 0; x < child.size(); ++x) {
                                 dataStore.add(new Pair<Integer, Integer>(i, MapleDataTool.getInt(child.get(x), -1)));
                             }
-                        }
-                        else if (req.getName().equals("skill")) {
+                        } else if (req.getName().equals("skill")) {
                             final List<MapleData> child = req.getChildren();
                             for (int x = 0; x < child.size(); ++x) {
                                 final MapleData childdata = child.get(x);
@@ -149,8 +146,7 @@ public class DumpQuests
                                     dataStore.add(new Pair<Integer, Integer>(MapleDataTool.getInt(childdata.getChildByPath("id"), 0), MapleDataTool.getInt(childdata.getChildByPath("acquire"), 0)));
                                 }
                             }
-                        }
-                        else if (req.getName().equals("quest")) {
+                        } else if (req.getName().equals("quest")) {
                             final List<MapleData> child = req.getChildren();
                             for (int x = 0; x < child.size(); ++x) {
                                 final MapleData childdata = child.get(x);
@@ -158,8 +154,7 @@ public class DumpQuests
                                     dataStore.add(new Pair<Integer, Integer>(MapleDataTool.getInt(childdata.getChildByPath("id"), 0), MapleDataTool.getInt(childdata.getChildByPath("state"), 0)));
                                 }
                             }
-                        }
-                        else if (req.getName().equals("item") || req.getName().equals("mob")) {
+                        } else if (req.getName().equals("item") || req.getName().equals("mob")) {
                             final List<MapleData> child = req.getChildren();
                             for (int x = 0; x < child.size(); ++x) {
                                 final MapleData childdata = child.get(x);
@@ -167,8 +162,7 @@ public class DumpQuests
                                     dataStore.add(new Pair<Integer, Integer>(MapleDataTool.getInt(childdata.getChildByPath("id"), 0), MapleDataTool.getInt(childdata.getChildByPath("count"), 0)));
                                 }
                             }
-                        }
-                        else if (req.getName().equals("mbcard")) {
+                        } else if (req.getName().equals("mbcard")) {
                             final List<MapleData> child = req.getChildren();
                             for (int x = 0; x < child.size(); ++x) {
                                 final MapleData childdata = child.get(x);
@@ -176,8 +170,7 @@ public class DumpQuests
                                     dataStore.add(new Pair<Integer, Integer>(MapleDataTool.getInt(childdata.getChildByPath("id"), 0), MapleDataTool.getInt(childdata.getChildByPath("min"), 0)));
                                 }
                             }
-                        }
-                        else if (req.getName().equals("pet")) {
+                        } else if (req.getName().equals("pet")) {
                             final List<MapleData> child = req.getChildren();
                             for (int x = 0; x < child.size(); ++x) {
                                 final MapleData childdata = child.get(x);
@@ -210,8 +203,7 @@ public class DumpQuests
                         psa.setString(3, act.getName());
                         if (act.getName().equals("sp")) {
                             psa.setInt(4, MapleDataTool.getIntConvert("0/sp_value", act, 0));
-                        }
-                        else {
+                        } else {
                             psa.setInt(4, MapleDataTool.getInt(act, 0));
                         }
                         final StringBuilder applicableJobs = new StringBuilder();
@@ -224,8 +216,7 @@ public class DumpQuests
                                     applicableJobs.append(MapleDataTool.getInt(d, 0));
                                 }
                             }
-                        }
-                        else if (act.getChildByPath("job") != null) {
+                        } else if (act.getChildByPath("job") != null) {
                             for (final MapleData d2 : act.getChildByPath("job")) {
                                 if (applicableJobs.length() > 0) {
                                     applicableJobs.append(", ");
@@ -248,14 +239,12 @@ public class DumpQuests
                                 psai.setInt(7, MapleDataTool.getInt("jobEx", iEntry, -1));
                                 if (iEntry.getChildByPath("prop") == null) {
                                     psai.setInt(8, -2);
-                                }
-                                else {
+                                } else {
                                     psai.setInt(8, MapleDataTool.getInt("prop", iEntry, -1));
                                 }
                                 psai.addBatch();
                             }
-                        }
-                        else if (act.getName().equals("skill")) {
+                        } else if (act.getName().equals("skill")) {
                             ++uniqueid;
                             psa.setInt(6, uniqueid);
                             psas.setInt(1, uniqueid);
@@ -265,8 +254,7 @@ public class DumpQuests
                                 psas.setInt(4, MapleDataTool.getInt("masterLevel", sEntry, 0));
                                 psas.addBatch();
                             }
-                        }
-                        else if (act.getName().equals("quest")) {
+                        } else if (act.getName().equals("quest")) {
                             ++uniqueid;
                             psa.setInt(6, uniqueid);
                             psaq.setInt(1, uniqueid);
@@ -290,8 +278,7 @@ public class DumpQuests
                 ps.setInt(7, MapleDataTool.getInt("blocked", infoData, 0));
                 ps.setInt(8, MapleDataTool.getInt("autoAccept", infoData, 0));
                 ps.setInt(9, MapleDataTool.getInt("autoComplete", infoData, 0));
-            }
-            else {
+            } else {
                 ps.setString(2, "");
                 ps.setInt(3, 0);
                 ps.setInt(4, 0);
@@ -317,15 +304,15 @@ public class DumpQuests
                     }
                 }
             }
-            System.out.println("Added quest: " + this.id);
+            log.info("Added quest: " + this.id);
         }
-        System.out.println("Done wz_questdata...");
+        log.info("Done wz_questdata...");
     }
-    
+
     public int currentId() {
         return this.id;
     }
-    
+
     public static void main(final String[] args) {
         boolean hadError = false;
         boolean update = false;
@@ -338,24 +325,23 @@ public class DumpQuests
         int currentQuest = 0;
         try {
             final DumpQuests dq = new DumpQuests(update);
-            System.out.println("Dumping quests");
+            log.info("Dumping quests");
             dq.dumpQuests();
             hadError |= dq.isHadError();
             currentQuest = dq.currentId();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             hadError = true;
             e.printStackTrace();
-            System.out.println(currentQuest + " quest.");
+            log.info(currentQuest + " quest.");
         }
         final long endTime = System.currentTimeMillis();
         final double elapsedSeconds = (endTime - startTime) / 1000.0;
-        final int elapsedSecs = (int)elapsedSeconds % 60;
-        final int elapsedMinutes = (int)(elapsedSeconds / 60.0);
+        final int elapsedSecs = (int) elapsedSeconds % 60;
+        final int elapsedMinutes = (int) (elapsedSeconds / 60.0);
         String withErrors = "";
         if (hadError) {
             withErrors = " with errors";
         }
-        System.out.println("Finished" + withErrors + " in " + elapsedMinutes + " minutes " + elapsedSecs + " seconds");
+        log.info("Finished" + withErrors + " in " + elapsedMinutes + " minutes " + elapsedSecs + " seconds");
     }
 }

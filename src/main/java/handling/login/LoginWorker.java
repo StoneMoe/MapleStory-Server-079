@@ -13,7 +13,7 @@ public class LoginWorker
     
     public static void registerClient(final MapleClient c) {
         if (LoginServer.isAdminOnly() && !c.isGm()) {
-            c.getSession().write(MaplePacketCreator.serverNotice(1, "管管已设置仅管理员登录。\r\n我们目前正在修复几个问题，\r\n请耐心等待"));
+            c.getSession().write(MaplePacketCreator.serverNotice(1, "服务器维护中\r\n请耐心等待"));
             c.getSession().write(LoginPacket.getLoginFailed(7));
             return;
         }

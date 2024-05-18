@@ -1,15 +1,14 @@
 package tools.wztosql;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
+
+import lombok.extern.slf4j.Slf4j;
 import provider.MapleData;
 import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
 
-public class WzStringDumperPet
-{
+import java.io.*;
+
+@Slf4j
+public class WzStringDumperPet {
     public static void main(final String[] args) throws FileNotFoundException, IOException {
         final File stringFile = MapleDataProviderFactory.fileInwzPath("String.wz");
         final MapleDataProvider stringProvider = MapleDataProviderFactory.getDataProvider(stringFile);
@@ -19,13 +18,13 @@ public class WzStringDumperPet
         final File petTxt = new File(output + "/Pet.txt");
         outputDir.mkdir();
         petTxt.createNewFile();
-        System.out.println("开始提取宠物数据....");
+        log.info("开始提取宠物数据....");
         try (final PrintWriter writer = new PrintWriter(new FileOutputStream(petTxt))) {
             for (final MapleData child : pet.getChildren()) {
                 writer.println("INSERT INTO `cashshop_modified_items` VALUES ('600500', '8000', '0', '1', '" + child.getName() + "', '0', '0', '0', '2', '1', '0', '0', '0', '0', '0'");
             }
             writer.flush();
         }
-        System.out.println("宠物数据提取完成....");
+        log.info("宠物数据提取完成....");
     }
 }

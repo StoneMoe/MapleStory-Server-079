@@ -6,12 +6,14 @@ import database.*;
 
 import java.sql.*;
 
+import lombok.extern.slf4j.Slf4j;
 import tools.*;
 import client.messages.commands.*;
 
 import java.util.*;
 import java.lang.reflect.*;
 
+@Slf4j
 public class CommandProcessor {
     private static HashMap<String, CommandObject> commands;
     private static HashMap<Integer, ArrayList<String>> commandList;
@@ -51,7 +53,7 @@ public class CommandProcessor {
                         final int ret = co.execute(c, splitted);
                         if (ret > 0 && c.getPlayer() != null) {
                             logGMCommandToDB(c.getPlayer(), line);
-                            System.out.println("[ " + c.getPlayer().getName() + " ] 使用了指令: " + line);
+                            log.info("[ " + c.getPlayer().getName() + " ] 使用了指令: " + line);
                         }
                     } else {
                         sendDisplayMessage(c, "您的权限等级不足以使用次命令.", type);
@@ -144,14 +146,16 @@ public class CommandProcessor {
                                 CommandProcessor.commands.put(rankNeeded.getCommandPrefix() + c.getSimpleName().toLowerCase(), new CommandObject(rankNeeded.getCommandPrefix() + c.getSimpleName().toLowerCase(), (CommandExecute) o, rankNeeded.getLevel()));
                             }
                         }
-                    } catch (IllegalAccessException | IllegalArgumentException | InstantiationException | SecurityException ex6) {
+                    } catch (IllegalAccessException | IllegalArgumentException | InstantiationException |
+                             SecurityException ex6) {
                         ex6.printStackTrace();
                         FileoutputUtil.outputFileError(FileoutputUtil.ScriptEx_Log, ex6);
                     }
                 }
                 Collections.sort(cL);
                 CommandProcessor.commandList.put(rankNeeded.getLevel(), cL);
-            } catch (IllegalAccessException | IllegalArgumentException | NoSuchMethodException | SecurityException | InvocationTargetException ex7) {
+            } catch (IllegalAccessException | IllegalArgumentException | NoSuchMethodException | SecurityException |
+                     InvocationTargetException ex7) {
                 ex7.printStackTrace();
                 FileoutputUtil.outputFileError(FileoutputUtil.ScriptEx_Log, ex7);
             }

@@ -1,6 +1,7 @@
 package scripting;
 
 import client.MapleClient;
+import lombok.extern.slf4j.Slf4j;
 import tools.FileoutputUtil;
 import tools.MaplePacketCreator;
 
@@ -8,9 +9,9 @@ import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
+@Slf4j
 public abstract class AbstractScriptManager {
     private static final ScriptEngineManager sem;
 
@@ -21,8 +22,8 @@ public abstract class AbstractScriptManager {
     protected Invocable getInvocable(String path, final MapleClient c, final boolean npc) {
         InputStream fr = null;
         try {
-           String serverPath = System.getProperty("scripts_path");
-            path = serverPath +"scripts"+File.separator + path;
+            String serverPath = System.getProperty("scripts_path");
+            path = serverPath + "scripts" + File.separator + path;
             ScriptEngine engine = null;
             if (c != null) {
                 engine = c.getScriptEngine(path);
@@ -53,7 +54,7 @@ public abstract class AbstractScriptManager {
             }
             return (Invocable) engine;
         } catch (Exception e) {
-            System.err.println("Error executing script. Path: " + path + "\nException " + e);
+            log.error("Error executing script. Path: " + path + "\nException " + e);
             FileoutputUtil.log(FileoutputUtil.ScriptEx_Log, "Error executing script. Path: " + path + "\nException " + e);
             return null;
         } finally {
@@ -67,7 +68,7 @@ public abstract class AbstractScriptManager {
     }
 
     static {
-        System.setProperty("nashorn.args","--no-deprecation-warning"); // TODO: replace with newer engine
+        System.setProperty("nashorn.args", "--no-deprecation-warning"); // TODO: replace with newer engine
         sem = new ScriptEngineManager();
     }
 }

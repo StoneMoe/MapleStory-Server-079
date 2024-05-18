@@ -4,23 +4,21 @@ import client.MapleCharacter;
 import database.DatabaseConnection;
 import handling.MaplePacket;
 import handling.world.World;
+import lombok.extern.slf4j.Slf4j;
+import tools.MaplePacketCreator;
+import tools.packet.FamilyPacket;
+
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import tools.MaplePacketCreator;
-import tools.packet.FamilyPacket;
 
-public class MapleFamily implements Serializable
-{
-    public static long serialVersionUID ;
+@Slf4j
+public class MapleFamily implements Serializable {
+    public static long serialVersionUID;
     private Map<Integer, MapleFamilyCharacter> members;
     private String leadername;
     private String notice;
@@ -30,7 +28,7 @@ public class MapleFamily implements Serializable
     private boolean proper;
     private boolean bDirty;
     private boolean changed;
-    
+
     public static Collection<MapleFamily> loadAll() {
         final Collection<MapleFamily> ret = new ArrayList<MapleFamily>();
         try {
@@ -45,14 +43,13 @@ public class MapleFamily implements Serializable
             }
             rs.close();
             ps.close();
-        }
-        catch (SQLException se) {
-            System.err.println("unable to read family information from sql");
+        } catch (SQLException se) {
+            log.error("unable to read family information from sql");
             se.printStackTrace();
         }
         return ret;
     }
-    
+
     public static void setOfflineFamilyStatus(final int familyid, final int seniorid, final int junior1, final int junior2, final int currentrep, final int totalrep, final int cid) {
         try {
             final Connection con = DatabaseConnection.getConnection();
@@ -66,13 +63,12 @@ public class MapleFamily implements Serializable
             ps.setInt(7, cid);
             ps.execute();
             ps.close();
-        }
-        catch (SQLException se) {
-            System.out.println("SQLException: " + se.getLocalizedMessage());
+        } catch (SQLException se) {
+            log.info("SQLException: " + se.getLocalizedMessage());
             se.printStackTrace();
         }
     }
-    
+
     public static int createFamily(final int leaderId) {
         try {
             final Connection con = DatabaseConnection.getConnection();
@@ -89,20 +85,18 @@ public class MapleFamily implements Serializable
             rs.close();
             ps.close();
             return ret;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             return 0;
         }
     }
-    
+
     public static void mergeFamily(final MapleFamily newfam, final MapleFamily oldfam) {
         for (final MapleFamilyCharacter mgc : oldfam.members.values()) {
             mgc.setFamilyId(newfam.getId());
             if (mgc.isOnline()) {
                 World.Family.setFamily(newfam.getId(), mgc.getSeniorId(), mgc.getJunior1(), mgc.getJunior2(), mgc.getCurrentRep(), mgc.getTotalRep(), mgc.getId());
-            }
-            else {
+            } else {
                 setOfflineFamilyStatus(newfam.getId(), mgc.getSeniorId(), mgc.getJunior1(), mgc.getJunior2(), mgc.getCurrentRep(), mgc.getTotalRep(), mgc.getId());
             }
             newfam.members.put(mgc.getId(), mgc);
@@ -111,7 +105,7 @@ public class MapleFamily implements Serializable
         newfam.resetPedigree();
         World.Family.disbandFamily(oldfam.getId());
     }
-    
+
     public MapleFamily(final int fid) {
         this.members = new ConcurrentHashMap<Integer, MapleFamilyCharacter>();
         this.leadername = null;
@@ -147,7 +141,7 @@ public class MapleFamily implements Serializable
             rs.close();
             ps.close();
             if (this.leadername == null || this.members.size() < 2) {
-                System.err.println("Leader " + this.leaderid + " isn't in family " + this.id + ".  Impossible... family is disbanding.");
+                log.error("Leader " + this.leaderid + " isn't in family " + this.id + ".  Impossible... family is disbanding.");
                 this.proper = false;
                 return;
             }
@@ -194,24 +188,23 @@ public class MapleFamily implements Serializable
             this.resetPedigree();
             this.resetDescendants();
             this.resetGens();
-        }
-        catch (SQLException se) {
-            System.err.println("unable to read family information from sql");
+        } catch (SQLException se) {
+            log.error("unable to read family information from sql");
             se.printStackTrace();
         }
     }
-    
+
     public int getGens() {
         return this.generations;
     }
-    
+
     public void resetPedigree() {
         for (final MapleFamilyCharacter mfc : this.members.values()) {
             mfc.resetPedigree(this);
         }
         this.bDirty = true;
     }
-    
+
     public void resetGens() {
         final MapleFamilyCharacter mfc = this.getMFC(this.leaderid);
         if (mfc != null) {
@@ -219,7 +212,7 @@ public class MapleFamily implements Serializable
         }
         this.bDirty = true;
     }
-    
+
     public void resetDescendants() {
         final MapleFamilyCharacter mfc = this.getMFC(this.leaderid);
         if (mfc != null) {
@@ -227,11 +220,11 @@ public class MapleFamily implements Serializable
         }
         this.bDirty = true;
     }
-    
+
     public boolean isProper() {
         return this.proper;
     }
-    
+
     public void writeToDB(final boolean bDisband) {
         try {
             final Connection con = DatabaseConnection.getConnection();
@@ -244,47 +237,45 @@ public class MapleFamily implements Serializable
                     ps.close();
                 }
                 this.changed = false;
-            }
-            else {
+            } else {
                 final PreparedStatement ps = con.prepareStatement("DELETE FROM families WHERE familyid = ?");
                 ps.setInt(1, this.id);
                 ps.execute();
                 ps.close();
             }
-        }
-        catch (SQLException se) {
-            System.err.println("Error saving family to SQL");
+        } catch (SQLException se) {
+            log.error("Error saving family to SQL");
             se.printStackTrace();
         }
     }
-    
+
     public int getId() {
         return this.id;
     }
-    
+
     public int getLeaderId() {
         return this.leaderid;
     }
-    
+
     public String getNotice() {
         if (this.notice == null) {
             return "";
         }
         return this.notice;
     }
-    
+
     public String getLeaderName() {
         return this.leadername;
     }
-    
+
     public void broadcast(final MaplePacket packet, final List<Integer> cids) {
         this.broadcast(packet, -1, FCOp.NONE, cids);
     }
-    
+
     public void broadcast(final MaplePacket packet, final int exception, final List<Integer> cids) {
         this.broadcast(packet, exception, FCOp.NONE, cids);
     }
-    
+
     public void broadcast(final MaplePacket packet, final int exceptionId, final FCOp bcop, final List<Integer> cids) {
         this.buildNotifications();
         if (this.members.size() < 2) {
@@ -296,12 +287,10 @@ public class MapleFamily implements Serializable
                 if (bcop == FCOp.DISBAND) {
                     if (mgc.isOnline()) {
                         World.Family.setFamily(0, 0, 0, 0, mgc.getCurrentRep(), mgc.getTotalRep(), mgc.getId());
-                    }
-                    else {
+                    } else {
                         setOfflineFamilyStatus(0, 0, 0, 0, mgc.getCurrentRep(), mgc.getTotalRep(), mgc.getId());
                     }
-                }
-                else {
+                } else {
                     if (!mgc.isOnline() || mgc.getId() == exceptionId) {
                         continue;
                     }
@@ -310,7 +299,7 @@ public class MapleFamily implements Serializable
             }
         }
     }
-    
+
     private void buildNotifications() {
         if (!this.bDirty) {
             return;
@@ -336,7 +325,7 @@ public class MapleFamily implements Serializable
         }
         this.bDirty = false;
     }
-    
+
     public void setOnline(final int cid, final boolean online, final int channel) {
         final MapleFamilyCharacter mgc = this.getMFC(cid);
         if (mgc != null && mgc.getFamilyId() == this.id) {
@@ -344,11 +333,11 @@ public class MapleFamily implements Serializable
                 this.broadcast(FamilyPacket.familyLoggedIn(online, mgc.getName()), cid, (mgc.getId() == this.leaderid) ? null : mgc.getPedigree());
             }
             mgc.setOnline(online);
-            mgc.setChannel((byte)channel);
+            mgc.setChannel((byte) channel);
         }
         this.bDirty = true;
     }
-    
+
     public int setRep(final int cid, int addrep, final int oldLevel) {
         final MapleFamilyCharacter mgc = this.getMFC(cid);
         if (mgc != null && mgc.getFamilyId() == this.id) {
@@ -360,15 +349,14 @@ public class MapleFamily implements Serializable
                 dummy.add(mgc.getId());
                 this.broadcast(FamilyPacket.changeRep(addrep), -1, dummy);
                 World.Family.setFamily(this.id, mgc.getSeniorId(), mgc.getJunior1(), mgc.getJunior2(), mgc.getCurrentRep() + addrep, mgc.getTotalRep() + addrep, mgc.getId());
-            }
-            else {
+            } else {
                 setOfflineFamilyStatus(this.id, mgc.getSeniorId(), mgc.getJunior1(), mgc.getJunior2(), mgc.getCurrentRep() + addrep, mgc.getTotalRep() + addrep, mgc.getId());
             }
             return mgc.getSeniorId();
         }
         return 0;
     }
-    
+
     public MapleFamilyCharacter addFamilyMemberInfo(final MapleCharacter mc, final int seniorid, final int junior1, final int junior2) {
         final MapleFamilyCharacter ret = new MapleFamilyCharacter(mc, this.id, seniorid, junior1, junior2);
         this.members.put(mc.getId(), ret);
@@ -380,8 +368,7 @@ public class MapleFamily implements Serializable
                 final MapleFamilyCharacter mfc = this.getMFC(ret.getPedigree().get(i));
                 if (mfc == null) {
                     toRemove.add(i);
-                }
-                else {
+                } else {
                     mfc.resetPedigree(this);
                 }
             }
@@ -391,7 +378,7 @@ public class MapleFamily implements Serializable
         }
         return ret;
     }
-    
+
     public int addFamilyMember(final MapleFamilyCharacter mgc) {
         mgc.setFamilyId(this.id);
         this.members.put(mgc.getId(), mgc);
@@ -402,18 +389,17 @@ public class MapleFamily implements Serializable
         }
         return 1;
     }
-    
+
     public void leaveFamily(final int id) {
         this.leaveFamily(this.getMFC(id), true);
     }
-    
+
     public void leaveFamily(final MapleFamilyCharacter mgc, final boolean skipLeader) {
         this.bDirty = true;
         if (mgc.getId() == this.leaderid && !skipLeader) {
             this.leadername = null;
             World.Family.disbandFamily(this.id);
-        }
-        else {
+        } else {
             if (mgc.getJunior1() > 0) {
                 final MapleFamilyCharacter j = this.getMFC(mgc.getJunior1());
                 if (j != null) {
@@ -433,8 +419,7 @@ public class MapleFamily implements Serializable
                 if (mfc != null) {
                     if (mfc.getJunior1() == mgc.getId()) {
                         mfc.setJunior1(0);
-                    }
-                    else {
+                    } else {
                         mfc.setJunior2(0);
                     }
                 }
@@ -447,7 +432,7 @@ public class MapleFamily implements Serializable
         this.members.remove(mgc.getId());
         this.bDirty = true;
     }
-    
+
     public void memberLevelJobUpdate(final MapleCharacter mgc) {
         final MapleFamilyCharacter member = this.getMFC(mgc.getId());
         if (member != null) {
@@ -463,19 +448,19 @@ public class MapleFamily implements Serializable
             }
         }
     }
-    
+
     public void disbandFamily() {
         this.writeToDB(true);
     }
-    
+
     public MapleFamilyCharacter getMFC(final int cid) {
         return this.members.get(cid);
     }
-    
+
     public int getMemberSize() {
         return this.members.size();
     }
-    
+
     public boolean splitFamily(final int splitId, final MapleFamilyCharacter def) {
         MapleFamilyCharacter leader = this.getMFC(splitId);
         if (leader == null) {
@@ -510,8 +495,7 @@ public class MapleFamily implements Serializable
                 World.Family.disbandFamily(this.id);
                 return true;
             }
-        }
-        finally {
+        } finally {
             if (this.members.size() <= 1) {
                 World.Family.disbandFamily(this.id);
                 return true;
@@ -520,19 +504,18 @@ public class MapleFamily implements Serializable
         this.bDirty = true;
         return false;
     }
-    
+
     public void setNotice(final String notice) {
         this.changed = true;
         this.notice = notice;
     }
-    
+
     static {
         MapleFamily.serialVersionUID = 6322150443228168192L;
     }
-    
-    public enum FCOp
-    {
-        NONE, 
+
+    public enum FCOp {
+        NONE,
         DISBAND;
     }
 }

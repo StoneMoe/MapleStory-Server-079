@@ -1,6 +1,7 @@
 package tools.wztosql;
 
 import database.DatabaseConnection;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -9,27 +10,29 @@ import java.nio.charset.CharsetEncoder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import lombok.extern.slf4j.Slf4j;
 import provider.MapleData;
 import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
 import provider.MapleDataTool;
 
-public class DumpOxQuizData
-{
+@Slf4j
+public class DumpOxQuizData {
     private final Connection con;
     static CharsetEncoder asciiEncoder;
-    
+
     public DumpOxQuizData() {
         this.con = DatabaseConnection.getConnection();
     }
-    
+
     public static void main(final String[] args) throws FileNotFoundException, IOException, SQLException {
-        System.out.println("OXQuiz.img Loading ...");
+        log.info("OXQuiz.img Loading ...");
         final DumpOxQuizData dump = new DumpOxQuizData();
         dump.dumpOxData();
-        System.out.println("Ox quiz data is complete");
+        log.info("Ox quiz data is complete");
     }
-    
+
     public void dumpOxData() throws SQLException {
         final MapleDataProvider stringProvider = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/Etc.wz"));
         final MapleData ox = stringProvider.getData("OXQuiz.img");
@@ -46,15 +49,14 @@ public class DumpOxQuizData
                 String as;
                 if (a == 0) {
                     as = "x";
-                }
-                else {
+                } else {
                     as = "o";
                 }
                 if (q != null) {
-                    qs = (String)q.getData();
+                    qs = (String) q.getData();
                 }
                 if (d != null) {
-                    ds = (String)d.getData();
+                    ds = (String) d.getData();
                 }
                 if (DumpOxQuizData.asciiEncoder.canEncode(child1.getName()) && DumpOxQuizData.asciiEncoder.canEncode(child2.getName()) && DumpOxQuizData.asciiEncoder.canEncode(qs) && DumpOxQuizData.asciiEncoder.canEncode(ds)) {
                     if (!DumpOxQuizData.asciiEncoder.canEncode(as)) {
@@ -72,7 +74,7 @@ public class DumpOxQuizData
             }
         }
     }
-    
+
     static {
         DumpOxQuizData.asciiEncoder = Charset.forName("ISO-8859-1").newEncoder();
     }

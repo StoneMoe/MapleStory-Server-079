@@ -6,11 +6,13 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import lombok.extern.slf4j.Slf4j;
 import server.MapleItemInformationProvider;
 import tools.Pair;
 
-public class AIOCreator
-{
+@Slf4j
+public class AIOCreator {
     public static void main(final String[] args) throws FileNotFoundException, IOException {
         final MapleItemInformationProvider provider = MapleItemInformationProvider.getInstance();
         for (final Pair<Integer, String> iteminfo : provider.getAllItems2()) {
@@ -21,7 +23,7 @@ public class AIOCreator
         }
         createSQLQuery();
     }
-    
+
     public static void createSQLQuery() throws FileNotFoundException, IOException {
         final FileOutputStream out = new FileOutputStream("AIO.txt", false);
         final StringBuilder sb = new StringBuilder();
@@ -35,30 +37,27 @@ public class AIOCreator
                 addLine(sb, "INSERT INTO `shopitems` (`shopid`, `itemid`, `price`, `position`, `reqitem`, `reqitemq`, `rank`, `buyable`, `category`, `minLevel`, `expiration`) VALUES ('" + id2 / 10000 * 1000 + "', '" + id2 + "', '" + getPrice(id2) + "', '0', '0', '0', '0', '0', '0', '0', '0');");
             }
         }
-        System.out.println("Success");
+        log.info("Success");
         out.write(sb.toString().getBytes());
     }
-    
+
     public static void addLine(final StringBuilder sb, final String string) {
         sb.append(string).append("\r\n");
     }
-    
+
     public static int getPrice(final int id) {
         return 1;
     }
-    
-    public static class ItemType
-    {
+
+    public static class ItemType {
     }
-    
-    public static class WeaponType
-    {
+
+    public static class WeaponType {
     }
-    
-    public static class Lists
-    {
+
+    public static class Lists {
         public static List<Integer> ALL;
-        
+
         static {
             Lists.ALL = new LinkedList<Integer>();
         }

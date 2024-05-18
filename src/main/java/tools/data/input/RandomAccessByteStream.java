@@ -1,18 +1,20 @@
 package tools.data.input;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-public class RandomAccessByteStream implements SeekableInputStreamBytestream
-{
+@Slf4j
+public class RandomAccessByteStream implements SeekableInputStreamBytestream {
     private final RandomAccessFile raf;
     private long read;
-    
+
     public RandomAccessByteStream(final RandomAccessFile raf) {
         this.read = 0L;
         this.raf = raf;
     }
-    
+
     @Override
     public int readByte() {
         try {
@@ -22,38 +24,36 @@ public class RandomAccessByteStream implements SeekableInputStreamBytestream
             }
             ++this.read;
             return temp;
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    
+
     @Override
     public void seek(final long offset) throws IOException {
         this.raf.seek(offset);
     }
-    
+
     @Override
     public long getPosition() throws IOException {
         return this.raf.getFilePointer();
     }
-    
+
     @Override
     public long getBytesRead() {
         return this.read;
     }
-    
+
     @Override
     public long available() {
         try {
             return this.raf.length() - this.raf.getFilePointer();
-        }
-        catch (IOException e) {
-            System.err.println("ERROR" + e);
+        } catch (IOException e) {
+            log.error("ERROR" + e);
             return 0L;
         }
     }
-    
+
     @Override
     public String toString(final boolean b) {
         return this.toString();

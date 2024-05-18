@@ -1,12 +1,14 @@
 package server.maps;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.awt.Point;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MapleFootholdTree
-{
+@Slf4j
+public class MapleFootholdTree {
     private static byte maxDepth;
     private MapleFootholdTree nw;
     private MapleFootholdTree ne;
@@ -19,7 +21,7 @@ public class MapleFootholdTree
     private int depth;
     private int maxDropX;
     private int minDropX;
-    
+
     public MapleFootholdTree(final Point p1, final Point p2) {
         this.nw = null;
         this.ne = null;
@@ -31,7 +33,7 @@ public class MapleFootholdTree
         this.p2 = p2;
         this.center = new Point((p2.x - p1.x) / 2, (p2.y - p1.y) / 2);
     }
-    
+
     public MapleFootholdTree(final Point p1, final Point p2, final int depth) {
         this.nw = null;
         this.ne = null;
@@ -44,7 +46,7 @@ public class MapleFootholdTree
         this.depth = depth;
         this.center = new Point((p2.x - p1.x) / 2, (p2.y - p1.y) / 2);
     }
-    
+
     public void insert(final MapleFoothold f) {
         if (this.depth == 0) {
             if (f.getX1() > this.maxDropX) {
@@ -62,8 +64,7 @@ public class MapleFootholdTree
         }
         if (this.depth == MapleFootholdTree.maxDepth || (f.getX1() >= this.p1.x && f.getX2() <= this.p2.x && f.getY1() >= this.p1.y && f.getY2() <= this.p2.y)) {
             this.footholds.add(f);
-        }
-        else {
+        } else {
             if (this.nw == null) {
                 this.nw = new MapleFootholdTree(this.p1, this.center, this.depth + 1);
                 this.ne = new MapleFootholdTree(new Point(this.center.x, this.p1.y), new Point(this.p2.x, this.center.y), this.depth + 1);
@@ -72,42 +73,36 @@ public class MapleFootholdTree
             }
             if (f.getX2() <= this.center.x && f.getY2() <= this.center.y) {
                 this.nw.insert(f);
-            }
-            else if (f.getX1() > this.center.x && f.getY2() <= this.center.y) {
+            } else if (f.getX1() > this.center.x && f.getY2() <= this.center.y) {
                 this.ne.insert(f);
-            }
-            else if (f.getX2() <= this.center.x && f.getY1() > this.center.y) {
+            } else if (f.getX2() <= this.center.x && f.getY1() > this.center.y) {
                 this.sw.insert(f);
-            }
-            else {
+            } else {
                 this.se.insert(f);
             }
         }
     }
-    
+
     private List<MapleFoothold> getRelevants(final Point p) {
         return this.getRelevants(p, new LinkedList<MapleFoothold>());
     }
-    
+
     private List<MapleFoothold> getRelevants(final Point p, final List<MapleFoothold> list) {
         list.addAll(this.footholds);
         if (this.nw != null) {
             if (p.x <= this.center.x && p.y <= this.center.y) {
                 this.nw.getRelevants(p, list);
-            }
-            else if (p.x > this.center.x && p.y <= this.center.y) {
+            } else if (p.x > this.center.x && p.y <= this.center.y) {
                 this.ne.getRelevants(p, list);
-            }
-            else if (p.x <= this.center.x && p.y > this.center.y) {
+            } else if (p.x <= this.center.x && p.y > this.center.y) {
                 this.sw.getRelevants(p, list);
-            }
-            else {
+            } else {
                 this.se.getRelevants(p, list);
             }
         }
         return list;
     }
-    
+
     private MapleFoothold findWallR(final Point p1, final Point p2) {
         for (final MapleFoothold f : this.footholds) {
             if (f.isWall() && f.getX1() >= p1.x && f.getX1() <= p2.x && f.getY1() >= p1.y && f.getY2() <= p1.y) {
@@ -142,14 +137,14 @@ public class MapleFootholdTree
         }
         return null;
     }
-    
+
     public MapleFoothold findWall(final Point p1, final Point p2) {
         if (p1.y != p2.y) {
             throw new IllegalArgumentException();
         }
         return this.findWallR(p1, p2);
     }
-    
+
     public boolean checkRelevantFH(final short fromx, final short fromy, final short tox, final short toy) {
         MapleFoothold fhdata = null;
         for (final MapleFoothold fh : this.footholds) {
@@ -161,7 +156,7 @@ public class MapleFootholdTree
         for (final MapleFoothold fh2 : this.footholds) {
             if (fh2.getX1() <= tox && fh2.getX2() >= tox && fh2.getY1() <= toy && fh2.getY2() >= toy) {
                 if (fhdata.getId() != fh2.getId() && fh2.getId() != fhdata.getNext() && fh2.getId() != fhdata.getPrev()) {
-                    System.out.println("Couldn't find the correct pos for next/prev");
+                    log.info("Couldn't find the correct pos for next/prev");
                     return false;
                 }
                 return true;
@@ -169,7 +164,7 @@ public class MapleFootholdTree
         }
         return false;
     }
-    
+
     public MapleFoothold findBelow(final Point p) {
         final List<MapleFoothold> relevants = this.getRelevants(p);
         final List<MapleFoothold> xMatches = new LinkedList<MapleFoothold>();
@@ -192,17 +187,15 @@ public class MapleFootholdTree
                 final double s4 = Math.cos(alpha) * (s3 / Math.cos(beta));
                 int calcY;
                 if (fh.getY2() < fh.getY1()) {
-                    calcY = fh.getY1() - (int)s4;
-                }
-                else {
-                    calcY = fh.getY1() + (int)s4;
+                    calcY = fh.getY1() - (int) s4;
+                } else {
+                    calcY = fh.getY1() + (int) s4;
                 }
                 if (calcY >= p.y) {
                     return fh;
                 }
                 continue;
-            }
-            else {
+            } else {
                 if (!fh.isWall() && fh.getY1() >= p.y) {
                     return fh;
                 }
@@ -211,31 +204,31 @@ public class MapleFootholdTree
         }
         return null;
     }
-    
+
     public int getX1() {
         return this.p1.x;
     }
-    
+
     public int getX2() {
         return this.p2.x;
     }
-    
+
     public int getY1() {
         return this.p1.y;
     }
-    
+
     public int getY2() {
         return this.p2.y;
     }
-    
+
     public int getMaxDropX() {
         return this.maxDropX;
     }
-    
+
     public int getMinDropX() {
         return this.minDropX;
     }
-    
+
     static {
         MapleFootholdTree.maxDepth = 8;
     }

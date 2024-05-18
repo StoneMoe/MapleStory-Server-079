@@ -8,22 +8,25 @@ import client.MapleClient;
 import database.DatabaseConnection;
 import handling.channel.ChannelServer;
 import handling.world.World;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import lombok.extern.slf4j.Slf4j;
 import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
-public class BuddyListHandler
-{
+@Slf4j
+public class BuddyListHandler {
     private static void nextPendingRequest(final MapleClient c) {
         final BuddyEntry pendingBuddyRequest = c.getPlayer().getBuddylist().pollPendingRequest();
         if (pendingBuddyRequest != null) {
             c.getSession().write(MaplePacketCreator.requestBuddylistAdd(pendingBuddyRequest.getCharacterId(), pendingBuddyRequest.getName(), pendingBuddyRequest.getLevel(), pendingBuddyRequest.getJob()));
         }
     }
-    
+
     private static CharacterIdNameBuddyCapacity getCharacterIdAndNameFromDatabase(final String name, final String group) throws SQLException {
         final Connection con = DatabaseConnection.getConnection();
         final PreparedStatement ps = con.prepareStatement("SELECT * FROM characters WHERE name LIKE ?");
@@ -37,7 +40,7 @@ public class BuddyListHandler
         ps.close();
         return ret;
     }
-    
+
     public static void BuddyOperation(final SeekableLittleEndianAccessor slea, final MapleClient c) {
         final int mode = slea.readByte();
         final BuddyList buddylist = c.getPlayer().getBuddylist();
@@ -50,17 +53,14 @@ public class BuddyListHandler
                     return;
                 }
                 if (ble != null && (ble.getGroup().equals(groupName) || !ble.isVisible())) {
-                    c.getSession().write(MaplePacketCreator.buddylistMessage((byte)11));
-                }
-                else if (ble != null && ble.isVisible()) {
+                    c.getSession().write(MaplePacketCreator.buddylistMessage((byte) 11));
+                } else if (ble != null && ble.isVisible()) {
                     ble.setGroup(groupName);
                     c.getSession().write(MaplePacketCreator.updateBuddylist(buddylist.getBuddies()));
-                    c.getSession().write(MaplePacketCreator.buddylistMessage((byte)13));
-                }
-                else if (buddylist.isFull()) {
-                    c.getSession().write(MaplePacketCreator.buddylistMessage((byte)11));
-                }
-                else {
+                    c.getSession().write(MaplePacketCreator.buddylistMessage((byte) 13));
+                } else if (buddylist.isFull()) {
+                    c.getSession().write(MaplePacketCreator.buddylistMessage((byte) 11));
+                } else {
                     try {
                         CharacterIdNameBuddyCapacity charWithId = null;
                         final int channel = World.Find.findChannel(addName);
@@ -70,16 +70,14 @@ public class BuddyListHandler
                             if (!otherChar.isGM() || c.getPlayer().isGM()) {
                                 charWithId = new CharacterIdNameBuddyCapacity(otherChar.getId(), otherChar.getName(), otherChar.getLevel(), otherChar.getJob(), groupName, otherChar.getBuddylist().getCapacity());
                             }
-                        }
-                        else {
+                        } else {
                             charWithId = getCharacterIdAndNameFromDatabase(addName, groupName);
                         }
                         if (charWithId != null) {
                             BuddyList.BuddyAddResult buddyAddResult = null;
                             if (channel > 0) {
                                 buddyAddResult = World.Buddy.requestBuddyAdd(addName, c.getChannel(), c.getPlayer().getId(), c.getPlayer().getName(), c.getPlayer().getLevel(), c.getPlayer().getJob());
-                            }
-                            else {
+                            } else {
                                 final Connection con = DatabaseConnection.getConnection();
                                 PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) as buddyCount FROM buddies WHERE characterid = ? AND pending = 0");
                                 ps.setInt(1, charWithId.getId());
@@ -106,16 +104,14 @@ public class BuddyListHandler
                                 ps.close();
                             }
                             if (buddyAddResult == BuddyList.BuddyAddResult.BUDDYLIST_FULL) {
-                                c.getSession().write(MaplePacketCreator.buddylistMessage((byte)12));
-                            }
-                            else {
+                                c.getSession().write(MaplePacketCreator.buddylistMessage((byte) 12));
+                            } else {
                                 int displayChannel = -1;
                                 final int otherCid = charWithId.getId();
                                 if (buddyAddResult == BuddyList.BuddyAddResult.ALREADY_ON_LIST && channel > 0) {
                                     displayChannel = channel;
                                     notifyRemoteChannel(c, channel, otherCid, groupName, BuddyList.BuddyOperation.ADDED);
-                                }
-                                else if (buddyAddResult != BuddyList.BuddyAddResult.ALREADY_ON_LIST && channel > 0) {
+                                } else if (buddyAddResult != BuddyList.BuddyAddResult.ALREADY_ON_LIST && channel > 0) {
                                     final Connection con2 = DatabaseConnection.getConnection();
                                     final PreparedStatement ps2 = con2.prepareStatement("INSERT INTO buddies (`characterid`, `buddyid`, `groupname`, `pending`) VALUES (?, ?, ?, 1)");
                                     ps2.setInt(1, charWithId.getId());
@@ -127,13 +123,11 @@ public class BuddyListHandler
                                 buddylist.put(new BuddyEntry(charWithId.getName(), otherCid, groupName, displayChannel, true, charWithId.getLevel(), charWithId.getJob()));
                                 c.getSession().write(MaplePacketCreator.updateBuddylist(buddylist.getBuddies()));
                             }
+                        } else {
+                            c.getSession().write(MaplePacketCreator.buddylistMessage((byte) 15));
                         }
-                        else {
-                            c.getSession().write(MaplePacketCreator.buddylistMessage((byte)15));
-                        }
-                    }
-                    catch (SQLException e) {
-                        System.err.println("SQL THROW" + e);
+                    } catch (SQLException e) {
+                        log.error("SQL THROW" + e);
                     }
                 }
                 nextPendingRequest(c);
@@ -159,8 +153,7 @@ public class BuddyListHandler
                             }
                             rs2.close();
                             ps3.close();
-                        }
-                        else {
+                        } else {
                             final MapleCharacter otherChar2 = ChannelServer.getInstance(channel).getPlayerStorage().getCharacterById(otherCid2);
                             otherName = otherChar2.getName();
                             otherLevel = otherChar2.getLevel();
@@ -171,13 +164,11 @@ public class BuddyListHandler
                             c.getSession().write(MaplePacketCreator.updateBuddylist(buddylist.getBuddies()));
                             notifyRemoteChannel(c, channel, otherCid2, BuddyList.DEFAULT_GROUP, BuddyList.BuddyOperation.ADDED);
                         }
+                    } catch (SQLException e2) {
+                        log.error("SQL THROW" + e2);
                     }
-                    catch (SQLException e2) {
-                        System.err.println("SQL THROW" + e2);
-                    }
-                }
-                else {
-                    c.getSession().write(MaplePacketCreator.buddylistMessage((byte)11));
+                } else {
+                    c.getSession().write(MaplePacketCreator.buddylistMessage((byte) 11));
                 }
                 nextPendingRequest(c);
                 break;
@@ -194,28 +185,27 @@ public class BuddyListHandler
                 break;
             }
             default: {
-                System.out.println("Unknown buddylist: " + slea.toString());
+                log.info("Unknown buddylist: " + slea.toString());
                 break;
             }
         }
     }
-    
+
     private static void notifyRemoteChannel(final MapleClient c, final int remoteChannel, final int otherCid, final String group, final BuddyList.BuddyOperation operation) {
         final MapleCharacter player = c.getPlayer();
         if (remoteChannel > 0) {
             World.Buddy.buddyChanged(otherCid, player.getId(), player.getName(), c.getChannel(), operation, player.getLevel(), player.getJob(), group);
         }
     }
-    
-    private static class CharacterIdNameBuddyCapacity extends CharacterNameAndId
-    {
+
+    private static class CharacterIdNameBuddyCapacity extends CharacterNameAndId {
         private final int buddyCapacity;
-        
+
         public CharacterIdNameBuddyCapacity(final int id, final String name, final int level, final int job, final String group, final int buddyCapacity) {
             super(id, name, level, job, group);
             this.buddyCapacity = buddyCapacity;
         }
-        
+
         public int getBuddyCapacity() {
             return this.buddyCapacity;
         }

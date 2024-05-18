@@ -5,12 +5,15 @@ import client.MapleClient;
 import handling.MaplePacket;
 import handling.world.World;
 import handling.world.guild.MapleGuild;
+
 import java.util.Iterator;
+
+import lombok.extern.slf4j.Slf4j;
 import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
-public class AllianceHandler
-{
+@Slf4j
+public class AllianceHandler {
     public static void HandleAlliance(SeekableLittleEndianAccessor slea, MapleClient c, boolean denied) {
         int inviteid, newGuild, gid;
         if (c.getPlayer().getGuildId() <= 0) {
@@ -104,7 +107,7 @@ public class AllianceHandler
                 }
                 return;
         }
-        System.out.println("Unhandled GuildAlliance op: " + op + ", \n" + slea.toString());
+        log.info("Unhandled GuildAlliance op: " + op + ", \n" + slea.toString());
     }
 
     public static void DenyInvite(final MapleClient c, final MapleGuild gs) {

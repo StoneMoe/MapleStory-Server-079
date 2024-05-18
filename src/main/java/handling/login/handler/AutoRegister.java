@@ -3,18 +3,20 @@ package handling.login.handler;
 import client.LoginCrypto;
 import constants.ServerConstants;
 import database.DatabaseConnection;
+import lombok.extern.slf4j.Slf4j;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AutoRegister
-{
+@Slf4j
+public class AutoRegister {
     private static final int ACCOUNTS_PER_MAC = 100;
     public static boolean autoRegister;
     public static boolean success;
     public static boolean mac;
-    
+
     public static boolean getAccountExists(final String login) {
         boolean accountExists = false;
         final Connection con = DatabaseConnection.getConnection();
@@ -27,13 +29,12 @@ public class AutoRegister
             }
             rs.close();
             ps.close();
-        }
-        catch (SQLException ex) {
-            System.out.println("getAccountExists   " + ex);
+        } catch (SQLException ex) {
+            log.info("getAccountExists   " + ex);
         }
         return accountExists;
     }
-    
+
     public static boolean getAccountExistsByID(final int id) {
         boolean accountExists = false;
         final Connection con = DatabaseConnection.getConnection();
@@ -46,21 +47,19 @@ public class AutoRegister
             }
             rs.close();
             ps.close();
-        }
-        catch (SQLException ex) {
-            System.out.println("getAccountExists   " + ex);
+        } catch (SQLException ex) {
+            log.info("getAccountExists   " + ex);
         }
         return accountExists;
     }
-    
+
     public static void createAccount(final String login, final String pwd, final String eip, final String macs) {
         final String sockAddr = eip;
         Connection con;
         try {
             con = DatabaseConnection.getConnection();
-        }
-        catch (Exception ex) {
-            System.out.println(ex);
+        } catch (Exception ex) {
+            log.info("Err during get database connection", ex);
             return;
         }
         try {
@@ -82,13 +81,11 @@ public class AutoRegister
             if (rs.getRow() >= 100) {
                 AutoRegister.mac = false;
             }
-        }
-        catch (SQLException ex2) {
-            ex2.printStackTrace();
-            System.out.println(ex2);
+        } catch (SQLException ex2) {
+            log.info("Err during account creation", ex2);
         }
     }
-    
+
     static {
         AutoRegister.autoRegister = ServerConstants.getAutoReg();
         AutoRegister.success = false;

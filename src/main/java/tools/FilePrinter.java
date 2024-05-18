@@ -1,8 +1,10 @@
 package tools;
 
-class FilePrinter
-{
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+class FilePrinter {
     static void printError(final String cashShopDumpertxt, final Exception ex) {
-        System.err.println(ex);
+        log.error(cashShopDumpertxt, ex);
     }
 }

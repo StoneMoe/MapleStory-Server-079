@@ -2,32 +2,34 @@ package handling.channel;
 
 import client.MapleClient;
 import database.DatabaseConnection;
+import lombok.extern.slf4j.Slf4j;
+import server.Timer;
+import tools.MaplePacketCreator;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
-import server.Timer;
-import tools.MaplePacketCreator;
 
-public class MapleGuildRanking
-{
+@Slf4j
+public class MapleGuildRanking {
     private static final MapleGuildRanking instance;
     private final List<GuildRankingInfo> ranks;
     private final List<levelRankingInfo> ranks1;
     private final List<mesoRankingInfo> ranks2;
-    
+
     public MapleGuildRanking() {
         this.ranks = new LinkedList<GuildRankingInfo>();
         this.ranks1 = new LinkedList<levelRankingInfo>();
         this.ranks2 = new LinkedList<mesoRankingInfo>();
     }
-    
+
     public static MapleGuildRanking getInstance() {
         return MapleGuildRanking.instance;
     }
-    
+
     public void RankingUpdate() {
         Timer.WorldTimer.getInstance().register(new Runnable() {
             @Override
@@ -36,36 +38,35 @@ public class MapleGuildRanking
                     MapleGuildRanking.this.reload();
                     MapleGuildRanking.this.showLevelRank();
                     MapleGuildRanking.this.showMesoRank();
-                }
-                catch (Exception ex) {
+                } catch (Exception ex) {
                     ex.printStackTrace();
-                    System.err.println("Could not update rankings");
+                    log.error("Could not update rankings");
                 }
             }
         }, 3600000L, 3600000L);
     }
-    
+
     public List<GuildRankingInfo> getGuildRank() {
         if (this.ranks.isEmpty()) {
             this.reload();
         }
         return this.ranks;
     }
-    
+
     public List<levelRankingInfo> getLevelRank() {
         if (this.ranks1.isEmpty()) {
             this.showLevelRank();
         }
         return this.ranks1;
     }
-    
+
     public List<mesoRankingInfo> getMesoRank() {
         if (this.ranks2.isEmpty()) {
             this.showMesoRank();
         }
         return this.ranks2;
     }
-    
+
     private void reload() {
         this.ranks.clear();
         final Connection con = DatabaseConnection.getConnection();
@@ -76,12 +77,11 @@ public class MapleGuildRanking
                 this.ranks.add(rank);
             }
             rs.close();
-        }
-        catch (SQLException e) {
-            System.err.println("家族排行错误" + e);
+        } catch (SQLException e) {
+            log.error("家族排行错误" + e);
         }
     }
-    
+
     public static void MapleMSpvpdeaths(final MapleClient c, final int npcid) {
         try {
             final Connection con = DatabaseConnection.getConnection();
@@ -90,12 +90,11 @@ public class MapleGuildRanking
             c.getSession().write(MaplePacketCreator.MapleMSpvpdeaths(npcid, rs));
             ps.close();
             rs.close();
-        }
-        catch (Exception e) {
-            System.out.println("failed to display guild ranks." + e);
+        } catch (Exception e) {
+            log.info("failed to display guild ranks." + e);
         }
     }
-    
+
     public static void MapleMSpvpkills(final MapleClient c, final int npcid) {
         try {
             final Connection con = DatabaseConnection.getConnection();
@@ -104,12 +103,11 @@ public class MapleGuildRanking
             c.getSession().write(MaplePacketCreator.MapleMSpvpkills(npcid, rs));
             ps.close();
             rs.close();
-        }
-        catch (Exception e) {
-            System.out.println("failed to display guild ranks." + e);
+        } catch (Exception e) {
+            log.info("failed to display guild ranks." + e);
         }
     }
-    
+
     private void showLevelRank() {
         this.ranks1.clear();
         try {
@@ -122,12 +120,11 @@ public class MapleGuildRanking
             }
             ps.close();
             rs.close();
-        }
-        catch (SQLException e) {
-            System.err.println("人物排行错误");
+        } catch (SQLException e) {
+            log.error("人物排行错误");
         }
     }
-    
+
     private void showMesoRank() {
         this.ranks2.clear();
         final Connection con = DatabaseConnection.getConnection();
@@ -138,25 +135,23 @@ public class MapleGuildRanking
                 this.ranks2.add(rank2);
             }
             rs.close();
-        }
-        catch (SQLException e) {
-            System.err.println("金币排行错误");
+        } catch (SQLException e) {
+            log.error("金币排行错误");
         }
     }
-    
+
     static {
         instance = new MapleGuildRanking();
     }
-    
-    public static class mesoRankingInfo
-    {
+
+    public static class mesoRankingInfo {
         private final String name;
         private final long meso;
         private final int str;
         private final int dex;
         private final int _int;
         private final int luk;
-        
+
         public mesoRankingInfo(final String name, final long meso, final int str, final int dex, final int intt, final int luk) {
             this.name = name;
             this.meso = meso;
@@ -165,41 +160,40 @@ public class MapleGuildRanking
             this._int = intt;
             this.luk = luk;
         }
-        
+
         public String getName() {
             return this.name;
         }
-        
+
         public long getMeso() {
             return this.meso;
         }
-        
+
         public int getStr() {
             return this.str;
         }
-        
+
         public int getDex() {
             return this.dex;
         }
-        
+
         public int getInt() {
             return this._int;
         }
-        
+
         public int getLuk() {
             return this.luk;
         }
     }
-    
-    public static class levelRankingInfo
-    {
+
+    public static class levelRankingInfo {
         private final String name;
         private final int level;
         private final int str;
         private final int dex;
         private final int _int;
         private final int luk;
-        
+
         public levelRankingInfo(final String name, final int level, final int str, final int dex, final int intt, final int luk) {
             this.name = name;
             this.level = level;
@@ -208,41 +202,40 @@ public class MapleGuildRanking
             this._int = intt;
             this.luk = luk;
         }
-        
+
         public String getName() {
             return this.name;
         }
-        
+
         public int getLevel() {
             return this.level;
         }
-        
+
         public int getStr() {
             return this.str;
         }
-        
+
         public int getDex() {
             return this.dex;
         }
-        
+
         public int getInt() {
             return this._int;
         }
-        
+
         public int getLuk() {
             return this.luk;
         }
     }
-    
-    public static class GuildRankingInfo
-    {
+
+    public static class GuildRankingInfo {
         private final String name;
         private final int gp;
         private final int logo;
         private final int logocolor;
         private final int logobg;
         private final int logobgcolor;
-        
+
         public GuildRankingInfo(final String name, final int gp, final int logo, final int logocolor, final int logobg, final int logobgcolor) {
             this.name = name;
             this.gp = gp;
@@ -251,27 +244,27 @@ public class MapleGuildRanking
             this.logobg = logobg;
             this.logobgcolor = logobgcolor;
         }
-        
+
         public String getName() {
             return this.name;
         }
-        
+
         public int getGP() {
             return this.gp;
         }
-        
+
         public int getLogo() {
             return this.logo;
         }
-        
+
         public int getLogoColor() {
             return this.logocolor;
         }
-        
+
         public int getLogoBg() {
             return this.logobg;
         }
-        
+
         public int getLogoBgColor() {
             return this.logobgcolor;
         }

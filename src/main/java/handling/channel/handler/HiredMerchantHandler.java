@@ -8,6 +8,7 @@ import client.inventory.MapleInventoryType;
 import constants.GameConstants;
 import database.DatabaseConnection;
 import handling.world.World;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +16,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import lombok.extern.slf4j.Slf4j;
 import server.MapleInventoryManipulator;
 import server.MapleItemInformationProvider;
 import server.MerchItemPackage;
@@ -24,8 +27,8 @@ import tools.Pair;
 import tools.data.input.SeekableLittleEndianAccessor;
 import tools.packet.PlayerShopPacket;
 
-public class HiredMerchantHandler
-{
+@Slf4j
+public class HiredMerchantHandler {
     public static final void UseHiredMerchant(final SeekableLittleEndianAccessor slea, final MapleClient c) {
         if (c.getPlayer().getMap().allowPersonalShop()) {
             final byte state = checkExistance(c.getPlayer().getAccountID(), c.getPlayer().getId());
@@ -48,12 +51,11 @@ public class HiredMerchantHandler
                     break;
                 }
             }
-        }
-        else {
+        } else {
             c.getSession().close();
         }
     }
-    
+
     private static byte checkExistance(final int accid, final int charid) {
         final Connection con = DatabaseConnection.getConnection();
         try {
@@ -69,12 +71,11 @@ public class HiredMerchantHandler
             rs.close();
             ps.close();
             return 0;
-        }
-        catch (SQLException se) {
+        } catch (SQLException se) {
             return -1;
         }
     }
-    
+
     public static void MerchantItemStore(final SeekableLittleEndianAccessor slea, final MapleClient c) {
         final MapleCharacter chr = c.getPlayer();
         if (chr == null) {
@@ -97,10 +98,9 @@ public class HiredMerchantHandler
                         c.getPlayer().dropMessage(1, "你没有物品可以领取!");
                         deletePackage(c.getPlayer().getId(), c.getPlayer().getAccountID());
                         c.getPlayer().setConversation(0);
-                    }
-                    else if (pack.getItems().size() <= 0) {
+                    } else if (pack.getItems().size() <= 0) {
                         if (!check(c.getPlayer(), pack)) {
-                            c.getSession().write(PlayerShopPacket.merchItem_Message((byte)33));
+                            c.getSession().write(PlayerShopPacket.merchItem_Message((byte) 33));
                             return;
                         }
                         if (deletePackage(c.getPlayer().getId(), c.getPlayer().getAccountID(), pack.getPackageid())) {
@@ -108,14 +108,12 @@ public class HiredMerchantHandler
                             c.getPlayer().gainMeso(pack.getMesos(), false);
                             c.getPlayer().setConversation(0);
                             c.getPlayer().dropMessage("领取金币" + pack.getMesos());
-                        }
-                        else {
+                        } else {
                             c.getPlayer().dropMessage(1, "发生未知错误。");
                         }
                         c.getPlayer().setConversation(0);
                         c.getSession().write(MaplePacketCreator.enableActions());
-                    }
-                    else {
+                    } else {
                         c.getSession().write(PlayerShopPacket.merchItemStore_ItemData(pack));
                     }
                     break;
@@ -126,7 +124,7 @@ public class HiredMerchantHandler
                 if (c.getPlayer().getConversation() != 3) {
                     return;
                 }
-                c.getSession().write(PlayerShopPacket.merchItemStore((byte)36));
+                c.getSession().write(PlayerShopPacket.merchItemStore((byte) 36));
                 break;
             }
             case 26: {
@@ -142,7 +140,7 @@ public class HiredMerchantHandler
                 }
                 if (!check(c.getPlayer(), pack2)) {
                     c.getPlayer().dropMessage(1, "因为背包空间不足，无法领取道具.");
-                    c.getSession().write(PlayerShopPacket.merchItem_Message((byte)33));
+                    c.getSession().write(PlayerShopPacket.merchItem_Message((byte) 33));
                     return;
                 }
                 if (deletePackage(c.getPlayer().getId(), c.getPlayer().getAccountID(), pack2.getPackageid())) {
@@ -151,7 +149,7 @@ public class HiredMerchantHandler
                         if (chr.isGM()) {
                             chr.dropMessage(6, "[雇佣] " + chr.getName() + " 雇佣取回获得金币: " + pack2.getMesos() + " 时间: " + FileoutputUtil.CurrentReadable_Date());
                         }
-                        System.out.println("[雇佣] " + chr.getName() + " 雇佣取回获得金币: " + pack2.getMesos() + " 时间: " + FileoutputUtil.CurrentReadable_Date());
+                        log.info("[雇佣] " + chr.getName() + " 雇佣取回获得金币: " + pack2.getMesos() + " 时间: " + FileoutputUtil.CurrentReadable_Date());
                         FileoutputUtil.hiredMerchLog(chr.getName(), "雇佣取回获得金币: " + pack2.getMesos());
                     }
                     for (final IItem item : pack2.getItems()) {
@@ -161,7 +159,7 @@ public class HiredMerchantHandler
                         }
                         FileoutputUtil.hiredMerchLog(chr.getName(), "雇佣取回获得道具: " + item.getItemId() + " - " + MapleItemInformationProvider.getInstance().getName(item.getItemId()) + " 数量: " + item.getQuantity());
                     }
-                    c.getSession().write(PlayerShopPacket.merchItem_Message((byte)29));
+                    c.getSession().write(PlayerShopPacket.merchItem_Message((byte) 29));
                     break;
                 }
                 c.getPlayer().dropMessage(1, "发生未知错误.");
@@ -172,12 +170,12 @@ public class HiredMerchantHandler
                 break;
             }
             default: {
-                System.out.println("弗兰德里：雇佣商店未知的操作类型 " + operation);
+                log.info("弗兰德里：雇佣商店未知的操作类型 " + operation);
                 break;
             }
         }
     }
-    
+
     private static void getShopItem(final MapleClient c) {
         if (c.getPlayer().getConversation() != 3) {
             return;
@@ -197,15 +195,14 @@ public class HiredMerchantHandler
                 MapleInventoryManipulator.addFromDrop(c, item, false);
             }
             c.getPlayer().dropMessage(5, "领取成功。");
-        }
-        else {
+        } else {
             c.getPlayer().dropMessage(1, "发生未知错误。");
         }
     }
-    
+
     private static boolean check(final MapleCharacter chr, final MerchItemPackage pack) {
         if (chr.getMeso() + pack.getMesos() < 0) {
-            System.out.println("[雇佣] " + chr.getName() + " 雇佣取回道具金币检测错误 时间: " + FileoutputUtil.CurrentReadable_Date());
+            log.info("[雇佣] " + chr.getName() + " 雇佣取回道具金币检测错误 时间: " + FileoutputUtil.CurrentReadable_Date());
             FileoutputUtil.hiredMerchLog(chr.getName(), "雇佣取回道具金币检测错误");
             return false;
         }
@@ -241,19 +238,19 @@ public class HiredMerchantHandler
                 }
             }
             if (MapleItemInformationProvider.getInstance().isPickupRestricted(item.getItemId()) && chr.haveItem(item.getItemId(), 1)) {
-                System.out.println("[雇佣] " + chr.getName() + " 雇佣取回道具是否可以捡取错误 时间: " + FileoutputUtil.CurrentReadable_Date());
+                log.info("[雇佣] " + chr.getName() + " 雇佣取回道具是否可以捡取错误 时间: " + FileoutputUtil.CurrentReadable_Date());
                 FileoutputUtil.hiredMerchLog(chr.getName(), "雇佣取回道具是否可以捡取错误");
                 return false;
             }
         }
         if (chr.getInventory(MapleInventoryType.EQUIP).getNumFreeSlot() < eq || chr.getInventory(MapleInventoryType.USE).getNumFreeSlot() < use || chr.getInventory(MapleInventoryType.SETUP).getNumFreeSlot() < setup || chr.getInventory(MapleInventoryType.ETC).getNumFreeSlot() < etc || chr.getInventory(MapleInventoryType.CASH).getNumFreeSlot() < cash) {
-            System.out.println("[雇佣] " + chr.getName() + " 雇佣取回道具背包空间不够 时间: " + FileoutputUtil.CurrentReadable_Date());
+            log.info("[雇佣] " + chr.getName() + " 雇佣取回道具背包空间不够 时间: " + FileoutputUtil.CurrentReadable_Date());
             FileoutputUtil.hiredMerchLog(chr.getName(), "雇佣取回道具背包空间不够");
             return false;
         }
         return true;
     }
-    
+
     private static boolean deletePackage(final int charid, final int accid, final int packageid) {
         final Connection con = DatabaseConnection.getConnection();
         try {
@@ -265,13 +262,12 @@ public class HiredMerchantHandler
             ps.close();
             ItemLoader.HIRED_MERCHANT.saveItems(null, packageid, accid, charid);
             return true;
-        }
-        catch (SQLException e) {
-            System.out.println("删除弗洛兰德道具信息出错" + e);
+        } catch (SQLException e) {
+            log.info("删除弗洛兰德道具信息出错" + e);
             return false;
         }
     }
-    
+
     private static boolean deletePackage(final int charid, final int accid) {
         final Connection con = DatabaseConnection.getConnection();
         try {
@@ -281,13 +277,12 @@ public class HiredMerchantHandler
             ps.execute();
             ps.close();
             return true;
-        }
-        catch (SQLException e) {
-            System.out.println("删除弗洛兰德道具信息出错" + e);
+        } catch (SQLException e) {
+            log.info("删除弗洛兰德道具信息出错" + e);
             return false;
         }
     }
-    
+
     private static MerchItemPackage loadItemFrom_Database(final int charid, final int accountid, final MapleCharacter chr) {
         final Connection con = DatabaseConnection.getConnection();
         try {
@@ -322,9 +317,8 @@ public class HiredMerchantHandler
             }
             FileoutputUtil.hiredMerchLog(chr.getName(), "弗洛兰德取回最后返回 金币: " + mesos + " 道具数量: " + items.size());
             return pack;
-        }
-        catch (SQLException e) {
-            System.out.println("加载弗洛兰德道具信息出错" + e);
+        } catch (SQLException e) {
+            log.info("加载弗洛兰德道具信息出错" + e);
             return null;
         }
     }

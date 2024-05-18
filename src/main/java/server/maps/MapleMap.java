@@ -3,11 +3,7 @@ package server.maps;
 import client.MapleBuffStat;
 import client.MapleCharacter;
 import client.MapleClient;
-import client.inventory.Equip;
-import client.inventory.IItem;
-import client.inventory.Item;
-import client.inventory.MapleInventoryType;
-import client.inventory.MaplePet;
+import client.inventory.*;
 import client.status.MonsterStatus;
 import client.status.MonsterStatusEffect;
 import constants.GameConstants;
@@ -18,52 +14,12 @@ import handling.channel.ChannelServer;
 import handling.login.LoginServer;
 import handling.world.MaplePartyCharacter;
 import handling.world.World;
-
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.lang.ref.WeakReference;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-
+import lombok.extern.slf4j.Slf4j;
 import scripting.EventManager;
-import server.MapleCarnivalFactory;
-import server.MapleInventoryManipulator;
-import server.MapleItemInformationProvider;
-import server.MaplePortal;
-import server.MapleSquad;
-import server.MapleStatEffect;
-import server.Randomizer;
-import server.SpeedRunner;
 import server.Timer;
+import server.*;
 import server.events.MapleEvent;
-import server.life.MapleLifeFactory;
-import server.life.MapleMonster;
-import server.life.MapleMonsterInformationProvider;
-import server.life.MapleNPC;
-import server.life.MonsterDropEntry;
-import server.life.MonsterGlobalDropEntry;
-import server.life.OverrideMonsterStats;
-import server.life.SpawnPoint;
-import server.life.SpawnPointAreaBoss;
-import server.life.Spawns;
+import server.life.*;
 import tools.FileoutputUtil;
 import tools.MaplePacketCreator;
 import tools.Pair;
@@ -72,6 +28,20 @@ import tools.packet.MTSCSPacket;
 import tools.packet.MobPacket;
 import tools.packet.PetPacket;
 
+import java.awt.*;
+import java.lang.ref.WeakReference;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.*;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
+@Slf4j
 public class MapleMap {
     private final Map<MapleMapObjectType, LinkedHashMap<Integer, MapleMapObject>> mapobjects;
     private final Map<MapleMapObjectType, ReentrantReadWriteLock> mapobjectlocks;
@@ -1759,20 +1729,20 @@ public class MapleMap {
         if (this.mapid == 109080000 || this.mapid == 109080001 || this.mapid == 109080002 || this.mapid == 109080003 || this.mapid == 109080010 || this.mapid == 109080011 || this.mapid == 109080012) {
             chr.setCoconutTeam(this.getAndSwitchTeam() ? 0 : 1);
             if (ServerConstants.封包显示 || 进入地图开启显示数据) {
-                System.out.println("进入地图加载数据A");
+                log.info("进入地图加载数据A");
             }
         }
         final MaplePacket packet = MaplePacketCreator.spawnPlayerMapobject(chr);
         if (!chr.isHidden()) {
             this.broadcastMessage(chr, packet, false);
             if (ServerConstants.封包显示 || 进入地图开启显示数据) {
-                System.out.println("进入地图加载数据B");
+                log.info("进入地图加载数据B");
             }
             if (chr.isGM() && this.speedRunStart > 0L) {
                 this.endSpeedRun();
                 this.broadcastMessage(MaplePacketCreator.serverNotice(5, "The speed run has ended."));
                 if (ServerConstants.封包显示 || 进入地图开启显示数据) {
-                    System.out.println("进入地图加载数据C");
+                    log.info("进入地图加载数据C");
                 }
             }
         } else {
@@ -1788,7 +1758,7 @@ public class MapleMap {
                 MapScriptMethods.startScript_FirstUser(chr.getClient(), this.onFirstUserEnter);
             }
             if (ServerConstants.封包显示 || 进入地图开启显示数据) {
-                System.out.println("进入地图加载数据D");
+                log.info("进入地图加载数据D");
             }
             switch (this.mapid) {
                 case 109030001:
@@ -1814,7 +1784,7 @@ public class MapleMap {
                 if (!ServerConstants.封包显示 && !进入地图开启显示数据) {
                     continue;
                 }
-                System.out.println("进入地图加载数据F");
+                log.info("进入地图加载数据F");
             }
         }
         if (this.hasForcedEquip()) {
@@ -1847,7 +1817,7 @@ public class MapleMap {
                 chr.unlockSummonsReadLock();
             }
             if (ServerConstants.封包显示 || 进入地图开启显示数据) {
-                System.out.println("进入地图加载数据H");
+                log.info("进入地图加载数据H");
             }
         }
         if (chr.getChalkboard() != null) {
@@ -1857,47 +1827,47 @@ public class MapleMap {
         if (this.timeLimit > 0 && this.getForcedReturnMap() != null && !chr.isClone()) {
             chr.startMapTimeLimitTask(this.timeLimit, this.getForcedReturnMap());
             if (ServerConstants.封包显示 || 进入地图开启显示数据) {
-                System.out.println("进入地图加载数据I");
+                log.info("进入地图加载数据I");
             }
         }
         if (this.getSquadBegin() != null && this.getSquadBegin().getTimeLeft() > 0L && this.getSquadBegin().getStatus() == 1) {
             chr.getClient().getSession().write(MaplePacketCreator.getClock((int) (this.getSquadBegin().getTimeLeft() / 1000L)));
             if (ServerConstants.封包显示 || 进入地图开启显示数据) {
-                System.out.println("进入地图加载数据O");
+                log.info("进入地图加载数据O");
             }
         }
         if (chr.getCarnivalParty() != null && chr.getEventInstance() != null) {
             chr.getClient().getSession().write(chr.getCoconutTeam());
             chr.getEventInstance().onMapLoad(chr);
             if (ServerConstants.封包显示 || 进入地图开启显示数据) {
-                System.out.println("进入地图加载数据M");
+                log.info("进入地图加载数据M");
             }
         }
         MapleEvent.mapLoad(chr, this.channel);
         if (chr.getEventInstance() != null && chr.getEventInstance().isTimerStarted() && !chr.isClone()) {
             chr.getClient().getSession().write(MaplePacketCreator.getClock((int) (chr.getEventInstance().getTimeLeft() / 1000L)));
             if (ServerConstants.封包显示 || 进入地图开启显示数据) {
-                System.out.println("进入地图加载数据K");
+                log.info("进入地图加载数据K");
             }
         }
         if (this.hasClock()) {
             final Calendar cal = Calendar.getInstance();
             chr.getClient().getSession().write(MaplePacketCreator.getClockTime(cal.get(11), cal.get(12), cal.get(13)));
             if (ServerConstants.封包显示 || 进入地图开启显示数据) {
-                System.out.println("进入地图加载数据L");
+                log.info("进入地图加载数据L");
             }
         }
         if (this.isTown()) {
             chr.cancelEffectFromBuffStat(MapleBuffStat.RAINING_MINES);
             if (ServerConstants.封包显示 || 进入地图开启显示数据) {
-                System.out.println("进入地图加载数据W-------------完");
+                log.info("进入地图加载数据W-------------完");
             }
         }
         if (chr.getParty() != null && !chr.isClone()) {
             chr.receivePartyMemberHP();
             chr.updatePartyMemberHP();
             if (ServerConstants.封包显示 || 进入地图开启显示数据) {
-                System.out.println("进入地图加载数据G");
+                log.info("进入地图加载数据G");
             }
         }
         if (this.permanentWeather > 0) {
@@ -2551,7 +2521,7 @@ public class MapleMap {
             --point3.y;
         }
         if (pos1 == null && pos2 == null && pos3 == null) {
-            System.out.println("WARNING: mapid " + this.mapid + ", monster " + monster.getId() + " could not be spawned.");
+            log.info("WARNING: mapid " + this.mapid + ", monster " + monster.getId() + " could not be spawned.");
             return;
         }
         if (pos1 != null) {

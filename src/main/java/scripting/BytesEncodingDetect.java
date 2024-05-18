@@ -1,5 +1,7 @@
 package scripting;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -7,8 +9,8 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-class BytesEncodingDetect extends Encoding
-{
+@Slf4j
+class BytesEncodingDetect extends Encoding {
     int[][] GBFreq;
     int[][] GBKFreq;
     int[][] Big5Freq;
@@ -17,7 +19,7 @@ class BytesEncodingDetect extends Encoding
     int[][] KRFreq;
     int[][] JPFreq;
     public boolean debug;
-    
+
     public static void main(final String[] argc) {
         int result = BytesEncodingDetect.OTHER;
         final BytesEncodingDetect sinodetector = new BytesEncodingDetect();
@@ -25,22 +27,20 @@ class BytesEncodingDetect extends Encoding
             if (argc[i].startsWith("http://")) {
                 try {
                     result = sinodetector.detectEncoding(new URL(argc[i]));
+                } catch (MalformedURLException e) {
+                    log.error("Bad URL " + e.toString());
                 }
-                catch (MalformedURLException e) {
-                    System.err.println("Bad URL " + e.toString());
-                }
-            }
-            else {
+            } else {
                 if (argc[i].equals("-d")) {
                     sinodetector.debug = true;
                     continue;
                 }
                 result = sinodetector.detectEncoding(new File(argc[i]));
             }
-            System.out.println(BytesEncodingDetect.nicename[result]);
+            log.info(BytesEncodingDetect.nicename[result]);
         }
     }
-    
+
     public BytesEncodingDetect() {
         this.debug = false;
         this.GBFreq = new int[94][94];
@@ -52,7 +52,7 @@ class BytesEncodingDetect extends Encoding
         this.JPFreq = new int[94][94];
         this.initialize_frequencies();
     }
-    
+
     public int detectEncoding(final URL testurl) {
         final byte[] rawtext = new byte[10000];
         int bytesread = 0;
@@ -60,30 +60,29 @@ class BytesEncodingDetect extends Encoding
         int guess = BytesEncodingDetect.OTHER;
         try {
             InputStream chinesestream;
-            for (chinesestream = testurl.openStream(); (bytesread = chinesestream.read(rawtext, byteoffset, rawtext.length - byteoffset)) > 0; byteoffset += bytesread) {}
+            for (chinesestream = testurl.openStream(); (bytesread = chinesestream.read(rawtext, byteoffset, rawtext.length - byteoffset)) > 0; byteoffset += bytesread) {
+            }
             chinesestream.close();
             guess = this.detectEncoding(rawtext);
-        }
-        catch (IOException e) {
-            System.err.println("Error loading or using URL " + e.toString());
+        } catch (IOException e) {
+            log.error("Error loading or using URL " + e.toString());
             guess = -1;
         }
         return guess;
     }
-    
+
     public int detectEncoding(final File testfile) {
-        final byte[] rawtext = new byte[(int)testfile.length()];
+        final byte[] rawtext = new byte[(int) testfile.length()];
         try {
             final FileInputStream chinesefile = new FileInputStream(testfile);
             chinesefile.read(rawtext);
             chinesefile.close();
-        }
-        catch (IOException e) {
-            System.err.println("Error: " + e);
+        } catch (IOException e) {
+            log.error("Error: " + e);
         }
         return this.detectEncoding(rawtext);
     }
-    
+
     public int detectEncoding(final byte[] rawtext) {
         int maxscore = 0;
         int encoding_guess = BytesEncodingDetect.OTHER;
@@ -112,7 +111,7 @@ class BytesEncodingDetect extends Encoding
         scores[BytesEncodingDetect.OTHER] = 0;
         for (int index = 0; index < BytesEncodingDetect.TOTALTYPES; ++index) {
             if (this.debug) {
-                System.err.println("Encoding " + BytesEncodingDetect.nicename[index] + " score " + scores[index]);
+                log.error("Encoding " + BytesEncodingDetect.nicename[index] + " score " + scores[index]);
             }
             if (scores[index] > maxscore) {
                 encoding_guess = index;
@@ -124,7 +123,7 @@ class BytesEncodingDetect extends Encoding
         }
         return encoding_guess;
     }
-    
+
     int gb2312_probability(final byte[] rawtext) {
         int rawtextlen = 0;
         int dbchars = 1;
@@ -144,19 +143,18 @@ class BytesEncodingDetect extends Encoding
                     final int column = rawtext[i + 1] + 256 - 161;
                     if (this.GBFreq[row][column] != 0) {
                         gbfreq += this.GBFreq[row][column];
-                    }
-                    else if (15 <= row && row < 55) {
+                    } else if (15 <= row && row < 55) {
                         gbfreq += 200L;
                     }
                 }
                 ++i;
             }
         }
-        rangeval = 50.0f * (gbchars / (float)dbchars);
-        freqval = 50.0f * (gbfreq / (float)totalfreq);
-        return (int)(rangeval + freqval);
+        rangeval = 50.0f * (gbchars / (float) dbchars);
+        freqval = 50.0f * (gbfreq / (float) totalfreq);
+        return (int) (rangeval + freqval);
     }
-    
+
     int gbk_probability(final byte[] rawtext) {
         int rawtextlen = 0;
         int dbchars = 1;
@@ -176,20 +174,17 @@ class BytesEncodingDetect extends Encoding
                     final int column = rawtext[i + 1] + 256 - 161;
                     if (this.GBFreq[row][column] != 0) {
                         gbfreq += this.GBFreq[row][column];
-                    }
-                    else if (15 <= row && row < 55) {
+                    } else if (15 <= row && row < 55) {
                         gbfreq += 200L;
                     }
-                }
-                else if (-127 <= rawtext[i] && rawtext[i] <= -2 && ((-128 <= rawtext[i + 1] && rawtext[i + 1] <= -2) || (64 <= rawtext[i + 1] && rawtext[i + 1] <= 126))) {
+                } else if (-127 <= rawtext[i] && rawtext[i] <= -2 && ((-128 <= rawtext[i + 1] && rawtext[i + 1] <= -2) || (64 <= rawtext[i + 1] && rawtext[i + 1] <= 126))) {
                     ++gbchars;
                     totalfreq += 500L;
                     final int row = rawtext[i] + 256 - 129;
                     int column;
                     if (64 <= rawtext[i + 1] && rawtext[i + 1] <= 126) {
                         column = rawtext[i + 1] - 64;
-                    }
-                    else {
+                    } else {
                         column = rawtext[i + 1] + 256 - 64;
                     }
                     if (this.GBKFreq[row][column] != 0) {
@@ -199,11 +194,11 @@ class BytesEncodingDetect extends Encoding
                 ++i;
             }
         }
-        rangeval = 50.0f * (gbchars / (float)dbchars);
-        freqval = 50.0f * (gbfreq / (float)totalfreq);
-        return (int)(rangeval + freqval) - 1;
+        rangeval = 50.0f * (gbchars / (float) dbchars);
+        freqval = 50.0f * (gbfreq / (float) totalfreq);
+        return (int) (rangeval + freqval) - 1;
     }
-    
+
     int gb18030_probability(final byte[] rawtext) {
         int rawtextlen = 0;
         int dbchars = 1;
@@ -223,37 +218,33 @@ class BytesEncodingDetect extends Encoding
                     final int column = rawtext[i + 1] + 256 - 161;
                     if (this.GBFreq[row][column] != 0) {
                         gbfreq += this.GBFreq[row][column];
-                    }
-                    else if (15 <= row && row < 55) {
+                    } else if (15 <= row && row < 55) {
                         gbfreq += 200L;
                     }
-                }
-                else if (-127 <= rawtext[i] && rawtext[i] <= -2 && i + 1 < rawtextlen && ((-128 <= rawtext[i + 1] && rawtext[i + 1] <= -2) || (64 <= rawtext[i + 1] && rawtext[i + 1] <= 126))) {
+                } else if (-127 <= rawtext[i] && rawtext[i] <= -2 && i + 1 < rawtextlen && ((-128 <= rawtext[i + 1] && rawtext[i + 1] <= -2) || (64 <= rawtext[i + 1] && rawtext[i + 1] <= 126))) {
                     ++gbchars;
                     totalfreq += 500L;
                     final int row = rawtext[i] + 256 - 129;
                     int column;
                     if (64 <= rawtext[i + 1] && rawtext[i + 1] <= 126) {
                         column = rawtext[i + 1] - 64;
-                    }
-                    else {
+                    } else {
                         column = rawtext[i + 1] + 256 - 64;
                     }
                     if (this.GBKFreq[row][column] != 0) {
                         gbfreq += this.GBKFreq[row][column];
                     }
-                }
-                else if (-127 <= rawtext[i] && rawtext[i] <= -2 && i + 3 < rawtextlen && 48 <= rawtext[i + 1] && rawtext[i + 1] <= 57 && -127 <= rawtext[i + 2] && rawtext[i + 2] <= -2 && 48 <= rawtext[i + 3] && rawtext[i + 3] <= 57) {
+                } else if (-127 <= rawtext[i] && rawtext[i] <= -2 && i + 3 < rawtextlen && 48 <= rawtext[i + 1] && rawtext[i + 1] <= 57 && -127 <= rawtext[i + 2] && rawtext[i + 2] <= -2 && 48 <= rawtext[i + 3] && rawtext[i + 3] <= 57) {
                     ++gbchars;
                 }
                 ++i;
             }
         }
-        rangeval = 50.0f * (gbchars / (float)dbchars);
-        freqval = 50.0f * (gbfreq / (float)totalfreq);
-        return (int)(rangeval + freqval) - 1;
+        rangeval = 50.0f * (gbchars / (float) dbchars);
+        freqval = 50.0f * (gbfreq / (float) totalfreq);
+        return (int) (rangeval + freqval) - 1;
     }
-    
+
     int hz_probability(final byte[] rawtext) {
         int hzchars = 0;
         int dbchars = 1;
@@ -284,20 +275,17 @@ class BytesEncodingDetect extends Encoding
                                 totalfreq += 500L;
                                 if (this.GBFreq[row][column] != 0) {
                                     hzfreq += this.GBFreq[row][column];
-                                }
-                                else if (15 <= row && row < 55) {
+                                } else if (15 <= row && row < 55) {
                                     hzfreq += 200L;
                                 }
-                            }
-                            else if (161 <= rawtext[i] && rawtext[i] <= 247 && 161 <= rawtext[i + 1] && rawtext[i + 1] <= 247) {
+                            } else if (161 <= rawtext[i] && rawtext[i] <= 247 && 161 <= rawtext[i + 1] && rawtext[i + 1] <= 247) {
                                 hzchars += 2;
                                 final int row = rawtext[i] + 256 - 161;
                                 final int column = rawtext[i + 1] + 256 - 161;
                                 totalfreq += 500L;
                                 if (this.GBFreq[row][column] != 0) {
                                     hzfreq += this.GBFreq[row][column];
-                                }
-                                else if (15 <= row && row < 55) {
+                                } else if (15 <= row && row < 55) {
                                     hzfreq += 200L;
                                 }
                             }
@@ -319,20 +307,17 @@ class BytesEncodingDetect extends Encoding
         }
         if (hzstart > 4) {
             rangeval = 50.0f;
-        }
-        else if (hzstart > 1) {
+        } else if (hzstart > 1) {
             rangeval = 41.0f;
-        }
-        else if (hzstart > 0) {
+        } else if (hzstart > 0) {
             rangeval = 39.0f;
-        }
-        else {
+        } else {
             rangeval = 0.0f;
         }
-        freqval = 50.0f * (hzfreq / (float)totalfreq);
-        return (int)(rangeval + freqval);
+        freqval = 50.0f * (hzfreq / (float) totalfreq);
+        return (int) (rangeval + freqval);
     }
-    
+
     int big5_probability(final byte[] rawtext) {
         int rawtextlen = 0;
         int dbchars = 1;
@@ -352,25 +337,23 @@ class BytesEncodingDetect extends Encoding
                     int column;
                     if (64 <= rawtext[i + 1] && rawtext[i + 1] <= 126) {
                         column = rawtext[i + 1] - 64;
-                    }
-                    else {
+                    } else {
                         column = rawtext[i + 1] + 256 - 97;
                     }
                     if (this.Big5Freq[row][column] != 0) {
                         bffreq += this.Big5Freq[row][column];
-                    }
-                    else if (3 <= row && row <= 37) {
+                    } else if (3 <= row && row <= 37) {
                         bffreq += 200L;
                     }
                 }
                 ++i;
             }
         }
-        rangeval = 50.0f * (bfchars / (float)dbchars);
-        freqval = 50.0f * (bffreq / (float)totalfreq);
-        return (int)(rangeval + freqval);
+        rangeval = 50.0f * (bfchars / (float) dbchars);
+        freqval = 50.0f * (bffreq / (float) totalfreq);
+        return (int) (rangeval + freqval);
     }
-    
+
     int big5plus_probability(final byte[] rawtext) {
         int rawtextlen = 0;
         int dbchars = 1;
@@ -390,26 +373,22 @@ class BytesEncodingDetect extends Encoding
                     int column;
                     if (64 <= rawtext[i + 1] && rawtext[i + 1] <= 126) {
                         column = rawtext[i + 1] - 64;
-                    }
-                    else {
+                    } else {
                         column = rawtext[i + 1] - 97;
                     }
                     if (this.Big5Freq[row][column] != 0) {
                         bffreq += this.Big5Freq[row][column];
-                    }
-                    else if (3 <= row && row < 37) {
+                    } else if (3 <= row && row < 37) {
                         bffreq += 200L;
                     }
-                }
-                else if (129 <= rawtext[i] && rawtext[i] <= 254 && ((64 <= rawtext[i + 1] && rawtext[i + 1] <= 126) || (128 <= rawtext[i + 1] && rawtext[i + 1] <= 254))) {
+                } else if (129 <= rawtext[i] && rawtext[i] <= 254 && ((64 <= rawtext[i + 1] && rawtext[i + 1] <= 126) || (128 <= rawtext[i + 1] && rawtext[i + 1] <= 254))) {
                     ++bfchars;
                     totalfreq += 500L;
                     final int row = rawtext[i] - 129;
                     int column;
                     if (64 <= rawtext[i + 1] && rawtext[i + 1] <= 126) {
                         column = rawtext[i + 1] - 64;
-                    }
-                    else {
+                    } else {
                         column = rawtext[i + 1] - 64;
                     }
                     if (this.Big5PFreq[row][column] != 0) {
@@ -419,11 +398,11 @@ class BytesEncodingDetect extends Encoding
                 ++i;
             }
         }
-        rangeval = 50.0f * (bfchars / (float)dbchars);
-        freqval = 50.0f * (bffreq / (float)totalfreq);
-        return (int)(rangeval + freqval) - 1;
+        rangeval = 50.0f * (bfchars / (float) dbchars);
+        freqval = 50.0f * (bffreq / (float) totalfreq);
+        return (int) (rangeval + freqval) - 1;
     }
-    
+
     int euc_tw_probability(final byte[] rawtext) {
         int rawtextlen = 0;
         int dbchars = 1;
@@ -439,27 +418,25 @@ class BytesEncodingDetect extends Encoding
                 if (i + 3 < rawtextlen && -114 == rawtext[i] && -95 <= rawtext[i + 1] && rawtext[i + 1] <= -80 && -95 <= rawtext[i + 2] && rawtext[i + 2] <= -2 && -95 <= rawtext[i + 3] && rawtext[i + 3] <= -2) {
                     ++cnschars;
                     i += 3;
-                }
-                else if (-95 <= rawtext[i] && rawtext[i] <= -2 && -95 <= rawtext[i + 1] && rawtext[i + 1] <= -2) {
+                } else if (-95 <= rawtext[i] && rawtext[i] <= -2 && -95 <= rawtext[i + 1] && rawtext[i + 1] <= -2) {
                     ++cnschars;
                     totalfreq += 500L;
                     final int row = rawtext[i] + 256 - 161;
                     final int column = rawtext[i + 1] + 256 - 161;
                     if (this.EUC_TWFreq[row][column] != 0) {
                         cnsfreq += this.EUC_TWFreq[row][column];
-                    }
-                    else if (35 <= row && row <= 92) {
+                    } else if (35 <= row && row <= 92) {
                         cnsfreq += 150L;
                     }
                     ++i;
                 }
             }
         }
-        rangeval = 50.0f * (cnschars / (float)dbchars);
-        freqval = 50.0f * (cnsfreq / (float)totalfreq);
-        return (int)(rangeval + freqval);
+        rangeval = 50.0f * (cnschars / (float) dbchars);
+        freqval = 50.0f * (cnsfreq / (float) totalfreq);
+        return (int) (rangeval + freqval);
     }
-    
+
     int iso_2022_cn_probability(final byte[] rawtext) {
         int rawtextlen = 0;
         int dbchars = 1;
@@ -481,15 +458,13 @@ class BytesEncodingDetect extends Encoding
                             totalfreq += 500L;
                             if (this.GBFreq[row][column] != 0) {
                                 isofreq += this.GBFreq[row][column];
-                            }
-                            else if (15 <= row && row < 55) {
+                            } else if (15 <= row && row < 55) {
                                 isofreq += 200L;
                             }
                             ++i;
                         }
                     }
-                }
-                else if (i + 3 < rawtextlen && rawtext[i + 1] == 36 && rawtext[i + 2] == 41 && rawtext[i + 3] == 71) {
+                } else if (i + 3 < rawtextlen && rawtext[i + 1] == 36 && rawtext[i + 2] == 41 && rawtext[i + 3] == 71) {
                     for (i += 4; rawtext[i] != 27; ++i) {
                         ++dbchars;
                         if (33 <= rawtext[i] && rawtext[i] <= 126 && 33 <= rawtext[i + 1] && rawtext[i + 1] <= 126) {
@@ -499,8 +474,7 @@ class BytesEncodingDetect extends Encoding
                             final int column = rawtext[i + 1] - 33;
                             if (this.EUC_TWFreq[row][column] != 0) {
                                 isofreq += this.EUC_TWFreq[row][column];
-                            }
-                            else if (35 <= row && row <= 92) {
+                            } else if (35 <= row && row <= 92) {
                                 isofreq += 150L;
                             }
                             ++i;
@@ -512,11 +486,11 @@ class BytesEncodingDetect extends Encoding
                 }
             }
         }
-        rangeval = 50.0f * (isochars / (float)dbchars);
-        freqval = 50.0f * (isofreq / (float)totalfreq);
-        return (int)(rangeval + freqval);
+        rangeval = 50.0f * (isochars / (float) dbchars);
+        freqval = 50.0f * (isofreq / (float) totalfreq);
+        return (int) (rangeval + freqval);
     }
-    
+
     int utf8_probability(final byte[] rawtext) {
         int score = 0;
         int rawtextlen = 0;
@@ -526,12 +500,10 @@ class BytesEncodingDetect extends Encoding
         for (int i = 0; i < rawtextlen; ++i) {
             if ((rawtext[i] & 0x7F) == rawtext[i]) {
                 ++asciibytes;
-            }
-            else if (-64 <= rawtext[i] && rawtext[i] <= -33 && i + 1 < rawtextlen && -128 <= rawtext[i + 1] && rawtext[i + 1] <= -65) {
+            } else if (-64 <= rawtext[i] && rawtext[i] <= -33 && i + 1 < rawtextlen && -128 <= rawtext[i + 1] && rawtext[i + 1] <= -65) {
                 goodbytes += 2;
                 ++i;
-            }
-            else if (-32 <= rawtext[i] && rawtext[i] <= -17 && i + 2 < rawtextlen && -128 <= rawtext[i + 1] && rawtext[i + 1] <= -65 && -128 <= rawtext[i + 2] && rawtext[i + 2] <= -65) {
+            } else if (-32 <= rawtext[i] && rawtext[i] <= -17 && i + 2 < rawtextlen && -128 <= rawtext[i + 1] && rawtext[i + 1] <= -65 && -128 <= rawtext[i + 2] && rawtext[i + 2] <= -65) {
                 goodbytes += 3;
                 i += 2;
             }
@@ -539,7 +511,7 @@ class BytesEncodingDetect extends Encoding
         if (asciibytes == rawtextlen) {
             return 0;
         }
-        score = (int)(100.0f * (goodbytes / (float)(rawtextlen - asciibytes)));
+        score = (int) (100.0f * (goodbytes / (float) (rawtextlen - asciibytes)));
         if (score > 98) {
             return score;
         }
@@ -548,21 +520,20 @@ class BytesEncodingDetect extends Encoding
         }
         return 0;
     }
-    
+
     int utf16_probability(final byte[] rawtext) {
         if ((rawtext.length > 1 && -2 == rawtext[0] && -1 == rawtext[1]) || (-1 == rawtext[0] && -2 == rawtext[1])) {
             return 100;
         }
         return 0;
     }
-    
+
     int ascii_probability(final byte[] rawtext) {
         int score = 75;
         for (int rawtextlen = rawtext.length, i = 0; i < rawtextlen; ++i) {
             if (rawtext[i] < 0) {
                 score -= 5;
-            }
-            else if (rawtext[i] == 27) {
+            } else if (rawtext[i] == 27) {
                 score -= 5;
             }
             if (score <= 0) {
@@ -571,7 +542,7 @@ class BytesEncodingDetect extends Encoding
         }
         return score;
     }
-    
+
     int euc_kr_probability(final byte[] rawtext) {
         int rawtextlen = 0;
         int dbchars = 1;
@@ -591,19 +562,18 @@ class BytesEncodingDetect extends Encoding
                     final int column = rawtext[i + 1] + 256 - 161;
                     if (this.KRFreq[row][column] != 0) {
                         krfreq += this.KRFreq[row][column];
-                    }
-                    else if (15 <= row && row < 55) {
+                    } else if (15 <= row && row < 55) {
                         krfreq += 0L;
                     }
                 }
                 ++i;
             }
         }
-        rangeval = 50.0f * (krchars / (float)dbchars);
-        freqval = 50.0f * (krfreq / (float)totalfreq);
-        return (int)(rangeval + freqval);
+        rangeval = 50.0f * (krchars / (float) dbchars);
+        freqval = 50.0f * (krfreq / (float) totalfreq);
+        return (int) (rangeval + freqval);
     }
-    
+
     int cp949_probability(final byte[] rawtext) {
         int rawtextlen = 0;
         int dbchars = 1;
@@ -630,20 +600,20 @@ class BytesEncodingDetect extends Encoding
                 ++i;
             }
         }
-        rangeval = 50.0f * (krchars / (float)dbchars);
-        freqval = 50.0f * (krfreq / (float)totalfreq);
-        return (int)(rangeval + freqval);
+        rangeval = 50.0f * (krchars / (float) dbchars);
+        freqval = 50.0f * (krfreq / (float) totalfreq);
+        return (int) (rangeval + freqval);
     }
-    
+
     int iso_2022_kr_probability(final byte[] rawtext) {
         for (int i = 0; i < rawtext.length; ++i) {
-            if (i + 3 < rawtext.length && rawtext[i] == 27 && (char)rawtext[i + 1] == '$' && (char)rawtext[i + 2] == ')' && (char)rawtext[i + 3] == 'C') {
+            if (i + 3 < rawtext.length && rawtext[i] == 27 && (char) rawtext[i + 1] == '$' && (char) rawtext[i + 2] == ')' && (char) rawtext[i + 3] == 'C') {
                 return 100;
             }
         }
         return 0;
     }
-    
+
     int euc_jp_probability(final byte[] rawtext) {
         int rawtextlen = 0;
         int dbchars = 1;
@@ -663,28 +633,27 @@ class BytesEncodingDetect extends Encoding
                     final int column = rawtext[i + 1] + 256 - 161;
                     if (this.JPFreq[row][column] != 0) {
                         jpfreq += this.JPFreq[row][column];
-                    }
-                    else if (15 <= row && row < 55) {
+                    } else if (15 <= row && row < 55) {
                         jpfreq += 0L;
                     }
                 }
                 ++i;
             }
         }
-        rangeval = 50.0f * (jpchars / (float)dbchars);
-        freqval = 50.0f * (jpfreq / (float)totalfreq);
-        return (int)(rangeval + freqval);
+        rangeval = 50.0f * (jpchars / (float) dbchars);
+        freqval = 50.0f * (jpfreq / (float) totalfreq);
+        return (int) (rangeval + freqval);
     }
-    
+
     int iso_2022_jp_probability(final byte[] rawtext) {
         for (int i = 0; i < rawtext.length; ++i) {
-            if (i + 2 < rawtext.length && rawtext[i] == 27 && (char)rawtext[i + 1] == '$' && (char)rawtext[i + 2] == 'B') {
+            if (i + 2 < rawtext.length && rawtext[i] == 27 && (char) rawtext[i + 1] == '$' && (char) rawtext[i + 2] == 'B') {
                 return 100;
             }
         }
         return 0;
     }
-    
+
     int sjis_probability(final byte[] rawtext) {
         int rawtextlen = 0;
         int dbchars = 1;
@@ -707,19 +676,16 @@ class BytesEncodingDetect extends Encoding
                         adjust = 1;
                         if (column > 127) {
                             column -= 32;
-                        }
-                        else {
+                        } else {
                             column -= 25;
                         }
-                    }
-                    else {
+                    } else {
                         adjust = 0;
                         column -= 126;
                     }
                     if (row < 160) {
                         row = (row - 112 << 1) - adjust;
-                    }
-                    else {
+                    } else {
                         row = (row - 176 << 1) - adjust;
                     }
                     row -= 32;
@@ -728,15 +694,15 @@ class BytesEncodingDetect extends Encoding
                         jpfreq += this.JPFreq[row][column];
                     }
                     ++i;
+                } else if (-95 > rawtext[i] || rawtext[i] <= -33) {
                 }
-                else if (-95 > rawtext[i] || rawtext[i] <= -33) {}
             }
         }
-        rangeval = 50.0f * (jpchars / (float)dbchars);
-        freqval = 50.0f * (jpfreq / (float)totalfreq);
-        return (int)(rangeval + freqval) - 1;
+        rangeval = 50.0f * (jpchars / (float) dbchars);
+        freqval = 50.0f * (jpfreq / (float) totalfreq);
+        return (int) (rangeval + freqval) - 1;
     }
-    
+
     void initialize_frequencies() {
         for (int i = 0; i < 94; ++i) {
             for (int j = 0; j < 94; ++j) {

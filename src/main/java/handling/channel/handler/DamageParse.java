@@ -427,7 +427,7 @@ public class    DamageParse
                             if (eachd > maxDamagePerHit) {
                                 player.getCheatTracker().registerOffense(CheatingOffense.魔法伤害过高);
                                 if (eachd > MaxDamagePerHit * 2) {
-//				    System.out.println("EXCEED!!! Client damage : " + eachd + " Server : " + MaxDamagePerHit);
+//				    log.info("EXCEED!!! Client damage : " + eachd + " Server : " + MaxDamagePerHit);
                                     eachd = (int) (MaxDamagePerHit * 2); // Convert to server calculated damage
                                     FileoutputUtil.logToFile_chr(player, FileoutputUtil.fixdam_ph, " 技能 " + attack.skill + " 怪物 " + monster.getId() + " 预计伤害:" + (long) MaxDamagePerHit + "  实际" + eachd);
                                     player.getCheatTracker().registerOffense(CheatingOffense.魔法伤害过高2);

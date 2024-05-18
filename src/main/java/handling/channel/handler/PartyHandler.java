@@ -6,11 +6,12 @@ import handling.world.MapleParty;
 import handling.world.MaplePartyCharacter;
 import handling.world.PartyOperation;
 import handling.world.World;
+import lombok.extern.slf4j.Slf4j;
 import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
-public class PartyHandler
-{
+@Slf4j
+public class PartyHandler {
     public static void DenyPartyRequest(final SeekableLittleEndianAccessor slea, final MapleClient c) {
         final int action = slea.readByte();
         final int partyid = slea.readInt();
@@ -37,16 +38,14 @@ public class PartyHandler
                         break;
                     }
                 }
-            }
-            else {
+            } else {
                 c.getPlayer().dropMessage(5, "要参加的队伍不存在。");
             }
-        }
-        else {
+        } else {
             c.getPlayer().dropMessage(5, "您已经有一个组队，无法加入其他组队!");
         }
     }
-    
+
     public static void PartyOperatopn(final SeekableLittleEndianAccessor slea, final MapleClient c) {
         final int operation = slea.readByte();
         MapleParty party = c.getPlayer().getParty();
@@ -76,8 +75,7 @@ public class PartyHandler
                         if (c.getPlayer().getPyramidSubway() != null) {
                             c.getPlayer().getPyramidSubway().fail(c.getPlayer());
                         }
-                    }
-                    else {
+                    } else {
                         World.Party.updateParty(party.getId(), PartyOperation.LEAVE, partyplayer);
                         if (c.getPlayer().getEventInstance() != null) {
                             c.getPlayer().getEventInstance().leftParty(c.getPlayer());
@@ -163,7 +161,7 @@ public class PartyHandler
                 break;
             }
             default: {
-                System.out.println("未知的队伍操作. 0x0" + operation);
+                log.info("未知的队伍操作. 0x0" + operation);
                 break;
             }
         }

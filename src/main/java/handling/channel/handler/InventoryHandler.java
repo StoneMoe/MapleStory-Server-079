@@ -18,6 +18,7 @@ import client.inventory.MaplePet;
 import constants.GameConstants;
 import handling.world.MaplePartyCharacter;
 import handling.world.World;
+
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -27,6 +28,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.locks.Lock;
+
+import lombok.extern.slf4j.Slf4j;
 import scripting.NPCScriptManager;
 import server.AutobanManager;
 import server.MapleInventoryManipulator;
@@ -55,10 +58,10 @@ import tools.packet.MTSCSPacket;
 import tools.packet.PetPacket;
 import tools.packet.PlayerShopPacket;
 
-public class InventoryHandler
-{
+@Slf4j
+public class InventoryHandler {
     public static int OWL_ID;
-    
+
     public static void ItemMove(final SeekableLittleEndianAccessor slea, final MapleClient c) {
         if (c.getPlayer().getPlayerShop() != null || c.getPlayer().getConversation() > 0 || c.getPlayer().getTrade() != null) {
             return;
@@ -70,14 +73,11 @@ public class InventoryHandler
         final short quantity = slea.readShort();
         if (src < 0 && dst > 0) {
             MapleInventoryManipulator.unequip(c, src, dst);
-        }
-        else if (dst < 0) {
+        } else if (dst < 0) {
             MapleInventoryManipulator.equip(c, src, dst);
-        }
-        else if (dst == 0) {
+        } else if (dst == 0) {
             MapleInventoryManipulator.drop(c, type, src, quantity);
-        }
-        else {
+        } else {
             if (c.getPlayer().getGMLevel() > 0) {
                 final int itemided = c.getPlayer().getInventory(type).getItem(src).getItemId();
                 c.getPlayer().dropMessage("此物品的ID是:" + itemided);
@@ -85,7 +85,7 @@ public class InventoryHandler
             MapleInventoryManipulator.move(c, type, src, dst);
         }
     }
-    
+
     public static final void ItemSort(final SeekableLittleEndianAccessor slea, final MapleClient c) {
         c.getPlayer().updateTick(slea.readInt());
         final MapleInventoryType pInvType = MapleInventoryType.getByType(slea.readByte());
@@ -96,10 +96,10 @@ public class InventoryHandler
         final MapleInventory pInv = c.getPlayer().getInventory(pInvType);
         boolean sorted = false;
         while (!sorted) {
-            final byte freeSlot = (byte)pInv.getNextFreeSlot();
+            final byte freeSlot = (byte) pInv.getNextFreeSlot();
             if (freeSlot != -1) {
                 byte itemSlot = -1;
-                for (byte i = (byte)(freeSlot + 1); i <= pInv.getSlotLimit(); ++i) {
+                for (byte i = (byte) (freeSlot + 1); i <= pInv.getSlotLimit(); ++i) {
                     if (pInv.getItem(i) != null) {
                         itemSlot = i;
                         break;
@@ -107,19 +107,17 @@ public class InventoryHandler
                 }
                 if (itemSlot > 0) {
                     MapleInventoryManipulator.move(c, pInvType, itemSlot, freeSlot);
-                }
-                else {
+                } else {
                     sorted = true;
                 }
-            }
-            else {
+            } else {
                 sorted = true;
             }
         }
         c.getSession().write(MaplePacketCreator.finishedSort(pInvType.getType()));
         c.getSession().write(MaplePacketCreator.enableActions());
     }
-    
+
     public static final void ItemGather(final SeekableLittleEndianAccessor slea, final MapleClient c) {
         c.getPlayer().updateTick(slea.readInt());
         final byte mode = slea.readByte();
@@ -145,7 +143,7 @@ public class InventoryHandler
         itemMap.clear();
         sortedItems.clear();
     }
-    
+
     private static final List<IItem> sortItems(final List<IItem> passedMap) {
         final List<Integer> itemIds = new ArrayList<Integer>();
         for (final IItem item : passedMap) {
@@ -164,7 +162,7 @@ public class InventoryHandler
         }
         return sortedList;
     }
-    
+
     public static boolean UseRewardItem(final byte slot, final int itemId, final MapleClient c, final MapleCharacter chr) {
         final IItem toUse = c.getPlayer().getInventory(GameConstants.getInventoryType(itemId)).getItem(slot);
         c.getSession().write(MaplePacketCreator.enableActions());
@@ -183,9 +181,8 @@ public class InventoryHandler
                                         item.setExpiration(System.currentTimeMillis() + reward.period * 60L * 60L * 10L);
                                     }
                                     MapleInventoryManipulator.addbyItem(c, item);
-                                }
-                                else {
-                                    MapleInventoryManipulator.addById(c, reward.itemid, reward.quantity, (byte)0);
+                                } else {
+                                    MapleInventoryManipulator.addById(c, reward.itemid, reward.quantity, (byte) 0);
                                 }
                                 MapleInventoryManipulator.removeById(c, GameConstants.getInventoryType(itemId), itemId, 1, false, false);
                                 rewarded = true;
@@ -193,25 +190,23 @@ public class InventoryHandler
                             }
                         }
                     }
-                }
-                else {
+                } else {
                     chr.dropMessage(6, "Unknown error.");
                 }
-            }
-            else {
+            } else {
                 chr.dropMessage(6, "你有一個欄位滿了 請空出來再打開");
             }
         }
         return false;
     }
-    
+
     public static void QuestKJ(final SeekableLittleEndianAccessor slea, final MapleClient c, final MapleCharacter chr) {
         if (chr == null || !chr.isAlive() || chr.getCSPoints(2) < 200) {
             chr.dropMessage(1, "你没有足够的抵用卷！");
             c.getSession().write(MaplePacketCreator.enableActions());
             return;
         }
-        final byte action = (byte)(slea.readByte() + 1);
+        final byte action = (byte) (slea.readByte() + 1);
         short quest = slea.readShort();
         if (quest < 0) {
             quest += 65536;
@@ -229,7 +224,7 @@ public class InventoryHandler
         }
         chr.modifyCSPoints(2, -200);
     }
-    
+
     public static void UseItem(final SeekableLittleEndianAccessor slea, final MapleClient c, final MapleCharacter chr) {
         if (chr == null || !chr.isAlive() || chr.getMapId() == 749040100 || chr.getMap() == null) {
             c.getSession().write(MaplePacketCreator.enableActions());
@@ -242,7 +237,7 @@ public class InventoryHandler
             return;
         }
         c.getPlayer().updateTick(slea.readInt());
-        final byte slot = (byte)slea.readShort();
+        final byte slot = (byte) slea.readShort();
         final int itemId = slea.readInt();
         final IItem toUse = chr.getInventory(MapleInventoryType.USE).getItem(slot);
         if (toUse == null || toUse.getQuantity() < 1 || toUse.getItemId() != itemId) {
@@ -251,24 +246,23 @@ public class InventoryHandler
         }
         if (!FieldLimitType.PotionUse.check(chr.getMap().getFieldLimit()) || chr.getMapId() == 610030600) {
             if (MapleItemInformationProvider.getInstance().getItemEffect(toUse.getItemId()).applyTo(chr)) {
-                MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.USE, slot, (short)1, false);
+                MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.USE, slot, (short) 1, false);
                 if (chr.getMap().getConsumeItemCoolTime() > 0) {
                     chr.setNextConsume(time + chr.getMap().getConsumeItemCoolTime() * 1000);
                 }
             }
-        }
-        else {
+        } else {
             c.getSession().write(MaplePacketCreator.enableActions());
         }
     }
-    
+
     public static void UseReturnScroll(final SeekableLittleEndianAccessor slea, final MapleClient c, final MapleCharacter chr) {
         if (!chr.isAlive() || chr.getMapId() == 749040100) {
             c.getSession().write(MaplePacketCreator.enableActions());
             return;
         }
         c.getPlayer().updateTick(slea.readInt());
-        final byte slot = (byte)slea.readShort();
+        final byte slot = (byte) slea.readShort();
         final int itemId = slea.readInt();
         final IItem toUse = chr.getInventory(MapleInventoryType.USE).getItem(slot);
         if (toUse == null || toUse.getQuantity() < 1 || toUse.getItemId() != itemId) {
@@ -276,17 +270,16 @@ public class InventoryHandler
             return;
         }
         if (MapleItemInformationProvider.getInstance().getItemEffect(toUse.getItemId()).applyReturnScroll(chr)) {
-            MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.USE, slot, (short)1, false);
-        }
-        else {
+            MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.USE, slot, (short) 1, false);
+        } else {
             c.getSession().write(MaplePacketCreator.enableActions());
         }
     }
-    
+
     public static boolean UseUpgradeScroll(final byte slot, final byte dst, final byte ws, final MapleClient c, final MapleCharacter chr) {
         return UseUpgradeScroll(slot, dst, ws, c, chr, 0);
     }
-    
+
     public static boolean UseUpgradeScroll(final byte slot, final byte dst, final byte ws, final MapleClient c, final MapleCharacter chr, final int vegas) {
         boolean whiteScroll = false;
         boolean legendarySpirit = false;
@@ -296,11 +289,10 @@ public class InventoryHandler
         }
         IEquip toScroll;
         if (dst < 0) {
-            toScroll = (IEquip)chr.getInventory(MapleInventoryType.EQUIPPED).getItem(dst);
-        }
-        else {
+            toScroll = (IEquip) chr.getInventory(MapleInventoryType.EQUIPPED).getItem(dst);
+        } else {
             legendarySpirit = true;
-            toScroll = (IEquip)chr.getInventory(MapleInventoryType.EQUIP).getItem(dst);
+            toScroll = (IEquip) chr.getInventory(MapleInventoryType.EQUIP).getItem(dst);
         }
         if (toScroll == null) {
             return false;
@@ -321,14 +313,12 @@ public class InventoryHandler
                 c.getSession().write(MaplePacketCreator.getInventoryFull());
                 return false;
             }
-        }
-        else if (GameConstants.isEquipScroll(scroll.getItemId())) {
+        } else if (GameConstants.isEquipScroll(scroll.getItemId())) {
             if (toScroll.getUpgradeSlots() >= 1 || toScroll.getEnhance() >= 100 || vegas > 0 || ii.isCash(toScroll.getItemId())) {
                 c.getSession().write(MaplePacketCreator.getInventoryFull());
                 return false;
             }
-        }
-        else if (GameConstants.isPotentialScroll(scroll.getItemId()) && (toScroll.getState() >= 1 || (toScroll.getLevel() == 0 && toScroll.getUpgradeSlots() == 0) || vegas > 0 || ii.isCash(toScroll.getItemId()))) {
+        } else if (GameConstants.isPotentialScroll(scroll.getItemId()) && (toScroll.getState() >= 1 || (toScroll.getLevel() == 0 && toScroll.getUpgradeSlots() == 0) || vegas > 0 || ii.isCash(toScroll.getItemId()))) {
             c.getSession().write(MaplePacketCreator.getInventoryFull());
             return false;
         }
@@ -390,8 +380,7 @@ public class InventoryHandler
                     break;
                 }
             }
-        }
-        else if (!GameConstants.isAccessoryScroll(scroll.getItemId()) && !GameConstants.isChaosScroll(scroll.getItemId()) && !GameConstants.isCleanSlate(scroll.getItemId()) && !GameConstants.isEquipScroll(scroll.getItemId()) && !GameConstants.isPotentialScroll(scroll.getItemId()) && !ii.canScroll(scroll.getItemId(), toScroll.getItemId())) {
+        } else if (!GameConstants.isAccessoryScroll(scroll.getItemId()) && !GameConstants.isChaosScroll(scroll.getItemId()) && !GameConstants.isCleanSlate(scroll.getItemId()) && !GameConstants.isEquipScroll(scroll.getItemId()) && !GameConstants.isPotentialScroll(scroll.getItemId()) && !ii.canScroll(scroll.getItemId(), toScroll.getItemId())) {
             return false;
         }
         if (GameConstants.isAccessoryScroll(scroll.getItemId()) && !GameConstants.isAccessory(toScroll.getItemId())) {
@@ -404,34 +393,29 @@ public class InventoryHandler
             AutobanManager.getInstance().addPoints(c, 50, 120000L, "Using the Skill 'Legendary Spirit' without having it.");
             return false;
         }
-        final IEquip scrolled = (IEquip)ii.scrollEquipWithId(toScroll, scroll, whiteScroll, chr, vegas, checkIfGM);
+        final IEquip scrolled = (IEquip) ii.scrollEquipWithId(toScroll, scroll, whiteScroll, chr, vegas, checkIfGM);
         IEquip.ScrollResult scrollSuccess;
         if (scrolled == null) {
             scrollSuccess = IEquip.ScrollResult.CURSE;
-        }
-        else if (scrolled.getLevel() > oldLevel || scrolled.getEnhance() > oldEnhance || scrolled.getState() > oldState || scrolled.getFlag() > oldFlag) {
+        } else if (scrolled.getLevel() > oldLevel || scrolled.getEnhance() > oldEnhance || scrolled.getState() > oldState || scrolled.getFlag() > oldFlag) {
             scrollSuccess = IEquip.ScrollResult.SUCCESS;
-        }
-        else if (GameConstants.isCleanSlate(scroll.getItemId()) && scrolled.getUpgradeSlots() > oldSlots) {
+        } else if (GameConstants.isCleanSlate(scroll.getItemId()) && scrolled.getUpgradeSlots() > oldSlots) {
             scrollSuccess = IEquip.ScrollResult.SUCCESS;
-        }
-        else {
+        } else {
             scrollSuccess = IEquip.ScrollResult.FAIL;
         }
-        chr.getInventory(MapleInventoryType.USE).removeItem(scroll.getPosition(), (short)1, false);
+        chr.getInventory(MapleInventoryType.USE).removeItem(scroll.getPosition(), (short) 1, false);
         if (whiteScroll) {
-            MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.USE, wscroll.getPosition(), (short)1, false, false);
+            MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.USE, wscroll.getPosition(), (short) 1, false, false);
         }
         if (scrollSuccess == IEquip.ScrollResult.CURSE) {
             c.getSession().write(MaplePacketCreator.scrolledItem(scroll, toScroll, true, false));
             if (dst < 0) {
                 chr.getInventory(MapleInventoryType.EQUIPPED).removeItem(toScroll.getPosition());
-            }
-            else {
+            } else {
                 chr.getInventory(MapleInventoryType.EQUIP).removeItem(toScroll.getPosition());
             }
-        }
-        else if (vegas == 0) {
+        } else if (vegas == 0) {
             c.getSession().write(MaplePacketCreator.scrolledItem(scroll, scrolled, false, false));
         }
         chr.getMap().broadcastMessage(chr, MaplePacketCreator.getScrollEffect(c.getPlayer().getId(), scrollSuccess, legendarySpirit), vegas == 0);
@@ -440,10 +424,10 @@ public class InventoryHandler
         }
         return true;
     }
-    
+
     public static void UseCatchItem(final SeekableLittleEndianAccessor slea, final MapleClient c, final MapleCharacter chr) {
         c.getPlayer().updateTick(slea.readInt());
-        final byte slot = (byte)slea.readShort();
+        final byte slot = (byte) slea.readShort();
         final int itemid = slea.readInt();
         final MapleMonster mob = chr.getMap().getMonsterByOid(slea.readInt());
         final IItem toUse = chr.getInventory(MapleInventoryType.USE).getItem(slot);
@@ -452,28 +436,28 @@ public class InventoryHandler
                 case 2270004: {
                     final MapleMap map = chr.getMap();
                     if (mob.getHp() <= mob.getMobMaxHp() / 2L) {
-                        map.broadcastMessage(MaplePacketCreator.catchMonster(mob.getId(), itemid, (byte)1));
-                        map.killMonster(mob, chr, true, false, (byte)0);
+                        map.broadcastMessage(MaplePacketCreator.catchMonster(mob.getId(), itemid, (byte) 1));
+                        map.killMonster(mob, chr, true, false, (byte) 0);
                         MapleInventoryManipulator.removeById(c, MapleInventoryType.USE, itemid, 1, false, false);
-                        MapleInventoryManipulator.addById(c, 4001169, (short)1, (byte)0);
+                        MapleInventoryManipulator.addById(c, 4001169, (short) 1, (byte) 0);
                         break;
                     }
-                    map.broadcastMessage(MaplePacketCreator.catchMonster(mob.getId(), itemid, (byte)0));
+                    map.broadcastMessage(MaplePacketCreator.catchMonster(mob.getId(), itemid, (byte) 0));
                     chr.dropMessage(5, "怪物的生命力还很强大,无法捕捉.");
                     break;
                 }
                 case 2270002: {
                     final MapleMap map = chr.getMap();
                     if (mob.getHp() <= mob.getMobMaxHp() / 2L) {
-                        c.getPlayer().getMap().broadcastMessage(MaplePacketCreator.catchMonster(mob.getId(), itemid, (byte)1));
-                        map.killMonster(mob, chr, true, false, (byte)0);
+                        c.getPlayer().getMap().broadcastMessage(MaplePacketCreator.catchMonster(mob.getId(), itemid, (byte) 1));
+                        map.killMonster(mob, chr, true, false, (byte) 0);
                         MapleInventoryManipulator.removeById(c, MapleInventoryType.USE, itemid, 1, false, false);
                         c.getPlayer().setAPQScore(c.getPlayer().getAPQScore() + 1);
                         c.getPlayer().getMap().broadcastMessage(MaplePacketCreator.updateAriantPQRanking(c.getPlayer().getName(), c.getPlayer().getAPQScore(), false));
                         break;
                     }
-                    c.getPlayer().getMap().broadcastMessage(MaplePacketCreator.catchMonster(mob.getId(), itemid, (byte)0));
-                    c.sendPacket(MaplePacketCreator.catchMob(mob.getId(), itemid, (byte)0));
+                    c.getPlayer().getMap().broadcastMessage(MaplePacketCreator.catchMonster(mob.getId(), itemid, (byte) 0));
+                    c.sendPacket(MaplePacketCreator.catchMob(mob.getId(), itemid, (byte) 0));
                     break;
                 }
                 case 2270000: {
@@ -481,9 +465,9 @@ public class InventoryHandler
                         break;
                     }
                     final MapleMap map = c.getPlayer().getMap();
-                    map.broadcastMessage(MaplePacketCreator.catchMonster(mob.getId(), itemid, (byte)1));
-                    map.killMonster(mob, chr, true, false, (byte)0);
-                    MapleInventoryManipulator.addById(c, 1902000, (short)1, null, (byte)0);
+                    map.broadcastMessage(MaplePacketCreator.catchMonster(mob.getId(), itemid, (byte) 1));
+                    map.killMonster(mob, chr, true, false, (byte) 0);
+                    MapleInventoryManipulator.addById(c, 1902000, (short) 1, null, (byte) 0);
                     MapleInventoryManipulator.removeById(c, MapleInventoryType.USE, itemid, 1, false, false);
                     break;
                 }
@@ -493,12 +477,12 @@ public class InventoryHandler
                     }
                     final MapleMap map = c.getPlayer().getMap();
                     if (mob.getHp() <= mob.getMobMaxHp() / 2L) {
-                        map.broadcastMessage(MaplePacketCreator.catchMonster(mob.getId(), itemid, (byte)1));
-                        map.killMonster(mob, chr, true, false, (byte)0);
+                        map.broadcastMessage(MaplePacketCreator.catchMonster(mob.getId(), itemid, (byte) 1));
+                        map.killMonster(mob, chr, true, false, (byte) 0);
                         MapleInventoryManipulator.removeById(c, MapleInventoryType.USE, itemid, 1, false, false);
                         break;
                     }
-                    map.broadcastMessage(MaplePacketCreator.catchMonster(mob.getId(), itemid, (byte)0));
+                    map.broadcastMessage(MaplePacketCreator.catchMonster(mob.getId(), itemid, (byte) 0));
                     chr.dropMessage(5, "怪物的生命力还很强大,无法捕捉.");
                     break;
                 }
@@ -506,34 +490,34 @@ public class InventoryHandler
         }
         c.getSession().write(MaplePacketCreator.enableActions());
     }
-    
+
     public static void UseMountFood(final SeekableLittleEndianAccessor slea, final MapleClient c, final MapleCharacter chr) {
         c.getPlayer().updateTick(slea.readInt());
-        final byte slot = (byte)slea.readShort();
+        final byte slot = (byte) slea.readShort();
         final int itemid = slea.readInt();
         final IItem toUse = chr.getInventory(MapleInventoryType.USE).getItem(slot);
         final MapleMount mount = chr.getMount();
         if (itemid / 10000 == 226 && toUse != null && toUse.getQuantity() > 0 && toUse.getItemId() == itemid && mount != null) {
             final int fatigue = mount.getFatigue();
             boolean levelup = false;
-            mount.setFatigue((byte)(-30));
+            mount.setFatigue((byte) (-30));
             if (fatigue > 0) {
                 mount.increaseExp();
                 final int level = mount.getLevel();
                 if (mount.getExp() >= GameConstants.getMountExpNeededForLevel(level + 1) && level < 31) {
-                    mount.setLevel((byte)(level + 1));
+                    mount.setLevel((byte) (level + 1));
                     levelup = true;
                 }
             }
             chr.getMap().broadcastMessage(MaplePacketCreator.updateMount(chr, levelup));
-            MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.USE, slot, (short)1, false);
+            MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.USE, slot, (short) 1, false);
         }
         c.getSession().write(MaplePacketCreator.enableActions());
     }
-    
+
     public static void UsePenguinBox(final SeekableLittleEndianAccessor slea, final MapleClient c) {
         final List<Integer> gift = new ArrayList<Integer>();
-        final byte slot = (byte)slea.readShort();
+        final byte slot = (byte) slea.readShort();
         final int item = slea.readInt();
         final IItem toUse = c.getPlayer().getInventory(MapleInventoryType.USE).getItem(slot);
         if (toUse.getItemId() != item) {
@@ -685,20 +669,20 @@ public class InventoryHandler
             }
         }
         if (gift.isEmpty()) {
-            if (c.getPlayer().isGM()) {}
-        }
-        else {
+            if (c.getPlayer().isGM()) {
+            }
+        } else {
             final int rand = ThreadLocalRandom.current().nextInt(gift.size());
-            MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.USE, slot, (short)1, false);
-            MapleInventoryManipulator.addById(c, gift.get(rand), (short)1, (byte)0);
+            MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.USE, slot, (short) 1, false);
+            MapleInventoryManipulator.addById(c, gift.get(rand), (short) 1, (byte) 0);
             gift.clear();
         }
         c.getSession().write(MaplePacketCreator.enableActions());
     }
-    
+
     public static void SunziBF(final SeekableLittleEndianAccessor slea, final MapleClient c) {
         slea.readInt();
-        final byte slot = (byte)slea.readShort();
+        final byte slot = (byte) slea.readShort();
         final int itemid = slea.readInt();
         final MapleItemInformationProvider ii = MapleItemInformationProvider.getInstance();
         final IItem item = c.getPlayer().getInventory(MapleInventoryType.USE).getItem(slot);
@@ -709,9 +693,9 @@ public class InventoryHandler
         final int expGained = ii.getExpCache(itemid) * c.getChannelServer().getExpRate();
         c.getPlayer().gainExp(expGained, true, false, false);
         c.getSession().write(MaplePacketCreator.enableActions());
-        MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.USE, slot, (short)1, false);
+        MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.USE, slot, (short) 1, false);
     }
-    
+
     public static void UseSummonBag(final SeekableLittleEndianAccessor slea, final MapleClient c, final MapleCharacter chr) {
         if (!chr.isAlive()) {
             c.getSession().write(MaplePacketCreator.enableActions());
@@ -723,11 +707,11 @@ public class InventoryHandler
             return;
         }
         c.getPlayer().updateTick(slea.readInt());
-        final byte slot = (byte)slea.readShort();
+        final byte slot = (byte) slea.readShort();
         final int itemId = slea.readInt();
         final IItem toUse = chr.getInventory(MapleInventoryType.USE).getItem(slot);
         if (toUse != null && toUse.getQuantity() >= 1 && toUse.getItemId() == itemId) {
-            MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.USE, slot, (short)1, false);
+            MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.USE, slot, (short) 1, false);
             if (c.getPlayer().isGM() || !FieldLimitType.SummoningBag.check(chr.getMap().getFieldLimit())) {
                 final List<Pair<Integer, Integer>> toSpawn = MapleItemInformationProvider.getInstance().getSummonMobs(itemId);
                 if (toSpawn == null) {
@@ -745,12 +729,12 @@ public class InventoryHandler
         }
         c.getSession().write(MaplePacketCreator.enableActions());
     }
-    
+
     public static void UseTreasureChest(final SeekableLittleEndianAccessor slea, final MapleClient c, final MapleCharacter chr) {
         final short slot = slea.readShort();
         final int itemid = slea.readInt();
         final boolean useCash = slea.readByte() > 0;
-        final IItem toUse = chr.getInventory(MapleInventoryType.ETC).getItem((byte)slot);
+        final IItem toUse = chr.getInventory(MapleInventoryType.ETC).getItem((byte) slot);
         if (toUse == null || toUse.getQuantity() <= 0 || toUse.getItemId() != itemid) {
             c.getSession().write(MaplePacketCreator.enableActions());
             return;
@@ -796,39 +780,35 @@ public class InventoryHandler
         if (useCash && chr.getCSPoints(2) < price) {
             chr.dropMessage(1, "抵用券不足" + price + "点");
             c.getSession().write(MaplePacketCreator.enableActions());
-        }
-        else if (chr.getInventory(MapleInventoryType.CASH).countById(keyIDforRemoval) < 0) {
+        } else if (chr.getInventory(MapleInventoryType.CASH).countById(keyIDforRemoval) < 0) {
             chr.dropMessage(1, "孵化" + box + "需要" + key + "，请到商城购买！");
             c.getSession().write(MaplePacketCreator.enableActions());
-        }
-        else if (chr.getInventory(MapleInventoryType.CASH).countById(keyIDforRemoval) > 0 || (useCash && chr.getCSPoints(2) > price)) {
-            final IItem item = MapleInventoryManipulator.addbyId_Gachapon(c, reward, (short)amount);
+        } else if (chr.getInventory(MapleInventoryType.CASH).countById(keyIDforRemoval) > 0 || (useCash && chr.getCSPoints(2) > price)) {
+            final IItem item = MapleInventoryManipulator.addbyId_Gachapon(c, reward, (short) amount);
             if (item == null) {
                 chr.dropMessage(1, "孵化失败，请重试一次。\r\n你的背包可能满了");
                 c.getSession().write(MaplePacketCreator.enableActions());
                 return;
             }
-            MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.ETC, slot, (short)1, true);
+            MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.ETC, slot, (short) 1, true);
             if (useCash) {
                 chr.modifyCSPoints(2, -price, true);
-            }
-            else {
+            } else {
                 MapleInventoryManipulator.removeById(c, MapleInventoryType.CASH, keyIDforRemoval, 1, true, false);
             }
-            c.getSession().write(MaplePacketCreator.getShowItemGain(reward, (short)amount, true));
+            c.getSession().write(MaplePacketCreator.getShowItemGain(reward, (short) amount, true));
             final byte rareness = GameConstants.gachaponRareItem(item.getItemId());
             if (rareness > 0 || reward > 0) {
                 World.Broadcast.broadcastMessage(MaplePacketCreator.getGachaponMega(c.getPlayer().getName(), " : 从" + box + "中获得{" + ii.getName(item.getItemId()) + "}！大家一起恭喜他（她）吧！！！！", item, rareness, c.getChannel()));
             }
-        }
-        else {
+        } else {
             chr.dropMessage(5, "孵化" + box + "失败\r\n请检查是否有" + key + "\r\n或者抵用卷是否有" + price + "点。");
             c.getSession().write(MaplePacketCreator.enableActions());
         }
     }
-    
+
     public static void UseCashItem(final SeekableLittleEndianAccessor slea, final MapleClient c) {
-        final byte slot = (byte)slea.readShort();
+        final byte slot = (byte) slea.readShort();
         final int itemId = slea.readInt();
         final IItem toUse = c.getPlayer().getInventory(MapleInventoryType.CASH).getItem(slot);
         if (toUse == null || toUse.getItemId() != itemId || toUse.getQuantity() < 1) {
@@ -837,7 +817,8 @@ public class InventoryHandler
         }
         boolean used = false;
         boolean cc = false;
-        Label_10360: {
+        Label_10360:
+        {
             switch (itemId) {
                 case 5042000: {
                     c.getPlayer().changeMap(701000200);
@@ -860,8 +841,7 @@ public class InventoryHandler
                                 c.getPlayer().changeMap(map, map.getPortal(0));
                             }
                             used = true;
-                        }
-                        else {
+                        } else {
                             c.getPlayer().dropMessage(1, "发生未知错误.");
                         }
                         break;
@@ -885,8 +865,7 @@ public class InventoryHandler
                             c.getPlayer().changeMap(victim.getMap(), victim.getMap().findClosestSpawnpoint(victim.getPosition()));
                             used = true;
                         }
-                    }
-                    else {
+                    } else {
                         c.getPlayer().dropMessage(1, "在此频道未找到该玩家.");
                     }
                     break;
@@ -973,50 +952,50 @@ public class InventoryHandler
                         switch (apto) {
                             case 256: {
                                 final int toSet = playerst.getStr() + 1;
-                                playerst.setStr((short)toSet);
+                                playerst.setStr((short) toSet);
                                 statupdate.add(new Pair<MapleStat, Integer>(MapleStat.STR, toSet));
                                 break;
                             }
                             case 512: {
                                 final int toSet = playerst.getDex() + 1;
-                                playerst.setDex((short)toSet);
+                                playerst.setDex((short) toSet);
                                 statupdate.add(new Pair<MapleStat, Integer>(MapleStat.DEX, toSet));
                                 break;
                             }
                             case 1024: {
                                 final int toSet = playerst.getInt() + 1;
-                                playerst.setInt((short)toSet);
+                                playerst.setInt((short) toSet);
                                 statupdate.add(new Pair<MapleStat, Integer>(MapleStat.INT, toSet));
                                 break;
                             }
                             case 2048: {
                                 final int toSet = playerst.getLuk() + 1;
-                                playerst.setLuk((short)toSet);
+                                playerst.setLuk((short) toSet);
                                 statupdate.add(new Pair<MapleStat, Integer>(MapleStat.LUK, toSet));
                             }
                         }
                         switch (apfrom) {
                             case 256: {
                                 final int toSet = playerst.getStr() - 1;
-                                playerst.setStr((short)toSet);
+                                playerst.setStr((short) toSet);
                                 statupdate.add(new Pair<MapleStat, Integer>(MapleStat.STR, toSet));
                                 break;
                             }
                             case 512: {
                                 final int toSet = playerst.getDex() - 1;
-                                playerst.setDex((short)toSet);
+                                playerst.setDex((short) toSet);
                                 statupdate.add(new Pair<MapleStat, Integer>(MapleStat.DEX, toSet));
                                 break;
                             }
                             case 1024: {
                                 final int toSet = playerst.getInt() - 1;
-                                playerst.setInt((short)toSet);
+                                playerst.setInt((short) toSet);
                                 statupdate.add(new Pair<MapleStat, Integer>(MapleStat.INT, toSet));
                                 break;
                             }
                             case 2048: {
                                 final int toSet = playerst.getLuk() - 1;
-                                playerst.setLuk((short)toSet);
+                                playerst.setLuk((short) toSet);
                                 statupdate.add(new Pair<MapleStat, Integer>(MapleStat.LUK, toSet));
                             }
                         }
@@ -1040,8 +1019,8 @@ public class InventoryHandler
                         break;
                     }
                     if (c.getPlayer().getSkillLevel(skillSPTo) + 1 <= skillSPTo.getMaxLevel() && c.getPlayer().getSkillLevel(skillSPFrom) > 0) {
-                        c.getPlayer().changeSkillLevel(skillSPFrom, (byte)(c.getPlayer().getSkillLevel(skillSPFrom) - 1), c.getPlayer().getMasterLevel(skillSPFrom));
-                        c.getPlayer().changeSkillLevel(skillSPTo, (byte)(c.getPlayer().getSkillLevel(skillSPTo) + 1), c.getPlayer().getMasterLevel(skillSPTo));
+                        c.getPlayer().changeSkillLevel(skillSPFrom, (byte) (c.getPlayer().getSkillLevel(skillSPFrom) - 1), c.getPlayer().getMasterLevel(skillSPFrom));
+                        c.getPlayer().changeSkillLevel(skillSPTo, (byte) (c.getPlayer().getSkillLevel(skillSPTo) + 1), c.getPlayer().getMasterLevel(skillSPTo));
                         used = true;
                         break;
                     }
@@ -1050,7 +1029,7 @@ public class InventoryHandler
                 case 5060000: {
                     IItem daojuquming = null;
                     final int zhuangbeicao = slea.readShort();
-                    daojuquming = c.getPlayer().getInventory(MapleInventoryType.EQUIPPED).getItem((byte)zhuangbeicao);
+                    daojuquming = c.getPlayer().getInventory(MapleInventoryType.EQUIPPED).getItem((byte) zhuangbeicao);
                     c.getSession().write(MaplePacketCreator.serverNotice(5, "请将道具直接点在你需要刻名的装备上."));
                     if (daojuquming == null) {
                         c.getSession().write(MaplePacketCreator.enableActions());
@@ -1121,17 +1100,16 @@ public class InventoryHandler
                     break;
                 }
                 case 5520000: {
-                    final MapleInventoryType type = MapleInventoryType.getByType((byte)slea.readInt());
-                    final IItem item = c.getPlayer().getInventory(type).getItem((byte)slea.readInt());
+                    final MapleInventoryType type = MapleInventoryType.getByType((byte) slea.readInt());
+                    final IItem item = c.getPlayer().getInventory(type).getItem((byte) slea.readInt());
                     if (item != null && !ItemFlag.KARMA_EQ.check(item.getFlag()) && !ItemFlag.KARMA_USE.check(item.getFlag()) && ((itemId == 5520000 && MapleItemInformationProvider.getInstance().isKarmaEnabled(item.getItemId())) || MapleItemInformationProvider.getInstance().isPKarmaEnabled(item.getItemId()))) {
                         byte flag = item.getFlag();
                         if (type == MapleInventoryType.EQUIP) {
-                            flag |= (byte)ItemFlag.KARMA_EQ.getValue();
+                            flag |= (byte) ItemFlag.KARMA_EQ.getValue();
+                        } else {
+                            flag |= (byte) ItemFlag.KARMA_USE.getValue();
                         }
-                        else {
-                            flag |= (byte)ItemFlag.KARMA_USE.getValue();
-                        }
-                        flag &= (byte)~ItemFlag.UNTRADEABLE.getValue();
+                        flag &= (byte) ~ItemFlag.UNTRADEABLE.getValue();
                         item.setFlag(flag);
                         c.getPlayer().forceReAddItem_Flag(item, type);
                         used = true;
@@ -1141,13 +1119,13 @@ public class InventoryHandler
                 }
                 case 5570000: {
                     slea.readInt();
-                    final Equip item2 = (Equip)c.getPlayer().getInventory(MapleInventoryType.EQUIP).getItem((byte)slea.readInt());
+                    final Equip item2 = (Equip) c.getPlayer().getInventory(MapleInventoryType.EQUIP).getItem((byte) slea.readInt());
                     if (item2 == null) {
                         break;
                     }
                     if (GameConstants.canHammer(item2.getItemId()) && MapleItemInformationProvider.getInstance().getSlots(item2.getItemId()) > 0 && item2.getViciousHammer() <= 2) {
-                        item2.setViciousHammer((byte)(item2.getViciousHammer() + 1));
-                        item2.setUpgradeSlots((byte)(item2.getUpgradeSlots() + 1));
+                        item2.setViciousHammer((byte) (item2.getViciousHammer() + 1));
+                        item2.setUpgradeSlots((byte) (item2.getUpgradeSlots() + 1));
                         c.getPlayer().forceReAddItem(item2, MapleInventoryType.EQUIP);
                         used = true;
                         cc = true;
@@ -1158,11 +1136,11 @@ public class InventoryHandler
                     break;
                 }
                 case 5060001: {
-                    final MapleInventoryType type = MapleInventoryType.getByType((byte)slea.readInt());
-                    final IItem item = c.getPlayer().getInventory(type).getItem((byte)slea.readInt());
+                    final MapleInventoryType type = MapleInventoryType.getByType((byte) slea.readInt());
+                    final IItem item = c.getPlayer().getInventory(type).getItem((byte) slea.readInt());
                     if (item != null && item.getExpiration() == -1L) {
                         byte flag = item.getFlag();
-                        flag |= (byte)ItemFlag.LOCK.getValue();
+                        flag |= (byte) ItemFlag.LOCK.getValue();
                         item.setFlag(flag);
                         c.getPlayer().forceReAddItem_Flag(item, type);
                         used = true;
@@ -1171,11 +1149,11 @@ public class InventoryHandler
                     break;
                 }
                 case 5061000: {
-                    final MapleInventoryType type = MapleInventoryType.getByType((byte)slea.readInt());
-                    final IItem item = c.getPlayer().getInventory(type).getItem((byte)slea.readInt());
+                    final MapleInventoryType type = MapleInventoryType.getByType((byte) slea.readInt());
+                    final IItem item = c.getPlayer().getInventory(type).getItem((byte) slea.readInt());
                     if (item != null && item.getExpiration() == -1L) {
                         byte flag = item.getFlag();
-                        flag |= (byte)ItemFlag.LOCK.getValue();
+                        flag |= (byte) ItemFlag.LOCK.getValue();
                         item.setFlag(flag);
                         item.setExpiration(System.currentTimeMillis() + 604800000L);
                         c.getPlayer().forceReAddItem_Flag(item, type);
@@ -1185,12 +1163,12 @@ public class InventoryHandler
                     break;
                 }
                 case 5061001: {
-                    final MapleInventoryType type = MapleInventoryType.getByType((byte)slea.readInt());
-                    final IItem item = c.getPlayer().getInventory(type).getItem((byte)slea.readInt());
+                    final MapleInventoryType type = MapleInventoryType.getByType((byte) slea.readInt());
+                    final IItem item = c.getPlayer().getInventory(type).getItem((byte) slea.readInt());
                     if (item != null && item.getExpiration() == -1L) {
                         short flag2 = item.getFlag();
-                        flag2 |= (short)ItemFlag.LOCK.getValue();
-                        item.setFlag((byte)flag2);
+                        flag2 |= (short) ItemFlag.LOCK.getValue();
+                        item.setFlag((byte) flag2);
                         long days = 0L;
                         switch (itemId) {
                             case 5061001: {
@@ -1211,12 +1189,12 @@ public class InventoryHandler
                     break;
                 }
                 case 5061002: {
-                    final MapleInventoryType type = MapleInventoryType.getByType((byte)slea.readInt());
-                    final IItem item = c.getPlayer().getInventory(type).getItem((byte)slea.readInt());
+                    final MapleInventoryType type = MapleInventoryType.getByType((byte) slea.readInt());
+                    final IItem item = c.getPlayer().getInventory(type).getItem((byte) slea.readInt());
                     if (item != null && item.getExpiration() == -1L) {
                         short flag2 = item.getFlag();
-                        flag2 |= (short)ItemFlag.LOCK.getValue();
-                        item.setFlag((byte)flag2);
+                        flag2 |= (short) ItemFlag.LOCK.getValue();
+                        item.setFlag((byte) flag2);
                         long days = 0L;
                         switch (itemId) {
                             case 5061002: {
@@ -1237,12 +1215,12 @@ public class InventoryHandler
                     break;
                 }
                 case 5061003: {
-                    final MapleInventoryType type = MapleInventoryType.getByType((byte)slea.readInt());
-                    final IItem item = c.getPlayer().getInventory(type).getItem((byte)slea.readInt());
+                    final MapleInventoryType type = MapleInventoryType.getByType((byte) slea.readInt());
+                    final IItem item = c.getPlayer().getInventory(type).getItem((byte) slea.readInt());
                     if (item != null && item.getExpiration() == -1L) {
                         short flag2 = item.getFlag();
-                        flag2 |= (short)ItemFlag.LOCK.getValue();
-                        item.setFlag((byte)flag2);
+                        flag2 |= (short) ItemFlag.LOCK.getValue();
+                        item.setFlag((byte) flag2);
                         long days = 0L;
                         switch (itemId) {
                             case 5061003: {
@@ -1292,11 +1270,10 @@ public class InventoryHandler
                     }
                     if (c.getPlayer().isPlayer()) {
                         c.getPlayer().getMap().broadcastMessage(MaplePacketCreator.serverNotice(2, sb.toString()));
-                        System.out.println("[玩家廣播頻道 " + c.getPlayer().getName() + "] : " + message);
-                    }
-                    else if (c.getPlayer().isGM()) {
+                        log.info("[玩家廣播頻道 " + c.getPlayer().getName() + "] : " + message);
+                    } else if (c.getPlayer().isGM()) {
                         c.getPlayer().getMap().broadcastMessage(MaplePacketCreator.serverNotice(2, sb.toString()));
-                        System.out.println("[ＧＭ廣播頻道 " + c.getPlayer().getName() + "] : " + message);
+                        log.info("[ＧＭ廣播頻道 " + c.getPlayer().getName() + "] : " + message);
                     }
                     used = true;
                     break;
@@ -1331,11 +1308,10 @@ public class InventoryHandler
                     sb2.append(message);
                     if (c.getPlayer().isPlayer()) {
                         c.getPlayer().getMap().broadcastMessage(MaplePacketCreator.serverNotice(2, sb2.toString()));
-                        System.out.println("[玩家廣播頻道 " + c.getPlayer().getName() + "] : " + message);
-                    }
-                    else if (c.getPlayer().isGM()) {
+                        log.info("[玩家廣播頻道 " + c.getPlayer().getName() + "] : " + message);
+                    } else if (c.getPlayer().isGM()) {
                         c.getPlayer().getMap().broadcastMessage(MaplePacketCreator.serverNotice(2, sb2.toString()));
-                        System.out.println("[ＧＭ廣播頻道 " + c.getPlayer().getName() + "] : " + message);
+                        log.info("[ＧＭ廣播頻道 " + c.getPlayer().getName() + "] : " + message);
                     }
                     used = true;
                     break;
@@ -1373,11 +1349,10 @@ public class InventoryHandler
                     }
                     if (c.getPlayer().isPlayer()) {
                         World.Broadcast.broadcastSmega(MaplePacketCreator.tripleSmega(messages, ear3, c.getChannel()).getBytes());
-                        System.out.println("[玩家廣播頻道 " + c.getPlayer().getName() + "] : " + messages);
-                    }
-                    else if (c.getPlayer().isGM()) {
+                        log.info("[玩家廣播頻道 " + c.getPlayer().getName() + "] : " + messages);
+                    } else if (c.getPlayer().isGM()) {
                         World.Broadcast.broadcastSmega(MaplePacketCreator.tripleSmega(messages, ear3, c.getChannel()).getBytes());
-                        System.out.println("[ＧＭ廣播頻道 " + c.getPlayer().getName() + "] : " + messages);
+                        log.info("[ＧＭ廣播頻道 " + c.getPlayer().getName() + "] : " + messages);
                     }
                     used = true;
                     break;
@@ -1412,11 +1387,10 @@ public class InventoryHandler
                     }
                     if (c.getPlayer().isPlayer()) {
                         World.Broadcast.broadcastSmega(MaplePacketCreator.serverNotice(11, c.getChannel(), sb.toString(), ear).getBytes());
-                        System.out.println("[玩家廣播頻道 " + c.getPlayer().getName() + "] : " + message);
-                    }
-                    else if (c.getPlayer().isGM()) {
+                        log.info("[玩家廣播頻道 " + c.getPlayer().getName() + "] : " + message);
+                    } else if (c.getPlayer().isGM()) {
                         World.Broadcast.broadcastSmega(MaplePacketCreator.serverNotice(11, c.getChannel(), sb.toString(), ear).getBytes());
-                        System.out.println("[ＧＭ廣播頻道 " + c.getPlayer().getName() + "] : " + message);
+                        log.info("[ＧＭ廣播頻道 " + c.getPlayer().getName() + "] : " + message);
                     }
                     used = true;
                     break;
@@ -1451,11 +1425,10 @@ public class InventoryHandler
                     }
                     if (c.getPlayer().isPlayer()) {
                         World.Broadcast.broadcastSmega(MaplePacketCreator.serverNotice(12, c.getChannel(), sb.toString(), ear).getBytes());
-                        System.out.println("[玩家廣播頻道 " + c.getPlayer().getName() + "] : " + message);
-                    }
-                    else if (c.getPlayer().isGM()) {
+                        log.info("[玩家廣播頻道 " + c.getPlayer().getName() + "] : " + message);
+                    } else if (c.getPlayer().isGM()) {
                         World.Broadcast.broadcastSmega(MaplePacketCreator.serverNotice(12, c.getChannel(), sb.toString(), ear).getBytes());
-                        System.out.println("[ＧＭ廣播頻道 " + c.getPlayer().getName() + "] : " + message);
+                        log.info("[ＧＭ廣播頻道 " + c.getPlayer().getName() + "] : " + message);
                     }
                     used = true;
                     break;
@@ -1490,11 +1463,10 @@ public class InventoryHandler
                     }
                     if (c.getPlayer().isPlayer()) {
                         World.Broadcast.broadcastSmega(MaplePacketCreator.serverNotice(3, c.getChannel(), sb.toString(), ear).getBytes());
-                        System.out.println("[玩家廣播頻道 " + c.getPlayer().getName() + "] : " + message);
-                    }
-                    else if (c.getPlayer().isGM()) {
+                        log.info("[玩家廣播頻道 " + c.getPlayer().getName() + "] : " + message);
+                    } else if (c.getPlayer().isGM()) {
                         World.Broadcast.broadcastSmega(MaplePacketCreator.serverNotice(3, c.getChannel(), sb.toString(), ear).getBytes());
-                        System.out.println("[ＧＭ廣播頻道 " + c.getPlayer().getName() + "] : " + message);
+                        log.info("[ＧＭ廣播頻道 " + c.getPlayer().getName() + "] : " + message);
                     }
                     used = true;
                     break;
@@ -1524,8 +1496,8 @@ public class InventoryHandler
                     final boolean ear = slea.readByte() > 0;
                     IItem item3 = null;
                     if (slea.readByte() == 1) {
-                        final byte invType = (byte)slea.readInt();
-                        final byte pos = (byte)slea.readInt();
+                        final byte invType = (byte) slea.readInt();
+                        final byte pos = (byte) slea.readInt();
                         item3 = c.getPlayer().getInventory(MapleInventoryType.getByType(invType)).getItem(pos);
                     }
                     if ((c.getPlayer().isPlayer() && message.indexOf("幹") != -1) || message.indexOf("豬") != -1 || message.indexOf("笨") != -1 || message.indexOf("靠") != -1 || message.indexOf("腦包") != -1 || message.indexOf("腦") != -1 || message.indexOf("智障") != -1 || message.indexOf("白目") != -1 || message.indexOf("白吃") != -1) {
@@ -1535,11 +1507,10 @@ public class InventoryHandler
                     }
                     if (c.getPlayer().isPlayer()) {
                         World.Broadcast.broadcastSmega(MaplePacketCreator.itemMegaphone(sb.toString(), ear, c.getChannel(), item3).getBytes());
-                        System.out.println("[玩家廣播頻道 " + c.getPlayer().getName() + "] : " + message);
-                    }
-                    else if (c.getPlayer().isGM()) {
+                        log.info("[玩家廣播頻道 " + c.getPlayer().getName() + "] : " + message);
+                    } else if (c.getPlayer().isGM()) {
                         World.Broadcast.broadcastSmega(MaplePacketCreator.itemMegaphone(sb.toString(), ear, c.getChannel(), item3).getBytes());
-                        System.out.println("[ＧＭ廣播頻道 " + c.getPlayer().getName() + "] : " + message);
+                        log.info("[ＧＭ廣播頻道 " + c.getPlayer().getName() + "] : " + message);
                     }
                     used = true;
                     break;
@@ -1565,8 +1536,7 @@ public class InventoryHandler
                     MapleCharacter victim2 = (tvType == 1 || tvType == 4) ? null : c.getChannelServer().getPlayerStorage().getCharacterByName(slea.readMapleAsciiString());
                     if (tvType == 0 || tvType == 3) {
                         victim2 = null;
-                    }
-                    else if (victim2 == null) {
+                    } else if (victim2 == null) {
                         c.getPlayer().dropMessage(1, "这个角色不是在频道里.");
                         break;
                     }
@@ -1599,7 +1569,7 @@ public class InventoryHandler
                     final MapleCharacter chr = c.getPlayer();
                     final int color = (itemId - 5152100) * 100;
                     if (chr.isGM()) {
-                        System.out.println("使用一次性隐形眼镜 - 道具: " + itemId + " 颜色: " + color);
+                        log.info("使用一次性隐形眼镜 - 道具: " + itemId + " 颜色: " + color);
                     }
                     if (color >= 0) {
                         changeFace(chr, color);
@@ -1618,7 +1588,7 @@ public class InventoryHandler
                 case 5190006:
                 case 5190007:
                 case 5190008: {
-                    final int uniqueid = (int)slea.readLong();
+                    final int uniqueid = (int) slea.readLong();
                     MaplePet pet = c.getPlayer().getPet(0);
                     int slo = 0;
                     if (pet == null) {
@@ -1644,7 +1614,7 @@ public class InventoryHandler
                     final MaplePet.PetFlag zz = MaplePet.PetFlag.getByAddId(itemId);
                     if (zz != null && !zz.check(pet.getFlags())) {
                         pet.setFlags(pet.getFlags() | zz.getValue());
-                        c.getSession().write(PetPacket.updatePet(pet, c.getPlayer().getInventory(MapleInventoryType.CASH).getItem((byte)pet.getInventoryPosition()), true));
+                        c.getSession().write(PetPacket.updatePet(pet, c.getPlayer().getInventory(MapleInventoryType.CASH).getItem((byte) pet.getInventoryPosition()), true));
                         c.getPlayer().getClient().getSession().write(PetPacket.petStatUpdate(c.getPlayer()));
                         c.getSession().write(MaplePacketCreator.enableActions());
                         c.getSession().write(MTSCSPacket.changePetFlag(uniqueid, true, zz.getValue()));
@@ -1658,7 +1628,7 @@ public class InventoryHandler
                 case 5191002:
                 case 5191003:
                 case 5191004: {
-                    final int uniqueid = (int)slea.readLong();
+                    final int uniqueid = (int) slea.readLong();
                     MaplePet pet = c.getPlayer().getPet(0);
                     int slo = 0;
                     if (pet == null) {
@@ -1684,7 +1654,7 @@ public class InventoryHandler
                     final MaplePet.PetFlag zz = MaplePet.PetFlag.getByDelId(itemId);
                     if (zz != null && zz.check(pet.getFlags())) {
                         pet.setFlags(pet.getFlags() - zz.getValue());
-                        c.getSession().write(PetPacket.updatePet(pet, c.getPlayer().getInventory(MapleInventoryType.CASH).getItem((byte)pet.getInventoryPosition()), true));
+                        c.getSession().write(PetPacket.updatePet(pet, c.getPlayer().getInventory(MapleInventoryType.CASH).getItem((byte) pet.getInventoryPosition()), true));
                         c.getSession().write(MaplePacketCreator.enableActions());
                         c.getSession().write(MTSCSPacket.changePetFlag(uniqueid, false, zz.getValue()));
                         used = true;
@@ -1700,7 +1670,7 @@ public class InventoryHandler
                     }
                     final String nName = slea.readMapleAsciiString();
                     pet2.setName(nName);
-                    c.getSession().write(PetPacket.updatePet(pet2, c.getPlayer().getInventory(MapleInventoryType.CASH).getItem((byte)pet2.getInventoryPosition()), true));
+                    c.getSession().write(PetPacket.updatePet(pet2, c.getPlayer().getInventory(MapleInventoryType.CASH).getItem((byte) pet2.getInventoryPosition()), true));
                     c.getSession().write(MaplePacketCreator.enableActions());
                     c.getPlayer().getMap().broadcastMessage(MTSCSPacket.changePetName(c.getPlayer(), nName, slo2));
                     used = true;
@@ -1759,8 +1729,7 @@ public class InventoryHandler
                     if (pet2.getCloseness() < 30000) {
                         if (pet2.getCloseness() + 100 > 30000) {
                             pet2.setCloseness(30000);
-                        }
-                        else {
+                        } else {
                             pet2.setCloseness(pet2.getCloseness() + 100);
                         }
                         if (pet2.getCloseness() >= GameConstants.getClosenessNeededForLevel(pet2.getLevel() + 1)) {
@@ -1770,7 +1739,7 @@ public class InventoryHandler
                         }
                     }
                     c.getSession().write(PetPacket.updatePet(pet2, c.getPlayer().getInventory(MapleInventoryType.CASH).getItem(pet2.getInventoryPosition()), true));
-                    c.getPlayer().getMap().broadcastMessage(c.getPlayer(), PetPacket.commandResponse(c.getPlayer().getId(), (byte)1, petindex, true, true), true);
+                    c.getPlayer().getMap().broadcastMessage(c.getPlayer(), PetPacket.commandResponse(c.getPlayer().getId(), (byte) 1, petindex, true, true), true);
                     used = true;
                     break;
                 }
@@ -1788,7 +1757,7 @@ public class InventoryHandler
                 case 5280001:
                 case 5281000:
                 case 5281001: {
-                    final Rectangle bounds = new Rectangle((int)c.getPlayer().getPosition().getX(), (int)c.getPlayer().getPosition().getY(), 1, 1);
+                    final Rectangle bounds = new Rectangle((int) c.getPlayer().getPosition().getX(), (int) c.getPlayer().getPosition().getY(), 1, 1);
                     final MapleMist mist = new MapleMist(bounds, c.getPlayer());
                     c.getPlayer().getMap().spawnMist(mist, 10000, true);
                     c.getPlayer().getMap().broadcastMessage(MaplePacketCreator.getChatText(c.getPlayer().getId(), "Oh no, I farted!", false, 1));
@@ -1866,11 +1835,10 @@ public class InventoryHandler
                     }
                     if (c.getPlayer().isPlayer()) {
                         World.Broadcast.broadcastSmega(MaplePacketCreator.getAvatarMega(c.getPlayer(), c.getChannel(), itemId, text, ear2).getBytes());
-                        System.out.println("[玩家廣播頻道 " + c.getPlayer().getName() + "] : " + text);
-                    }
-                    else if (c.getPlayer().isGM()) {
+                        log.info("[玩家廣播頻道 " + c.getPlayer().getName() + "] : " + text);
+                    } else if (c.getPlayer().isGM()) {
                         World.Broadcast.broadcastSmega(MaplePacketCreator.getAvatarMega(c.getPlayer(), c.getChannel(), itemId, text, ear2).getBytes());
-                        System.out.println("[ＧＭ廣播頻道 " + c.getPlayer().getName() + "] : " + text);
+                        log.info("[ＧＭ廣播頻道 " + c.getPlayer().getName() + "] : " + text);
                     }
                     used = true;
                     break;
@@ -1896,8 +1864,7 @@ public class InventoryHandler
                             item4.setExpiration(item4.getExpiration() + days2 * 24 * 60 * 60 * 1000);
                             c.getPlayer().forceReAddItem(item4, MapleInventoryType.EQUIPPED);
                             used = true;
-                        }
-                        else {
+                        } else {
                             c.getPlayer().dropMessage(1, "此装备无法使用.");
                         }
                         break;
@@ -1944,8 +1911,8 @@ public class InventoryHandler
                             break Label_10360;
                         }
                         default: {
-                            System.out.println("Unhandled CS item : " + itemId);
-                            System.out.println(slea.toString(true));
+                            log.info("Unhandled CS item : " + itemId);
+                            log.info(slea.toString(true));
                             break Label_10360;
                         }
                     }
@@ -1953,7 +1920,7 @@ public class InventoryHandler
             }
         }
         if (used) {
-            MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.CASH, slot, (short)1, false, true);
+            MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.CASH, slot, (short) 1, false, true);
         }
         c.getSession().write(MaplePacketCreator.enableActions());
         c.getSession().write(MaplePacketCreator.enableActions());
@@ -1966,7 +1933,7 @@ public class InventoryHandler
             c.getPlayer().fakeRelog();
         }
     }
-    
+
     public static void Pickup_Player(final SeekableLittleEndianAccessor slea, final MapleClient c, final MapleCharacter chr) {
         if (c.getPlayer().getPlayerShop() != null || c.getPlayer().getConversation() > 0 || c.getPlayer().getTrade() != null) {
             return;
@@ -1982,7 +1949,7 @@ public class InventoryHandler
             c.getSession().write(MaplePacketCreator.enableActions());
             return;
         }
-        final MapleMapItem mapitem = (MapleMapItem)ob;
+        final MapleMapItem mapitem = (MapleMapItem) ob;
         final Lock lock = mapitem.getLock();
         lock.lock();
         try {
@@ -2002,8 +1969,7 @@ public class InventoryHandler
             if (Distance > 2500.0) {
                 chr.getCheatTracker().registerOffense(CheatingOffense.全图吸物_客户端, String.valueOf(Distance));
                 World.Broadcast.broadcastGMMessage(MaplePacketCreator.serverNotice(6, "[GM消息] " + chr.getName() + " ID: " + chr.getId() + " (等级 " + chr.getLevel() + ") 全屏捡物。地图ID: " + chr.getMapId() + " 范围: " + Distance).getBytes());
-            }
-            else if (chr.getPosition().distanceSq(mapitem.getPosition()) > 640000.0) {
+            } else if (chr.getPosition().distanceSq(mapitem.getPosition()) > 640000.0) {
                 chr.getCheatTracker().registerOffense(CheatingOffense.全图吸物_服务端);
                 World.Broadcast.broadcastGMMessage(MaplePacketCreator.serverNotice(6, "[GM消息] " + chr.getName() + " ID: " + chr.getId() + " (等级 " + chr.getLevel() + ") 全屏捡物。地图ID: " + chr.getMapId() + " 范围: " + Distance).getBytes());
             }
@@ -2017,45 +1983,39 @@ public class InventoryHandler
                         }
                     }
                     for (final MapleCharacter i : toGive) {
-                        i.gainMeso(mapitem.getMeso() / toGive.size() + (i.getStat().hasPartyBonus ? ((int)(mapitem.getMeso() / 20.0)) : 0), true, true);
+                        i.gainMeso(mapitem.getMeso() / toGive.size() + (i.getStat().hasPartyBonus ? ((int) (mapitem.getMeso() / 20.0)) : 0), true, true);
                     }
-                }
-                else {
+                } else {
                     chr.gainMeso(mapitem.getMeso(), true, true);
                 }
                 removeItem(chr, mapitem, ob);
-            }
-            else if (MapleItemInformationProvider.getInstance().isPickupBlocked(mapitem.getItem().getItemId())) {
+            } else if (MapleItemInformationProvider.getInstance().isPickupBlocked(mapitem.getItem().getItemId())) {
                 c.getSession().write(MaplePacketCreator.enableActions());
                 c.getPlayer().dropMessage(5, "这个道具无法捡取.");
-            }
-            else if (useItem(c, mapitem.getItemId())) {
+            } else if (useItem(c, mapitem.getItemId())) {
                 removeItem(c.getPlayer(), mapitem, ob);
-            }
-            else if (MapleInventoryManipulator.checkSpace(c, mapitem.getItem().getItemId(), mapitem.getItem().getQuantity(), mapitem.getItem().getOwner())) {
+            } else if (MapleInventoryManipulator.checkSpace(c, mapitem.getItem().getItemId(), mapitem.getItem().getQuantity(), mapitem.getItem().getOwner())) {
                 if (mapitem.getItem().getQuantity() >= 50 && GameConstants.isUpgradeScroll(mapitem.getItem().getItemId())) {
                     c.setMonitored(true);
                 }
                 if (MapleInventoryManipulator.addFromDrop(c, mapitem.getItem(), true, mapitem.getDropper() instanceof MapleMonster)) {
                     removeItem(chr, mapitem, ob);
                 }
-            }
-            else {
+            } else {
                 c.getSession().write(MaplePacketCreator.getInventoryFull());
                 c.getSession().write(MaplePacketCreator.getShowInventoryFull());
                 c.getSession().write(MaplePacketCreator.enableActions());
             }
-        }
-        finally {
+        } finally {
             lock.unlock();
         }
     }
-    
+
     public static void Pickup_Pet(final SeekableLittleEndianAccessor slea, final MapleClient c, final MapleCharacter chr) {
         if (chr == null) {
             return;
         }
-        final byte petz = c.getPlayer().getPetIndex((int)slea.readLong());
+        final byte petz = c.getPlayer().getPetIndex((int) slea.readLong());
         final MaplePet pet = chr.getPet(petz);
         slea.skip(1);
         chr.updateTick(slea.readInt());
@@ -2064,7 +2024,7 @@ public class InventoryHandler
         if (ob == null || pet == null) {
             return;
         }
-        final MapleMapItem mapitem = (MapleMapItem)ob;
+        final MapleMapItem mapitem = (MapleMapItem) ob;
         if (mapitem.isPickedUp()) {
             c.getSession().write(MaplePacketCreator.getInventoryFull());
             return;
@@ -2092,8 +2052,7 @@ public class InventoryHandler
         if (Distance > 10000.0 && (mapitem.getMeso() > 0 || mapitem.getItemId() != 4001025)) {
             chr.getCheatTracker().registerOffense(CheatingOffense.宠物全图吸物_客户端, String.valueOf(Distance));
             World.Broadcast.broadcastGMMessage(MaplePacketCreator.serverNotice(6, "[GM消息] " + chr.getName() + " ID: " + chr.getId() + " (等级 " + chr.getLevel() + ") 全屏宠吸。地图ID: " + chr.getMapId() + " 范围: " + Distance).getBytes());
-        }
-        else if (pet.getPos().distanceSq(mapitem.getPosition()) > 640000.0) {
+        } else if (pet.getPos().distanceSq(mapitem.getPosition()) > 640000.0) {
             chr.getCheatTracker().registerOffense(CheatingOffense.宠物全图吸物_服务端);
             World.Broadcast.broadcastGMMessage(MaplePacketCreator.serverNotice(6, "[GM消息] " + chr.getName() + " ID: " + chr.getId() + " (等级 " + chr.getLevel() + ") 全屏宠吸。地图ID: " + chr.getMapId() + " 范围: " + Distance).getBytes());
         }
@@ -2108,22 +2067,18 @@ public class InventoryHandler
                     }
                 }
                 for (final MapleCharacter i : toGive) {
-                    i.gainMeso(splitMeso / toGive.size() + (i.getStat().hasPartyBonus ? ((int)(mapitem.getMeso() / 20.0)) : 0), true);
+                    i.gainMeso(splitMeso / toGive.size() + (i.getStat().hasPartyBonus ? ((int) (mapitem.getMeso() / 20.0)) : 0), true);
                 }
                 chr.gainMeso(mapitem.getMeso() - splitMeso, true);
-            }
-            else {
+            } else {
                 chr.gainMeso(mapitem.getMeso(), true);
             }
             removeItem_Pet(chr, mapitem, petz);
-        }
-        else if (MapleItemInformationProvider.getInstance().isPickupBlocked(mapitem.getItemId()) || mapitem.getItemId() / 10000 == 291) {
+        } else if (MapleItemInformationProvider.getInstance().isPickupBlocked(mapitem.getItemId()) || mapitem.getItemId() / 10000 == 291) {
             c.getSession().write(MaplePacketCreator.enableActions());
-        }
-        else if (useItem(c, mapitem.getItemId())) {
+        } else if (useItem(c, mapitem.getItemId())) {
             removeItem_Pet(chr, mapitem, petz);
-        }
-        else if (MapleInventoryManipulator.checkSpace(c, mapitem.getItemId(), mapitem.getItem().getQuantity(), mapitem.getItem().getOwner())) {
+        } else if (MapleInventoryManipulator.checkSpace(c, mapitem.getItemId(), mapitem.getItem().getQuantity(), mapitem.getItem().getOwner())) {
             if (mapitem.getItem().getQuantity() >= 50 && mapitem.getItemId() == 2340000) {
                 c.setMonitored(true);
             }
@@ -2131,7 +2086,7 @@ public class InventoryHandler
             removeItem_Pet(chr, mapitem, petz);
         }
     }
-    
+
     public static boolean useItem(final MapleClient c, final int id) {
         if (GameConstants.isUse(id)) {
             final MapleItemInformationProvider ii = MapleItemInformationProvider.getInstance();
@@ -2145,44 +2100,42 @@ public class InventoryHandler
                                 ii.getItemEffect(id).applyTo(chr);
                             }
                         }
-                    }
-                    else {
+                    } else {
                         ii.getItemEffect(id).applyTo(c.getPlayer());
                     }
-                }
-                else {
+                } else {
                     ii.getItemEffect(id).applyTo(c.getPlayer());
                 }
-                c.getSession().write(MaplePacketCreator.getShowItemGain(id, (short)1));
+                c.getSession().write(MaplePacketCreator.getShowItemGain(id, (short) 1));
                 return true;
             }
         }
         return false;
     }
-    
+
     public static void removeItem_Pet(final MapleCharacter chr, final MapleMapItem mapitem, final int pet) {
         mapitem.setPickedUp(true);
         chr.getMap().broadcastMessage(MaplePacketCreator.removeItemFromMap(mapitem.getObjectId(), 5, chr.getId(), pet), mapitem.getPosition());
         chr.getMap().removeMapObject(mapitem);
     }
-    
+
     private static void removeItem(final MapleCharacter chr, final MapleMapItem mapitem, final MapleMapObject ob) {
         mapitem.setPickedUp(true);
         chr.getMap().broadcastMessage(MaplePacketCreator.removeItemFromMap(mapitem.getObjectId(), 2, chr.getId()), mapitem.getPosition());
         chr.getMap().removeMapObject(ob);
     }
-    
+
     private static void addMedalString(final MapleCharacter c, final StringBuilder sb) {
-        final IItem medal = c.getInventory(MapleInventoryType.EQUIPPED).getItem((short)(-26));
+        final IItem medal = c.getInventory(MapleInventoryType.EQUIPPED).getItem((short) (-26));
         if (medal != null) {
             sb.append("<");
             sb.append(MapleItemInformationProvider.getInstance().getName(medal.getItemId()));
             sb.append("> ");
         }
     }
-    
+
     public static void OwlMinerva(final SeekableLittleEndianAccessor slea, final MapleClient c) {
-        final byte slot = (byte)slea.readShort();
+        final byte slot = (byte) slea.readShort();
         final int itemid = slea.readInt();
         final IItem toUse = c.getPlayer().getInventory(MapleInventoryType.USE).getItem(slot);
         if (toUse != null && toUse.getQuantity() > 0 && toUse.getItemId() == itemid && itemid == 2310000) {
@@ -2191,26 +2144,24 @@ public class InventoryHandler
             if (hms.size() > 0) {
                 c.getSession().write(MaplePacketCreator.getOwlSearched(itemSearch, hms));
                 MapleInventoryManipulator.removeById(c, MapleInventoryType.USE, itemid, 1, true, false);
-            }
-            else {
+            } else {
                 c.getPlayer().dropMessage(1, "没有找到这个道具.");
             }
         }
         c.getSession().write(MaplePacketCreator.enableActions());
     }
-    
+
     public static void Owl(final SeekableLittleEndianAccessor slea, final MapleClient c) {
         if (c.getPlayer().haveItem(5230000, 1, true, false) || c.getPlayer().haveItem(5230001, 1, true, false)) {
             if (c.getPlayer().getMapId() >= 910000000 && c.getPlayer().getMapId() <= 910000022) {
                 c.getSession().write(MaplePacketCreator.getOwlOpen());
-            }
-            else {
+            } else {
                 c.getPlayer().dropMessage(5, "商店搜索器只能在自由市场使用.");
                 c.getSession().write(MaplePacketCreator.enableActions());
             }
         }
     }
-    
+
     public static void OwlWarp(final SeekableLittleEndianAccessor slea, final MapleClient c) {
         c.getSession().write(MaplePacketCreator.enableActions());
         if (c.getPlayer().getMapId() >= 910000000 && c.getPlayer().getMapId() <= 910000022 && c.getPlayer().getPlayerShop() == null) {
@@ -2225,11 +2176,11 @@ public class InventoryHandler
                         final List<MapleMapObject> objects = mapp.getAllHiredMerchantsThreadsafe();
                         for (final MapleMapObject ob : objects) {
                             if (ob instanceof IMaplePlayerShop) {
-                                final IMaplePlayerShop ips = (IMaplePlayerShop)ob;
+                                final IMaplePlayerShop ips = (IMaplePlayerShop) ob;
                                 if (!(ips instanceof HiredMerchant)) {
                                     continue;
                                 }
-                                final HiredMerchant merch = (HiredMerchant)ips;
+                                final HiredMerchant merch = (HiredMerchant) ips;
                                 if (merch.getOwnerId() == id) {
                                     merchant = merch;
                                     break;
@@ -2243,11 +2194,11 @@ public class InventoryHandler
                         final List<MapleMapObject> objects = mapp.getAllHiredMerchantsThreadsafe();
                         for (final MapleMapObject ob : objects) {
                             if (ob instanceof IMaplePlayerShop) {
-                                final IMaplePlayerShop ips = (IMaplePlayerShop)ob;
+                                final IMaplePlayerShop ips = (IMaplePlayerShop) ob;
                                 if (!(ips instanceof HiredMerchant)) {
                                     continue;
                                 }
-                                final HiredMerchant merch = (HiredMerchant)ips;
+                                final HiredMerchant merch = (HiredMerchant) ips;
                                 if (merch.getStoreId() == id) {
                                     merchant = merch;
                                     break;
@@ -2262,9 +2213,9 @@ public class InventoryHandler
                         if (!(ob2 instanceof IMaplePlayerShop)) {
                             break;
                         }
-                        final IMaplePlayerShop ips2 = (IMaplePlayerShop)ob2;
+                        final IMaplePlayerShop ips2 = (IMaplePlayerShop) ob2;
                         if (ips2 instanceof HiredMerchant) {
-                            merchant = (HiredMerchant)ips2;
+                            merchant = (HiredMerchant) ips2;
                             break;
                         }
                         break;
@@ -2276,32 +2227,27 @@ public class InventoryHandler
                         merchant.removeAllVisitors(16, 0);
                         c.getPlayer().setPlayerShop(merchant);
                         c.getSession().write(PlayerShopPacket.getHiredMerch(c.getPlayer(), merchant, false));
-                    }
-                    else if (!merchant.isOpen() || !merchant.isAvailable()) {
+                    } else if (!merchant.isOpen() || !merchant.isAvailable()) {
                         c.getPlayer().dropMessage(1, "主人正在整理商店物品\r\n请稍后再度光临！.");
-                    }
-                    else if (merchant.getFreeSlot() == -1) {
+                    } else if (merchant.getFreeSlot() == -1) {
                         c.getPlayer().dropMessage(1, "店铺已达到最大人数\r\n请稍后再度光临！.");
-                    }
-                    else if (merchant.isInBlackList(c.getPlayer().getName())) {
+                    } else if (merchant.isInBlackList(c.getPlayer().getName())) {
                         c.getPlayer().dropMessage(1, "你被禁止进入该店铺");
-                    }
-                    else {
+                    } else {
                         c.getPlayer().setPlayerShop(merchant);
                         merchant.addVisitor(c.getPlayer());
                         c.getSession().write(PlayerShopPacket.getHiredMerch(c.getPlayer(), merchant, false));
                     }
-                }
-                else {
+                } else {
                     c.getPlayer().dropMessage(1, "主人正在整理商店物品\r\n请稍后再度光临！");
                 }
             }
         }
     }
-    
+
     public static boolean UseSkillBook(final SeekableLittleEndianAccessor slea, final MapleClient c, final MapleCharacter chr) {
         slea.skip(4);
-        final byte slot = (byte)slea.readShort();
+        final byte slot = (byte) slea.readShort();
         final int itemId = slea.readInt();
         final IItem toUse = chr.getInventory(MapleInventoryType.USE).getItem(slot);
         if (toUse == null || toUse.getQuantity() < 1 || toUse.getItemId() != itemId) {
@@ -2334,12 +2280,11 @@ public class InventoryHandler
                 if (Randomizer.nextInt(99) <= SuccessRate && SuccessRate != 0) {
                     success = true;
                     final ISkill skill2 = CurrSkillData;
-                    chr.changeSkillLevel(skill2, chr.getSkillLevel(skill2), (byte)MasterLevel);
-                }
-                else {
+                    chr.changeSkillLevel(skill2, chr.getSkillLevel(skill2), (byte) MasterLevel);
+                } else {
                     success = false;
                 }
-                MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.USE, slot, (short)1, false);
+                MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.USE, slot, (short) 1, false);
                 break;
             }
             canuse = false;
@@ -2348,36 +2293,29 @@ public class InventoryHandler
         c.getSession().write(MaplePacketCreator.enableActions());
         return canuse;
     }
-    
+
     private static void changeFace(final MapleCharacter player, final int color) {
         if (player.getFace() % 1000 < 100) {
             player.setFace(player.getFace() + color);
-        }
-        else if (player.getFace() % 1000 >= 100 && player.getFace() % 1000 < 200) {
+        } else if (player.getFace() % 1000 >= 100 && player.getFace() % 1000 < 200) {
             player.setFace(player.getFace() - 100 + color);
-        }
-        else if (player.getFace() % 1000 >= 200 && player.getFace() % 1000 < 300) {
+        } else if (player.getFace() % 1000 >= 200 && player.getFace() % 1000 < 300) {
             player.setFace(player.getFace() - 200 + color);
-        }
-        else if (player.getFace() % 1000 >= 300 && player.getFace() % 1000 < 400) {
+        } else if (player.getFace() % 1000 >= 300 && player.getFace() % 1000 < 400) {
             player.setFace(player.getFace() - 300 + color);
-        }
-        else if (player.getFace() % 1000 >= 400 && player.getFace() % 1000 < 500) {
+        } else if (player.getFace() % 1000 >= 400 && player.getFace() % 1000 < 500) {
             player.setFace(player.getFace() - 400 + color);
-        }
-        else if (player.getFace() % 1000 >= 500 && player.getFace() % 1000 < 600) {
+        } else if (player.getFace() % 1000 >= 500 && player.getFace() % 1000 < 600) {
             player.setFace(player.getFace() - 500 + color);
-        }
-        else if (player.getFace() % 1000 >= 600 && player.getFace() % 1000 < 700) {
+        } else if (player.getFace() % 1000 >= 600 && player.getFace() % 1000 < 700) {
             player.setFace(player.getFace() - 600 + color);
-        }
-        else if (player.getFace() % 1000 >= 700 && player.getFace() % 1000 < 800) {
+        } else if (player.getFace() % 1000 >= 700 && player.getFace() % 1000 < 800) {
             player.setFace(player.getFace() - 700 + color);
         }
         player.updateSingleStat(MapleStat.FACE, player.getFace());
         player.equipChanged();
     }
-    
+
     static {
         InventoryHandler.OWL_ID = 2;
     }

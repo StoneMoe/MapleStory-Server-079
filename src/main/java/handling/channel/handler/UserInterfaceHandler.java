@@ -1,20 +1,21 @@
 package handling.channel.handler;
 
 import client.MapleClient;
+import lombok.extern.slf4j.Slf4j;
 import scripting.EventManager;
 import scripting.NPCScriptManager;
 import tools.MaplePacketCreator;
-public class UserInterfaceHandler
-{
+
+@Slf4j
+public class UserInterfaceHandler {
     public static void CygnusSummon_NPCRequest(final MapleClient c) {
         if (c.getPlayer().getJob() == 2000) {
             NPCScriptManager.getInstance().start(c, 1202000);
-        }
-        else if (c.getPlayer().getJob() == 1000) {
+        } else if (c.getPlayer().getJob() == 1000) {
             NPCScriptManager.getInstance().start(c, 1101008);
         }
     }
-    
+
     public static void ShipObjectRequest(final int mapid, final MapleClient c) {
         int effect = 3;
         switch (mapid) {
@@ -64,7 +65,7 @@ public class UserInterfaceHandler
                 return;
             }
             default: {
-                System.out.println("Unhandled ship object, MapID : " + mapid);
+                log.info("Unhandled ship object, MapID : " + mapid);
                 break;
             }
         }

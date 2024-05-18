@@ -1,39 +1,40 @@
 package server.events;
 
 import database.DatabaseConnection;
+import lombok.extern.slf4j.Slf4j;
+import server.Randomizer;
+import tools.Pair;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import server.Randomizer;
-import tools.Pair;
 
-
-public class MapleOxQuizFactory
-{
+@Slf4j
+public class MapleOxQuizFactory {
     private static final MapleOxQuizFactory instance;
     private boolean initialized;
     private final Map<Pair<Integer, Integer>, MapleOxQuizEntry> questionCache;
-    
+
     public static MapleOxQuizFactory getInstance() {
         return MapleOxQuizFactory.instance;
     }
-    
+
     public static MapleOxQuizEntry getOxEntry(final int questionSet, final int questionId) {
         return getInstance().getOxQuizEntry(new Pair<Integer, Integer>(questionSet, questionId));
     }
-    
+
     public static MapleOxQuizEntry getOxEntry(final Pair<Integer, Integer> pair) {
         return getInstance().getOxQuizEntry(pair);
     }
-    
+
     public MapleOxQuizFactory() {
         this.initialized = false;
         this.questionCache = new HashMap<Pair<Integer, Integer>, MapleOxQuizEntry>();
     }
-    
+
     public boolean hasInitialized() {
         return this.initialized;
     }
@@ -47,7 +48,7 @@ public class MapleOxQuizFactory
             }
         }
     }
-    
+
     public void initialize() {
         if (this.initialized) {
             return;
@@ -61,14 +62,13 @@ public class MapleOxQuizFactory
             }
             rs.close();
             ps.close();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.print("Done\r");
+        log.info("Done\r");
         this.initialized = true;
     }
-    
+
     public MapleOxQuizEntry getFromSQL(final String sql) {
         MapleOxQuizEntry ret = null;
         try {
@@ -80,13 +80,12 @@ public class MapleOxQuizFactory
             }
             rs.close();
             ps.close();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return ret;
     }
-    
+
     public MapleOxQuizEntry getOxQuizEntry(final Pair<Integer, Integer> pair) {
         MapleOxQuizEntry mooe = this.questionCache.get(pair);
         if (mooe == null) {
@@ -98,11 +97,11 @@ public class MapleOxQuizFactory
         }
         return mooe;
     }
-    
+
     private MapleOxQuizEntry get(final ResultSet rs) throws SQLException {
         return new MapleOxQuizEntry(rs.getString("question"), rs.getString("display"), this.getAnswerByText(rs.getString("answer")), rs.getInt("questionset"), rs.getInt("questionid"));
     }
-    
+
     private int getAnswerByText(final String text) {
         if (text.equalsIgnoreCase("x")) {
             return 0;
@@ -112,19 +111,18 @@ public class MapleOxQuizFactory
         }
         return -1;
     }
-    
+
     static {
         instance = new MapleOxQuizFactory();
     }
-    
-    public static class MapleOxQuizEntry
-    {
+
+    public static class MapleOxQuizEntry {
         private final String question;
         private final String answerText;
         private final int answer;
         private final int questionset;
         private final int questionid;
-        
+
         public MapleOxQuizEntry(final String question, final String answerText, final int answer, final int questionset, final int questionid) {
             this.question = question;
             this.answerText = answerText;
@@ -132,23 +130,23 @@ public class MapleOxQuizFactory
             this.questionset = questionset;
             this.questionid = questionid;
         }
-        
+
         public String getQuestion() {
             return this.question;
         }
-        
+
         public String getAnswerText() {
             return this.answerText;
         }
-        
+
         public int getAnswer() {
             return this.answer;
         }
-        
+
         public int getQuestionSet() {
             return this.questionset;
         }
-        
+
         public int getQuestionId() {
             return this.questionid;
         }

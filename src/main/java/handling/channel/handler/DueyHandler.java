@@ -9,15 +9,7 @@ import client.inventory.ItemLoader;
 import client.inventory.MapleInventoryType;
 import constants.GameConstants;
 import database.DatabaseConnection;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import server.MapleDueyActions;
 import server.MapleInventoryManipulator;
 import server.MapleItemInformationProvider;
@@ -25,8 +17,14 @@ import tools.MaplePacketCreator;
 import tools.Pair;
 import tools.data.input.SeekableLittleEndianAccessor;
 
-public class DueyHandler
-{
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
+
+@Slf4j
+public class DueyHandler {
     public static void DueyOperation(final SeekableLittleEndianAccessor slea, final MapleClient c) {
         final byte operation = slea.readByte();
         switch (operation) {
@@ -34,7 +32,7 @@ public class DueyHandler
                 final String AS13Digit = slea.readMapleAsciiString();
                 final int conv = c.getPlayer().getConversation();
                 if (conv == 2) {
-                    c.getSession().write(MaplePacketCreator.sendDuey((byte)10, loadItems(c.getPlayer())));
+                    c.getSession().write(MaplePacketCreator.sendDuey((byte) 10, loadItems(c.getPlayer())));
                     break;
                 }
                 break;
@@ -57,9 +55,9 @@ public class DueyHandler
                             final boolean recipientOn = false;
                             if (inventId > 0) {
                                 final MapleInventoryType inv = MapleInventoryType.getByType(inventId);
-                                final IItem item = c.getPlayer().getInventory(inv).getItem((byte)itemPos);
+                                final IItem item = c.getPlayer().getInventory(inv).getItem((byte) itemPos);
                                 if (item == null) {
-                                    c.getSession().write(MaplePacketCreator.sendDuey((byte)17, null));
+                                    c.getSession().write(MaplePacketCreator.sendDuey((byte) 17, null));
                                     return;
                                 }
                                 final byte flag = item.getFlag();
@@ -72,44 +70,36 @@ public class DueyHandler
                                     if (!ii.isDropRestricted(item.getItemId()) && !ii.isAccountShared(item.getItemId())) {
                                         if (addItemToDB(item, amount, mesos, c.getPlayer().getName(), accid, recipientOn)) {
                                             if (GameConstants.is飞镖道具(item.getItemId()) || GameConstants.is子弹道具(item.getItemId())) {
-                                                MapleInventoryManipulator.removeFromSlot(c, inv, (byte)itemPos, item.getQuantity(), true);
-                                            }
-                                            else {
-                                                MapleInventoryManipulator.removeFromSlot(c, inv, (byte)itemPos, amount, true, false);
+                                                MapleInventoryManipulator.removeFromSlot(c, inv, (byte) itemPos, item.getQuantity(), true);
+                                            } else {
+                                                MapleInventoryManipulator.removeFromSlot(c, inv, (byte) itemPos, amount, true, false);
                                             }
                                             c.getPlayer().gainMeso(-finalcost, false);
-                                            c.getSession().write(MaplePacketCreator.sendDuey((byte)19, null));
+                                            c.getSession().write(MaplePacketCreator.sendDuey((byte) 19, null));
+                                        } else {
+                                            c.getSession().write(MaplePacketCreator.sendDuey((byte) 17, null));
                                         }
-                                        else {
-                                            c.getSession().write(MaplePacketCreator.sendDuey((byte)17, null));
-                                        }
+                                    } else {
+                                        c.getSession().write(MaplePacketCreator.sendDuey((byte) 17, null));
                                     }
-                                    else {
-                                        c.getSession().write(MaplePacketCreator.sendDuey((byte)17, null));
-                                    }
+                                } else {
+                                    c.getSession().write(MaplePacketCreator.sendDuey((byte) 17, null));
                                 }
-                                else {
-                                    c.getSession().write(MaplePacketCreator.sendDuey((byte)17, null));
-                                }
-                            }
-                            else if (addMesoToDB(mesos, c.getPlayer().getName(), accid, recipientOn)) {
+                            } else if (addMesoToDB(mesos, c.getPlayer().getName(), accid, recipientOn)) {
                                 c.getPlayer().gainMeso(-finalcost, false);
-                                c.getSession().write(MaplePacketCreator.sendDuey((byte)19, null));
+                                c.getSession().write(MaplePacketCreator.sendDuey((byte) 19, null));
+                            } else {
+                                c.getSession().write(MaplePacketCreator.sendDuey((byte) 17, null));
                             }
-                            else {
-                                c.getSession().write(MaplePacketCreator.sendDuey((byte)17, null));
-                            }
+                        } else {
+                            c.getSession().write(MaplePacketCreator.sendDuey((byte) 15, null));
                         }
-                        else {
-                            c.getSession().write(MaplePacketCreator.sendDuey((byte)15, null));
-                        }
-                    }
-                    else {
-                        c.getSession().write(MaplePacketCreator.sendDuey((byte)14, null));
+                    } else {
+                        c.getSession().write(MaplePacketCreator.sendDuey((byte) 14, null));
                     }
                     break;
                 }
-                c.getSession().write(MaplePacketCreator.sendDuey((byte)12, null));
+                c.getSession().write(MaplePacketCreator.sendDuey((byte) 12, null));
                 break;
             }
             case 5: {
@@ -122,11 +112,11 @@ public class DueyHandler
                     return;
                 }
                 if (dp.getItem() != null && !MapleInventoryManipulator.checkSpace(c, dp.getItem().getItemId(), dp.getItem().getQuantity(), dp.getItem().getOwner())) {
-                    c.getSession().write(MaplePacketCreator.sendDuey((byte)16, null));
+                    c.getSession().write(MaplePacketCreator.sendDuey((byte) 16, null));
                     return;
                 }
                 if (dp.getMesos() < 0 || dp.getMesos() + c.getPlayer().getMeso() < 0) {
-                    c.getSession().write(MaplePacketCreator.sendDuey((byte)17, null));
+                    c.getSession().write(MaplePacketCreator.sendDuey((byte) 17, null));
                     return;
                 }
                 removeItemFromDB(packageid, c.getPlayer().getId());
@@ -153,12 +143,12 @@ public class DueyHandler
                 break;
             }
             default: {
-                System.out.println("Unhandled Duey operation : " + slea.toString());
+                log.info("Unhandled Duey operation : " + slea.toString());
                 break;
             }
         }
     }
-    
+
     private static boolean addMesoToDB(final int mesos, final String sName, final int recipientID, final boolean isOn) {
         final Connection con = DatabaseConnection.getConnection();
         try {
@@ -172,13 +162,12 @@ public class DueyHandler
             ps.executeUpdate();
             ps.close();
             return true;
-        }
-        catch (SQLException se) {
+        } catch (SQLException se) {
             se.printStackTrace();
             return false;
         }
     }
-    
+
     private static boolean addItemToDB(final IItem item, final int quantity, final int mesos, final String sName, final int recipientID, final boolean isOn) {
         final Connection con = DatabaseConnection.getConnection();
         try {
@@ -197,13 +186,12 @@ public class DueyHandler
             rs.close();
             ps.close();
             return true;
-        }
-        catch (SQLException se) {
+        } catch (SQLException se) {
             se.printStackTrace();
             return false;
         }
     }
-    
+
     public static List<MapleDueyActions> loadItems(final MapleCharacter chr) {
         final List<MapleDueyActions> packages = new LinkedList<MapleDueyActions>();
         final Connection con = DatabaseConnection.getConnection();
@@ -221,13 +209,12 @@ public class DueyHandler
             rs.close();
             ps.close();
             return packages;
-        }
-        catch (SQLException se) {
+        } catch (SQLException se) {
             se.printStackTrace();
             return null;
         }
     }
-    
+
     public static MapleDueyActions loadSingleItem(final int packageid, final int charid) {
         final List<MapleDueyActions> packages = new LinkedList<MapleDueyActions>();
         final Connection con = DatabaseConnection.getConnection();
@@ -249,12 +236,11 @@ public class DueyHandler
             rs.close();
             ps.close();
             return null;
-        }
-        catch (SQLException se) {
+        } catch (SQLException se) {
             return null;
         }
     }
-    
+
     public static void reciveMsg(final MapleClient c, final int recipientId) {
         final Connection con = DatabaseConnection.getConnection();
         try {
@@ -262,12 +248,11 @@ public class DueyHandler
             ps.setInt(1, recipientId);
             ps.executeUpdate();
             ps.close();
-        }
-        catch (SQLException se) {
+        } catch (SQLException se) {
             se.printStackTrace();
         }
     }
-    
+
     private static void removeItemFromDB(final int packageid, final int charid) {
         final Connection con = DatabaseConnection.getConnection();
         try {
@@ -276,12 +261,11 @@ public class DueyHandler
             ps.setInt(2, charid);
             ps.executeUpdate();
             ps.close();
-        }
-        catch (SQLException se) {
+        } catch (SQLException se) {
             se.printStackTrace();
         }
     }
-    
+
     private static MapleDueyActions getItemByPID(final int packageid) {
         try {
             final Map<Integer, Pair<IItem, MapleInventoryType>> iter = ItemLoader.DUEY.loadItems(false, packageid);
@@ -292,8 +276,7 @@ public class DueyHandler
                     return new MapleDueyActions(packageid, i.getLeft());
                 }
             }
-        }
-        catch (SQLException se) {
+        } catch (SQLException se) {
             se.printStackTrace();
         }
         return new MapleDueyActions(packageid);

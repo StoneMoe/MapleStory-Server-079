@@ -3,7 +3,7 @@ package handling.channel.handler;
 import client.MapleCharacter;
 import client.MapleClient;
 import client.MapleDisease;
-import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import server.MapleCarnivalFactory;
 import server.Randomizer;
 import server.life.MapleLifeFactory;
@@ -13,8 +13,10 @@ import tools.Pair;
 import tools.data.input.SeekableLittleEndianAccessor;
 import tools.packet.MonsterCarnivalPacket;
 
-public class MonsterCarnivalHandler
-{
+import java.util.List;
+
+@Slf4j
+public class MonsterCarnivalHandler {
     public static void MonsterCarnival(final SeekableLittleEndianAccessor slea, final MapleClient c) {
         if (c.getPlayer().getCarnivalParty() == null) {
             c.getSession().write(MaplePacketCreator.enableActions());
@@ -32,12 +34,12 @@ public class MonsterCarnivalHandler
                 }
                 final MapleMonster mons = MapleLifeFactory.getMonster(mobs.get(num).left);
                 if (c.getPlayer().isGM()) {
-                    System.out.println("tab：" + tab);
-                    System.out.println("num：" + num);
-                    System.out.println("mons：" + mons);
-                    System.out.println("num：" + num);
-                    System.out.println("判断A：" + mons != null);
-                    System.out.println("判断B：" + c.getPlayer().getMap().makeCarnivalSpawn(c.getPlayer().getCarnivalParty().getTeam(), mons, num));
+                    log.info("tab：" + tab);
+                    log.info("num：" + num);
+                    log.info("mons：" + mons);
+                    log.info("num：" + num);
+                    log.info("判断A：{}", mons != null);
+                    log.info("判断B：" + c.getPlayer().getMap().makeCarnivalSpawn(c.getPlayer().getCarnivalParty().getTeam(), mons, num));
                 }
                 if (mons != null && c.getPlayer().getMap().makeCarnivalSpawn(c.getPlayer().getCarnivalParty().getTeam(), mons, num)) {
                     c.getPlayer().getCarnivalParty().useCP(c.getPlayer(), mobs.get(num).right);
@@ -73,11 +75,9 @@ public class MonsterCarnivalHandler
                         found = true;
                         if (dis == null) {
                             chr2.dispel();
-                        }
-                        else if (skil.getSkill() == null) {
+                        } else if (skil.getSkill() == null) {
                             chr2.giveDebuff(dis, 1, 30000L, MapleDisease.getByDisease(dis), 1);
-                        }
-                        else {
+                        } else {
                             chr2.giveDebuff(dis, skil.getSkill());
                         }
                         if (!skil.targetsAll) {

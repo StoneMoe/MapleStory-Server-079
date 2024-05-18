@@ -1,6 +1,7 @@
 package server;
 
 import database.DatabaseConnection;
+
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,13 +13,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import lombok.extern.slf4j.Slf4j;
 import provider.MapleData;
 import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
 import provider.MapleDataTool;
 
-public class CashItemFactory
-{
+@Slf4j
+public class CashItemFactory {
     private static final CashItemFactory instance;
     private static final int[] bestItems;
     private boolean initialized;
@@ -28,7 +31,7 @@ public class CashItemFactory
     private final MapleDataProvider data;
     private final MapleDataProvider itemStringInfo;
     private final Map<Integer, Integer> idLookup;
-    
+
     protected CashItemFactory() {
         this.initialized = false;
         this.itemStats = new HashMap<Integer, CashItemInfo>();
@@ -38,13 +41,13 @@ public class CashItemFactory
         this.itemStringInfo = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/String.wz"));
         this.idLookup = new HashMap<Integer, Integer>();
     }
-    
+
     public static CashItemFactory getInstance() {
         return CashItemFactory.instance;
     }
-    
+
     public void initialize() {
-        System.out.println("商城 :::");
+        log.info("商城");
         final List<Integer> itemids = new ArrayList<Integer>();
         for (final MapleData field : this.data.getData("Commodity.img").getChildren()) {
             final int SN = MapleDataTool.getIntConvert("SN", field, 0);
@@ -77,8 +80,7 @@ public class CashItemFactory
                     }
                 }
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         for (final int i : this.itemStats.keySet()) {
@@ -86,7 +88,7 @@ public class CashItemFactory
         }
         this.initialized = true;
     }
-    
+
     public CashItemInfo getItem(final int sn) {
         final CashItemInfo stats = this.itemStats.get(sn);
         final CashItemInfo.CashModInfo z = this.getModInfo(sn);
@@ -98,7 +100,7 @@ public class CashItemFactory
         }
         return stats;
     }
-    
+
     public List<CashItemInfo> getPackageItems(final int itemId) {
         if (this.itemPackage.get(itemId) != null) {
             return this.itemPackage.get(itemId);
@@ -114,26 +116,26 @@ public class CashItemFactory
         this.itemPackage.put(itemId, packageItems);
         return packageItems;
     }
-    
+
     public CashItemInfo.CashModInfo getModInfo(final int sn) {
         return this.itemMods.get(sn);
     }
-    
+
     public Collection<CashItemInfo.CashModInfo> getAllModInfo() {
         if (!this.initialized) {
             this.initialize();
         }
         return this.itemMods.values();
     }
-    
+
     public int[] getBestItems() {
         return CashItemFactory.bestItems;
     }
-    
+
     public int getSnFromId(final int itemId) {
         return this.idLookup.get(itemId);
     }
-    
+
     public void clearCashShop() {
         this.itemStats.clear();
         this.itemPackage.clear();
@@ -142,7 +144,7 @@ public class CashItemFactory
         this.initialized = false;
         this.initialize();
     }
-    
+
     public int getItemSN(final int itemid) {
         for (final Map.Entry<Integer, CashItemInfo> ci : this.itemStats.entrySet()) {
             if (ci.getValue().getId() == itemid) {
@@ -151,9 +153,9 @@ public class CashItemFactory
         }
         return 0;
     }
-    
+
     static {
         instance = new CashItemFactory();
-        bestItems = new int[] { 10099994, 20490094, 10099993, 60090092, 50290004 };
+        bestItems = new int[]{10099994, 20490094, 10099993, 60090092, 50290004};
     }
 }
