@@ -924,7 +924,7 @@ public class MapleGuild implements Serializable {
             mplew.writeInt(mgc.getId());
         }
         for (final MapleGuildCharacter mgc : this.members) {
-            mplew.writeAsciiString(StringUtil.getRightPaddedStr(mgc.getName(), '\0', 13));
+            mplew.writeAsciiString(mgc.getName(), 13);
             mplew.writeInt(mgc.getJobId());
             mplew.writeInt(mgc.getLevel());
             mplew.writeInt(mgc.getGuildRank());

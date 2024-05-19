@@ -2,10 +2,11 @@ package tools.data.output;
 
 import java.awt.Point;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 
 public class GenericLittleEndianWriter implements LittleEndianWriter
 {
-    private static Charset ASCII;
+    private static Charset Encoding;
     private ByteOutputStream bos;
     
     protected GenericLittleEndianWriter() {
@@ -65,23 +66,26 @@ public class GenericLittleEndianWriter implements LittleEndianWriter
     
     @Override
     public void writeAsciiString(final String s) {
-        this.write(s.getBytes(GenericLittleEndianWriter.ASCII));
+        this.write(s.getBytes(GenericLittleEndianWriter.Encoding));
     }
-    
+
     @Override
     public void writeAsciiString(String s, final int max) {
-        if (s.getBytes(GenericLittleEndianWriter.ASCII).length > max) {
-            s = s.substring(0, max);
-        }
-        this.write(s.getBytes(GenericLittleEndianWriter.ASCII));
-        for (int i = s.getBytes(GenericLittleEndianWriter.ASCII).length; i < max; ++i) {
-            this.write(0);
+        byte[] bytes = s.getBytes(GenericLittleEndianWriter.Encoding);
+
+        if (bytes.length > max) {
+            this.write(Arrays.copyOf(bytes, max));
+        } else {
+            this.write(bytes);
+            for (int i = bytes.length; i < max; i++) {
+                this.write(0);
+            }
         }
     }
     
     @Override
     public void writeMapleAsciiString(final String s) {
-        this.writeShort((short)s.getBytes(GenericLittleEndianWriter.ASCII).length);
+        this.writeShort((short)s.getBytes(GenericLittleEndianWriter.Encoding).length);
         this.writeAsciiString(s);
     }
     
@@ -104,6 +108,6 @@ public class GenericLittleEndianWriter implements LittleEndianWriter
     }
     
     static {
-        GenericLittleEndianWriter.ASCII = Charset.forName("GBK");
+        GenericLittleEndianWriter.Encoding = Charset.forName("GBK");
     }
 }
