@@ -3637,7 +3637,6 @@ public class MaplePacketCreator {
                 mplew.write(0);
                 mplew.writeInt((buddy.getChannel() == -1) ? -1 : (buddy.getChannel() - 1));
                 mplew.writeAsciiString(StringUtil.getRightPaddedStr(buddy.getGroup(), '\0', 17));
-                mplew.writeInt(0);
             }
         }
         for (int x = 0; x < buddylist.size(); ++x) {
