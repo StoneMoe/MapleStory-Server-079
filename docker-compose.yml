@@ -9,6 +9,7 @@ services:
       MYSQL_DATABASE: maplestory
       MYSQL_USER: maplestory
       MYSQL_PASSWORD: maplestory
+      TZ: Asia/Shanghai
     ports:
       - "3306:3306"
   server:
@@ -23,6 +24,7 @@ services:
       MYSQL_USER: maplestory
       MYSQL_PASSWORD: maplestory
       PUBLIC_IP: 127.0.0.1
+      TZ: Asia/Shanghai
     ports:
       - "2525-2530:2525-2530"
       - "6350:6350"
