@@ -17,22 +17,13 @@ public class StringUtil
         final byte[] bt = str.getBytes(Charset.forName("GBK"));
         return bt.length;
     }
-    
-    public static String getRightPaddedStr(final String in, final char padChar, final int length) {
-        var buf = new byte[length];
-        var splitedString = splitGBKString(in, length);
-        var stringBytes = splitedString.getBytes(Charset.forName("GBK"));
-        for (int i = 0; i < length; ++i) {
-            if (i < stringBytes.length && stringBytes[i] != '\0')
-            {
-                buf[i] = stringBytes[i];
-            }
-            else
-            {
-                buf[i] = (byte) padChar;
-            }
+
+    public static String getRightPaddedStr(final String in, final char padchar, final int length) {
+        final StringBuilder builder = new StringBuilder(in);
+        for (int x = in.getBytes().length; x < length; ++x) {
+            builder.append(padchar);
         }
-        return new String(buf, Charset.forName("GBK"));
+        return builder.toString();
     }
     
     public static String joinStringFrom(final String[] arr, final int start) {
@@ -154,34 +145,5 @@ public class StringUtil
         final int elapsedHrs = elapsedMinutes / 60;
         final int elapsedDays = elapsedHrs / 24;
         return elapsedDays;
-    }
-
-    public static String splitGBKString(String input, int maxBytes) {
-        byte[] gbkBytes = input.getBytes(Charset.forName("GBK"));
-        if (gbkBytes.length <= maxBytes) {
-            return input; // 如果总字节长度小于或等于最大长度，直接返回原字符串
-        }
-
-        int byteCount = 0;
-        int lastValidIndex = 0;
-        for (int i = 0; i < gbkBytes.length; i++) {
-            byteCount += isChinese(gbkBytes[i]) ? 2 : 1;
-            if (byteCount > maxBytes) {
-                break;
-            }
-            lastValidIndex = i;
-            // 如果是中文字符的第一个字节，确保下一个字节也包含在内
-            if (isChinese(gbkBytes[i])) {
-                i++;
-                lastValidIndex = i;
-            }
-        }
-
-        return new String(gbkBytes, 0, lastValidIndex + 1, Charset.forName("GBK"));
-    }
-
-    private static boolean isChinese(byte b) {
-        // 在GBK编码中，中文字符的第一个字节范围是0x81到0xFE
-        return (b & 0xFF) >= 0x81 && (b & 0xFF) <= 0xFE;
     }
 }
