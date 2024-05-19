@@ -19,7 +19,7 @@ var sss ="#fUI/UIWindow.img/QuestIcon/3/0#";
 		return;
 		}
 		 if (cm.getLevel() < 50 ) {
-			cm.sendOk("Ö»ÓĞ #r50¼¶#k ²Å¿ÉÒÔ¿ª¸Î¸Ã¸±±¾¡£");
+			cm.sendOk("åªæœ‰ #r50çº§#k æ‰å¯ä»¥å¼€è‚è¯¥å‰¯æœ¬ã€‚");
 			cm.dispose();
 			 }
 		if (mode == 1)
@@ -30,19 +30,19 @@ var sss ="#fUI/UIWindow.img/QuestIcon/3/0#";
 
 	if (status == 0) {
 
-	    var textz = "\r\nÓÂÊ¿:#d#h ##k£¬Ã¿´ÎÊ¹ÓÃ1500WÃ°ÏÕ±Ò¿ÉÕÙ»½ÔúÀ¥±¾ÌåºÍÊÖ±Û¡£\r\n\r\n";
+	    var textz = "\r\nå‹‡å£«:#d#h ##kï¼Œæ¯æ¬¡ä½¿ç”¨1500Wå†’é™©å¸å¯å¬å”¤æ‰æ˜†æœ¬ä½“å’Œæ‰‹è‡‚ã€‚\r\n\r\n";
 
-		textz += "#b#L0#½â¿ª·âÓ¡¡¾ÕÙ»½--ÔúÀ¥BOSS¡¿#l\r\n\r\n";
+		textz += "#b#L0#è§£å¼€å°å°ã€å¬å”¤--æ‰æ˜†BOSSã€‘#l\r\n\r\n";
 		
-		//textz += "#b#L1#½â¿ª·âÓ¡¡¾ÕÙ»½--ÔúÀ¥ÊÖ±Û(¾­Ñé)¡¿#l\r\n\r\n";
+		//textz += "#b#L1#è§£å¼€å°å°ã€å¬å”¤--æ‰æ˜†æ‰‹è‡‚(ç»éªŒ)ã€‘#l\r\n\r\n";
 		
-	//	textz += "#b#L2#½â¿ª·âÓ¡¡¾ÕÙ»½--ÈıºÅBOSS¡¿#l\r\n\r\n";
+	//	textz += "#b#L2#è§£å¼€å°å°ã€å¬å”¤--ä¸‰å·BOSSã€‘#l\r\n\r\n";
 		
-	//	textz += "#r#L3#½â¿ª·âÓ¡¡¾ÕÙ»½--ËÄºÅBOSS¡¿#l\r\n\r\n";
+	//	textz += "#r#L3#è§£å¼€å°å°ã€å¬å”¤--å››å·BOSSã€‘#l\r\n\r\n";
 		
-	//	textz += "#r#L5#½â¿ª·âÓ¡¡¾ÕÙ»½--ÎåºÅBOSS¡¿#l\r\n\r\n";
+	//	textz += "#r#L5#è§£å¼€å°å°ã€å¬å”¤--äº”å·BOSSã€‘#l\r\n\r\n";
 		
-		textz += "#r#L4#ÎÒÒªÀë¿ª#l\r\n\r\n";
+		textz += "#r#L4#æˆ‘è¦ç¦»å¼€#l\r\n\r\n";
 
 		
 
@@ -54,25 +54,25 @@ var sss ="#fUI/UIWindow.img/QuestIcon/3/0#";
 	if (selection == 0){
 		var party = cm.getPlayer().getParty();	
 		if (party == null || party.getLeader().getId() != cm.getPlayer().getId()) {
-                cm.sendOk("Äã²»ÊÇ¶Ó³¤¡£ÇëÄãÃÇ¶Ó³¤À´Ëµ»°°É£¡");
+                cm.sendOk("ä½ ä¸æ˜¯é˜Ÿé•¿ã€‚è¯·ä½ ä»¬é˜Ÿé•¿æ¥è¯´è¯å§ï¼");
                 cm.dispose();
 			//	}else	if (cm.getClient().getPlayer().getBeans() < 3) {  
-         //   cm.sendOk("ĞŞÏÉµÈ¼¶×î¸ß10¼¶£¬Ö»ÄÜ³õ¼¶ĞŞÏÉ£¡");
+         //   cm.sendOk("ä¿®ä»™ç­‰çº§æœ€é«˜10çº§ï¼Œåªèƒ½åˆçº§ä¿®ä»™ï¼");
               //  cm.dispose();
 				}else if(cm.getLevel() < 70){
-	            cm.sendOk("ĞèÒª70¼¶²ÅÄÜÕÙ»½.");
+	            cm.sendOk("éœ€è¦70çº§æ‰èƒ½å¬å”¤.");
                 cm.dispose();				
 	// }	else   if (cm.getBossLog('PlayQuest151') >= 8) {
-		//	cm.sendOk("Äã½ñÌìÌôÕ½´ÎÊı³¬¹ı8´Î!");
+		//	cm.sendOk("ä½ ä»Šå¤©æŒ‘æˆ˜æ¬¡æ•°è¶…è¿‡8æ¬¡!");
 			//cm.dispose();			
 	}	else if (cm.getMeso() < 15000000) {
-			cm.sendOk("ÄãÉíÉÏ²»×ã1500Íò½ğ±Ò!");
+			cm.sendOk("ä½ èº«ä¸Šä¸è¶³1500ä¸‡é‡‘å¸!");
 			cm.dispose();
 			}else{ 
-                   // cm.sendOk("µ±Ç°´¬³¤²¢Ã»ÓĞÇåÀíÍê£¬ÎŞ·¨¼ÌĞøÕÙ»½£¡");
+                   // cm.sendOk("å½“å‰èˆ¹é•¿å¹¶æ²¡æœ‰æ¸…ç†å®Œï¼Œæ— æ³•ç»§ç»­å¬å”¤ï¼");
                   //  cm.dispose();
 		//}else if(party.getMembers().size() < 0) {
-	           // cm.sendOk("ĞèÒª 6 ÈËÒÔÉÏµÄ×é¶Ó²Å¿ÉÒÔÊÍ·ÅÇ¿´óµÄÄ§·¨£¡!");
+	           // cm.sendOk("éœ€è¦ 6 äººä»¥ä¸Šçš„ç»„é˜Ÿæ‰å¯ä»¥é‡Šæ”¾å¼ºå¤§çš„é­”æ³•ï¼!");
                    // cm.dispose();	
 		//}else if (cm.getMeso() >= 5000000) {	//&&cm.haveItem(4001257,1)&&cm.haveItem(4001258,1)&&cm.haveItem(4001259,1)&&cm.haveItem(4001260,1)// #i04001257# #i04001258# #i04001259# #i04001260#
                         cm.gainMeso(-15000000);
@@ -87,97 +87,97 @@ var sss ="#fUI/UIWindow.img/QuestIcon/3/0#";
 						cm.spawnMonster(8800009,1);
                         cm.spawnMonster(8800010,1);
                         cm.dispose();
-						cm.À®°È(2,"[ÔúÀ¥¸±±¾]£ºÍæ¼Ò" + cm.getPlayer().getName() + "¿ªÊ¼ÌôÕ½ÔúÀ¥BOSS~");
+						cm.å–‡å­(2,"[æ‰æ˜†å‰¯æœ¬]ï¼šç©å®¶" + cm.getPlayer().getName() + "å¼€å§‹æŒ‘æˆ˜æ‰æ˜†BOSS~");
                        
 }
 
 	}else if (selection == 1){
 		var party = cm.getPlayer().getParty();
 if (party == null || party.getLeader().getId() != cm.getPlayer().getId()) {
-                cm.sendOk("Äã²»ÊÇ¶Ó³¤¡£ÇëÄãÃÇ¶Ó³¤À´Ëµ»°°É£¡");
+                cm.sendOk("ä½ ä¸æ˜¯é˜Ÿé•¿ã€‚è¯·ä½ ä»¬é˜Ÿé•¿æ¥è¯´è¯å§ï¼");
                 cm.dispose();
 				}else if(cm.getLevel() < 70){
-	            cm.sendOk("ĞèÒª70¼¶²ÅÄÜÕÙ»½.");
+	            cm.sendOk("éœ€è¦70çº§æ‰èƒ½å¬å”¤.");
                 cm.dispose();		
 	}	else	if (cm.getBossLog('PlayQuest56') >= 1) {
-			cm.sendOk("Äã½ñÌìÌôÕ½´ÎÊı³¬¹ı1´Î!");
+			cm.sendOk("ä½ ä»Šå¤©æŒ‘æˆ˜æ¬¡æ•°è¶…è¿‡1æ¬¡!");
 			cm.dispose();	
 	}	else if (cm.getMeso() < 2000000) {
-			cm.sendOk("ÄãÉíÉÏ²»×ã200Íò½ğ±Ò!");
+			cm.sendOk("ä½ èº«ä¸Šä¸è¶³200ä¸‡é‡‘å¸!");
 			cm.dispose();
 			}else{ 
 	//	}else if(party.getMembers().size() < 0) {
-	 //           cm.sendOk("ĞèÒª 6 ÈËÒÔÉÏµÄ×é¶Ó²Å¿ÉÒÔÊÍ·ÅÇ¿´óµÄÄ§·¨£¡!");
+	 //           cm.sendOk("éœ€è¦ 6 äººä»¥ä¸Šçš„ç»„é˜Ÿæ‰å¯ä»¥é‡Šæ”¾å¼ºå¤§çš„é­”æ³•ï¼!");
      //               cm.dispose();	
 		//&&cm.haveItem(4001257,1)&&cm.haveItem(4001258,1)&&cm.haveItem(4001259,1)&&cm.haveItem(4001260,1)// #i04001257# #i04001258# #i04001259# #i04001260#
                         cm.gainMeso(-2000000);
 						cm.setBossLog('PlayQuest56');
                         cm.spawnMonster(8800003,1);
                         cm.dispose();
-						cm.À®°È(2,"[ÔúÀ¥¸±±¾]£ºÍæ¼Ò" + cm.getPlayer().getName() + "¿ªÊ¼ÌôÕ½ÔúÀ¥ÊÖ±Û~");
+						cm.å–‡å­(2,"[æ‰æ˜†å‰¯æœ¬]ï¼šç©å®¶" + cm.getPlayer().getName() + "å¼€å§‹æŒ‘æˆ˜æ‰æ˜†æ‰‹è‡‚~");
                         
 			cm.dispose();			
 }
     }else if (selection == 2){
 		var party = cm.getPlayer().getParty();		
 		if (cm.getBossLog('PlayQuest52') >= 2) {
-			cm.sendOk("Äã½ñÌìÌôÕ½´ÎÊı³¬¹ı2´Î!");
+			cm.sendOk("ä½ ä»Šå¤©æŒ‘æˆ˜æ¬¡æ•°è¶…è¿‡2æ¬¡!");
 			cm.dispose();	
 	}	else if (cm.getMeso() < 5000000) {
-			cm.sendOk("ÄãÉíÉÏ²»×ã500Íò½ğ±Ò!");
+			cm.sendOk("ä½ èº«ä¸Šä¸è¶³500ä¸‡é‡‘å¸!");
 			cm.dispose();
 			}else{ 
 	//	}else if(party.getMembers().size() < 0) {
-	//            cm.sendOk("ĞèÒª 6 ÈËÒÔÉÏµÄ×é¶Ó²Å¿ÉÒÔÊÍ·ÅÇ¿´óµÄÄ§·¨£¡!");
+	//            cm.sendOk("éœ€è¦ 6 äººä»¥ä¸Šçš„ç»„é˜Ÿæ‰å¯ä»¥é‡Šæ”¾å¼ºå¤§çš„é­”æ³•ï¼!");
     //                cm.dispose();	
 		//&&cm.haveItem(4001257,1)&&cm.haveItem(4001258,1)&&cm.haveItem(4001259,1)&&cm.haveItem(4001260,1)// #i04001257# #i04001258# #i04001259# #i04001260#
                        cm.gainMeso(-5000000);
 					   cm.setBossLog('PlayQuest52');
                         cm.spawnMonster(9400591,1);
                         cm.dispose();
-						cm.À®°È(2,"[ç³ºì¸±±¾]£ºÍæ¼Ò" + cm.getPlayer().getName() + "¿ªÊ¼ÌôÕ½ÈıºÅBOSS£¬¿ªÊ¼±¬¸Î°¡°¡°¡°¡!!!");
+						cm.å–‡å­(2,"[ç»¯çº¢å‰¯æœ¬]ï¼šç©å®¶" + cm.getPlayer().getName() + "å¼€å§‹æŒ‘æˆ˜ä¸‰å·BOSSï¼Œå¼€å§‹çˆ†è‚å•Šå•Šå•Šå•Š!!!");
                        
 			cm.dispose();	
 }
      }else if (selection == 3){
 		var party = cm.getPlayer().getParty();		
 		if (cm.getBossLog('PlayQuest53') >= 2) {
-			cm.sendOk("Äã½ñÌìÌôÕ½´ÎÊı³¬¹ı2´Î!");
+			cm.sendOk("ä½ ä»Šå¤©æŒ‘æˆ˜æ¬¡æ•°è¶…è¿‡2æ¬¡!");
 			cm.dispose();	
 	}	else if (cm.getMeso() < 5000000) {
-			cm.sendOk("ÄãÉíÉÏ²»×ã500Íò½ğ±Ò!");
+			cm.sendOk("ä½ èº«ä¸Šä¸è¶³500ä¸‡é‡‘å¸!");
 			cm.dispose();
 			}else{ 
 		//}else if(party.getMembers().size() < 0) {
-	     //       cm.sendOk("ĞèÒª 6 ÈËÒÔÉÏµÄ×é¶Ó²Å¿ÉÒÔÊÍ·ÅÇ¿´óµÄÄ§·¨£¡!");
+	     //       cm.sendOk("éœ€è¦ 6 äººä»¥ä¸Šçš„ç»„é˜Ÿæ‰å¯ä»¥é‡Šæ”¾å¼ºå¤§çš„é­”æ³•ï¼!");
         //            cm.dispose();	
 		//&&cm.haveItem(4001257,1)&&cm.haveItem(4001258,1)&&cm.haveItem(4001259,1)&&cm.haveItem(4001260,1)// #i04001257# #i04001258# #i04001259# #i04001260#
                        cm.gainMeso(-5000000);
 					   cm.setBossLog('PlayQuest53');
                         cm.spawnMonster(9400592,1);
                         cm.dispose();
-						cm.À®°È(2,"[ç³ºì¸±±¾]£ºÍæ¼Ò" + cm.getPlayer().getName() + "¿ªÊ¼ÌôÕ½ËÄºÅBOSS!!!Ï£ÍûËûÄÜ»î×Å³öÀ´");
+						cm.å–‡å­(2,"[ç»¯çº¢å‰¯æœ¬]ï¼šç©å®¶" + cm.getPlayer().getName() + "å¼€å§‹æŒ‘æˆ˜å››å·BOSS!!!å¸Œæœ›ä»–èƒ½æ´»ç€å‡ºæ¥");
                        
 			cm.dispose();	
 			}
 			}else if (selection == 5){
 		var party = cm.getPlayer().getParty();		
 		if (cm.getBossLog('PlayQuest54') >= 2) {
-			cm.sendOk("Äã½ñÌìÌôÕ½´ÎÊı³¬¹ı2´Î!");
+			cm.sendOk("ä½ ä»Šå¤©æŒ‘æˆ˜æ¬¡æ•°è¶…è¿‡2æ¬¡!");
 			cm.dispose();	
 	}	else if (cm.getMeso() < 5000000) {
-			cm.sendOk("ÄãÉíÉÏ²»×ã500Íò½ğ±Ò!");
+			cm.sendOk("ä½ èº«ä¸Šä¸è¶³500ä¸‡é‡‘å¸!");
 			cm.dispose();
 			}else{ 
 		//}else if(party.getMembers().size() < 0) {
-	     //       cm.sendOk("ĞèÒª 6 ÈËÒÔÉÏµÄ×é¶Ó²Å¿ÉÒÔÊÍ·ÅÇ¿´óµÄÄ§·¨£¡!");
+	     //       cm.sendOk("éœ€è¦ 6 äººä»¥ä¸Šçš„ç»„é˜Ÿæ‰å¯ä»¥é‡Šæ”¾å¼ºå¤§çš„é­”æ³•ï¼!");
         //            cm.dispose();	
 		//&&cm.haveItem(4001257,1)&&cm.haveItem(4001258,1)&&cm.haveItem(4001259,1)&&cm.haveItem(4001260,1)// #i04001257# #i04001258# #i04001259# #i04001260#
                          cm.gainMeso(-5000000);
 						 cm.setBossLog('PlayQuest54');
                         cm.spawnMonster(9400593,1);
                         cm.dispose();
-						cm.À®°È(2,"[ç³ºì¸±±¾]£ºÍæ¼Ò" + cm.getPlayer().getName() + "¿ªÊ¼ÌôÕ½ÎåºÅBOSS,×¼±¸½ÓÊÜ±©Å°°É");
+						cm.å–‡å­(2,"[ç»¯çº¢å‰¯æœ¬]ï¼šç©å®¶" + cm.getPlayer().getName() + "å¼€å§‹æŒ‘æˆ˜äº”å·BOSS,å‡†å¤‡æ¥å—æš´è™å§");
                        
 			cm.dispose();	
 			}

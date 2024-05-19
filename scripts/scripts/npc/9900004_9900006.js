@@ -1,12 +1,12 @@
 var ca = java.util.Calendar.getInstance();
-var year = ca.get(java.util.Calendar.YEAR); //»ñµÃÄê·İ
-var month = ca.get(java.util.Calendar.MONTH) + 1; //»ñµÃÔÂ·İ
-var day = ca.get(java.util.Calendar.DATE);//»ñÈ¡ÈÕ
-var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //»ñµÃĞ¡Ê±
-var minute = ca.get(java.util.Calendar.MINUTE);//»ñµÃ·ÖÖÓ
-var second = ca.get(java.util.Calendar.SECOND); //»ñµÃÃë
+var year = ca.get(java.util.Calendar.YEAR); //è·å¾—å¹´ä»½
+var month = ca.get(java.util.Calendar.MONTH) + 1; //è·å¾—æœˆä»½
+var day = ca.get(java.util.Calendar.DATE);//è·å–æ—¥
+var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //è·å¾—å°æ—¶
+var minute = ca.get(java.util.Calendar.MINUTE);//è·å¾—åˆ†é’Ÿ
+var second = ca.get(java.util.Calendar.SECOND); //è·å¾—ç§’
 var weekday = ca.get(java.util.Calendar.DAY_OF_WEEK);
-var ´«ËÍÍ¼ = "#fEffect/SkillName1.img/1001003/´«ËÍÍ¼#";
+var ä¼ é€å›¾ = "#fEffect/SkillName1.img/1001003/ä¼ é€å›¾#";
 function start() {
     status = -1;
     action(1, 0, 0);
@@ -23,26 +23,26 @@ function action(mode, type, selection) {
         status--;
     }
 	//if (cm.getQuestStatus(21728) == 0) {
-          //  cm.sendOk("ÄãÎ´Ï°µÃ´Ëµã¸èÌì¸³¡£");
+          //  cm.sendOk("ä½ æœªä¹ å¾—æ­¤ç‚¹æ­Œå¤©èµ‹ã€‚");
            // cm.dispose();
        // }
     if (cm.getMapId() == 180000001) {
-            cm.sendOk("ºÜÒÅº¶£¬ÄúÒòÎªÎ¥·´ÓÃ»§ÊØÔò±»½ûÖ¹ÓÎÏ·»î¶¯£¬ÈçÓĞÒìÒéÇëÁªÏµ¹ÜÀíÔ±.");
+            cm.sendOk("å¾ˆé—æ†¾ï¼Œæ‚¨å› ä¸ºè¿åç”¨æˆ·å®ˆåˆ™è¢«ç¦æ­¢æ¸¸æˆæ´»åŠ¨ï¼Œå¦‚æœ‰å¼‚è®®è¯·è”ç³»ç®¡ç†å‘˜.");
             cm.dispose();
         }  
     else if (status == 0) {
         var 
 		 
-		 selStr = " "+´«ËÍÍ¼+"\r\n\r\n\r\n"; 
+		 selStr = " "+ä¼ é€å›¾+"\r\n\r\n\r\n"; 
 		
 		
-		selStr += "#L1#ÔúÀ¥Èë¿Ú#l  "; 
-		selStr += "#L2#Ê±¼ä±¾Ô´#l  "; 
-		selStr += "#L3#Åç »ğ Áú#l  "; 
-		selStr += "#L4#·Ò¶àÉ­ÁÖ#l  "; 
-		selStr += "#L5#±© Á¦ ĞÜ#l  "; 
-		selStr += "#L6#°µºÚÁúÍõ#l  "; 
-		selStr += "#L7#ÉñµÄ»Æ»è#l  "; 
+		selStr += "#L1#æ‰æ˜†å…¥å£#l  "; 
+		selStr += "#L2#æ—¶é—´æœ¬æº#l  "; 
+		selStr += "#L3#å–· ç« é¾™#l  "; 
+		selStr += "#L4#èŠ¬å¤šæ£®æ—#l  "; 
+		selStr += "#L5#æš´ åŠ› ç†Š#l  "; 
+		selStr += "#L6#æš—é»‘é¾™ç‹#l  "; 
+		selStr += "#L7#ç¥çš„é»„æ˜#l  "; 
 		
 
 	

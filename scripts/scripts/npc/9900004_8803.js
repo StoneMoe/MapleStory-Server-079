@@ -10,7 +10,7 @@ function action(mode, type, selection) {
     else {
         if (status >= 0 && mode == 0) {
 
-            cm.sendOk("¸ĞĞ»ÄãµÄ¹âÁÙ£¡");
+            cm.sendOk("æ„Ÿè°¢ä½ çš„å…‰ä¸´ï¼");
             cm.dispose();
             return;
         }
@@ -26,23 +26,23 @@ function action(mode, type, selection) {
             for (i = 0; i < 10; i++) {
                 text += "";
             }
-			//ÏÔÊ¾ÎïÆ·IDÍ¼Æ¬ÓÃµÄ´úÂëÊÇ  #vÕâÀïĞ´ÈëID#
-            text += "#e#r¸ĞĞ»ÄãÎª´óÍõÃ°ÏÕµº×ö³öµÄ¹±Ï×#n#b\r\n\r\n"
-            text += "#L1##r#v1112772#ÄãÊÇ·ñÈ·¶¨¹ºÂò£¿#l\r\n\r\n"//3
+			//æ˜¾ç¤ºç‰©å“IDå›¾ç‰‡ç”¨çš„ä»£ç æ˜¯  #vè¿™é‡Œå†™å…¥ID#
+            text += "#e#ræ„Ÿè°¢ä½ ä¸ºå¤§ç‹å†’é™©å²›åšå‡ºçš„è´¡çŒ®#n#b\r\n\r\n"
+            text += "#L1##r#v1112772#ä½ æ˜¯å¦ç¡®å®šè´­ä¹°ï¼Ÿ#l\r\n\r\n"//3
             cm.sendSimple(text);
         } else if (selection == 1) {
                       if(!cm.canHold(1112793,1)){
-			cm.sendOk("ÇëÇåÀíÄãµÄ±³°ü£¬ÖÁÉÙ¿Õ³ö2¸öÎ»ÖÃ£¡");
+			cm.sendOk("è¯·æ¸…ç†ä½ çš„èƒŒåŒ…ï¼Œè‡³å°‘ç©ºå‡º2ä¸ªä½ç½®ï¼");
             cm.dispose();
         } else if(cm.getPlayer().getNX() >= 6666){
 				cm.gainNX(-6666);
 				cm.gainItem(1112772, 1);//
 
-            cm.sendOk("¹ºÂò³É¹¦£¬¹§Ï²Äã£¡");
-			Packages.handling.world.World.Broadcast.broadcastMessage(Packages.tools.MaplePacketCreator.serverNotice(12, cm.getClient().getChannel(), "¡º¸ß¶ËÉÌµê¹ºÂòÍ¨Öª¡»" + " : " + "¹§Ï²[" + cm.getPlayer().getName() + "]³É¹¦¹ºÂò¡¾A¼¶ÖÇ»Û±¦Ê¯½äÖ¸¡¿£¡"));
+            cm.sendOk("è´­ä¹°æˆåŠŸï¼Œæ­å–œä½ ï¼");
+			Packages.handling.world.World.Broadcast.broadcastMessage(Packages.tools.MaplePacketCreator.serverNotice(12, cm.getClient().getChannel(), "ã€é«˜ç«¯å•†åº—è´­ä¹°é€šçŸ¥ã€" + " : " + "æ­å–œ[" + cm.getPlayer().getName() + "]æˆåŠŸè´­ä¹°ã€Açº§æ™ºæ…§å®çŸ³æˆ’æŒ‡ã€‘ï¼"));
             cm.dispose();
 			}else{
-            cm.sendOk("ÄãµÄµã¾íÊÇ·ñ×ã¹»£¬Èôµã¾í²»×ãÇë³äÖµ»òÔÚÓÎÏ·ÖĞ»ñµÃ£¡");
+            cm.sendOk("ä½ çš„ç‚¹å·æ˜¯å¦è¶³å¤Ÿï¼Œè‹¥ç‚¹å·ä¸è¶³è¯·å……å€¼æˆ–åœ¨æ¸¸æˆä¸­è·å¾—ï¼");
             cm.dispose();
 			}
 		}

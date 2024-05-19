@@ -1,6 +1,6 @@
 /*
-	×°±¸¶ÍÔì NPC½Å±¾  by ÍÁ¹· 2017/6/30 ĞÇÆÚÎå ÉÏÎç 12:03:48
-	½ö¹©Ñ§Ï°²Î¿¼£¬½ûÖ¹ÓÃÓÚÈÎºÎÉÌÒµĞĞÎª
+	è£…å¤‡é”»é€  NPCè„šæœ¬  by åœŸç‹— 2017/6/30 æ˜ŸæœŸäº” ä¸Šåˆ 12:03:48
+	ä»…ä¾›å­¦ä¹ å‚è€ƒï¼Œç¦æ­¢ç”¨äºä»»ä½•å•†ä¸šè¡Œä¸º
 */
 
 
@@ -51,8 +51,8 @@ function action(mode, type, selection) {
         }
         if (status == 0) {
         	
-            text = "#r¡¾ÖĞ¹úĞÄÇ¿»¯¡¿ÊôĞÔÌáÉıËµÃ÷£º#dÃ¿´ÎÌáÉı»áËæ»úÔö¼ÓÊôĞÔ0-6µã£¬ ÌáÉıĞèÒª#v4000464#ÖĞ¹úĞÄÒ»¸ö£¡\r\n#b¡¾¹æÔò¡¿Ã¿ÈÕÊ®´Î»ú»á£¬100%³É¹¦ÂÊ£¡#k\r\n";
-            text += "#L0##e#r Éı¼¶°ü¹üÄÚÖ¸¶¨×°±¸#l\r\n";
+            text = "#rã€ä¸­å›½å¿ƒå¼ºåŒ–ã€‘å±æ€§æå‡è¯´æ˜ï¼š#dæ¯æ¬¡æå‡ä¼šéšæœºå¢åŠ å±æ€§0-6ç‚¹ï¼Œ æå‡éœ€è¦#v4000464#ä¸­å›½å¿ƒä¸€ä¸ªï¼\r\n#bã€è§„åˆ™ã€‘æ¯æ—¥åæ¬¡æœºä¼šï¼Œ100%æˆåŠŸç‡ï¼#k\r\n";
+            text += "#L0##e#r å‡çº§åŒ…è£¹å†…æŒ‡å®šè£…å¤‡#l\r\n";
             text += "\r\n\r\n\r\n\r\n";
             cm.sendSimple(text);
         } else {
@@ -62,7 +62,7 @@ function action(mode, type, selection) {
             switch (selstatus) {
                 case 0:
 				if (cm.getBossLog('PlayQuest99') >= 10) {
-			cm.sendOk("Äã½ñÌìÇ¿»¯´ÎÊı³¬¹ı3´Î!");
+			cm.sendOk("ä½ ä»Šå¤©å¼ºåŒ–æ¬¡æ•°è¶…è¿‡3æ¬¡!");
 			cm.dispose();
 			} else {
                     deleteItemBySlot(selection);
@@ -77,7 +77,7 @@ function action(mode, type, selection) {
 function deleteItemBySlot(selection) {
     if (status == 1) {
         itemList = cm.getInventory(1).list().iterator();
-        text = "#e- ÇëÑ¡ÔñÒªÉı¼¶µÄµÀ¾ß -#n\r\n\r\n#b";
+        text = "#e- è¯·é€‰æ‹©è¦å‡çº§çš„é“å…· -#n\r\n\r\n#b";
         var indexof = 1;
         while (itemList.hasNext()) {
             var item = itemList.next();
@@ -110,7 +110,7 @@ function deleteItemBySlot(selection) {
         
         deleteSlot = selection;
 			if (ii.isCash(item.getItemId()) == true) {
-                    cm.sendOk("Ö»Ö§³ÖÆÕÍ¨×°±¸Ç¿»¯.");
+                    cm.sendOk("åªæ”¯æŒæ™®é€šè£…å¤‡å¼ºåŒ–.");
                     cm.dispose();
   
                 }
@@ -139,26 +139,26 @@ function deleteItemBySlot(selection) {
     			chance_value=chance_level1;
     			price=price1;i
     		}*/
-        text = "#eÈ·¶¨ÒªÉı¼¶#v" + item.getItemId() + "# "+ "£¿³É¹¦¸ÅÂÊÎª£º#r"+chance_value+"%\r\n\r\n";
-		text += "#b×°±¸Ä¿Ç°ÊôĞÔ£º\r\n" ;
-        text += "Á¦Á¿£º" + itemstr + "\r\n" ;
-        text += "Ãô½İ£º" + itemdex + "\r\n" ;
-        text += "ÔËÆø£º" + itemluk + "\r\n" ;
-        text += "ÖÇÁ¦£º" + itemint + "\r\n" ;
-		text += "HP£º" + itemhp + "\r\n" ;
-		text += "MP£º" + itemmp + "\r\n" ;
-        text += "¹¥»÷£º" + itemwatk + "\r\n" ;
-        text += "Ä§¹¥£º" + itemmatk + "\r\n" ;
-		text += "·ÀÓùÁ¦£º" +  itemwdef + "\r\n" ;
-		text += "Ä§·¨·ÀÓùÁ¦£º" +  itemmdef + "\r\n" ;
-		text += "ÃüÖĞÂÊ£º" + itemacc + "\r\n" ;
-		text += "»Ø±ÜÂÊ£º" + itemavoid + "\r\n" ;
+        text = "#eç¡®å®šè¦å‡çº§#v" + item.getItemId() + "# "+ "ï¼ŸæˆåŠŸæ¦‚ç‡ä¸ºï¼š#r"+chance_value+"%\r\n\r\n";
+		text += "#bè£…å¤‡ç›®å‰å±æ€§ï¼š\r\n" ;
+        text += "åŠ›é‡ï¼š" + itemstr + "\r\n" ;
+        text += "æ•æ·ï¼š" + itemdex + "\r\n" ;
+        text += "è¿æ°”ï¼š" + itemluk + "\r\n" ;
+        text += "æ™ºåŠ›ï¼š" + itemint + "\r\n" ;
+		text += "HPï¼š" + itemhp + "\r\n" ;
+		text += "MPï¼š" + itemmp + "\r\n" ;
+        text += "æ”»å‡»ï¼š" + itemwatk + "\r\n" ;
+        text += "é­”æ”»ï¼š" + itemmatk + "\r\n" ;
+		text += "é˜²å¾¡åŠ›ï¼š" +  itemwdef + "\r\n" ;
+		text += "é­”æ³•é˜²å¾¡åŠ›ï¼š" +  itemmdef + "\r\n" ;
+		text += "å‘½ä¸­ç‡ï¼š" + itemacc + "\r\n" ;
+		text += "å›é¿ç‡ï¼š" + itemavoid + "\r\n" ;
 		
         cm.sendNextPrev(text);
     } else if (status == 3) {
     		if(itemspeed>=295)
     		{
-    			cm.sendOk("¸Ã×°±¸ÎŞ·¨Éı¼¶");
+    			cm.sendOk("è¯¥è£…å¤‡æ— æ³•å‡çº§");
         	status = 0;
 					cm.dispose();
 				}
@@ -166,7 +166,7 @@ function deleteItemBySlot(selection) {
     			if(cm.getPlayer().getItemQuantity(4000464,false) < price)
     			//if(cm.getPlayer().getItemQuantity(04001126, false) < price)
     			{
-								cm.sendOk("²ÄÁÏ²»×ã£¬Éı¼¶ĞèÒª"+price+"¸ö#r#v4000464#£¬Äãµ±Ç°ÓĞ"+cm.getPlayer().getItemQuantity(4000464, false));
+								cm.sendOk("ææ–™ä¸è¶³ï¼Œå‡çº§éœ€è¦"+price+"ä¸ª#r#v4000464#ï¼Œä½ å½“å‰æœ‰"+cm.getPlayer().getItemQuantity(4000464, false));
 				        status = 0;
 								cm.dispose();
     			}
@@ -174,7 +174,7 @@ function deleteItemBySlot(selection) {
     				{
     					if(chance_random<=chance_value)
 		    			{
-				        cm.removeSlot(1, deleteSlot, 1);//µÚÒ»¸ö²ÎÊı1ÊÇ×°±¸À¸£¬µÚ¶ş¹Ø²ÎÊıÊÇ±³°üÖĞµÄÎ»ÖÃ£¬µÚÈı¸ö²ÎÊıÊÇÊıÁ¿
+				        cm.removeSlot(1, deleteSlot, 1);//ç¬¬ä¸€ä¸ªå‚æ•°1æ˜¯è£…å¤‡æ ï¼Œç¬¬äºŒå…³å‚æ•°æ˜¯èƒŒåŒ…ä¸­çš„ä½ç½®ï¼Œç¬¬ä¸‰ä¸ªå‚æ•°æ˜¯æ•°é‡
 				        cm.gainItem(4000464,-price);
 				    		if(itemspeed>40)
 				    			speed_random=0;						
@@ -182,28 +182,28 @@ function deleteItemBySlot(selection) {
 				    			jump_random=0;																		// str,dex,luk,int,hp,mp,watk,matk,wdef,mdef,avoid,acc,jump,speed,time
 								cm.gainItem(itemid,itemstr+str_random,itemdex+dex_random,itemluk+luk_random,itemint+int_random,itemhp+hp_random,itemmp+mp_random,itemwatk+watk_random,itemmatk+matk_random,itemwdef+wdef_random,itemmdef+mdef_random,itemavoid+avoid_random,itemacc+acc_random,0,0);//item.getItemId(),  ,speed=295
 				        
-				        text = "#e³É¹¦Îª×°±¸Ôö¼ÓÊôĞÔ£º#b\r\n";
-				        text += "Á¦Á¿£º" + itemstr + "+" + str_random + "\r\n" ;
-				        text += "Ãô½İ£º" + itemdex + "+" + dex_random + "\r\n" ;
-				        text += "ÔËÆø£º" + itemluk + "+" + luk_random + "\r\n" ;
-				        text += "ÖÇÁ¦£º" + itemint + "+" + int_random + "\r\n" ;
-						text += "HP£º" + itemhp + "+" + hp_random + "\r\n" ;
-						text += "MP£º" + itemmp + "+" + mp_random + "\r\n" ;
-				        text += "¹¥»÷£º" + itemwatk+ "+" + watk_random + "\r\n" ;
-				        text += "Ä§¹¥£º" + itemmatk+ "+" + matk_random + "\r\n" ;
-						text += "ÃüÖĞÂÊ£º" + itemacc + "+" + acc_random + "\r\n" ;
-						text += "»Ø±ÜÂÊ£º" + itemavoid + "+" + avoid_random + "\r\n" ;
+				        text = "#eæˆåŠŸä¸ºè£…å¤‡å¢åŠ å±æ€§ï¼š#b\r\n";
+				        text += "åŠ›é‡ï¼š" + itemstr + "+" + str_random + "\r\n" ;
+				        text += "æ•æ·ï¼š" + itemdex + "+" + dex_random + "\r\n" ;
+				        text += "è¿æ°”ï¼š" + itemluk + "+" + luk_random + "\r\n" ;
+				        text += "æ™ºåŠ›ï¼š" + itemint + "+" + int_random + "\r\n" ;
+						text += "HPï¼š" + itemhp + "+" + hp_random + "\r\n" ;
+						text += "MPï¼š" + itemmp + "+" + mp_random + "\r\n" ;
+				        text += "æ”»å‡»ï¼š" + itemwatk+ "+" + watk_random + "\r\n" ;
+				        text += "é­”æ”»ï¼š" + itemmatk+ "+" + matk_random + "\r\n" ;
+						text += "å‘½ä¸­ç‡ï¼š" + itemacc + "+" + acc_random + "\r\n" ;
+						text += "å›é¿ç‡ï¼š" + itemavoid + "+" + avoid_random + "\r\n" ;
 				        cm.sendOk(text);
 						cm.setBossLog('PlayQuest99');
-								cm.À®°È(3, "¡ºÖĞ¹úĞÄÇ¿»¯¡» £º¹§Ï²¡¾"+cm.getName()+"¡¿Ê¹ÓÃÖĞ¹úĞÄ³É¹¦Ç¿»¯ÁË×°±¸£¬¼ÌĞø¼ÓÓÍ½«Ëü´òÔìµ½¼«ÖÂ°É£¡");
-								//cm.È«·şÆ¯¸¡À®°È("¹§Ï²Íæ¼Ò["+cm.getName()+"]Ê±×°Ç¿»¯Áù½×³É¹¦£¡¿ÉÏ²¿ÉºØ£¡", 5121001);
-								//1°×É«£¬2ºìÉ«£¬3·ÛÉ«À®°È
+								cm.å–‡å­(3, "ã€ä¸­å›½å¿ƒå¼ºåŒ–ã€ ï¼šæ­å–œã€"+cm.getName()+"ã€‘ä½¿ç”¨ä¸­å›½å¿ƒæˆåŠŸå¼ºåŒ–äº†è£…å¤‡ï¼Œç»§ç»­åŠ æ²¹å°†å®ƒæ‰“é€ åˆ°æè‡´å§ï¼");
+								//cm.å…¨æœæ¼‚æµ®å–‡å­("æ­å–œç©å®¶["+cm.getName()+"]æ—¶è£…å¼ºåŒ–å…­é˜¶æˆåŠŸï¼å¯å–œå¯è´ºï¼", 5121001);
+								//1ç™½è‰²ï¼Œ2çº¢è‰²ï¼Œ3ç²‰è‰²å–‡å­
 				        status = 0;
 								cm.dispose();
 							}
 							else
 							{
-								cm.sendOk("Éı¼¶Ê§°Ü£¬ÇëÔÙ½ÓÔÙÀ÷£¡");
+								cm.sendOk("å‡çº§å¤±è´¥ï¼Œè¯·å†æ¥å†å‰ï¼");
 								cm.setBossLog('PlayQuest99');
 				        cm.gainItem(4000464,-price);
 				        status = 0;

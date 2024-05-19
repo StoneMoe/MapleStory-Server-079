@@ -9,7 +9,7 @@ function action(mode, type, selection) {
     switch (cm.getPlayer().getMapId()) {
         case 930000500:
             if (!cm.haveItem(4001163)) {
-                cm.sendNext("°Ñ#b#t4001163##k´øÀ´¸øÎÒ¡£");
+                cm.sendNext("æŠŠ#b#t4001163##kå¸¦æ¥ç»™æˆ‘ã€‚");
             } else {
                 cm.warpParty(930000600);
             }

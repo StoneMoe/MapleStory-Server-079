@@ -4,6 +4,6 @@ function enter(pi) {
 	pi.warp(926110303,0);
 	em.setProperty("stage6_2", "1");
     } else {
-	pi.playerMessage(5, "有人已经进入了这个门");
+	pi.playerMessage(5, "鏈変汉宸茬粡杩涘叆浜嗚繖涓棬");
     }
 }

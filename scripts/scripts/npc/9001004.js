@@ -12,13 +12,13 @@ function action(mode, type, selection) {
 	} else {
 		status++;
 		if (status == 0) {
-			cm.sendSimple("àË£¬ÎÒÊÇ#p9001004#£¬ĞèÒªÊ²Ã´°ïÃ¦Âğ£¿£¿\r\n#L0#´øÎÒÀë¿ªÕâÀï¡£#l\r\n#L1#ÂòÒ»°Ñ»î¶¯ÎäÆ÷ (1 ·ã±Ò)#l");
+			cm.sendSimple("å—¨ï¼Œæˆ‘æ˜¯#p9001004#ï¼Œéœ€è¦ä»€ä¹ˆå¸®å¿™å—ï¼Ÿï¼Ÿ\r\n#L0#å¸¦æˆ‘ç¦»å¼€è¿™é‡Œã€‚#l\r\n#L1#ä¹°ä¸€æŠŠæ´»åŠ¨æ­¦å™¨ (1 æ«å¸)#l");
 		} else if (status == 1) {
 			if (selection == 0) {
-				cm.sendYesNo("ÄãÏëÒªÀë¿ªÕâÀï£¿£¿");
+				cm.sendYesNo("ä½ æƒ³è¦ç¦»å¼€è¿™é‡Œï¼Ÿï¼Ÿ");
 			} else if (selection == 1) {
 				if (cm.getPlayer().getMeso() < 1 || !cm.canHold(1322005)) {
-					cm.sendOk("ÄãÃ»ÓĞ×ã¹»µÄ·ã±Ò£¬»òÕßµÀ¾ßÀ¸Î»ÂúÁË¡£");
+					cm.sendOk("ä½ æ²¡æœ‰è¶³å¤Ÿçš„æ«å¸ï¼Œæˆ–è€…é“å…·æ ä½æ»¡äº†ã€‚");
 				} else {
 					cm.gainItem(1322005, 1);
 					cm.gainMeso(-1); //lool

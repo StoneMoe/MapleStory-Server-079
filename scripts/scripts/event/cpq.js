@@ -6,12 +6,12 @@
 
 importPackage(Packages.tools.packet);
 
-var exitMap = 0;//ÍË³öµØÍ¼
-var waitingMap = 1;//µÈ´ıµØÍ¼
-var reviveMap = 2;//¸´»îµØÍ¼
-var fieldMap = 3;//³¡µØÍ¼
-var winnerMap = 4;//Ó®¼ÒµØÍ¼
-var loserMap = 5;//Ê§°ÜÕßµØÍ¼
+var exitMap = 0;//é€€å‡ºåœ°å›¾
+var waitingMap = 1;//ç­‰å¾…åœ°å›¾
+var reviveMap = 2;//å¤æ´»åœ°å›¾
+var fieldMap = 3;//åœºåœ°å›¾
+var winnerMap = 4;//èµ¢å®¶åœ°å›¾
+var loserMap = 5;//å¤±è´¥è€…åœ°å›¾
 
 function init() {
     // *For use ONLY with Development v117.2*
@@ -35,8 +35,8 @@ function setup(mapid) {
     eim.setProperty("red", "-1");
     eim.setProperty("started", "false");
     var portal = eim.getMapInstance(reviveMap).getPortal("pt00");
-    var scriptStart = map % 1000; // µØÍ¼×îºóÈıÎ»Êı
-    var scriptEnd = scriptStart / 100; // µØÍ¼×îºóÈıÎ»ÊıµÄµÚÒ»Î»Êı¡£
+    var scriptStart = map % 1000; // åœ°å›¾æœ€åä¸‰ä½æ•°
+    var scriptEnd = scriptStart / 100; // åœ°å›¾æœ€åä¸‰ä½æ•°çš„ç¬¬ä¸€ä½æ•°ã€‚
     portal.setScriptName("MCrevive" + scriptEnd); // portals one through six calculated and used
     //portal.setScriptName("MCrevive"); // portals one through six calculated and used
 
@@ -97,7 +97,7 @@ function removePlayer(eim, player) {
 function getParty(eim, property) {
     var chr = em.getChannelServer().getPlayerStorage().getCharacterById(parseInt(eim.getProperty(property)));
     if (chr == null) {
-        eim.broadcastPlayerMsg(5, "¶ÓÎéÖĞµÄ¶Ó³¤" + property + " Ã»ÓĞÕÒµ½.");
+        eim.broadcastPlayerMsg(5, "é˜Ÿä¼ä¸­çš„é˜Ÿé•¿" + property + " æ²¡æœ‰æ‰¾åˆ°.");
         disposeAll(eim);
         return null;
     } else {
@@ -180,7 +180,7 @@ function playerRevive(eim, player) {
 
 function playerDisconnected(eim, player) {
     player.setMap(eim.getMapInstance(exitMap));
-    eim.broadcastPlayerMsg(5, "[" + player.getName() + "] ÍÅ¶Ó [" + (player.getCarnivalParty().getTeam() == 0 ? "Ã°ÏÕµººì¶Ó" : "Ã°ÏÕµºÀ¶¶Ó") + "] ÍË³ö¹ÖÎï¼ÎÄê»ª."); // forgot about the packet xD
+    eim.broadcastPlayerMsg(5, "[" + player.getName() + "] å›¢é˜Ÿ [" + (player.getCarnivalParty().getTeam() == 0 ? "å†’é™©å²›çº¢é˜Ÿ" : "å†’é™©å²›è“é˜Ÿ") + "] é€€å‡ºæ€ªç‰©å˜‰å¹´å."); // forgot about the packet xD
     eim.unregisterPlayer(player);
     if ((player.getCarnivalParty().getMembers().size() - 1) < 1) {
         player.getCarnivalParty().removeMember(player);

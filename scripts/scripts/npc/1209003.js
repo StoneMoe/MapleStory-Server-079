@@ -18,7 +18,7 @@ function action(mode, type, selection) {
 
     switch (status) {
         case 0: 
-	    cm.sendOk("ÎÒÃÇ²»ÏëËÀ£¡£¡´óÓ¢ĞÛÄã¿ì¾È¾ÈÎÒÃÇ£¡");
+	    cm.sendOk("æˆ‘ä»¬ä¸æƒ³æ­»ï¼ï¼å¤§è‹±é›„ä½ å¿«æ•‘æ•‘æˆ‘ä»¬ï¼");
 		cm.dispose();
             break;
         case 1: //

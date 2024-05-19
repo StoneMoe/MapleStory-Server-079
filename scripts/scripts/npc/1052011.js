@@ -25,7 +25,7 @@ function action(mode, type, selection) {
     else
         status--;
     if (status == 0) {
-        cm.sendYesNo("是否想离开这里？？");
+        cm.sendYesNo("鏄惁鎯崇寮�杩欓噷锛燂紵");
     } else if (status == 1) {
         cm.warp(103000100, 0);
         cm.dispose();

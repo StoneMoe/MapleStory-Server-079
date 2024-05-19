@@ -1,6 +1,6 @@
 /*
  *
- *  ´Ë½Å±¾ÓÉÃ°ÏÕµºÖÆ×÷Íê³É
+ *  æ­¤è„šæœ¬ç”±å†’é™©å²›åˆ¶ä½œå®Œæˆ
  * i
  *
  */
@@ -23,18 +23,18 @@ var fuben = 0;
 //------------------------------------------------------------------------
 
 var bossmaps = Array(
-		Array(100000005,0,"Ìú¼×Öí¹«Ô°III"),
-		Array(105070002,0,"Ä¢¹½ÍõÖ®Ä¹"), 
-		Array(105090900,0,"±»×çÖäµÄËÂÔº"), 				
-		Array(230040420,0,"Æ¤ÑÇÅ«Ë¹¶´Ñ¨"), 
-		Array(211042300,0,"ÔúÀ¥Èë¿Ú"), 
-		Array(220080000,0,"Ê±¼äËşµÄ±¾Ô´"), 
-		Array(240020402,0,"Åç»ğÁúÆÜÏ¢µØ"), 
-		Array(240020101,0,"¸ñÈğ·Ò¶àÉ­ÁÖ"),					
-		Array(551030100,0,"ÌôÕ½±©Á¦ĞÜ"),					
-		Array(240040700,0,"°µºÚÁúÍõ¶´Ñ¨"), 				
-		Array(270050000,0,"ÉñµÄ»Æ»è:Æ·¿ËçÍ³¡Ëù"),	
-		Array(541020800,0,"Ç§ÄêÊ÷¾«")									
+		Array(100000005,0,"é“ç”²çŒªå…¬å›­III"),
+		Array(105070002,0,"è˜‘è‡ç‹ä¹‹å¢“"), 
+		Array(105090900,0,"è¢«è¯…å’’çš„å¯ºé™¢"), 				
+		Array(230040420,0,"çš®äºšå¥´æ–¯æ´ç©´"), 
+		Array(211042300,0,"æ‰æ˜†å…¥å£"), 
+		Array(220080000,0,"æ—¶é—´å¡”çš„æœ¬æº"), 
+		Array(240020402,0,"å–·ç«é¾™æ –æ¯åœ°"), 
+		Array(240020101,0,"æ ¼ç‘èŠ¬å¤šæ£®æ—"),					
+		Array(551030100,0,"æŒ‘æˆ˜æš´åŠ›ç†Š"),					
+		Array(240040700,0,"æš—é»‘é¾™ç‹æ´ç©´"), 				
+		Array(270050000,0,"ç¥çš„é»„æ˜:å“å…‹ç¼¤åœºæ‰€"),	
+		Array(541020800,0,"åƒå¹´æ ‘ç²¾")									
 		);
 
 //------------------------------------------------------------------------
@@ -46,15 +46,15 @@ var monstermaps = Array(
 
 var townmaps = Array(
 		//Array(270050000,0,"PB") 
-		//Array(240060200,0,"ºÚÁú"),
-                //Array(280030000,0,"ÔúÀ¥")
+		//Array(240060200,0,"é»‘é¾™"),
+                //Array(280030000,0,"æ‰æ˜†")
 		);
 
 //------------------------------------------------------------------------
 
 var fubenmaps = Array(
-		Array(800020400,0,"¼Ò×åÂş²½µØÍ¼"),
-		Array(193000000,0,"Íø°ÉµØÍ¼")						
+		Array(800020400,0,"å®¶æ—æ¼«æ­¥åœ°å›¾"),
+		Array(193000000,0,"ç½‘å§åœ°å›¾")						
 		);
 
 //------------------------------------------------------------------------
@@ -65,11 +65,11 @@ var fubenmaps = Array(
 		}
 	function action(mode, type, selection) {
 	if (mode == -1) {
-		cm.sendOk("#bºÃµÄ,ÏÂ´ÎÔÙ¼û.");
+		cm.sendOk("#bå¥½çš„,ä¸‹æ¬¡å†è§.");
 		cm.dispose();
 		} else {
 	if (status >= 0 && mode == 0) {
-		cm.sendOk("#bºÃµÄ,ÏÂ´ÎÔÙ¼û.");
+		cm.sendOk("#bå¥½çš„,ä¸‹æ¬¡å†è§.");
 		cm.dispose();
 		return;
 		}
@@ -83,19 +83,19 @@ var fubenmaps = Array(
 
 	if (status == 0) {
 
-   	    var add = "\r\nÄúºÃ£¬ÎÒÊÇBOSSµôÏß´«ËÍÔ±¡£ÇëÎÊÄúÒª»Øµ½£¿\r\n\r\n#e#r";
+   	    var add = "\r\næ‚¨å¥½ï¼Œæˆ‘æ˜¯BOSSæ‰çº¿ä¼ é€å‘˜ã€‚è¯·é—®æ‚¨è¦å›åˆ°ï¼Ÿ\r\n\r\n#e#r";
 
-//		add += "Ã°ÏÕµ½ÊÀ½çµØÍ¼ÎÒ¶¼¿ÉÒÔÎªÄãËÍµ½,";
+//		add += "å†’é™©åˆ°ä¸–ç•Œåœ°å›¾æˆ‘éƒ½å¯ä»¥ä¸ºä½ é€åˆ°,";
 
-//		add += "Îª·½±ãÍæ¼Ò,¹ÜÀíÉèÖÃÁËÁ·¼¶µØÍ¼,BOSSµØÍ¼Ö±½Ó´«ËÍ,";
+//		add += "ä¸ºæ–¹ä¾¿ç©å®¶,ç®¡ç†è®¾ç½®äº†ç»ƒçº§åœ°å›¾,BOSSåœ°å›¾ç›´æ¥ä¼ é€,";
 
-		//add += "Èç¹ûÄãÓĞÊ²Ã´¸üºÃµÄµØÍ¼,²»·ÀÁªÏµ¹ÜÀíÔ±Ìí¼Ó,¸ĞĞ»Äã¶Ô±¾·şµÄÖ§³Ö.#b\r\n\r\n";
+		//add += "å¦‚æœä½ æœ‰ä»€ä¹ˆæ›´å¥½çš„åœ°å›¾,ä¸é˜²è”ç³»ç®¡ç†å‘˜æ·»åŠ ,æ„Ÿè°¢ä½ å¯¹æœ¬æœçš„æ”¯æŒ.#b\r\n\r\n";
 
-	   add += "#L0#ºÚÁú--ÔúÀ¥--PB#l ";    
+	   add += "#L0#é»‘é¾™--æ‰æ˜†--PB#l ";    
 
-		//add += "#L1#Á·¼¶´«ËÍ#l ";
+		//add += "#L1#ç»ƒçº§ä¼ é€#l ";
 
-//		add += "#L2#BOSS´«ËÍ#l ";
+//		add += "#L2#BOSSä¼ é€#l ";
  
 		cm.sendSimple (add);    
 
@@ -104,7 +104,7 @@ var fubenmaps = Array(
 	} else if (status == 1) {
 
 	if (selection == 0){
-		var selStr = "Ñ¡ÔñÄãµÄÄ¿µÄµØ°É.#b";
+		var selStr = "é€‰æ‹©ä½ çš„ç›®çš„åœ°å§.#b";
 		for (var i = 0; i < townmaps.length; i++) {
 		selStr += "\r\n#L" + i + "#" + townmaps[i][2] + "";
 		}
@@ -113,7 +113,7 @@ var fubenmaps = Array(
 		}
 
 	if (selection == 1) {
-		var selStr = "Ñ¡ÔñÄãµÄÄ¿µÄµØ°É.#b";
+		var selStr = "é€‰æ‹©ä½ çš„ç›®çš„åœ°å§.#b";
 		for (var i = 0; i < monstermaps.length; i++) {
 		selStr += "\r\n#L" + i + "#" + monstermaps[i][2] + "";
 		}
@@ -122,7 +122,7 @@ var fubenmaps = Array(
 		}
 
 	if (selection == 2) {
-		var selStr = "Ñ¡ÔñÄãµÄÄ¿µÄµØ°É.#b";
+		var selStr = "é€‰æ‹©ä½ çš„ç›®çš„åœ°å§.#b";
 		for (var i = 0; i < bossmaps.length; i++) {
 		selStr += "\r\n#L" + i + "#" + bossmaps[i][2] + "";
 		}
@@ -167,23 +167,23 @@ var fubenmaps = Array(
 		var map = net.sf.odinms.net.channel.ChannelServer.getInstance(4).getMapFactory().getMap(220080000);
 		var nao4 = map.getCharacters().toArray().length
 
-   	    var add = "ÒÔÏÂËùÊ¾Îª¸÷ÏßµÄBOSSÕ½¿ö#b\r\n";
+   	    var add = "ä»¥ä¸‹æ‰€ç¤ºä¸ºå„çº¿çš„BOSSæˆ˜å†µ#b\r\n";
 
-		add += ""+aaa+"[#rÆµµÀÒ»#b]\r\n";
+		add += ""+aaa+"[#ré¢‘é“ä¸€#b]\r\n";
 
-		add += ""+zzz+"[#dÔúÀ¥#b]£º#r"+zha1+"#bÈË  [#dºÚÁú#b]£º#r"+hei1+"#bÈË  [#dPB#b]£º#r"+pb1+"#bÈË  [#dÄÖÖÓ#b]£º#r"+nao1+"#bÈË\r\n\r\n";
+		add += ""+zzz+"[#dæ‰æ˜†#b]ï¼š#r"+zha1+"#bäºº  [#dé»‘é¾™#b]ï¼š#r"+hei1+"#bäºº  [#dPB#b]ï¼š#r"+pb1+"#bäºº  [#dé—¹é’Ÿ#b]ï¼š#r"+nao1+"#bäºº\r\n\r\n";
 
-		add += ""+aaa+"[#rÆµµÀ¶ş#b]\r\n";
+		add += ""+aaa+"[#ré¢‘é“äºŒ#b]\r\n";
 
-		add += ""+zzz+"[#dÔúÀ¥#b]£º#r"+zha2+"#bÈË  [#dºÚÁú#b]£º#r"+hei2+"#bÈË  [#dPB#b]£º#r"+pb2+"#bÈË  [#dÄÖÖÓ#b]£º#r"+nao2+"#bÈË\r\n\r\n";
+		add += ""+zzz+"[#dæ‰æ˜†#b]ï¼š#r"+zha2+"#bäºº  [#dé»‘é¾™#b]ï¼š#r"+hei2+"#bäºº  [#dPB#b]ï¼š#r"+pb2+"#bäºº  [#dé—¹é’Ÿ#b]ï¼š#r"+nao2+"#bäºº\r\n\r\n";
 
-		add += ""+aaa+"[#rÆµµÀÈı#b]\r\n";
+		add += ""+aaa+"[#ré¢‘é“ä¸‰#b]\r\n";
 
-		add += ""+zzz+"[#dÔúÀ¥#b]£º#r"+zha3+"#bÈË  [#dºÚÁú#b]£º#r"+hei3+"#bÈË  [#dPB#b]£º#r"+pb3+"#bÈË  [#dÄÖÖÓ#b]£º#r"+nao3+"#bÈË\r\n\r\n";
+		add += ""+zzz+"[#dæ‰æ˜†#b]ï¼š#r"+zha3+"#bäºº  [#dé»‘é¾™#b]ï¼š#r"+hei3+"#bäºº  [#dPB#b]ï¼š#r"+pb3+"#bäºº  [#dé—¹é’Ÿ#b]ï¼š#r"+nao3+"#bäºº\r\n\r\n";
 
-		add += ""+aaa+"[#rÆµµÀËÄ#b]\r\n";
+		add += ""+aaa+"[#ré¢‘é“å››#b]\r\n";
 
-		add += ""+zzz+"[#dÔúÀ¥#b]£º#r"+zha4+"#bÈË  [#dºÚÁú#b]£º#r"+hei4+"#bÈË  [#dPB#b]£º#r"+pb4+"#bÈË  [#dÄÖÖÓ#b]£º#r"+nao4+"#bÈË\r\n\r\n";
+		add += ""+zzz+"[#dæ‰æ˜†#b]ï¼š#r"+zha4+"#bäºº  [#dé»‘é¾™#b]ï¼š#r"+hei4+"#bäºº  [#dPB#b]ï¼š#r"+pb4+"#bäºº  [#dé—¹é’Ÿ#b]ï¼š#r"+nao4+"#bäºº\r\n\r\n";
  
 		cm.sendOk (add); 
 
@@ -196,22 +196,22 @@ var fubenmaps = Array(
 	} else if (status == 2) {
 
 	if (towns == 1) {
-		cm.sendYesNo("ÄãÈ·¶¨ÒªÈ¥ " + townmaps[selection][2] + "?");
+		cm.sendYesNo("ä½ ç¡®å®šè¦å» " + townmaps[selection][2] + "?");
 		chosenMap = selection;
 		towns = 2;
 
 	} else if (monsters == 1) {
-		cm.sendYesNo("ÄãÈ·¶¨ÒªÈ¥ " + monstermaps[selection][2] + "?");
+		cm.sendYesNo("ä½ ç¡®å®šè¦å» " + monstermaps[selection][2] + "?");
 		chosenMap = selection;
 		monsters = 2;
 
 	} else if (bosses == 1) {
-		cm.sendYesNo("ÄãÈ·¶¨ÒªÈ¥ " + bossmaps[selection][2] + "?");
+		cm.sendYesNo("ä½ ç¡®å®šè¦å» " + bossmaps[selection][2] + "?");
 		chosenMap = selection;
 		bosses = 2;
 
 	} else if (fuben == 1) {
-		cm.sendYesNo("ÄãÈ·¶¨ÒªÈ¥ " + fubenmaps[selection][2] + "?");
+		cm.sendYesNo("ä½ ç¡®å®šè¦å» " + fubenmaps[selection][2] + "?");
 		chosenMap = selection;
 		fuben = 2;
 
@@ -226,7 +226,7 @@ var fubenmaps = Array(
 		cm.warp(townmaps[chosenMap][0], 0);
 		cm.gainMeso(-townmaps[chosenMap][1]);
 		}else{
-		cm.sendOk("ÄãÃ»ÓĞ×ã¹»µÄ½ğ±ÒÅ¶!");
+		cm.sendOk("ä½ æ²¡æœ‰è¶³å¤Ÿçš„é‡‘å¸å“¦!");
 		}
 		cm.dispose();
 
@@ -235,7 +235,7 @@ var fubenmaps = Array(
 		cm.warp(monstermaps[chosenMap][0], 0);
 		cm.gainMeso(-monstermaps[chosenMap][1]);
 		}else{
-		cm.sendOk("ÄãÃ»ÓĞ×ã¹»µÄ½ğ±ÒÅ¶!");
+		cm.sendOk("ä½ æ²¡æœ‰è¶³å¤Ÿçš„é‡‘å¸å“¦!");
 		}
 		cm.dispose();
 
@@ -244,7 +244,7 @@ var fubenmaps = Array(
 		cm.warp(bossmaps[chosenMap][0], 0);
 		cm.gainMeso(-bossmaps[chosenMap][1]);
 		}else{
-		cm.sendOk("ÄãÃ»ÓĞ×ã¹»µÄ½ğ±ÒÅ¶!");
+		cm.sendOk("ä½ æ²¡æœ‰è¶³å¤Ÿçš„é‡‘å¸å“¦!");
 		}
 		cm.dispose();
 
@@ -253,7 +253,7 @@ var fubenmaps = Array(
 		cm.warp(fubenmaps[chosenMap][0], 0);
 		cm.gainMeso(-fubenmaps[chosenMap][1]);
 		}else{
-		cm.sendOk("ÄãÃ»ÓĞ×ã¹»µÄ½ğ±ÒÅ¶!");
+		cm.sendOk("ä½ æ²¡æœ‰è¶³å¤Ÿçš„é‡‘å¸å“¦!");
 		}
 		cm.dispose();
 

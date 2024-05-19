@@ -1,12 +1,12 @@
 
 importPackage(net.sf.cherry.client);
 var status = 0;
-var È·¶¨ = "#fUI/Login.img/BtOk/normal/0#";
-var È¡Ïû = "#fUI/Login.img/BtCancel/normal/0#";
-var ·½¿é = "#fUI/GuildMark.img/BackGround/00001007/16#";
-var ÃÀ»¯new = "#fUI/UIWindow/Quest/icon5/1#";
-var ¸ĞÌ¾ºÅ = "#fUI/UIWindow/Quest/icon0#";
-var Õı·½¼ıÍ· = "#fUI/Basic/BtHide3/mouseOver/0#";
+var ç¡®å®š = "#fUI/Login.img/BtOk/normal/0#";
+var å–æ¶ˆ = "#fUI/Login.img/BtCancel/normal/0#";
+var æ–¹å— = "#fUI/GuildMark.img/BackGround/00001007/16#";
+var ç¾åŒ–new = "#fUI/UIWindow/Quest/icon5/1#";
+var æ„Ÿå¹å· = "#fUI/UIWindow/Quest/icon0#";
+var æ­£æ–¹ç®­å¤´ = "#fUI/Basic/BtHide3/mouseOver/0#";
 
 function start() {
     status = -1;
@@ -21,18 +21,18 @@ function action(mode, type, selection) {
             cm.dispose();
             return;
         }var MC = cm.getServerName();
-		var jb = cm.getBossRank("ÒøĞĞ½ğ±Ò",2)/90/10;
-		var dq = cm.getBossRank("ÒøĞĞµãÈ¯",2)/95/5;
-        if(cm.getBossLog("ÒøĞĞÀûÏ¢") == 0){
-			cm.setBossRankCount("ÒøĞĞ½ğ±Ò",jb);
-			cm.setBossRankCount("ÒøĞĞµãÈ¯",dq);
-		    cm.setBossLog("ÒøĞĞÀûÏ¢");
+		var jb = cm.getBossRank("é“¶è¡Œé‡‘å¸",2)/90/10;
+		var dq = cm.getBossRank("é“¶è¡Œç‚¹åˆ¸",2)/95/5;
+        if(cm.getBossLog("é“¶è¡Œåˆ©æ¯") == 0){
+			cm.setBossRankCount("é“¶è¡Œé‡‘å¸",jb);
+			cm.setBossRankCount("é“¶è¡Œç‚¹åˆ¸",dq);
+		    cm.setBossLog("é“¶è¡Œåˆ©æ¯");
 			
 			
 		}
 		
 		//if (cm.getBossLog("gengxin")==0  ) {
-        //    cm.showInstruction("\r\n#e#r"+MC+"#n#k\r\n\r\n\r\nµ±Ç°°æ±¾;#bV 4.9\r\n\r\n\r\nÇ©µ½Íê³É\r\n\r\n\r\n", 220, 15); 
+        //    cm.showInstruction("\r\n#e#r"+MC+"#n#k\r\n\r\n\r\nå½“å‰ç‰ˆæœ¬;#bV 4.9\r\n\r\n\r\nç­¾åˆ°å®Œæˆ\r\n\r\n\r\n", 220, 15); 
         //    cm.dispose();
         //  return;
 	 

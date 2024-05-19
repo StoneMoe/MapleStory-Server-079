@@ -1,10 +1,10 @@
 var ca = java.util.Calendar.getInstance();
-var year = ca.get(java.util.Calendar.YEAR); //»ñµÃÄê·Ý
-var month = ca.get(java.util.Calendar.MONTH) + 1; //»ñµÃÔÂ·Ý
-var day = ca.get(java.util.Calendar.DATE);//»ñÈ¡ÈÕ
-var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //»ñµÃÐ¡Ê±
-var minute = ca.get(java.util.Calendar.MINUTE);//»ñµÃ·ÖÖÓ
-var second = ca.get(java.util.Calendar.SECOND); //»ñµÃÃë
+var year = ca.get(java.util.Calendar.YEAR); //èŽ·å¾—å¹´ä»½
+var month = ca.get(java.util.Calendar.MONTH) + 1; //èŽ·å¾—æœˆä»½
+var day = ca.get(java.util.Calendar.DATE);//èŽ·å–æ—¥
+var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //èŽ·å¾—å°æ—¶
+var minute = ca.get(java.util.Calendar.MINUTE);//èŽ·å¾—åˆ†é’Ÿ
+var second = ca.get(java.util.Calendar.SECOND); //èŽ·å¾—ç§’
 var weekday = ca.get(java.util.Calendar.DAY_OF_WEEK);
 var Z = "#fUI/GuildMark.img/Mark/Letter/00005025/1#";
 var Y = "#fUI/GuildMark.img/Mark/Letter/00005024/3#";
@@ -14,9 +14,9 @@ var M = "#fUI/GuildMark.img/Mark/Letter/00005012/1#";
 var A = "#fUI/GuildMark.img/Mark/Letter/00005000/1#";
 var P = "#fUI/GuildMark.img/Mark/Letter/00005015/1#";
 var Z = "#fUI/GuildMark.img/Mark/Letter/00005025/9#";
-var ¾Å = "#fUI/GuildMark.img/Mark/Letter/00005035/15#";
-var Æß = "#fUI/GuildMark.img/Mark/Letter/00005033/15#";
-var Áã = "#fUI/GuildMark.img/Mark/Letter/00005026/15#";
+var ä¹ = "#fUI/GuildMark.img/Mark/Letter/00005035/15#";
+var ä¸ƒ = "#fUI/GuildMark.img/Mark/Letter/00005033/15#";
+var é›¶ = "#fUI/GuildMark.img/Mark/Letter/00005026/15#";
 
 
 function start() {
@@ -37,14 +37,14 @@ function action(mode, type, selection) {
 
 
 	if (cm.getMapId() > 209000001 || cm.getMapId() <= 209000000) {
-        cm.sendOk("´ËÃüÁîÖ»ÓÐ002ºÅ·¿Ö÷¿ÉÊ¹ÓÃ¡£");
+        cm.sendOk("æ­¤å‘½ä»¤åªæœ‰002å·æˆ¿ä¸»å¯ä½¿ç”¨ã€‚");
         cm.dispose();
 		 }
   
     else if (status == 0) {
-        var selStr = "#e#r©³#k©¥©¥©¥©¥©¥©¥©¥©¥ "+Áã+""+Æß+""+¾Å+"©¥©¥©¥©¥©¥©¥©¥©¥©¥#r©·#k\r\n             -¡ï¡î¡ï¡î¡ï¡î¡ï¡î-\r\n#b        "+Z+"    "+Y+"    "+M+"    "+X+"    "+D+" #k\r\n  #n                                        \r\n#r©»#k©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥#r©¿#k#n\r\r\n";
-  selStr += "   ÏÖÔÚÊ±¼ä£º#r"+year+"Äê"+month+"ÔÂ"+day+"ÈÕ"+hour+"Ê±"+minute+"·Ö"+second+"Ãë#k\r\n   µãÈ¯Óà¶î£º#r"+cm.getPlayer().getCSPoints(1)+"\r\n";
-          selStr += "  #L0##b·µ»ØÊÐ³¡#l#k #L1##bÐ¯´øÔ¿³×#l#k #L2#¡ó½øÈë»î¶¯#l#k \r\n\r\n";
+        var selStr = "#e#râ”#kâ”â”â”â”â”â”â”â” "+é›¶+""+ä¸ƒ+""+ä¹+"â”â”â”â”â”â”â”â”â”#râ”“#k\r\n             -â˜…â˜†â˜…â˜†â˜…â˜†â˜…â˜†-\r\n#b        "+Z+"    "+Y+"    "+M+"    "+X+"    "+D+" #k\r\n  #n                                        \r\n#râ”—#kâ”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”#râ”›#k#n\r\r\n";
+  selStr += "   çŽ°åœ¨æ—¶é—´ï¼š#r"+year+"å¹´"+month+"æœˆ"+day+"æ—¥"+hour+"æ—¶"+minute+"åˆ†"+second+"ç§’#k\r\n   ç‚¹åˆ¸ä½™é¢ï¼š#r"+cm.getPlayer().getCSPoints(1)+"\r\n";
+          selStr += "  #L0##bè¿”å›žå¸‚åœº#l#k #L1##bæºå¸¦é’¥åŒ™#l#k #L2#â—‡è¿›å…¥æ´»åŠ¨#l#k \r\n\r\n";
 		  
 	
 		cm.sendSimple(selStr);

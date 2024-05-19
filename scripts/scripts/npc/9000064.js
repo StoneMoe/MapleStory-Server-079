@@ -1,10 +1,10 @@
 var ca = java.util.Calendar.getInstance();
-var year = ca.get(java.util.Calendar.YEAR); //»ñµÃÄê·İ
-var month = ca.get(java.util.Calendar.MONTH) + 1; //»ñµÃÔÂ·İ
-var day = ca.get(java.util.Calendar.DATE);//»ñÈ¡ÈÕ
-var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //»ñµÃĞ¡Ê±
-var minute = ca.get(java.util.Calendar.MINUTE);//»ñµÃ·ÖÖÓ
-var second = ca.get(java.util.Calendar.SECOND); //»ñµÃÃë
+var year = ca.get(java.util.Calendar.YEAR); //è·å¾—å¹´ä»½
+var month = ca.get(java.util.Calendar.MONTH) + 1; //è·å¾—æœˆä»½
+var day = ca.get(java.util.Calendar.DATE);//è·å–æ—¥
+var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //è·å¾—å°æ—¶
+var minute = ca.get(java.util.Calendar.MINUTE);//è·å¾—åˆ†é’Ÿ
+var second = ca.get(java.util.Calendar.SECOND); //è·å¾—ç§’
 var weekday = ca.get(java.util.Calendar.DAY_OF_WEEK);
 var Z = "#fUI/GuildMark.img/Mark/Letter/00005025/1#";
 var Y = "#fUI/GuildMark.img/Mark/Letter/00005024/3#";
@@ -14,17 +14,17 @@ var M = "#fUI/GuildMark.img/Mark/Letter/00005012/1#";
 var A = "#fUI/GuildMark.img/Mark/Letter/00005000/1#";
 var P = "#fUI/GuildMark.img/Mark/Letter/00005015/1#";
 var Z = "#fUI/GuildMark.img/Mark/Letter/00005025/9#";
-var ¾Å = "#fUI/GuildMark.img/Mark/Letter/00005035/15#";
-var Æß = "#fUI/GuildMark.img/Mark/Letter/00005033/15#";
-var Áã = "#fUI/GuildMark.img/Mark/Letter/00005026/15#";
-var ·µ»ØÊĞ³¡ = "#fEffect/SkillName1.img/1001003/·µ»ØÊĞ³¡#";
-var Ô¶³Ì´«ËÍ = "#fEffect/SkillName1.img/1001003/Ô¶³Ì´«ËÍ#";
-var »îÔ¾³É¾Í = "#fEffect/SkillName1.img/1001003/»îÔ¾³É¾Í#";
-var ÇåÀí±³°ü = "#fEffect/SkillName1.img/1001003/ÇåÀí±³°ü#";
-var ¿ì½İÉÌµê = "#fEffect/SkillName1.img/1001003/¿ì½İÉÌµê#";
-var ¿ìËÙ×ªÖ° = "#fEffect/SkillName1.img/1001003/¿ìËÙ×ªÖ°#";
-var Ç©µ½ = "#fEffect/SkillName1.img/1001003/Ç©µ½#";
-var ×ÔÓÉ1 = "#fEffect/SkillName1.img/1001003/×ÔÓÉ1#";
+var ä¹ = "#fUI/GuildMark.img/Mark/Letter/00005035/15#";
+var ä¸ƒ = "#fUI/GuildMark.img/Mark/Letter/00005033/15#";
+var é›¶ = "#fUI/GuildMark.img/Mark/Letter/00005026/15#";
+var è¿”å›å¸‚åœº = "#fEffect/SkillName1.img/1001003/è¿”å›å¸‚åœº#";
+var è¿œç¨‹ä¼ é€ = "#fEffect/SkillName1.img/1001003/è¿œç¨‹ä¼ é€#";
+var æ´»è·ƒæˆå°± = "#fEffect/SkillName1.img/1001003/æ´»è·ƒæˆå°±#";
+var æ¸…ç†èƒŒåŒ… = "#fEffect/SkillName1.img/1001003/æ¸…ç†èƒŒåŒ…#";
+var å¿«æ·å•†åº— = "#fEffect/SkillName1.img/1001003/å¿«æ·å•†åº—#";
+var å¿«é€Ÿè½¬èŒ = "#fEffect/SkillName1.img/1001003/å¿«é€Ÿè½¬èŒ#";
+var ç­¾åˆ° = "#fEffect/SkillName1.img/1001003/ç­¾åˆ°#";
+var è‡ªç”±1 = "#fEffect/SkillName1.img/1001003/è‡ªç”±1#";
 
 
 
@@ -44,25 +44,25 @@ function action(mode, type, selection) {
         status--;
     }
 	    if (cm.getMapId() == 20000 || cm.getMapId() == 10000) {
-            cm.sendOk(" ×Ô ÓÉ Ã° ÏÕ µº ¾³ Íâ ÎŞ ·¨ Ê¹ ÓÃ ´Ë ¹¦ ÄÜ ¡£");
+            cm.sendOk(" è‡ª ç”± å†’ é™© å²› å¢ƒ å¤– æ—  æ³• ä½¿ ç”¨ æ­¤ åŠŸ èƒ½ ã€‚");
             cm.dispose();
         }
 
 	if (cm.getPlayer().getLevel() < 10) {
-        cm.sendOk("ÄãµÄµÈ¼¶Î´´ïµ½10¼¶£¬Òò´ËÎ´ÄÜ½âËø±¾¹¦ÄÜ");
+        cm.sendOk("ä½ çš„ç­‰çº§æœªè¾¾åˆ°10çº§ï¼Œå› æ­¤æœªèƒ½è§£é”æœ¬åŠŸèƒ½");
         cm.dispose();
 		 }
   
     else if (status == 0) {
-        var selStr = "#e#r©³#k©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥#r©·#k\r\n";
-		selStr += "         #r×ÔÓÉ¹ÜÀíÔ±1ºÅ£¬ÎªÄú·şÎñ\r\n";
+        var selStr = "#e#râ”#kâ”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”#râ”“#k\r\n";
+		selStr += "         #rè‡ªç”±ç®¡ç†å‘˜1å·ï¼Œä¸ºæ‚¨æœåŠ¡\r\n";
 		
-		selStr += "#r©»#k©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥#r©¿#k#n\r\n";
+		selStr += "#râ”—#kâ”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”#râ”›#k#n\r\n";
 		
 			
-		selStr += "#b#L0#×ÔÓÉ±¦#l     #L2#¿ÚÁîÁì½±#l#k\r\n\r\n";
+		selStr += "#b#L0#è‡ªç”±å®#l     #L2#å£ä»¤é¢†å¥–#l#k\r\n\r\n";
 		
-		selStr += "    #b#L4#²Î¼Ó»î¶¯#l \r\n\r\n";
+		selStr += "    #b#L4#å‚åŠ æ´»åŠ¨#l \r\n\r\n";
 		
 		
 		  

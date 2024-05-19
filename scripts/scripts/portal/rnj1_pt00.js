@@ -3,6 +3,6 @@ function enter(pi) {
     if (em != null && em.getProperty("stage1").equals("1")) {
 	pi.warp(926100001,0);
     } else {
-	pi.playerMessage(5, "门尚未开放");
+	pi.playerMessage(5, "螕螘螜螤螢蝿螐秃路螘");
     }
 }

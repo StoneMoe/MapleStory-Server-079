@@ -1,5 +1,5 @@
 function start() {
-		cm.sendYesNo("此返回功能只适用于某些特定地图！");
+		cm.sendYesNo("姝よ繑鍥炲姛鑳藉彧閫傜敤浜庢煇浜涚壒瀹氬湴鍥撅紒");
     cm.dispose();		
 	
 	if (cm.getMapId() == 109040004 ||cm.getMapId() == 109040001 || cm.getMapId() == 109040002|| cm.getMapId() == 109040003 || cm.getMapId() == 105040327 || cm.getMapId() == 105040323 || cm.getMapId() == 105040324

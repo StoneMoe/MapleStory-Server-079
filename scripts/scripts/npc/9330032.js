@@ -3,7 +3,7 @@ function start() {
              cm.warp(741020100);
              cm.dispose();
 	} else {
-	    cm.sendOk("ÄãÃ»ÓĞ½âÍæÇ°ÖÃÈÎÎñ");
+	    cm.sendOk("ä½ æ²¡æœ‰è§£ç©å‰ç½®ä»»åŠ¡");
             cm.dispose();
         }
     }

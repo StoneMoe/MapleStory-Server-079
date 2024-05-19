@@ -6,8 +6,8 @@ var hour = ca.get(java.util.Calendar.HOUR_OF_DAY);
 var minute = ca.get(java.util.Calendar.MINUTE);
 var second = ca.get(java.util.Calendar.SECOND);
 var weekday = ca.get(java.util.Calendar.DAY_OF_WEEK);
-var ¿ó = "#fReactor/2112007.img/0/0#";
-var ¼ıÍ· = "#fUI/Basic/BtHide3/mouseOver/0#";
+var çŸ¿ = "#fReactor/2112007.img/0/0#";
+var ç®­å¤´ = "#fUI/Basic/BtHide3/mouseOver/0#";
 
 function start() {
     status = -1;
@@ -26,28 +26,28 @@ function action(mode, type, selection) {
     }	 
 		
 		if (cm.getPlayer().getGMLevel() == 99) {
-            cm.showInstruction("\r\n#e#r"+MC+"\r\n\r\nÄãÎŞÈ¨Ê¹ÓÃ#n#k\r\n ", 200, 3);  
+            cm.showInstruction("\r\n#e#r"+MC+"\r\n\r\nä½ æ— æƒä½¿ç”¨#n#k\r\n ", 200, 3);  
             cm.dispose();
           return;
 	 
 	    
 	    
     } else if (status <= 0) {
-        var selStr = "#e#rÍÚ¿óËµÃ÷#k#n\r\n\r\n";
+        var selStr = "#e#ræŒ–çŸ¿è¯´æ˜#k#n\r\n\r\n";
  
-		selStr +=" 1. ÍÚ¿óÊ×ÏÈÄãĞèÒªÒ»°Ñ  #v1322071# #b#t1322071##k\r\n";//
-		selStr +=" 2. È»ºóÔÚÓĞ "+¿ó+" µÄµØÍ¼£¬\r\n    ×°±¸ #v1322071# #b#t1322071##k ¾Í¿ÉÒÔ½øĞĞÍÚ¿ó\r\n";//
+		selStr +=" 1. æŒ–çŸ¿é¦–å…ˆä½ éœ€è¦ä¸€æŠŠ  #v1322071# #b#t1322071##k\r\n";//
+		selStr +=" 2. ç„¶ååœ¨æœ‰ "+çŸ¿+" çš„åœ°å›¾ï¼Œ\r\n    è£…å¤‡ #v1322071# #b#t1322071##k å°±å¯ä»¥è¿›è¡ŒæŒ–çŸ¿\r\n";//
 		
 		
-		selStr +=" 3. Ã¿´ÎÍÚ¿ó»á»ñµÃ#b¸÷ÖÖ¿óÎï,½ğ±Ò£¬¾­Ñé£¬²ÄÁÏ#kµÈ£¬¸ù¾İÍÚ\r\n    ¿óµÈ¼¶£¬»ñµÃµÄ¶«Î÷Ò²»á²»Í¬¡£\r\n";//
+		selStr +=" 3. æ¯æ¬¡æŒ–çŸ¿ä¼šè·å¾—#bå„ç§çŸ¿ç‰©,é‡‘å¸ï¼Œç»éªŒï¼Œææ–™#kç­‰ï¼Œæ ¹æ®æŒ–\r\n    çŸ¿ç­‰çº§ï¼Œè·å¾—çš„ä¸œè¥¿ä¹Ÿä¼šä¸åŒã€‚\r\n";//
 		
 		
-		selStr +=" 4. Ã¿´ÎÍÚ¿ó»á»ñµÃ#rÍÚ¿ó¾­Ñé#k¡£ÍÚ¿ó¾­Ñé»áÌá¸ßÍÚ¿óµÈ¼¶£¬\r\n    ¿ÉÒÔ¹ºÂòÔö·ù¿¨£¬À´¿ìËÙÀÛ»ı¾­Ñé¡£\r\n";//
+		selStr +=" 4. æ¯æ¬¡æŒ–çŸ¿ä¼šè·å¾—#ræŒ–çŸ¿ç»éªŒ#kã€‚æŒ–çŸ¿ç»éªŒä¼šæé«˜æŒ–çŸ¿ç­‰çº§ï¼Œ\r\n    å¯ä»¥è´­ä¹°å¢å¹…å¡ï¼Œæ¥å¿«é€Ÿç´¯ç§¯ç»éªŒã€‚\r\n";//
 		
 		
-		selStr +=" 5. ²»Í¬ÀàĞÍµÄ¿¨¿ÉÒÔµş¼Ó¡£\r\n";//
+		selStr +=" 5. ä¸åŒç±»å‹çš„å¡å¯ä»¥å åŠ ã€‚\r\n";//
 		
-		//selStr +="\r\n\r\n\t\t\t\t #L0#"+¼ıÍ·+"#b·µ»Ø\r\n";//
+		//selStr +="\r\n\r\n\t\t\t\t #L0#"+ç®­å¤´+"#bè¿”å›\r\n";//
  
  
  

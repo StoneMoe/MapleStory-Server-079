@@ -1,7 +1,7 @@
 var status = -1;
 
 function start(mode, type, selection) {
-    qm.sendNext("Ğ»Ğ»ÄãÍê³É´ËÈÎÎñ\r\nÈç¹û»¹»á¿´´ËÈÎÎñÇëÖØµÇ¡£");
+    qm.sendNext("è°¢è°¢ä½ å®Œæˆæ­¤ä»»åŠ¡\r\nå¦‚æœè¿˜ä¼šçœ‹æ­¤ä»»åŠ¡è¯·é‡ç™»ã€‚");
     //qm.gainItem(1142077, 1);
     qm.forceCompleteQuest();
     qm.dispose();

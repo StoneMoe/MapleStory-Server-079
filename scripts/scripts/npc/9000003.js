@@ -12,14 +12,14 @@ function action(mode, type, selection) {
 	} else {
 		status++;
 		if (status == 0) {
-			cm.sendSimple("ÕÒµ½±¦ÏäÁËÂğ£¿£¿\r\n\r\n\r\n#L0#ÎÒÄÃµ½±¦ÏäÁË");
+			cm.sendSimple("æ‰¾åˆ°å®ç®±äº†å—ï¼Ÿï¼Ÿ\r\n\r\n\r\n#L0#æˆ‘æ‹¿åˆ°å®ç®±äº†");
 		} else if (status == 1) {
 			if(cm.haveItem(4031017)){
 			cm.removeAll(4031017);
     		cm.warp(109050000, 0);
 			cm.dispose();
 			} else {
-			cm.sendOk("ÄãÃ»ÓĞ#b#i4031017##k£¬ÄãÀ´ÕÒÎÒ×öÊ²Ã´£¿£¿");
+			cm.sendOk("ä½ æ²¡æœ‰#b#i4031017##kï¼Œä½ æ¥æ‰¾æˆ‘åšä»€ä¹ˆï¼Ÿï¼Ÿ");
 			cm.dispose();
 			}
 			cm.dispose();

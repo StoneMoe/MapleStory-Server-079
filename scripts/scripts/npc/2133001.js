@@ -9,42 +9,42 @@ function action(mode, type, selection) {
     }
     switch(cm.getPlayer().getMapId()) {
 	case 930000000:
-	    cm.sendNext("»¶Ó­£¬ÇëÍ¨¹ı¹âÈ¦½øÈë£¡.");
+	    cm.sendNext("æ¬¢è¿ï¼Œè¯·é€šè¿‡å…‰åœˆè¿›å…¥ï¼.");
 	    break;
 	case 930000010:
 	    cm.warpParty(100000000);
 	    break;
 	case 930000100:
-	    cm.sendNext("ÎÒÃÇ±ØĞëÏûÃğ¹ÖÎï");
+	    cm.sendNext("æˆ‘ä»¬å¿…é¡»æ¶ˆç­æ€ªç‰©");
 	    break;
 	case 930000200:
-	    cm.sendNext("ÎÒÃÇ±ØĞëÏûÃğ¹ÖÎï");
+	    cm.sendNext("æˆ‘ä»¬å¿…é¡»æ¶ˆç­æ€ªç‰©");
 	    break;
 	case 930000300:
-		cm.¸ø×é¶Ó¾­Ñé(150000);
+		cm.ç»™ç»„é˜Ÿç»éªŒ(150000);
 	    cm.warpParty(930000400);
 	    break;
 	case 930000400:
 	    if (cm.haveItem(4001169,50)) {
-		cm.¸ø×é¶Ó¾­Ñé(150000);
+		cm.ç»™ç»„é˜Ÿç»éªŒ(150000);
 		cm.warpParty(930000500);
 		cm.gainItem(4001169,-50);
 	    } else {
-		cm.sendOk("ÎÒÃÇ±ØĞëÏûÃğ¹ÖÎï£¬»ñµÃ50¸ö¹ÖÎïÖ®Öé");
+		cm.sendOk("æˆ‘ä»¬å¿…é¡»æ¶ˆç­æ€ªç‰©ï¼Œè·å¾—50ä¸ªæ€ªç‰©ä¹‹ç ");
 	    }
 	    break;
 	case 930000600:
 	    cm.sendNext("This is it! Place the Magic Stone on the Altar!");
 	    break;
 	case 930000700:
-	    cm.removeAll(4001169);//¹ÖÎïÖ®Öé
-	    cm.removeAll(2270004);//¾»»¯Ö®Öé
+	    cm.removeAll(4001169);//æ€ªç‰©ä¹‹ç 
+	    cm.removeAll(2270004);//å‡€åŒ–ä¹‹ç 
 	    cm.removeAll(4001162);
 	    cm.removeAll(4001163);
-		cm.¸ø×é¶Ó¾­Ñé(300000);
-	//	cm.¸ø×é¶ÓÎïÆ·(4031456, 1);//¸ø·ãÒ¶Öé1¸ö
-		cm.¸ø×é¶ÓÎïÆ·(2614015, 2);//
-		cm.¸ø×é¶ÓÎïÆ·(4170001, 1);//
+		cm.ç»™ç»„é˜Ÿç»éªŒ(300000);
+	//	cm.ç»™ç»„é˜Ÿç‰©å“(4031456, 1);//ç»™æ«å¶ç 1ä¸ª
+		cm.ç»™ç»„é˜Ÿç‰©å“(2614015, 2);//
+		cm.ç»™ç»„é˜Ÿç‰©å“(4170001, 1);//
 	    cm.warpParty(930000800,0);
 	    break;
     }

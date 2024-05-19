@@ -1,14 +1,14 @@
 //////////////////////////////
-//Æß±¦*×ÔÓÉÃ°ÏÕµº*×î¾ß´´Òâ////
+//ä¸ƒå®*è‡ªç”±å†’é™©å²›*æœ€å…·åˆ›æ„////
 //1346464664/992916233//////
 ///////////////////////////
 var ca = java.util.Calendar.getInstance();
-var year = ca.get(java.util.Calendar.YEAR); //»ñµÃÄê·İ
-var month = ca.get(java.util.Calendar.MONTH) + 1; //»ñµÃÔÂ·İ
-var day = ca.get(java.util.Calendar.DATE);//»ñÈ¡ÈÕ
-var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //»ñµÃĞ¡Ê±
-var minute = ca.get(java.util.Calendar.MINUTE);//»ñµÃ·ÖÖÓ
-var second = ca.get(java.util.Calendar.SECOND); //»ñµÃÃë
+var year = ca.get(java.util.Calendar.YEAR); //è·å¾—å¹´ä»½
+var month = ca.get(java.util.Calendar.MONTH) + 1; //è·å¾—æœˆä»½
+var day = ca.get(java.util.Calendar.DATE);//è·å–æ—¥
+var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //è·å¾—å°æ—¶
+var minute = ca.get(java.util.Calendar.MINUTE);//è·å¾—åˆ†é’Ÿ
+var second = ca.get(java.util.Calendar.SECOND); //è·å¾—ç§’
 var weekday = ca.get(java.util.Calendar.DAY_OF_WEEK);
 var Z = "#fUI/GuildMark.img/Mark/Letter/00005025/1#";
 var Y = "#fUI/GuildMark.img/Mark/Letter/00005024/3#";
@@ -18,7 +18,7 @@ var M = "#fUI/GuildMark.img/Mark/Letter/00005012/1#";
 var A = "#fUI/GuildMark.img/Mark/Letter/00005000/1#";
 var P = "#fUI/GuildMark.img/Mark/Letter/00005015/1#";
 var Z = "#fUI/GuildMark.img/Mark/Letter/00005025/9#";
-var ¼ıÍ· = "#fUI/Basic/BtHide3/mouseOver/0#";//"+¼ıÍ·+"
+var ç®­å¤´ = "#fUI/Basic/BtHide3/mouseOver/0#";//"+ç®­å¤´+"
 
 
 function start() {
@@ -37,7 +37,7 @@ function action(mode, type, selection) {
         status--;
     }var MC = cm.getServerName();
 	    if ( cm.getMapId() == 10000) {
-            cm.sendOk(" ×Ô ÓÉ Ã° ÏÕ µº ¾³ Íâ ÎŞ ·¨ Ê¹ ÓÃ ´Ë ¹¦ ÄÜ ¡£");
+            cm.sendOk(" è‡ª ç”± å†’ é™© å²› å¢ƒ å¤– æ—  æ³• ä½¿ ç”¨ æ­¤ åŠŸ èƒ½ ã€‚");
             cm.dispose();
         }
 
@@ -46,10 +46,10 @@ function action(mode, type, selection) {
     else if (status == 0) {
 		
 		
-   var  selStr = "#e#r"+MC+" - Íæ¼ÒÌì¸³Ò³;\r\n";
-       // selStr += "#L0##b"+¼ıÍ·+"·µ»Ø½çÃæ#l\r\n\r\n\r\n";
+   var  selStr = "#e#r"+MC+" - ç©å®¶å¤©èµ‹é¡µ;\r\n";
+       // selStr += "#L0##b"+ç®­å¤´+"è¿”å›ç•Œé¢#l\r\n\r\n\r\n";
 		if(cm.getQuestStatus(999991)== 2){
-		selStr += "#L1##s4111002#¿ËÂ¡Êõ[³õ¼¶]#l\r\n";
+		selStr += "#L1##s4111002#å…‹éš†æœ¯[åˆçº§]#l\r\n";
 		} else {}
 		
 		
@@ -59,15 +59,15 @@ function action(mode, type, selection) {
     } else if (status == 1) {
         switch (selection) {
         case 1:
-		if(cm.getBossRank("¿ËÂ¡",2) <= 0){
-            cm.¿ËÂ¡();
-			cm.setBossRankCount("¿ËÂ¡");
-			cm.playerMessage(5,"Äã¿ËÂ¡³öÁËÒ»¸ö×Ô¼º");
+		if(cm.getBossRank("å…‹éš†",2) <= 0){
+            cm.å…‹éš†();
+			cm.setBossRankCount("å…‹éš†");
+			cm.playerMessage(5,"ä½ å…‹éš†å‡ºäº†ä¸€ä¸ªè‡ªå·±");
             cm.dispose();
        } else {
-			cm.È¡Ïû¿ËÂ¡();
-			cm.setBossRankCount("¿ËÂ¡","-"+cm.getBossRank("¿ËÂ¡",2)+"");
-			cm.playerMessage(5,"¿ËÂ¡ÌåÏûÊ§");
+			cm.å–æ¶ˆå…‹éš†();
+			cm.setBossRankCount("å…‹éš†","-"+cm.getBossRank("å…‹éš†",2)+"");
+			cm.playerMessage(5,"å…‹éš†ä½“æ¶ˆå¤±");
             cm.dispose();
 		return;
 			}

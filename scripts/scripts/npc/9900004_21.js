@@ -15,7 +15,7 @@ function action(mode, type ,selection) {
 	}
 	
 	if (status == 0) {
-		cm.sendOk("ÎÒÊÇ±¾·þµÄµÀ¾ß»ØÊÕNPC\r\nÎÒ¿ÉÒÔ°ïÄãÇåÀíµôÄã²»ÏëÒªµÄÎïÆ·£¡\r\n\r\n#L1#ÎÒÒªÑ¡ÔñÐÔÉ¾³ýµÀ¾ß#l\r\n");
+		cm.sendOk("æˆ‘æ˜¯æœ¬æœçš„é“å…·å›žæ”¶NPC\r\næˆ‘å¯ä»¥å¸®ä½ æ¸…ç†æŽ‰ä½ ä¸æƒ³è¦çš„ç‰©å“ï¼\r\n\r\n#L1#æˆ‘è¦é€‰æ‹©æ€§åˆ é™¤é“å…·#l\r\n");
 	} else if (selection == 1){
 		cm.openNpc(9900004,1911);
 	} else if (selection == 2){

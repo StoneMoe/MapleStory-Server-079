@@ -10,12 +10,12 @@ function action(mode, type, selection) {
         status--;
     }
     if (cm.getPlayer().getLevel() < 50) {
-        cm.sendOk("ÔÚÄãÊÜÉËÒÔÇ°£¬¸Ï¿ìÀë¿ª°É.");
+        cm.sendOk("åœ¨ä½ å—ä¼¤ä»¥å‰ï¼Œèµ¶å¿«ç¦»å¼€å§.");
         cm.dispose();
         return;
     }
     if (status == 0) {
-        cm.sendYesNo("Äã¿´ÆðÀ´ºÜÇ¿µÄÑù×Ó£¬Òª²»ÒªÈ¥Ò»ÌË°ÍÂå¹ÅËÂÃíÄØ?");
+        cm.sendYesNo("ä½ çœ‹èµ·æ¥å¾ˆå¼ºçš„æ ·å­ï¼Œè¦ä¸è¦åŽ»ä¸€è¶Ÿå·´æ´›å¤å¯ºåº™å‘¢?");
     } else if (status == 1) {
         cm.warp(105100100);
         cm.dispose();

@@ -18,7 +18,7 @@ function action(mode, type, selection) {
 	status++;
     } else {
 	if (status >= 2) {
-	    cm.sendNext("Õâ¸öÕòÉÏÒ²ÓĞºÜ¶àÖµµÃÒ»¿´µÄµØ·½¡£µ±ÄãĞèÒªÈ¥ÁíÒ»¸ö³ÇÊĞµÄÊ±ºò£¬ÔÙ»ØÀ´ÕÒÎÒ°É£¡");
+	    cm.sendNext("è¿™ä¸ªé•‡ä¸Šä¹Ÿæœ‰å¾ˆå¤šå€¼å¾—ä¸€çœ‹çš„åœ°æ–¹ã€‚å½“ä½ éœ€è¦å»å¦ä¸€ä¸ªåŸå¸‚çš„æ—¶å€™ï¼Œå†å›æ¥æ‰¾æˆ‘å§ï¼");
 	    cm.safeDispose();
 	    return;
 	}
@@ -30,14 +30,14 @@ function action(mode, type, selection) {
 	if (!cm.haveItem(4032313)) {
 	    var job = cm.getJob();
 	    if (job == 0 || job == 1000 || job == 2000) {
-		var selStr = "We have a special 90% discount for beginners. ÇëÑ¡ÔñÄúµÄÄ¿µÄµØ¡£Ö§¸¶·ÑÓÃÖ®ºó£¬ÎÒ½«»á´«ËÍÄãÈ¥Íù±ğµÄ³ÇÕò¡£#b";
+		var selStr = "We have a special 90% discount for beginners. è¯·é€‰æ‹©æ‚¨çš„ç›®çš„åœ°ã€‚æ”¯ä»˜è´¹ç”¨ä¹‹åï¼Œæˆ‘å°†ä¼šä¼ é€ä½ å»å¾€åˆ«çš„åŸé•‡ã€‚#b";
 		for (var i = 0; i < maps.length; i++) {
-		    selStr += "\r\n#L" + i + "##m" + maps[i] + "# (" + costBeginner[i] + " ½ğ±Ò)#l";
+		    selStr += "\r\n#L" + i + "##m" + maps[i] + "# (" + costBeginner[i] + " é‡‘å¸)#l";
 		}
 	    } else {
-		var selStr = "ÇëÑ¡ÔñÄúµÄÄ¿µÄµØ¡£Ö§¸¶·ÑÓÃÖ®ºó£¬ÎÒ½«»á´«ËÍÄãÈ¥Íù±ğµÄ³ÇÕò¡£#b";
+		var selStr = "è¯·é€‰æ‹©æ‚¨çš„ç›®çš„åœ°ã€‚æ”¯ä»˜è´¹ç”¨ä¹‹åï¼Œæˆ‘å°†ä¼šä¼ é€ä½ å»å¾€åˆ«çš„åŸé•‡ã€‚#b";
 		for (var i = 0; i < maps.length; i++) {
-		    selStr += "\r\n#L" + i + "##m" + maps[i] + "# (" + cost[i] + " ½ğ±Ò)#l";
+		    selStr += "\r\n#L" + i + "##m" + maps[i] + "# (" + cost[i] + " é‡‘å¸)#l";
 		}
 	    }
 	    cm.sendSimple(selStr);
@@ -54,7 +54,7 @@ function action(mode, type, selection) {
 		sCost = rCost[selection];
 		show = cost[selection];
 	    }
-	    cm.sendYesNo("ÄãÔÚÕâÀïÃ»Ê²Ã´¿É¸ÉµÄ£¬¶÷£¿ÄãÕæµÄÏëÈ¥ #b#m" + maps[selection] + "##k? Õâ½«»¨·ÑÄã #b" + show + " ½ğ±Ò#k.");
+	    cm.sendYesNo("ä½ åœ¨è¿™é‡Œæ²¡ä»€ä¹ˆå¯å¹²çš„ï¼Œæ©ï¼Ÿä½ çœŸçš„æƒ³å» #b#m" + maps[selection] + "##k? è¿™å°†èŠ±è´¹ä½  #b" + show + " é‡‘å¸#k.");
 	    selectedMap = selection;
 	} else {
 	    cm.gainItem(4032313, -1);

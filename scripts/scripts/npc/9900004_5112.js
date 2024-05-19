@@ -10,7 +10,7 @@
  * Arrows/Bronze Arrows/Steel Arrows
  */
 /*
- ĞŞ¸Äby×Ú´ï 20160106 06:52
+ ä¿®æ”¹byå®—è¾¾ 20160106 06:52
  */
 var status = 0;
 var selectedType = -1;
@@ -33,8 +33,8 @@ function action(mode, type, selection) {
     else
         cm.dispose();
     if (status == 0 && mode == 1) {
-        var selStr = "ÓĞÊ²Ã´ÎÒ¿ÉÒÔ°ïÖúÄãµÄ£¿£¿#b"
-        var options = new Array("ºÏ³ÉË®¾§");
+        var selStr = "æœ‰ä»€ä¹ˆæˆ‘å¯ä»¥å¸®åŠ©ä½ çš„ï¼Ÿï¼Ÿ#b"
+        var options = new Array("åˆæˆæ°´æ™¶");
         for (var i = 0; i < options.length; i++) {
             selStr += "\r\n#L" + i + "# " + options[i] + "#l";
         }
@@ -42,7 +42,7 @@ function action(mode, type, selection) {
     } else if (status == 1 && mode == 1) {
         selectedType = selection;
         if (selectedType == 0) { //mineral refine
-            var selStr = "ĞèÒªÊ²Ã´Âğ£¿£¿#b";
+            var selStr = "éœ€è¦ä»€ä¹ˆå—ï¼Ÿï¼Ÿ#b";
             var crystals = new Array("#t4005000#", "#t4005001#", "#t4005002#", "#t4005003#", "#t4005004#");
             for (var i = 0; i < crystals.length; i++) {
                 selStr += "\r\n#L" + i + "# " + crystals[i] + "#l";
@@ -50,7 +50,7 @@ function action(mode, type, selection) {
             equip = false;
             cm.sendSimple(selStr);
         } else if (selectedType == 1) { //jewel refine
-            var selStr = "ĞèÒªÊ²Ã´Âğ£¿£¿#b";
+            var selStr = "éœ€è¦ä»€ä¹ˆå—ï¼Ÿï¼Ÿ#b";
             var jewels = new Array("#t4021000#", "#t4021001#", "#t4021002#", "#t4021003#", "#t4021004#", "#t4021005#", "#t4021006#", "#t4021007#", "#t4021008#");
             for (var i = 0; i < jewels.length; i++) {
                 selStr += "\r\n#L" + i + "# " + jewels[i] + "#l";
@@ -58,14 +58,14 @@ function action(mode, type, selection) {
             equip = false;
             cm.sendSimple(selStr);
         } else if (selectedType == 2) { //rock refine
-            var selStr = "ĞèÒªÊ²Ã´Âğ£¿£¿#b";
+            var selStr = "éœ€è¦ä»€ä¹ˆå—ï¼Ÿï¼Ÿ#b";
             var items = new Array("#t4011007#", "#t4021009#");
             for (var i = 0; i < items.length; i++) {
                 selStr += "\r\n#L" + i + "# " + items[i] + "#l";
             }
             cm.sendSimple(selStr);
         } else if (selectedType == 3) { //crystal refine
-            var selStr = "ĞèÒªÊ²Ã´Âğ£¿£¿#b";
+            var selStr = "éœ€è¦ä»€ä¹ˆå—ï¼Ÿï¼Ÿ#b";
             var crystals = new Array("#t4005000#", "#t4005001#", "#t4005002#", "#t4005003#", "#t4005004#");
             for (var i = 0; i < crystals.length; i++) {
                 selStr += "\r\n#L" + i + "# " + crystals[i] + "#l";
@@ -73,15 +73,15 @@ function action(mode, type, selection) {
             equip = false;
             cm.sendSimple(selStr);
         } else if (selectedType == 4) { //material refine
-            var selStr = "ĞèÒªÊ²Ã´Âğ£¿£¿#b";
-            var materials = new Array("#t4003001#", "#t4003001#", "#t4003000# (Ò»×é15¸ö)");
+            var selStr = "éœ€è¦ä»€ä¹ˆå—ï¼Ÿï¼Ÿ#b";
+            var materials = new Array("#t4003001#", "#t4003001#", "#t4003000# (ä¸€ç»„15ä¸ª)");
             for (var i = 0; i < materials.length; i++) {
                 selStr += "\r\n#L" + i + "# " + materials[i] + "#l";
             }
             equip = false;
             cm.sendSimple(selStr);
         } else if (selectedType == 5) { //arrow refine
-            var selStr = "ĞèÒªÊ²Ã´Âğ£¿£¿#b";
+            var selStr = "éœ€è¦ä»€ä¹ˆå—ï¼Ÿï¼Ÿ#b";
             var arrows = new Array("#t2060000#", "#t2061000#", "#t2060001#", "#t2061001#", "#t2060002#", "#t2061002#");
             for (var i = 0; i < arrows.length; i++) {
                 selStr += "\r\n#L" + i + "# " + arrows[i] + "#l";
@@ -140,7 +140,7 @@ function action(mode, type, selection) {
             cost = costSet[selectedItem];
         }
 
-        var prompt = "ÄãÏëÒª×öÒ»Ğ© #t" + item + "#? ÔÚÕâÖÖÇé¿öÏÂ, ÎÒÎªÁËÒª×ö³ö×î°ôµÄÆ·ÖÊ£¬ÎÒ½¨ÒéÄãÈ·±£×°±¸À¸¿Õ¼ä×ã¹»¡£#b";
+        var prompt = "ä½ æƒ³è¦åšä¸€äº› #t" + item + "#? åœ¨è¿™ç§æƒ…å†µä¸‹, æˆ‘ä¸ºäº†è¦åšå‡ºæœ€æ£’çš„å“è´¨ï¼Œæˆ‘å»ºè®®ä½ ç¡®ä¿è£…å¤‡æ ç©ºé—´è¶³å¤Ÿã€‚#b";
 
         cm.sendGetNumber(prompt, 1, 1, 100)
     } else if (status == 3 && mode == 1) {
@@ -163,13 +163,13 @@ function action(mode, type, selection) {
             cost = costSet[selectedItem];
         }
 
-        var prompt = "ÄãÏëÒªÎÒ×ö ";
+        var prompt = "ä½ æƒ³è¦æˆ‘åš ";
         if (qty == 1)
-            prompt += "Ò»¸ö #t" + item + "#?";
+            prompt += "ä¸€ä¸ª #t" + item + "#?";
         else
             prompt += qty + " #t" + item + "#?";
 
-        prompt += " ÎÒÎªÁËÒª×ö³ö×î°ôµÄÆ·ÖÊ£¬ÎÒ½¨ÒéÄãÈ·±£×°±¸À¸¿Õ¼ä×ã¹»¡£#b";
+        prompt += " æˆ‘ä¸ºäº†è¦åšå‡ºæœ€æ£’çš„å“è´¨ï¼Œæˆ‘å»ºè®®ä½ ç¡®ä¿è£…å¤‡æ ç©ºé—´è¶³å¤Ÿã€‚#b";
 
         if (mats instanceof Array) {
             for (var i = 0; i < mats.length; i++) {
@@ -180,14 +180,14 @@ function action(mode, type, selection) {
         }
 
         if (cost > 0)
-            prompt += "\r\n#i4031138# " + cost * qty + " ½ğ±Ò";
+            prompt += "\r\n#i4031138# " + cost * qty + " é‡‘å¸";
 
         cm.sendYesNo(prompt);
     } else if (status == 4 && mode == 1) {
         var complete = true;
 
         if (cm.getMeso() < cost * qty) {
-            cm.sendOk("Ôã¸â...ÄãµÄÇ®ºÃÏñ²»¹»Å¶...")
+            cm.sendOk("ç³Ÿç³•...ä½ çš„é’±å¥½åƒä¸å¤Ÿå“¦...")
             cm.dispose();
             return;
         } else {
@@ -209,7 +209,7 @@ function action(mode, type, selection) {
         }
 
         if (!complete) {
-            cm.sendOk("ºÜ±§Ç¸ÓÉÓÚÄãµÄ²ÄÁÏ²»×ã£¬ËùÒÔÎÒ²»Ïë°ïÄã×öÁË¡£");
+            cm.sendOk("å¾ˆæŠ±æ­‰ç”±äºä½ çš„ææ–™ä¸è¶³ï¼Œæ‰€ä»¥æˆ‘ä¸æƒ³å¸®ä½ åšäº†ã€‚");
         } else {
             if (mats instanceof Array) {
                 for (var i = 0; i < mats.length; i++) {
@@ -221,7 +221,7 @@ function action(mode, type, selection) {
             if (cost > 0) {
                 cm.gainMeso(-cost * qty);
             } else {
-                cm.sendNext("·¢Éú´íÎóÇë»Ø±¨¹ÜÀíÔ±");
+                cm.sendNext("å‘ç”Ÿé”™è¯¯è¯·å›æŠ¥ç®¡ç†å‘˜");
                 cm.dispose();
                 return;
 
@@ -234,7 +234,7 @@ function action(mode, type, selection) {
                 cm.gainItem(4003000, 15 * qty);
             else
                 cm.gainItem(item, qty);
-            cm.sendOk("ÖÆ×÷Íê±Ï¡£");
+            cm.sendOk("åˆ¶ä½œå®Œæ¯•ã€‚");
         }
         cm.dispose();
     }

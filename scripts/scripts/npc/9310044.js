@@ -1,5 +1,5 @@
 /*
-	ÉÙÁÖÑıÉ® -- ³ö¿ÚNPC
+	å°‘æ—å¦–åƒ§ -- å‡ºå£NPC
 */
 var status = 0;
 
@@ -12,7 +12,7 @@ function action(mode, type, selection) {
 	if (mode == -1) {
 		cm.dispose();
 	} else if (mode == 0) {
-		cm.sendOk("ºÃµÄÈç¹ûÒª³öÈ¥ËæÊ±À´ÕÒÎÒ.");
+		cm.sendOk("å¥½çš„å¦‚æœè¦å‡ºå»éšæ—¶æ¥æ‰¾æˆ‘.");
 		cm.dispose();
 	} else {
 		if (mode == 1)
@@ -20,10 +20,10 @@ function action(mode, type, selection) {
 		else
 			status--;		
 	if (status == 0) {		
-		cm.sendYesNo("ÄúÊÇ·ñÒª³öÈ¥ÄØ?" );	
+		cm.sendYesNo("æ‚¨æ˜¯å¦è¦å‡ºå»å‘¢?" );	
 	} else if (status == 1)  {
 		if (!cm.isLeader()) {
-	cm.sendOk("Çë½ĞÄãµÄ¶Ó³¤À´ÕÒÎÒ!");
+	cm.sendOk("è¯·å«ä½ çš„é˜Ÿé•¿æ¥æ‰¾æˆ‘!");
 		cm.dispose();
 		} else {
 		cm.warpParty(702070400,0);

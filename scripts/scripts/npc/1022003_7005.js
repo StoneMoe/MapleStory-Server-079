@@ -31,8 +31,8 @@ function action(mode, type, selection) {
         cm.dispose();
     }
     if (status == 0 && mode == 1) {
-        var selStr = "�ţ�����˭������Ŷ���ѵ�����˵���ҵĶ��켼��������������£��Һ�Ը��Ϊ������һЩ��ʯ�������ǣ������֧����һЩ��ҡ�#b"
-        var options = new Array("ұ����ʯĸ��", "ұ����ʯĸ��", "ұ������ĸ��", "ұ��ˮ��ĸ��", "��������", "������");
+        var selStr = "嗯？你是谁……？哦，难道你听说过我的锻造技能吗？在这种情况下，我很愿意为你制作一些矿石……但是，你必须支付我一些金币。#b"
+        var options = new Array("冶炼矿石母矿", "冶炼宝石母矿", "冶炼罕见母矿", "冶炼水晶母矿", "制作材料", "制作箭");
         for (var i = 0; i < options.length; i++) {
             selStr += "\r\n#L" + i + "# " + options[i] + "#l";
         }
@@ -40,7 +40,7 @@ function action(mode, type, selection) {
     } else if (status == 1 && mode == 1) {
         selectedType = selection;
         if (selectedType == 0) { //mineral refine
-            var selStr = "��ô������ұ��ʲô���Ŀ�ʯ��#b";
+            var selStr = "那么，你想冶炼什么样的矿石？#b";
             var minerals = new Array("#t4011000#", "#t4011001#", "#t4011002#", "#t4011003#", "#t4011004#", "#t4011005#", "#t4011006#");
             for (var i = 0; i < minerals.length; i++) {
                 selStr += "\r\n#L" + i + "# " + minerals[i] + "#l";
@@ -48,7 +48,7 @@ function action(mode, type, selection) {
             equip = false;
             cm.sendSimple(selStr);
         } else if (selectedType == 1) { //jewel refine
-            var selStr = "��ô������ұ��ʲô���ı�ʯ��#b";
+            var selStr = "那么，你想冶炼什么样的宝石？#b";
             var jewels = new Array("#t4021000#", "#t4021001#", "#t4021002#", "#t4021003#", "#t4021004#", "#t4021005#", "#t4021006#", "#t4021007#", "#t4021008#");
             for (var i = 0; i < jewels.length; i++) {
                 selStr += "\r\n#L" + i + "# " + jewels[i] + "#l";
@@ -56,14 +56,14 @@ function action(mode, type, selection) {
             equip = false;
             cm.sendSimple(selStr);
         } else if (selectedType == 2) { //rock refine
-            var selStr = "һ����ʯ������Ҫʲô��#b";
+            var selStr = "一个宝石？你想要什么？#b";
             var items = new Array("#t4011007#", "#t4021009#");
             for (var i = 0; i < items.length; i++) {
                 selStr += "\r\n#L" + i + "# " + items[i] + "#l";
             }
             cm.sendSimple(selStr);
         } else if (selectedType == 3) { //crystal refine
-            var selStr = "����Ҫˮ������#b";
+            var selStr = "你想要水晶矿吗？#b";
             var crystals = new Array("#t4005000#", "#t4005001#", "#t4005002#", "#t4005003#", "#t4005004#");
             for (var i = 0; i < crystals.length; i++) {
                 selStr += "\r\n#L" + i + "# " + crystals[i] + "#l";
@@ -71,7 +71,7 @@ function action(mode, type, selection) {
             equip = false;
             cm.sendSimple(selStr);
         } else if (selectedType == 4) { //material refine
-            var selStr = "��������֪��һЩ���ϵ�������#b";
+            var selStr = "材料吗？我知道一些材料的做法。#b";
             var materials = new Array("#t4003001#", "#t4003001#", "#t4003000#");
             for (var i = 0; i < materials.length; i++) {
                 selStr += "\r\n#L" + i + "# " + materials[i] + "#l";
@@ -79,7 +79,7 @@ function action(mode, type, selection) {
             equip = false;
             cm.sendSimple(selStr);
         } else if (selectedType == 5) { //arrow refine
-            var selStr = "�������С��˼��~#b";
+            var selStr = "箭吗？这个小意思啦~#b";
             var arrows = new Array("#t2060000#", "#t2061000#", "#t2060001#", "#t2061001#", "#t2060002#", "#t2061002#");
             for (var i = 0; i < arrows.length; i++) {
                 selStr += "\r\n#L" + i + "# " + arrows[i] + "#l";
@@ -136,7 +136,7 @@ function action(mode, type, selection) {
             matQty = matQtySet[selectedItem];
             cost = costSet[selectedItem];
         }
-        var prompt = "��ô������Ҫ���� #t" + item + "# �����ҿ�����������������";
+        var prompt = "那么，你想要我做 #t" + item + "# 吗？让我看看，你想做几个？";
         cm.sendGetNumber(prompt, 1, 1, 100)
     } else if (status == 3 && mode == 1) {
         if (equip) {
@@ -156,13 +156,13 @@ function action(mode, type, selection) {
             cost = costSet[selectedItem];
         }
 
-        var prompt = "����Ҫ��ȥ�� ";
+        var prompt = "你想要我去做 ";
         if (qty == 1) {
-            prompt += "#t" + item + "# ��";
+            prompt += "#t" + item + "# 吗？";
         } else {
-            prompt += qty + " �� #t" + item + "# ��";
+            prompt += qty + " 个 #t" + item + "# 吗？";
         }
-        prompt += " ���ҿ������ҽ���Ҫʹ���������Ʒ����ȷ����ı����Ƿ����㹻�Ŀռ䡣#b";
+        prompt += " 让我看看，我将需要使用特殊的物品，请确保你的背包是否有足够的空间。#b";
         if (mats instanceof Array) {
             for (var i = 0; i < mats.length; i++) {
                 prompt += "\r\n#i" + mats[i] + "# " + matQty[i] * qty + " #t" + mats[i] + "#";
@@ -171,13 +171,13 @@ function action(mode, type, selection) {
             prompt += "\r\n#i" + mats + "# " + matQty * qty + " #t" + mats + "#";
         }
         if (cost > 0) {
-            prompt += "\r\n#i4031138# " + cost * qty + " ���";
+            prompt += "\r\n#i4031138# " + cost * qty + " 金币";
         }
         cm.sendYesNo(prompt);
     } else if (status == 4 && mode == 1) {
         var complete = false;
         if (cm.getMeso() < cost * qty) {
-            cm.sendOk("�����û���㹻�Ľ�ҡ�")
+            cm.sendOk("你好像没有足够的金币。")
             cm.dispose();
             return;
         } else {
@@ -193,7 +193,7 @@ function action(mode, type, selection) {
             }
         }
         if (!complete) {
-            cm.sendOk("�����û���㹻�Ĳ��ϡ�");
+            cm.sendOk("你好像没有足够的材料。");
         } else {
             if (mats instanceof Array) {
                 for (var i = 0; i < mats.length; i++) {
@@ -214,7 +214,7 @@ function action(mode, type, selection) {
             } else {
                 cm.gainItem(item, qty);
             }
-            cm.sendOk("ȫ�������ˣ�����㻹��Ҫʲô���������������ҡ�");
+            cm.sendOk("全部做好了，如果你还需要什么东西，请再来找我。");
         }
         cm.dispose();
     }

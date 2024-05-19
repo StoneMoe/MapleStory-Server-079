@@ -1,7 +1,7 @@
 var status = -1;
 
 function start(mode, type, selection) {
-    qm.sendAcceptDecline("àÅ...¸ß¾´ÏÈÉúËùÍÆ¼öÀ´µÄÂð£¿¹ûÈ»ÊÇ...µ«ÎÒ»¹²»ÄÜ°Ù·ÖÖ®°ÙÏàÐÅÄã¡£ÎÒ»¹Ã»¿´¹ýÄãµÄÄÜÁ¦£¬ÔõÃ´ÄÜÖ»Ìý±ðÈËËµ¾ÍÏàÐÅÄãÄØ£¿Èç¹ûÄãÄÜ°ïÖúÎÒ£¬ÎÒÒ²»áÏàÐÅÄã£¬¿ÉÒÔ°ÝÍÐ¸üÖØÒªµÄÊÂÇé°É¡£ÔõÃ´Ñù£¿Äã»á°ïÎÒÂð£¿");
+    qm.sendAcceptDecline("å—¯...é«˜æ•¬å…ˆç”Ÿæ‰€æŽ¨èæ¥çš„å—ï¼Ÿæžœç„¶æ˜¯...ä½†æˆ‘è¿˜ä¸èƒ½ç™¾åˆ†ä¹‹ç™¾ç›¸ä¿¡ä½ ã€‚æˆ‘è¿˜æ²¡çœ‹è¿‡ä½ çš„èƒ½åŠ›ï¼Œæ€Žä¹ˆèƒ½åªå¬åˆ«äººè¯´å°±ç›¸ä¿¡ä½ å‘¢ï¼Ÿå¦‚æžœä½ èƒ½å¸®åŠ©æˆ‘ï¼Œæˆ‘ä¹Ÿä¼šç›¸ä¿¡ä½ ï¼Œå¯ä»¥æ‹œæ‰˜æ›´é‡è¦çš„äº‹æƒ…å§ã€‚æ€Žä¹ˆæ ·ï¼Ÿä½ ä¼šå¸®æˆ‘å—ï¼Ÿ");
     qm.dispose();
 }
 

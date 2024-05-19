@@ -18,7 +18,7 @@ function action(mode, type, selection) {
 
     switch (status) {
         case 0: 
-	    cm.sendOk("我们什么时候可以上船？");
+	    cm.sendOk("鎴戜滑浠�涔堟椂鍊欏彲浠ヤ笂鑸癸紵");
 		cm.dispose();
             break;
         case 1: //

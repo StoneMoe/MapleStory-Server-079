@@ -18,7 +18,7 @@ function action(mode, type, selection) {
 
     switch (status) {
         case 0: 
-	    cm.sendOk("听说史莱克冒险岛来了一个超级大富豪，只要完成他的任务，就可以得到一种特别的赚钱法门哟！");
+	    cm.sendOk("鍚鍙茶幈鍏嬪啋闄╁矝鏉ヤ簡涓�涓秴绾уぇ瀵岃豹锛屽彧瑕佸畬鎴愪粬鐨勪换鍔★紝灏卞彲浠ュ緱鍒颁竴绉嶇壒鍒殑璧氶挶娉曢棬鍝燂紒");
 		cm.dispose();
             break;
         case 1: //

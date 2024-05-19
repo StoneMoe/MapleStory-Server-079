@@ -1,13 +1,13 @@
 var ca = java.util.Calendar.getInstance();
-var year = ca.get(java.util.Calendar.YEAR); //»ñµÃÄê·Ý
-var month = ca.get(java.util.Calendar.MONTH) + 1; //»ñµÃÔÂ·Ý
-var day = ca.get(java.util.Calendar.DATE);//»ñÈ¡ÈÕ
-var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //»ñµÃÐ¡Ê±
-var minute = ca.get(java.util.Calendar.MINUTE);//»ñµÃ·ÖÖÓ
-var second = ca.get(java.util.Calendar.SECOND); //»ñµÃÃë
+var year = ca.get(java.util.Calendar.YEAR); //èŽ·å¾—å¹´ä»½
+var month = ca.get(java.util.Calendar.MONTH) + 1; //èŽ·å¾—æœˆä»½
+var day = ca.get(java.util.Calendar.DATE);//èŽ·å–æ—¥
+var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //èŽ·å¾—å°æ—¶
+var minute = ca.get(java.util.Calendar.MINUTE);//èŽ·å¾—åˆ†é’Ÿ
+var second = ca.get(java.util.Calendar.SECOND); //èŽ·å¾—ç§’
 var weekday = ca.get(java.util.Calendar.DAY_OF_WEEK);
-var Õý·½¼ýÍ· = "#fUI/Basic/BtHide3/mouseOver/0#";
-//var tz = "#fEffect/CharacterEff/1082565/4/0#";  //ÍÃ×Ó·Û
+var æ­£æ–¹ç®­å¤´ = "#fUI/Basic/BtHide3/mouseOver/0#";
+//var tz = "#fEffect/CharacterEff/1082565/4/0#";  //å…”å­ç²‰
 
 function start() {
     status = -1;
@@ -25,22 +25,22 @@ function action(mode, type, selection) {
         status--;
     }
 	//if (cm.getHour() >  20){
-	//cm.sendOk("Ê±¼äÅÐ¶Ï");
+	//cm.sendOk("æ—¶é—´åˆ¤æ–­");
     // cm.dispose();
 	//}
 	if (cm.getPlayer().getLevel() < 10) {
-        cm.sendOk("ÄãµÄµÈ¼¶Î´´ïµ½10¼¶£¬Òò´ËÎ´ÄÜ½âËø±¾¹¦ÄÜ");
+        cm.sendOk("ä½ çš„ç­‰çº§æœªè¾¾åˆ°10çº§ï¼Œå› æ­¤æœªèƒ½è§£é”æœ¬åŠŸèƒ½");
         cm.dispose();
 		 }
     if (cm.getMapId() == 180000001) {
-            cm.sendOk("ºÜÒÅº¶£¬ÄúÒòÎªÎ¥·´ÓÃ»§ÊØÔò±»½ûÖ¹ÓÎÏ·»î¶¯£¬ÈçÓÐÒìÒéÇëÁªÏµ¹ÜÀíÔ±.");
+            cm.sendOk("å¾ˆé—æ†¾ï¼Œæ‚¨å› ä¸ºè¿åç”¨æˆ·å®ˆåˆ™è¢«ç¦æ­¢æ¸¸æˆæ´»åŠ¨ï¼Œå¦‚æœ‰å¼‚è®®è¯·è”ç³»ç®¡ç†å‘˜.");
             cm.dispose();
         }  
     else if (status == 0) {
         var selStr = "";
-          selStr += "#L1##b¡ó±¬Îï²éÑ¯#l#k#L2##b¡ó·µ»ØÊÐ³¡#l#k#L3##b¡óÃ¿ÈÕÌøÌø#l#k\r\n\r\n";
+          selStr += "#L1##bâ—‡çˆ†ç‰©æŸ¥è¯¢#l#k#L2##bâ—‡è¿”å›žå¸‚åœº#l#k#L3##bâ—‡æ¯æ—¥è·³è·³#l#k\r\n\r\n";
 		  
-		  selStr += "#L4##b¡ó¸öÈË°ü¼ä#l#k  \r\n\r\n";
+		  selStr += "#L4##bâ—‡ä¸ªäººåŒ…é—´#l#k  \r\n\r\n";
 		cm.sendSimple(selStr);
     } else if (status == 1) {
         switch (selection) {

@@ -4,6 +4,6 @@
  */
 
 function action(mode, type, selection) {
-    cm.sendOk("Ã»ÊÂ²»Òª´Ó7¶´ÍùÏÂ±Ä£¬ÇĞ¼Ç£¡");
+    cm.sendOk("æ²¡äº‹ä¸è¦ä»7æ´å¾€ä¸‹è¹¦ï¼Œåˆ‡è®°ï¼");
     cm.dispose();
 }

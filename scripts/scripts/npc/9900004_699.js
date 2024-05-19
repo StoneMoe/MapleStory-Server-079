@@ -1,14 +1,14 @@
 importPackage(Packages.database);
 var ca = java.util.Calendar.getInstance();
-var year = ca.get(java.util.Calendar.YEAR); //»ñµÃÄê·İ
-var month = ca.get(java.util.Calendar.MONTH) + 1; //»ñµÃÔÂ·İ
-var day = ca.get(java.util.Calendar.DATE);//»ñÈ¡ÈÕ
-var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //»ñµÃĞ¡Ê±
-var minute = ca.get(java.util.Calendar.MINUTE);//»ñµÃ·ÖÖÓ
-var second = ca.get(java.util.Calendar.SECOND); //»ñµÃÃë
+var year = ca.get(java.util.Calendar.YEAR); //è·å¾—å¹´ä»½
+var month = ca.get(java.util.Calendar.MONTH) + 1; //è·å¾—æœˆä»½
+var day = ca.get(java.util.Calendar.DATE);//è·å–æ—¥
+var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //è·å¾—å°æ—¶
+var minute = ca.get(java.util.Calendar.MINUTE);//è·å¾—åˆ†é’Ÿ
+var second = ca.get(java.util.Calendar.SECOND); //è·å¾—ç§’
 var weekday = ca.get(java.util.Calendar.DAY_OF_WEEK);
-var ·ãÒ¶ÖÁ×ğ10 = "#fEffect/SkillName1.img/1001003/·ãÒ¶ÖÁ×ğ10#";
-var ÃÀ»¯new = "#fUI/UIWindow/Quest/icon5/1#";
+var æ«å¶è‡³å°Š10 = "#fEffect/SkillName1.img/1001003/æ«å¶è‡³å°Š10#";
+var ç¾åŒ–new = "#fUI/UIWindow/Quest/icon5/1#";
 var item = 4001126;
 
 function start() {
@@ -27,7 +27,7 @@ function action(mode, type, selection) {
         status--;
     }
     if (cm.getMapId() == 180000001) {
-            cm.sendOk("ºÜÒÅº¶£¬ÄúÒòÎªÎ¥·´ÓÃ»§ÊØÔò±»½ûÖ¹ÓÎÏ·»î¶¯£¬ÈçÓĞÒìÒéÇëÁªÏµ¹ÜÀíÔ±.");
+            cm.sendOk("å¾ˆé—æ†¾ï¼Œæ‚¨å› ä¸ºè¿åç”¨æˆ·å®ˆåˆ™è¢«ç¦æ­¢æ¸¸æˆæ´»åŠ¨ï¼Œå¦‚æœ‰å¼‚è®®è¯·è”ç³»ç®¡ç†å‘˜.");
             cm.dispose();
     } 
     else if (status == 0) {
@@ -46,13 +46,13 @@ function action(mode, type, selection) {
 					
 					text += "      "      + i +     "\t\t "  ;
 					
-					// Ìî³äÃû×Ö¿Õ¸ñ
+					// å¡«å……åå­—ç©ºæ ¼
 					text += getname(list.getInt("characterid"));
 					for (var j = 30 - list.getInt("characterid").length; j > 0; j--) {
 						text += " ";
 					}
 
-					// Ìî³äÃÔÂ·µÄº¢×Ó
+					// å¡«å……è¿·è·¯çš„å­©å­
 					var zc = " \t\t\t "+(list.getInt("sidai")).toFixed(0)+"";
 					text += "  " + zc;
 					var totalsidai = list.getInt("sidai");
@@ -68,8 +68,8 @@ function action(mode, type, selection) {
 					
 					text += "#k\r\n";
 				}
-				text += "©³-#i4001126##i4001126##i4001126##i4001126##i4001126##i4001126##i4001126##i4001126##i4001126##i4001126#-©·\r\n";
-				text += "\t\t\t #r#L0#- Ìá½»·ãÒ¶ \r\n";
+				text += "â”-#i4001126##i4001126##i4001126##i4001126##i4001126##i4001126##i4001126##i4001126##i4001126##i4001126#-â”“\r\n";
+				text += "\t\t\t #r#L0#- æäº¤æ«å¶ \r\n";
 				list.close();
 				pstmt.close();
 				cm.sendOk(text);
@@ -88,8 +88,8 @@ function action(mode, type, selection) {
 				var pstmt = conn.prepareStatement(sql);
 				var list = pstmt.executeQuery();
 				var 
-				text = "©³------------------#e#d¡ï #i4001126# ¡ï#k#n------------------©·\r\n\r\n";
-				text += "\t#eÃû´Î#n\t\t#eêÇ³Æ#n\t\t\t\t#eÊıÁ¿#n\\r\n";
+				text = "â”------------------#e#dâ˜… #i4001126# â˜…#k#n------------------â”“\r\n\r\n";
+				text += "\t#eåæ¬¡#n\t\t#eæ˜µç§°#n\t\t\t\t#eæ•°é‡#n\\r\n";
 				for (var i = 1; i <= 100; i++) {
 					if (!list.next()) {
 						break;
@@ -98,13 +98,13 @@ function action(mode, type, selection) {
 					
 					text += "      "      + i +     "\t\t "  ;
 					
-					// Ìî³äÃû×Ö¿Õ¸ñ
+					// å¡«å……åå­—ç©ºæ ¼
 					text += getname(list.getInt("characterid"));
 					for (var j = 30 - list.getInt("characterid").length; j > 0; j--) {
 						text += " ";
 					}
 
-					// Ìî³äÃÔÂ·µÄº¢×Ó
+					// å¡«å……è¿·è·¯çš„å­©å­
 					var zc = " \t\t\t "+(list.getInt("sidai")).toFixed(0)+"";
 					text += "  " + zc;
 					var totalsidai = list.getInt("sidai");
@@ -131,7 +131,7 @@ function action(mode, type, selection) {
     			cm.openNpc(2007,20013);
     			break;
     		case 3:
-    			var text = "#i1142099# #r#t1142099##k"+·ãÒ¶ÖÁ×ğ10+"\r\n";
+    			var text = "#i1142099# #r#t1142099##k"+æ«å¶è‡³å°Š10+"\r\n";
     			text += "#i1142098# #r#t1142098##k\r\n";
 				text += "#i1142097# #r#t1142097##k\r\n";
 				text += "#i1142096# #r#t1142096##k\r\n";
@@ -156,7 +156,7 @@ function action(mode, type, selection) {
     if (rs1.next()) {
         name = rs1.getString("name");
     } else {
-        name = "ÄäÃûÈËÊ¿";
+        name = "åŒ¿åäººå£«";
     }
     rs1.close();
     ps1.close();

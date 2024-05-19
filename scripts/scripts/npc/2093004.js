@@ -10,15 +10,15 @@ function action(mode, type, selection) {
     if (mode == 1) {
 	status++;
     } else {
-	cm.sendNext("ĞèÒªµÄÊ±ºòÔÙÀ´ÕÒÎÒ¡£");
+	cm.sendNext("éœ€è¦çš„æ—¶å€™å†æ¥æ‰¾æˆ‘ã€‚");
 	cm.safeDispose();
 	return;
     }
     if (status == 0) {
-	cm.sendYesNo("ÄãÏÖÔÚÏëÒªÇ°Íù #b#m230000000##k ? ·ÑÓÃÊÇ #b"+cost+" ·ã±Ò#k.");
+	cm.sendYesNo("ä½ ç°åœ¨æƒ³è¦å‰å¾€ #b#m230000000##k ? è´¹ç”¨æ˜¯ #b"+cost+" æ«å¸#k.");
     } else if (status == 1) {
 	if (cm.getMeso() < cost) {
-	    cm.sendOk("ºÜ±§Ç¸£¬ÄúÃ»ÓĞ×ã¹»µÄ·ã±Ò...");
+	    cm.sendOk("å¾ˆæŠ±æ­‰ï¼Œæ‚¨æ²¡æœ‰è¶³å¤Ÿçš„æ«å¸...");
 	    cm.safeDispose();
 	} else {
 	    cm.gainMeso(-cost);

@@ -12,11 +12,11 @@ function action(mode, type, selection) {
 
     if (status == 0) {
         if (cm.getMap().getAllMonstersThreadsafe().size() <= 0) {
-            cm.sendOk("µ±Ç°µØÍ¼Ã»ÓÐ¹ÖÎï¡C");
+            cm.sendOk("å½“å‰åœ°å›¾æ²¡æœ‰æ€ªç‰©î“‰");
             cm.dispose();
             return;
         }
-        var selStr = "#r#"+MC+"#k- ±¬Îï²éÑ¯ -\r\n\r\n#b";
+        var selStr = "#r#"+MC+"#k- çˆ†ç‰©æŸ¥è¯¢ -\r\n\r\n#b";
         var iz = cm.getMap().getAllUniqueMonsters().iterator();
         while (iz.hasNext()) {
             var zz = iz.next();

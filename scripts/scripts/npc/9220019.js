@@ -1,5 +1,5 @@
 function start() {
-    cm.sendYesNo("您想要离开了？？");
+    cm.sendYesNo("脛煤脧毛脪陋脌毛驴陋脕脣拢驴拢驴");
 }
 
 function action(mode, type, selection) {

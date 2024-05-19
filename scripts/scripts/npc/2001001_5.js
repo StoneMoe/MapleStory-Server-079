@@ -19,7 +19,7 @@ var sss ="#fUI/UIWindow.img/QuestIcon/3/0#";
 		return;
 		}
 		 if (cm.getPlayer().getClient().getChannel() != 1) {
-			cm.sendOk("Ö»ÓĞ #r1#k Ïß¿ÉÒÔÆôÓÃÏÍÕßµñÏñ¡£");
+			cm.sendOk("åªæœ‰ #r1#k çº¿å¯ä»¥å¯ç”¨è´¤è€…é›•åƒã€‚");
 			cm.dispose();
 			 }
 		if (mode == 1)
@@ -32,7 +32,7 @@ var sss ="#fUI/UIWindow.img/QuestIcon/3/0#";
 
 	    var textz = "\r\n";
 
-		textz += "#b#L0#È·ÈÏÕÙ»½#l\r\n";
+		textz += "#b#L0#ç¡®è®¤å¬å”¤#l\r\n";
 
 
 		cm.sendSimple (textz);  
@@ -43,14 +43,14 @@ var sss ="#fUI/UIWindow.img/QuestIcon/3/0#";
 	if (selection == 0){
 		var party = cm.getPlayer().getParty();		
 		if (party == null || party.getLeader().getId() != cm.getPlayer().getId ()) {
-                    cm.sendOk("Äã²»ÊÇ¶Ó³¤¡£ÇëÄãÃÇ¶Ó³¤À´Ëµ»°°É£¡");
+                    cm.sendOk("ä½ ä¸æ˜¯é˜Ÿé•¿ã€‚è¯·ä½ ä»¬é˜Ÿé•¿æ¥è¯´è¯å§ï¼");
                     cm.dispose();
 		}else  if (cm.getMapId() == 209000003 || cm.getMapId() == 209000004 || cm.getMapId() == 209000005 ||  cm.getMapId() == 209000002 || cm.getMapId() == 209000007 || cm.getMapId() == 209000008 || cm.getMapId() == 209000009 ) {
-            cm.sendOk(" ·¿¼ä²»¶Ô£¬ÇëÔÚ¶ÔÓ¦µÄ·¿¼äÊ¹ÓÃ¡£ ");
+            cm.sendOk(" æˆ¿é—´ä¸å¯¹ï¼Œè¯·åœ¨å¯¹åº”çš„æˆ¿é—´ä½¿ç”¨ã€‚ ");
             cm.dispose();
         			
 		}else if(party.getMembers().size() < 0) {
-	            cm.sendOk("ĞèÒª 6 ÈËÒÔÉÏµÄ×é¶Ó²Å¿ÉÒÔÊÍ·ÅÇ¿´óµÄÄ§·¨£¡!");
+	            cm.sendOk("éœ€è¦ 6 äººä»¥ä¸Šçš„ç»„é˜Ÿæ‰å¯ä»¥é‡Šæ”¾å¼ºå¤§çš„é­”æ³•ï¼!");
                     cm.dispose();
 					
 		}else if (cm.haveItem(4000463,10)&&cm.getLevel()>= 10 ) {	
@@ -60,11 +60,11 @@ var sss ="#fUI/UIWindow.img/QuestIcon/3/0#";
 						
                       
                         cm.dispose();
-						//cm.worldMessage(6,"ÔÖÄÑ°¡£¬ÔÖÄÑ°¡£¬Ì«¿ÉÅÂÁË£¬"+cm.getName()+"ÔÚÓÂÊ¿²¿ÂäÕÙ»½³öÁË°µºÚÁúÍõ¡£");
+						//cm.worldMessage(6,"ç¾éš¾å•Šï¼Œç¾éš¾å•Šï¼Œå¤ªå¯æ€•äº†ï¼Œ"+cm.getName()+"åœ¨å‹‡å£«éƒ¨è½å¬å”¤å‡ºäº†æš—é»‘é¾™ç‹ã€‚");
 						
 						
                         }else{
-                        cm.sendOk("ÎŞ·¨½øĞĞÕÙ»½£¡");
+                        cm.sendOk("æ— æ³•è¿›è¡Œå¬å”¤ï¼");
 			cm.dispose();	
 }
 

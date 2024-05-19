@@ -1,14 +1,14 @@
 //////////////////////////////
-//�߱�*自由冒险岛*最具创意////
+//Æß±¦*èªç±åé©å²*æå·åæ////
 //1346464664/992916233//////
 ///////////////////////////
 var ca = java.util.Calendar.getInstance();
-var year = ca.get(java.util.Calendar.YEAR); //获得年份
-var month = ca.get(java.util.Calendar.MONTH) + 1; //获得月份
-var day = ca.get(java.util.Calendar.DATE);//获取日
-var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //获得小时
-var minute = ca.get(java.util.Calendar.MINUTE);//获得分钟
-var second = ca.get(java.util.Calendar.SECOND); //获得秒
+var year = ca.get(java.util.Calendar.YEAR); //è·å¾å¹´ä»½
+var month = ca.get(java.util.Calendar.MONTH) + 1; //è·å¾æä»½
+var day = ca.get(java.util.Calendar.DATE);//è·åæ¥
+var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //è·å¾å°æ¶
+var minute = ca.get(java.util.Calendar.MINUTE);//è·å¾åé
+var second = ca.get(java.util.Calendar.SECOND); //è·å¾ç§
 var weekday = ca.get(java.util.Calendar.DAY_OF_WEEK);
 var Z = "#fUI/GuildMark.img/Mark/Letter/00005025/1#";
 var Y = "#fUI/GuildMark.img/Mark/Letter/00005024/3#";
@@ -37,7 +37,7 @@ function action(mode, type, selection) {
         status--;
     }
 	    if ( cm.getMapId() == 10000) {
-            cm.sendOk(" 自 由 冒 险 岛 境 外 无 法 使 用 此 功 能 。");
+            cm.sendOk(" èª ç± å é© å² å¢ å¤ æ  æ³ ä½¿ ç¨ æ­¤ å è½ ã");
             cm.dispose();
         }
 
@@ -47,10 +47,10 @@ function action(mode, type, selection) {
 		
 		
    var  
-	    selStr = "#r自由冒险岛活动区；\r\n";
-		selStr += "#e#L0#返回界面#l\r\n";
+	    selStr = "#rèªç±åé©å²æ´»å¨åºï¼\r\n";
+		selStr += "#e#L0#è¿åçé¢#l\r\n";
 		
-		selStr += "#L1##b节奏大师#l\r\n";
+		selStr += "#L1##bèå¥å¤§å¸#l\r\n";
 
 		cm.sendSimple(selStr);
     } else if (status == 1) {
@@ -64,7 +64,7 @@ function action(mode, type, selection) {
             cm.dispose();
             cm.openNpc(2007,10);	
 			} else {
-		  cm.sendOk("节奏大师开启时间为每天;#r20:00-20:59");
+		  cm.sendOk("èå¥å¤§å¸å¼å¯æ¶é´ä¸ºæ¯å¤©;#r20:00-20:59");
 		  cm.dispose();
 		  }
             break;

@@ -6,7 +6,7 @@ function start() {
 }
 function action(mode, type, selection) {
     if (status == 0 && mode == 0) {
-        cm.sendOk("¸ĞĞ»Ö§³Ö#rÃ°ÏÕµº#kÎÒÃÇÓĞ¶ÀÁ¢¿ª·¢µÄ¼¼ÊõÒÔ¼°×îÇ°ÏßµÄ±£ÕÏ¡£Ğ»Ğ»¸÷Î»Ö§³Ö£¡\r\n#bĞ¡¶ÄâùÇé£¬´ò¶ÄÉËÉí£¬Ç¿¶Ä»Ò·ÉÑÌÃğ~£¡");
+        cm.sendOk("æ„Ÿè°¢æ”¯æŒ#rå†’é™©å²›#kæˆ‘ä»¬æœ‰ç‹¬ç«‹å¼€å‘çš„æŠ€æœ¯ä»¥åŠæœ€å‰çº¿çš„ä¿éšœã€‚è°¢è°¢å„ä½æ”¯æŒï¼\r\n#bå°èµŒæ€¡æƒ…ï¼Œæ‰“èµŒä¼¤èº«ï¼Œå¼ºèµŒç°é£çƒŸç­~ï¼");
         cm.dispose();
         return;
     }
@@ -16,21 +16,21 @@ function action(mode, type, selection) {
         status--;
     }
     if (cm.getMapId() == 180000001) {
-        cm.sendOk("ºÜÒÅº¶£¬ÄúÒòÎªÎ¥·´ÓÃ»§ÊØÔò±»½ûÖ¹ÓÎÏ·»î¶¯£¬ÈçÓĞÒìÒéÇëÁªÏµ¹ÜÀíÔ±.")
+        cm.sendOk("å¾ˆé—æ†¾ï¼Œæ‚¨å› ä¸ºè¿åç”¨æˆ·å®ˆåˆ™è¢«ç¦æ­¢æ¸¸æˆæ´»åŠ¨ï¼Œå¦‚æœ‰å¼‚è®®è¯·è”ç³»ç®¡ç†å‘˜.")
         cm.dispose();
     }
     else if (status == 0) {
 cm.teachSkill(1004,1,1);
-        var selStr = "\t\t\t  ÄãºÃ~»¶Ó­À´µ½#bÓÆÓÆÃ°ÏÕµº#k.\r\n\tÎÂÜ°ÌáÊ¾: #rĞ¡¶ÄâùÇé£¬´ó¶ÄÉËÉí£¬Ç¿¶Ä»Ò·ÉÑÌÃğ~£¡¡£#n\r\n";
-        selStr += "  #b#L0#ÀÏ»¢»ú100µã¾í[#rNEW#b]#l\r\n\r\n";
-        selStr += "  #b#L1#ÀÏ»¢»ú1000µã¾í[#rNEW#b]#l\r\n\r\n"
-        selStr += "  #b#L2#ÀÏ»¢»ú10000µã¾í[#rNEW#b]#l\r\n\r\n"
+        var selStr = "\t\t\t  ä½ å¥½~æ¬¢è¿æ¥åˆ°#bæ‚ æ‚ å†’é™©å²›#k.\r\n\tæ¸©é¦¨æç¤º: #rå°èµŒæ€¡æƒ…ï¼Œå¤§èµŒä¼¤èº«ï¼Œå¼ºèµŒç°é£çƒŸç­~ï¼ã€‚#n\r\n";
+        selStr += "  #b#L0#è€è™æœº100ç‚¹å·[#rNEW#b]#l\r\n\r\n";
+        selStr += "  #b#L1#è€è™æœº1000ç‚¹å·[#rNEW#b]#l\r\n\r\n"
+        selStr += "  #b#L2#è€è™æœº10000ç‚¹å·[#rNEW#b]#l\r\n\r\n"
         cm.sendSimple(selStr);
     } else if (status == 1) {
         switch (selection) {
             case 0:
 		if(cm.getNX(1) < 100){
-        	cm.sendOk("ÄãÃ»ÓĞ100µã„»")
+        	cm.sendOk("ä½ æ²¡æœ‰100ç‚¹åŠµ")
 		}else{
                 cm.getlfj(100,0);
 		}
@@ -39,7 +39,7 @@ cm.teachSkill(1004,1,1);
                 break;
             case 1:
 		if(cm.getNX(1) < 1000){
-        	cm.sendOk("ÄãÃ»ÓĞ1000µã„»")
+        	cm.sendOk("ä½ æ²¡æœ‰1000ç‚¹åŠµ")
 		}else{
                 cm.getlfj(1000,1);
 		}
@@ -47,7 +47,7 @@ cm.teachSkill(1004,1,1);
                 break;
             case 2:
 		if(cm.getNX(1) < 10000){
-        	cm.sendOk("ÄãÃ»ÓĞ10000µã„»")
+        	cm.sendOk("ä½ æ²¡æœ‰10000ç‚¹åŠµ")
 		}else{
                 cm.getlfj(10000,2);
 		}

@@ -4,9 +4,9 @@ var status = 0;
 var fee;
 var chance = Math.floor(Math.random()*1+1);
 var ca = java.util.Calendar.getInstance();
-var year = ca.get(java.util.Calendar.YEAR); //»ñµÃÄê·İ
-var month = ca.get(java.util.Calendar.MONTH) + 1; //»ñµÃÔÂ·İ
-var day = ca.get(java.util.Calendar.DATE);//»ñÈ¡ÈÕ
+var year = ca.get(java.util.Calendar.YEAR); //è·å¾—å¹´ä»½
+var month = ca.get(java.util.Calendar.MONTH) + 1; //è·å¾—æœˆä»½
+var day = ca.get(java.util.Calendar.DATE);//è·å–æ—¥
 function start() {
     status = -1;
     action(1, 0, 0);
@@ -17,7 +17,7 @@ function action(mode, type, selection) {
         cm.dispose();
     } else {
         if (mode == 0) {
-            cm.sendOk("Äã²»ÖªµÀÖ¸Áî£¿");
+            cm.sendOk("ä½ ä¸çŸ¥é“æŒ‡ä»¤ï¼Ÿ");
             cm.dispose();
             return;
         }
@@ -29,23 +29,23 @@ function action(mode, type, selection) {
 			if (status == 0)
 				{
 					
-            cm.sendGetText("\r\n-#r "+year+" Äê "+month+" ÔÂ "+day+" ÈÕ #bµÄ¿ÚÁîÇëÁôÒâÈºÄÚ¡£#k\r\n\r\n ÊäÈë¿ÚÁî;\r\n");
+            cm.sendGetText("\r\n-#r "+year+" å¹´ "+month+" æœˆ "+day+" æ—¥ #bçš„å£ä»¤è¯·ç•™æ„ç¾¤å†…ã€‚#k\r\n\r\n è¾“å…¥å£ä»¤;\r\n");
         } else if (status == 1) {
             fee = cm.getText();
-            cm.sendYesNo("- ÄãÊäÈëµÄ¿ÚÁîÊÇ£» #r" + fee + "#k £¿");
+            cm.sendYesNo("- ä½ è¾“å…¥çš„å£ä»¤æ˜¯ï¼› #r" + fee + "#k ï¼Ÿ");
         } else if (status == 2) {
-            if (cm.getBossLog("mrkl") == 0 && cm.getText() == "ß£°¡ß££¬²»ß£²»Êæ·şË¹»ù£¬°¡ß£°¡ß£" ){//////////////¿ÚÁî
+            if (cm.getBossLog("mrkl") == 0 && cm.getText() == "æ’¸å•Šæ’¸ï¼Œä¸æ’¸ä¸èˆ’æœæ–¯åŸºï¼Œå•Šæ’¸å•Šæ’¸" ){//////////////å£ä»¤
         cm.setBossLog("mrkl");
 		cm.setBossLog("zymxd");
-		cm.sendOk("ÁìÈ¡³É¹¦ ");
+		cm.sendOk("é¢†å–æˆåŠŸ ");
 		cm.dispose();
 		
-		cm.serverNotice("[Ã¿ÈÕ¿ÚÁî]£º"+ cm.getChar().getName() +"ÊäÈëÁËÕıÈ·µÄ¿ÚÁî£¬³É¹¦ÁìÈ¡"+year+"Äê"+month+"ÔÂ"+day+"ÈÕµÄ½±Àø¡£"); 
+		cm.serverNotice("[æ¯æ—¥å£ä»¤]ï¼š"+ cm.getChar().getName() +"è¾“å…¥äº†æ­£ç¡®çš„å£ä»¤ï¼ŒæˆåŠŸé¢†å–"+year+"å¹´"+month+"æœˆ"+day+"æ—¥çš„å¥–åŠ±ã€‚"); 
 
             } else {
                  if (chance <= 1) { 
 				         
-                         cm.sendOk("ÇëÊäÈëÕıÈ·µÄ¿ÚÁî£¬»òÕßÄãÒÑ¾­ÁìÈ¡ÁË¡£")
+                         cm.sendOk("è¯·è¾“å…¥æ­£ç¡®çš„å£ä»¤ï¼Œæˆ–è€…ä½ å·²ç»é¢†å–äº†ã€‚")
 	                    cm.dispose(); 
 
 	                } 

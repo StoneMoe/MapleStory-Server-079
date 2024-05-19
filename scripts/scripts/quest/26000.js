@@ -15,7 +15,7 @@ function start(mode, type, selection) {
         qm.sendYesNo("The Guild supplies have arrived. Here, take them, and don't complain about the amount. You can always get more when your Guild level goes up.");
     } else {
         if (!qm.canHold(2002037, qm.getGuild().getLevel() * 20)) {
-            qm.sendOk("�뱣��һЩ�ռ䣡");
+            qm.sendOk("Çë±£ÁôÒ»Ð©¿Õ¼ä£¡");
         } else {
             qm.gainItemPeriod(2002037, qm.getGuild().getLevel() * 20, 7);
             qm.forceCompleteQuest();

@@ -11,7 +11,7 @@ function start() {
 }
 
 function action(mode, type, selection) {
-     cm.sendNext("ÆÚ´ı¿ªÆô");
+     cm.sendNext("æœŸå¾…å¼€å¯");
             cm.dispose();
     // if (mode == 1) {
     //     status++;
@@ -23,7 +23,7 @@ function action(mode, type, selection) {
     // }
     // if (status == 0) {
     //     var msg = "";
-    //   //  msg += "\r\n#dĞèÒª:#b ";
+    //   //  msg += "\r\n#déœ€è¦:#b ";
     //     msg += "\r\n\r\n";
     //     for (var ii = 0; ii < req.length; ii++) {
     //         msg += "#i" + req[ii][0] + "##t" + req[ii][0] + "#x" + req[ii][1];
@@ -37,31 +37,31 @@ function action(mode, type, selection) {
     //         msg += "#r#L" + i + "#";
     //         msg += "#i" + weapon[i] + "##z" + weapon[i] + "##l\r\n";
     //     }
-    //     cm.sendSimple("#dÄúºÃ£¬ÎÒÊÇÈºÖ÷ÇëÀ´µÄ¶Ò»»ÉÌÈË£¬ÏëÒª¶Ò»»±Ø³É¾íÖáÂğ?(PS£º5¸ö²İİ®µ°¸â=5ÕÅ±Ø³É¾í)\r\n\r\n" + msg + "");
+    //     cm.sendSimple("#dæ‚¨å¥½ï¼Œæˆ‘æ˜¯ç¾¤ä¸»è¯·æ¥çš„å…‘æ¢å•†äººï¼Œæƒ³è¦å…‘æ¢å¿…æˆå·è½´å—?(PSï¼š5ä¸ªè‰è“è›‹ç³•=5å¼ å¿…æˆå·)\r\n\r\n" + msg + "");
     // } else if (status == 1) {
     //     sels = selection;
     //     if (!cm.canHold(weapon[sels])) {
-    //         cm.sendNext("#r±³°ü¿Õ¼ä²»×ã");
+    //         cm.sendNext("#rèƒŒåŒ…ç©ºé—´ä¸è¶³");
     //         cm.dispose();
     //         return;
     //     }
     //     for (var i = 0; i < req.length; i++) {
     //         if (!cm.haveItem(req[i][0], req[i][1])) {
-    //             cm.sendNext("#bÄãÉíÉÏÃ»ÓĞ#r×ã¹»µÄ²ÄÁÏ#k£¬¼ÌĞøÊÕ¼¯²ÄÁÏÈ¥°É£¡");
+    //             cm.sendNext("#bä½ èº«ä¸Šæ²¡æœ‰#rè¶³å¤Ÿçš„ææ–™#kï¼Œç»§ç»­æ”¶é›†ææ–™å»å§ï¼");
     //             cm.dispose();
     //             return;
     //         }
     //     }
-    //     cm.sendYesNo("#bÊÇ·ñÒª¶Ò»»¾íÖá#r #i" + weapon[sels] + "#? \r\n");
+    //     cm.sendYesNo("#bæ˜¯å¦è¦å…‘æ¢å·è½´#r #i" + weapon[sels] + "#? \r\n");
     // } else if (status == 2) {
     //     for (var i = 0; i < req.length; i++) {
     //         cm.gainItem(req[i][0], -req[i][1]);
     //     }
     //     cm.gainItem(weapon[sels], 5);
-    //     cm.sendNext("#bÒÑ¾­¶Ò»»ÁË¾íÖá #i" + weapon[sels] + "#");
+    //     cm.sendNext("#bå·²ç»å…‘æ¢äº†å·è½´ #i" + weapon[sels] + "#");
     //     cm.dispose();
     // } else {
-    //     cm.sendNext("#r·¢Éú´íÎó: mode : " + mode + " status : " + status);
+    //     cm.sendNext("#rå‘ç”Ÿé”™è¯¯: mode : " + mode + " status : " + status);
     //     cm.dispose();
     // }
 }

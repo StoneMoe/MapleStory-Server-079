@@ -9,14 +9,14 @@ var year = myDate.getFullYear();
 var month = myDate.getMonth() + 1;
 var days = myDate.getDate();
 var status = 0;
-var ºÚË®¾§ = 4021008;
-var À¶É«¼ıÍ· = "#fUI/UIWindow/Quest/icon2/7#";
-var ºìÉ«¼ıÍ· = "#fUI/UIWindow/Quest/icon6/7#";
-var Ô²ĞÎ = "#fUI/UIWindow/Quest/icon3/6#";
-var ÃÀ»¯new = "#fUI/UIWindow/Quest/icon5/1#";
-var ¸ĞÌ¾ºÅ = "#fUI/UIWindow/Quest/icon0#";
-var Õı·½¼ıÍ· = "#fUI/Basic/BtHide3/mouseOver/0#";
-var ÖÒ¸æ = "#kÎÂÜ°ÌáÊ¾£ºÈÎºÎ·Ç·¨³ÌĞòºÍÍâ¹Ò·âºÅ´¦Àí.·âÉ±½ÄĞÒĞÄÀí.";
+var é»‘æ°´æ™¶ = 4021008;
+var è“è‰²ç®­å¤´ = "#fUI/UIWindow/Quest/icon2/7#";
+var çº¢è‰²ç®­å¤´ = "#fUI/UIWindow/Quest/icon6/7#";
+var åœ†å½¢ = "#fUI/UIWindow/Quest/icon3/6#";
+var ç¾åŒ–new = "#fUI/UIWindow/Quest/icon5/1#";
+var æ„Ÿå¹å· = "#fUI/UIWindow/Quest/icon0#";
+var æ­£æ–¹ç®­å¤´ = "#fUI/Basic/BtHide3/mouseOver/0#";
+var å¿ å‘Š = "#kæ¸©é¦¨æç¤ºï¼šä»»ä½•éæ³•ç¨‹åºå’Œå¤–æŒ‚å°å·å¤„ç†.å°æ€ä¾¥å¹¸å¿ƒç†.";
 function start() {
     status = -1;
     action(1, 0, 0);
@@ -35,54 +35,54 @@ function action(mode, type, selection) {
         else
             status--;
         if (status == 0) {
-        	var strlen = "Ç×°®µÄ#b#e#h ##n#k£¬ÕâÀïÊÇµÈ¼¶Ã¿ÈÕ½±ÀøÖĞĞÄ\r\n";
-        	strlen += ÃÀ»¯new + "#bµÈ¼¶½±ÀøÄÚÈİ£º\r\n			0-9 ÎŞ\r\n";
-			strlen += "			10-29 Ã°ÏÕ±Ò10w\r\n";
-			strlen += "			30-69 Ã°ÏÕ±Ò20w\r\n";
-			strlen += "			70-119 µãÈ¯200 ³é½±Ïä×Óx2 Ã°ÏÕ±Ò30w\r\n";
-			strlen += "			120ÒÔÉÏ µãÈ¯500 ³é½±Ïä×Óx4 Ã°ÏÕ±Ò50w\r\n";
-			strlen +=" "+¸ĞÌ¾ºÅ+"#L1##r×¢ÒâºÃµÈ¼¶Çø¼ä£¬È·¶¨ÒªÁìÈ¡Ã´£¿Ã¿ÌìÖ»ÄÜÁìÈ¡Ò»´ÎÅ¶#l\r\n";
+        	var strlen = "äº²çˆ±çš„#b#e#h ##n#kï¼Œè¿™é‡Œæ˜¯ç­‰çº§æ¯æ—¥å¥–åŠ±ä¸­å¿ƒ\r\n";
+        	strlen += ç¾åŒ–new + "#bç­‰çº§å¥–åŠ±å†…å®¹ï¼š\r\n			0-9 æ— \r\n";
+			strlen += "			10-29 å†’é™©å¸10w\r\n";
+			strlen += "			30-69 å†’é™©å¸20w\r\n";
+			strlen += "			70-119 ç‚¹åˆ¸200 æŠ½å¥–ç®±å­x2 å†’é™©å¸30w\r\n";
+			strlen += "			120ä»¥ä¸Š ç‚¹åˆ¸500 æŠ½å¥–ç®±å­x4 å†’é™©å¸50w\r\n";
+			strlen +=" "+æ„Ÿå¹å·+"#L1##ræ³¨æ„å¥½ç­‰çº§åŒºé—´ï¼Œç¡®å®šè¦é¢†å–ä¹ˆï¼Ÿæ¯å¤©åªèƒ½é¢†å–ä¸€æ¬¡å“¦#l\r\n";
 			cm.sendSimple(strlen);
 		}else if(status == 1){
 			var id = cm.getPlayer().getId();
         	var time = getBossLog("meirijiangli",id);
         	if(time >= 1){
-        		cm.sendOk("Ã¿ÌìÖ»¿ÉÒÔÁìÈ¡Ò»´ÎÅ¶");
+        		cm.sendOk("æ¯å¤©åªå¯ä»¥é¢†å–ä¸€æ¬¡å“¦");
         		cm.dispose();
         		return;
         	}
 		if (cm.getInventory(1).isFull() || cm.getInventory(2).isFull() || cm.getInventory(3).isFull() || cm.getInventory(4).isFull() || cm.getInventory(5).isFull()) {
-                cm.sendSimple("ÄúµÄ±³°ü¿Õ¼ä²»×ã£¬¸÷¸öÀ¸Ä¿ÆğÂëÁô³öÒ»¸ö¿ÕÎ»¡£");
+                cm.sendSimple("æ‚¨çš„èƒŒåŒ…ç©ºé—´ä¸è¶³ï¼Œå„ä¸ªæ ç›®èµ·ç ç•™å‡ºä¸€ä¸ªç©ºä½ã€‚");
 		cm.dispose();
         		return;
         	}
         	var level = cm.getLevel();
         	if(level < 10){
-        		cm.sendOk("Ã»µ½Ê®¼¶²»ÄÜÁìÈ¡½±ÀøÅ¶");
+        		cm.sendOk("æ²¡åˆ°åçº§ä¸èƒ½é¢†å–å¥–åŠ±å“¦");
         		cm.dispose();
         	}else if(level < 30){
         		cm.getPlayer().gainMeso(100000, true);
 			cm.setBossLog("meirijiangli");
-        		cm.sendOk("¹§Ï²Äã»ñµÃ10-29¼¶½±Àø");
+        		cm.sendOk("æ­å–œä½ è·å¾—10-29çº§å¥–åŠ±");
         		cm.dispose();
         	}else if(level < 70){
         		cm.getPlayer().gainMeso(200000, true);
 			cm.setBossLog("meirijiangli");
-        		cm.sendOk("¹§Ï²Äã»ñµÃ30-69¼¶½±Àø");
+        		cm.sendOk("æ­å–œä½ è·å¾—30-69çº§å¥–åŠ±");
         		cm.dispose();
         	}else if(level < 120){
         		cm.gainItem(2022336,2);
         		cm.gainNX(200);
         		cm.getPlayer().gainMeso(300000, true);
 			cm.setBossLog("meirijiangli");
-        		cm.sendOk("¹§Ï²Äã»ñµÃ70-119¼¶½±Àø");
+        		cm.sendOk("æ­å–œä½ è·å¾—70-119çº§å¥–åŠ±");
         		cm.dispose();
         	}else{
         		cm.gainItem(2022336,4);
         		cm.gainNX(500);
         		cm.getPlayer().gainMeso(500000, true);
 			cm.setBossLog("meirijiangli");
-        		cm.sendOk("¹§Ï²Äã»ñµÃ120¼¶½±Àø");
+        		cm.sendOk("æ­å–œä½ è·å¾—120çº§å¥–åŠ±");
         		cm.dispose();
         	}
         }

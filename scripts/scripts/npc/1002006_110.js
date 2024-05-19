@@ -10,7 +10,7 @@ function action(mode, type, selection) {
             else {
                 if (status >= 0 && mode == 0) {
                 
-   cm.sendOk("¸ĞĞ»Ê¹ÓÃ.");
+   cm.sendOk("æ„Ÿè°¢ä½¿ç”¨.");
    cm.dispose();
    return;                    
                 }
@@ -26,13 +26,13 @@ function action(mode, type, selection) {
 	for(i = 0; i < 10; i++){
 		text += "";
 	}				
-	text += "#dºÏ³É-- #r¡ï5000HPÑªÒÂ¡ïĞèÒªÒÔÏÂÎïÆ·£º\r\n#v1113035##d3000HPÑªÒÂ 1¸ö\r\n#v4000072##d#z4000072# 150¸ö \r\n#v4000071##d#z4000071# 150¸ö\r\n#v4000070##d#z4000070# 150¸ö ½ğ±Ò5000W\r\n\r\n~\r\n"
-	text += "\r\n#L1##dÎÒÊÕ¼¯ÁËÒÔÉÏÎïÆ·¡£È·¶¨ÖÆ×÷5000HPÑªÒÂ";//ÆßÌì
+	text += "#dåˆæˆ-- #râ˜…5000HPè¡€è¡£â˜…éœ€è¦ä»¥ä¸‹ç‰©å“ï¼š\r\n#v1113035##d3000HPè¡€è¡£ 1ä¸ª\r\n#v4000072##d#z4000072# 150ä¸ª \r\n#v4000071##d#z4000071# 150ä¸ª\r\n#v4000070##d#z4000070# 150ä¸ª é‡‘å¸5000W\r\n\r\n~\r\n"
+	text += "\r\n#L1##dæˆ‘æ”¶é›†äº†ä»¥ä¸Šç‰©å“ã€‚ç¡®å®šåˆ¶ä½œ5000HPè¡€è¡£";//ä¸ƒå¤©
 	text += "     \r\n"
         cm.sendSimple(text);
         } else if (selection == 1) {
                       if(!cm.canHold(1012059,1)){
-			cm.sendOk("ÇëÇåÀíÄãµÄ±³°ü£¬ÖÁÉÙ¿Õ³ö2¸öÎ»ÖÃ£¡");
+			cm.sendOk("è¯·æ¸…ç†ä½ çš„èƒŒåŒ…ï¼Œè‡³å°‘ç©ºå‡º2ä¸ªä½ç½®ï¼");
             cm.dispose();
         } else if(cm.haveItem(4000070,150) && cm.haveItem(4000072,150) && cm.haveItem(4000071,150) && cm.haveItem(1113035,1) && cm.getMeso() >= 50000000){
 			cm.gainItem(4000070, -150);
@@ -41,11 +41,11 @@ function action(mode, type, selection) {
 			cm.gainMeso(-20000000);
 			cm.gainItem(1113035, -1);
 cm.gainItem(1113036,20,20,20,20,5000,5000,0,0,0,0,0,0,0,0);
-            cm.sendOk("»»¹º³É¹¦£¡");
+            cm.sendOk("æ¢è´­æˆåŠŸï¼");
             cm.dispose();
-cm.À®°È(3, "Íæ¼Ò£º[" + cm.getPlayer().getName() + "]³É¹¦ÖÆ×÷5000HPÑªÒÂ£¬¹§Ï²£¡£¡");
+cm.å–‡å­(3, "ç©å®¶ï¼š[" + cm.getPlayer().getName() + "]æˆåŠŸåˆ¶ä½œ5000HPè¡€è¡£ï¼Œæ­å–œï¼ï¼");
 			}else{
-            cm.sendOk("ÎŞ·¨ÖÆ×÷£¬»òĞíÄã²ÄÁÏ²»×ã\r\n");
+            cm.sendOk("æ— æ³•åˆ¶ä½œï¼Œæˆ–è®¸ä½ ææ–™ä¸è¶³\r\n");
             cm.dispose();
 			}
 		}

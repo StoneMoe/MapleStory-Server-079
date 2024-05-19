@@ -3,7 +3,7 @@ var status = -1;
 function start(mode, type, selection) {
     qm.getMap().killAllMonsters(true);
     qm.spawnMonster(3300008, 1);
-    qm.sendNext("Çë°ïÎÒ³ýµôÕâ¸öÈË£¡£¡");
+    qm.sendNext("Ã‡Ã«Â°Ã¯ÃŽÃ’Â³Ã½ÂµÃ´Ã•Ã¢Â¸Ã¶ÃˆÃ‹Â£Â¡Â£Â¡");
     qm.forceCompleteQuest(2332);
     qm.forceStartQuest();
     qm.dispose();

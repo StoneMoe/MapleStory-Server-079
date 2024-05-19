@@ -55,13 +55,13 @@ function action(mode, type, selection) {
 			}
 			slot.push(i);
 		}
-		cm.sendSimple("ÇëÑ¡ÔñÄãĞèÒªÇå³ıµÄÎïÆ·:\r\n#b" + avail);
+		cm.sendSimple("è¯·é€‰æ‹©ä½ éœ€è¦æ¸…é™¤çš„ç‰©å“:\r\n#b" + avail);
 	 
     } else if (status == 1) {
         itemss = selection;
 		var shul = cm.getPlayer().getItemQuantity(itemss, false);
 		cm.removeAll(itemss);
-		Ok("ÎÒÒÑ¾­½«Äã±³°üÀïµÄ #d#i" + itemss + ":# #t" + itemss + ":# ÊıÁ¿£º#e#r" + shul + "#n#b\r\n´ÓÄãµÄ±³°üÉ¾³ı£¡");
+		Ok("æˆ‘å·²ç»å°†ä½ èƒŒåŒ…é‡Œçš„ #d#i" + itemss + ":# #t" + itemss + ":# æ•°é‡ï¼š#e#r" + shul + "#n#b\r\nä»ä½ çš„èƒŒåŒ…åˆ é™¤ï¼");
 		
 		cm.dispose();	
 		

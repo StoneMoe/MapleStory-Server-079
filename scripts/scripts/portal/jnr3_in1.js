@@ -2,6 +2,6 @@ function enter(pi) {
     if (pi.getMap().getReactorByName("jnr3_out2").getState() > 0) {
 	pi.warp(926110202,0);
     } else {
-	pi.playerMessage(5, "门尚未开放");
+	pi.playerMessage(5, "螕螘螜螤螢蝿螐秃路螘");
     }
 }

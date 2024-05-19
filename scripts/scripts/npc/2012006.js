@@ -1,6 +1,6 @@
 /*
 -- MrCoffee JavaScript --
-        NPC½Å±¾ 
+        NPCè„šæœ¬ 
 -------------------------
    MrCoffee MapleStory
 ----- Version Info ------
@@ -11,7 +11,7 @@
 importPackage(net.sf.MrCoffee.client);
 
 var mapid = new Array(200000110,200000120,200000130,200000140,200000150);
-var platform = new Array("Ä§·¨ÃÜÁÖ","Íæ¾ß³Ç","ÉñÄ¾´å","ÎäÁê","°¢Àï°²ÌØ");
+var platform = new Array("é­”æ³•å¯†æ—","ç©å…·åŸ","ç¥æœ¨æ‘","æ­¦é™µ","é˜¿é‡Œå®‰ç‰¹");
 var flight = new Array("ship","ship","ship","Hak","Geenie");
 var menu;
 var select;
@@ -30,7 +30,7 @@ function action(mode, type, selection) {
 			return;
 		}
 		if(mode == 0) {
-			cm.sendOk("Çë×ĞÏ¸Ñ¡ÔñºÃÄãÒªÈ¥µÄÕ¾Ì¨£¬ÔÙ¸úÎÒ½²¡£");
+			cm.sendOk("è¯·ä»”ç»†é€‰æ‹©å¥½ä½ è¦å»çš„ç«™å°ï¼Œå†è·Ÿæˆ‘è®²ã€‚");
 			cm.dispose();
 			return;
 		}
@@ -39,14 +39,14 @@ function action(mode, type, selection) {
 		else
 			status--;
 		if(status == 0) {
-			menu = "Ìì¿ÕÖ®³ÇÀ´Íùº½°à×İºá½»´í£¬ÇëÑ¡ÔñÒ»¸ö¿ÉÒÔ´øÄãµ½Ä¿µÄµØµÄÕ¾Ì¨¡£Çë·ÅĞÄ£¬¼´Ê¹ÄãÑ¡Ôñ´íÁË£¬»¹¿ÉÒÔ»ØÀ´¸úÎÒËµ£¬ÎÒ½«´øÄãµ½ÕıÈ·µÄÕ¾Ì¨µÈ´ıº½°à¡£ÇëÔÚÏÂÃæÑ¡ÔñÄãÒªÈ¥µÄÕ¾Ì¨¡£";
+			menu = "å¤©ç©ºä¹‹åŸæ¥å¾€èˆªç­çºµæ¨ªäº¤é”™ï¼Œè¯·é€‰æ‹©ä¸€ä¸ªå¯ä»¥å¸¦ä½ åˆ°ç›®çš„åœ°çš„ç«™å°ã€‚è¯·æ”¾å¿ƒï¼Œå³ä½¿ä½ é€‰æ‹©é”™äº†ï¼Œè¿˜å¯ä»¥å›æ¥è·Ÿæˆ‘è¯´ï¼Œæˆ‘å°†å¸¦ä½ åˆ°æ­£ç¡®çš„ç«™å°ç­‰å¾…èˆªç­ã€‚è¯·åœ¨ä¸‹é¢é€‰æ‹©ä½ è¦å»çš„ç«™å°ã€‚";
 			for(var i=0; i < platform.length; i++) {
-				menu += "\r\n#L"+i+"##b¿ªÍù "+platform[i]+"#k#l";
+				menu += "\r\n#L"+i+"##bå¼€å¾€ "+platform[i]+"#k#l";
 			}
 			cm.sendSimple(menu);
 		} else if(status == 1) {
 			select = selection;
-			cm.sendYesNo("¼´Ê¹ÄãÑ¡Ôñ´íÁËÕ¾Ì¨£¬Äã»¹¿ÉÒÔ»Øµ½ÕâÀïÀ´¸úÎÒËµ£¬ÏÖÔÚÄã½«ÒªÒÆ¶¯µ½¿ªÍù #b "+flight[select]+"  "+platform[select]+" #kµÄÕ¾Ì¨£¿");
+			cm.sendYesNo("å³ä½¿ä½ é€‰æ‹©é”™äº†ç«™å°ï¼Œä½ è¿˜å¯ä»¥å›åˆ°è¿™é‡Œæ¥è·Ÿæˆ‘è¯´ï¼Œç°åœ¨ä½ å°†è¦ç§»åŠ¨åˆ°å¼€å¾€ #b "+flight[select]+"  "+platform[select]+" #kçš„ç«™å°ï¼Ÿ");
 		} else if(status == 2) {
 			cm.warp(mapid[select]);
 			cm.dispose();

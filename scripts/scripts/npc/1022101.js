@@ -6,6 +6,6 @@ var status = -1;
 var firstsel = 0;
 
 function action(mode, type, selection) {
-	cm.sendOk("¼ÙÆÚÓä¿ì~");
+	cm.sendOk("Â¼Ã™Ã†ÃšÃ“Ã¤Â¿Ã¬~");
 	cm.safeDispose();
 }

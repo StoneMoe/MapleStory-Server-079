@@ -15,22 +15,22 @@ function action(mode, type, selection) {
     }
     if (status == 0) {
         if (cm.isQuestActive(22515) || cm.isQuestActive(22516) || cm.isQuestActive(22517) || cm.isQuestActive(22518)) {
-            cm.sendYesNo("ÄãÏë½øÈëÅàÑµÖĞĞÄ£¿£¿");
+            cm.sendYesNo("ä½ æƒ³è¿›å…¥åŸ¹è®­ä¸­å¿ƒï¼Ÿï¼Ÿ");
             status = 1;
         }
-        var selStr = "Ñ¡ÔñÒ»¸öÄãÏëÒªÈ¥µÄÅàÑµÖĞĞÄ";
+        var selStr = "é€‰æ‹©ä¸€ä¸ªä½ æƒ³è¦å»çš„åŸ¹è®­ä¸­å¿ƒ";
         for (var i = 0; i < num; i++) {
-            selStr += "\r\n#b#L" + i + "#ÅàÑµÖĞĞÄ " + i + " (" + cm.getPlayerCount(map + i) + "/" + maxp + ")#l#k";
+            selStr += "\r\n#b#L" + i + "#åŸ¹è®­ä¸­å¿ƒ " + i + " (" + cm.getPlayerCount(map + i) + "/" + maxp + ")#l#k";
         }
         cm.sendSimple(selStr);
     } else if (status == 1) {
         if (selection < 0 || selection >= num) {
             cm.dispose();
         } else if (cm.getPlayer().getLevel() >= 20) {
-            cm.sendNext("¶şÊ®µÈÒÔºóÎŞ·¨Ê¹ÓÃà¡¡£");
+            cm.sendNext("äºŒåç­‰ä»¥åæ— æ³•ä½¿ç”¨å”·ã€‚");
             cm.dispose();
         } else if (cm.getPlayerCount(map + selection) >= maxp) {
-            cm.sendNext("Õâ¸öÅàÑµÖĞĞÄÒÑ¾­ÂúÈË£¬ÇëÉÔºóÔÙ³¢ÊÔ!");
+            cm.sendNext("è¿™ä¸ªåŸ¹è®­ä¸­å¿ƒå·²ç»æ»¡äººï¼Œè¯·ç¨åå†å°è¯•!");
             status = -1;
         } else {
             cm.warp(map + selection, 0);

@@ -23,120 +23,120 @@ function action(mode, type, selection) {
 			status--;
 		if (status == 0) {
 			
-			cm.sendSimple("\t\t\t\t\t#e#r��ӭ������ȯ����ϵͳ����#n\r\n#d====================================================\r\n#dĿǰ�˻�ʣ���ȯ:"+ cm.getPlayer().getNX() + "\r\n====================================================#b#n\r\n#L2##b#e�һ�ǿ���������10��  ��Ҫ��ȯ5��#v2049116##b#n\r\n#L3##b#e�һ�ף������10��  ��Ҫ��ȯ8��#v2340000##b#n\r\n");
+			cm.sendSimple("\t\t\t\t\t#e#r欢迎来到点券换购系统中心#n\r\n#d====================================================\r\n#d目前账户剩余点券:"+ cm.getPlayer().getNX() + "\r\n====================================================#b#n\r\n#L2##b#e兑换强化混沌卷轴10张  需要点券5万#v2049116##b#n\r\n#L3##b#e兑换祝福卷轴10张  需要点券8万#v2340000##b#n\r\n");
 			} else if (status == 1) {
                   if (selection == 1) {
-		  cm.sendOk("\t\t\t#e#b��ȯ�Ļ�ȡ���������˱ؿ���#n#d\r\n====================================================#k\r\n����һ��װ�������Կ�Ŭ����ã����ͣ�#k#d\r\n====================================================#k\r\n��Ҫ��ø�����Ϣ��ѯ����������ǵĽ���Ⱥһ������#r#d\r\n");
+		  cm.sendOk("\t\t\t#e#b点券的获取方法（新人必看）#n#d\r\n====================================================#k\r\n本服一切装备都可以靠努力获得，加油！#k#d\r\n====================================================#k\r\n想要获得更多信息咨询，请加入我们的交流群一起讨论#r#d\r\n");
 	          cm.dispose();
                   }else if(selection == 2){ 	           
 			    if(cm.getPlayer().getNX() > 50000){
-                cm.sendOk("#b#e��ϲ�����#r#e��ǿ���������10�š�");
+                cm.sendOk("#b#e恭喜您获得#r#e【强化混沌卷轴10张】");
                 cm.gainItem(2049116,10);
                 cm.gainNX(-50000);
-                cm.����(3,"��ϲ���[" + cm.getChar().getName() + "]�һ�ǿ���������10�ųɹ�����");
+                cm.喇叭(3,"恭喜玩家[" + cm.getChar().getName() + "]兑换强化混沌卷轴10张成功！！");
                 cm.dispose();		
                 }else{ 
-                cm.sendOk("#b��û���㹻�ĵ�ȯ���й���,��Ŭ����.");
+                cm.sendOk("#b您没有足够的点券进行购买,请努力吧.");
                 cm.dispose();
                   }
                   }else if(selection == 3){ 	           
 			    if(cm.getPlayer().getNX() > 80000){
-                cm.sendOk("#b#e��ϲ�����#r#e��ף������10�š�.");
+                cm.sendOk("#b#e恭喜您获得#r#e【祝福卷轴10张】.");
                 cm.gainItem(2340000,10);
                 cm.gainNX(-80000);
-                cm.����(3,"��ϲ���[" + cm.getChar().getName() + "]�һ�ף������10�ųɹ�����");
+                cm.喇叭(3,"恭喜玩家[" + cm.getChar().getName() + "]兑换祝福卷轴10张成功！！");
                 cm.dispose();		
                 }else{ 
-                cm.sendOk("#b��û���㹻�ĵ�ȯ���й���,��Ŭ���ռ���.");
+                cm.sendOk("#b您没有足够的点券进行购买,请努力收集吧.");
                 cm.dispose();
                   }
                   }else if(selection == 4){ 	           
 			    if(cm.getPlayer().getNX() > 60000){
-                cm.sendOk("#b#e��ϲ�����#r#e����ά˫��+60 VIP��ʯ��ָһö��.");
+                cm.sendOk("#b#e恭喜您获得#r#e【四维双攻+60 VIP钻石戒指一枚】.");
                 cm.gainItem(1112138,60,60,60,60,666,666,60,60,0,0,0,0,0,0);
                 cm.gainNX(-60000);
-                cm.����(3,"��ϲ���[" + cm.getChar().getName() + "]��ά˫��+60   VIP�ƽ��ָһö����");
+                cm.喇叭(3,"恭喜玩家[" + cm.getChar().getName() + "]四维双攻+60   VIP黄金戒指一枚！！");
                 cm.dispose();		
                 }else{ 
-                cm.sendOk("#b��û���㹻�ĵ�ȯ���й���,��Ŭ���ռ���.");
+                cm.sendOk("#b您没有足够的点券进行购买,请努力收集吧.");
                 cm.dispose();
                   }
                   }else if(selection == 5){ 	           
 			    if(cm.getPlayer().getNX() > 30000){
-                cm.sendOk("#r#e��ϲ�������ά20+˫��20�����Ե�װ-͸������.");
+                cm.sendOk("#r#e恭喜您获得四维20+双攻20的属性点装-透明耳环.");
                 cm.gainItem(1032024,20,20,20,20,0,0,20,20,0,0,0,0,0,0);
                 cm.gainNX(-30000);
-                cm.����(3,"��ϲ���[" + cm.getChar().getName() + "]�������ά20+˫��20�����Ե�װ-͸����������");
+                cm.喇叭(3,"恭喜玩家[" + cm.getChar().getName() + "]获得了四维20+双攻20的属性点装-透明耳环！！");
                 cm.dispose();		
                 }else{ 
-                cm.sendOk("#b��û���㹻�ĵ�ȯ���й���,��Ŭ���ռ���.");
+                cm.sendOk("#b您没有足够的点券进行购买,请努力收集吧.");
                 cm.dispose();
                   }
                   }else if(selection == 6){ 	           
 			    if(cm.getPlayer().getNX() > 30000){
-                cm.sendOk("#r#e��ϲ�������ά20+˫��20�����Ե�װ-͸��ñ��.");
+                cm.sendOk("#r#e恭喜您获得四维20+双攻20的属性点装-透明帽子.");
                 cm.gainItem(1002186,20,20,20,20,0,0,20,20,0,0,0,0,0,0);
                 cm.gainNX(-30000);
-                cm.����(3,"��ϲ���[" + cm.getChar().getName() + "]�������ά20+˫��20�����Ե�װ-͸��ñ�ӣ���");
+                cm.喇叭(3,"恭喜玩家[" + cm.getChar().getName() + "]获得了四维20+双攻20的属性点装-透明帽子！！");
                 cm.dispose();		
                 }else{ 
-                cm.sendOk("#b��û���㹻�ĵ�ȯ���й���,��Ŭ���ռ���.");
+                cm.sendOk("#b您没有足够的点券进行购买,请努力收集吧.");
                 cm.dispose();
                   }
                 }else if(selection == 7){ 	           
 					if(cm.getPlayer().getNX() > 30000){
-						cm.sendOk("#r#e��ϲ�������ά20+˫��20�����Ե�װ-͸������.");
+						cm.sendOk("#r#e恭喜您获得四维20+双攻20的属性点装-透明手套.");
 						cm.gainItem(1082102,20,20,20,20,0,0,20,20,0,0,0,0,0,0);
 						cm.gainNX(-30000);
-						cm.����(3,"��ϲ���[" + cm.getChar().getName() + "]�������ά20+˫��20�����Ե�װ-͸�����ף���");
+						cm.喇叭(3,"恭喜玩家[" + cm.getChar().getName() + "]获得了四维20+双攻20的属性点装-透明手套！！");
 						cm.dispose();		
 					}else{ 
-						cm.sendOk("#b��û���㹻�ĵ�ȯ���й���,��Ŭ���ռ���.");
+						cm.sendOk("#b您没有足够的点券进行购买,请努力收集吧.");
 						cm.dispose();
 					}
 				}else if(selection == 8){ 	           
 					if(cm.getPlayer().getNX() > 30000){
-						cm.sendOk("#r#e��ϲ�������ά20+˫��20�����Ե�װ-͸��Ь.");
+						cm.sendOk("#r#e恭喜您获得四维20+双攻20的属性点装-透明鞋.");
 						cm.gainItem(1072153,20,20,20,20,0,0,20,20,0,0,0,0,0,0);
 						cm.gainNX(-30000);
-						cm.����(3,"��ϲ���[" + cm.getChar().getName() + "]�������ά20+˫��20�����Ե�װ-͸��Ь����");
+						cm.喇叭(3,"恭喜玩家[" + cm.getChar().getName() + "]获得了四维20+双攻20的属性点装-透明鞋！！");
 						cm.dispose();		
 					}else{ 
-						cm.sendOk("#b��û���㹻�ĵ�ȯ���й���,��Ŭ���ռ���.");
+						cm.sendOk("#b您没有足够的点券进行购买,请努力收集吧.");
 						cm.dispose();
 						
 					}
 				}else if(selection == 11){ 	           
 					if(cm.getPlayer().getNX() > 30000){
-						cm.sendOk("#r#e��ϲ�������ά20+˫��20�����Ե�װ-͸������.");
+						cm.sendOk("#r#e恭喜您获得四维20+双攻20的属性点装-透明披风.");
 						cm.gainItem(1102039,20,20,20,20,0,0,20,20,0,0,0,0,0,0);
 						cm.gainNX(-30000);
-						cm.����(3,"��ϲ���[" + cm.getChar().getName() + "]�������ά20+˫��20�����Ե�װ-͸�����磡��");
+						cm.喇叭(3,"恭喜玩家[" + cm.getChar().getName() + "]获得了四维20+双攻20的属性点装-透明披风！！");
 						cm.dispose();		
 					}else{ 
-						cm.sendOk("#b��û���㹻�ĵ�ȯ���й���,��Ŭ���ռ���.");
+						cm.sendOk("#b您没有足够的点券进行购买,请努力收集吧.");
 						cm.dispose();	
 					}
 				} else if(selection == 9){ 	           
 					if(cm.getPlayer().getNX() > 30000){
-						cm.sendOk("#r#e��ϲ�������ά20+˫��20�����Ե�װ-͸������.");
+						cm.sendOk("#r#e恭喜您获得四维20+双攻20的属性点装-透明眼饰.");
 						cm.gainItem(1022048,20,20,20,20,0,0,20,20,0,0,0,0,0,0);
 						cm.gainNX(-30000);
-						cm.����(3,"��ϲ���[" + cm.getChar().getName() + "]�������ά20+˫��20�����Ե�װ-͸�����Σ���");
+						cm.喇叭(3,"恭喜玩家[" + cm.getChar().getName() + "]获得了四维20+双攻20的属性点装-透明眼饰！！");
 						cm.dispose();		
 					}else{ 
-						cm.sendOk("#b��û���㹻�ĵ�ȯ���й���,��Ŭ���ռ���.");
+						cm.sendOk("#b您没有足够的点券进行购买,请努力收集吧.");
 						cm.dispose();
 					}
 				} else if(selection == 10){ 	           
 					if(cm.getPlayer().getNX() > 30000){
-						cm.sendOk("#r#e��ϲ�������ά20+˫��20�����Ե�װ-͸�����.");
+						cm.sendOk("#r#e恭喜您获得四维20+双攻20的属性点装-透明面具.");
 						cm.gainItem(1012057,20,20,20,20,0,0,20,20,0,0,0,0,0,0);
 						cm.gainNX(-30000);
-						cm.����(3,"��ϲ���[" + cm.getChar().getName() + "]�������ά20+˫��10�����Ե�װ-͸����ߣ���");
+						cm.喇叭(3,"恭喜玩家[" + cm.getChar().getName() + "]获得了四维20+双攻10的属性点装-透明面具！！");
 						cm.dispose();		
 					}else{ 
-						cm.sendOk("#b��û���㹻�ĵ�ȯ���й���,��Ŭ���ռ���.");
+						cm.sendOk("#b您没有足够的点券进行购买,请努力收集吧.");
 						cm.dispose();
 					}
 				}

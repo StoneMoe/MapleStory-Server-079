@@ -1,4 +1,4 @@
 function start() {
-    cm.sendOk("½ñÌìÌìÆøÕæºÃ°¡£¡£¡");
+    cm.sendOk("ä»Šå¤©å¤©æ°”çœŸå¥½å•Šï¼ï¼");
 	cm.dispose();
 }

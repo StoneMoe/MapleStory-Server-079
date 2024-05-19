@@ -10,7 +10,7 @@ function action(mode, type, selection) {
 	status++;
     } else {
 	if (status >= 1) {
-	    cm.sendNext("�������Ҳ�кܶ���û̽�����ĵط�Ŷ�����������б�Ҫȥ���Ϲ㳡����������ҡ�");
+	    cm.sendNext("这个城市也有很多你没探索到的地方哦。如果你觉得有必要去蚂蚁广场，你可以找我。");
 	    cm.safeDispose();
 	    return;
 	}
@@ -18,19 +18,19 @@ function action(mode, type, selection) {
     }
 
     if (status == 0) {
-	cm.sendNext("��������10000��ң��Ҿ�����ȥ#b���Ϲ㳡#k.");
+	cm.sendNext("如果你给我10000金币，我就送你去#b蚂蚁广场#k.");
     } else if (status == 1) {
 	var job = cm.getJob();
 	if (job == 0 || job == 1000 || job == 2000) {
-	    cm.sendYesNo("���Ƕ������аٷ�90���Ż�Ŷ���������Ҫ��ȫ����#b���Ϲ㳡#k,�ǾͿ�㸶Ǯ�ɣ�");
+	    cm.sendYesNo("我们对新手有百分90的优惠哦！如果你想要安全到达#b蚂蚁广场#k,那就快点付钱吧！");
 	    cost = 1000;
 	} else {
-	    cm.sendYesNo("�Ǳ���һ��24Сʱ�ŵ����Բ�������Ҫ�Ĳ���Ʒ����㸶Ǯ�ɣ���#b10,000���#k�㶼������ô?");
+	    cm.sendYesNo("那边有一个24小时排挡可以补充你需要的补给品，快点付钱吧，才#b10,000金币#k你都出不起么?");
 	    cost = 10000;
 	}
     } else if (status == 2) {
 	if (cm.getMeso() < cost) {
-	    cm.sendNext("��ʡʡ�ɣ���ôһ��СǮ����������������⳵��ȥ��������");
+	    cm.sendNext("你省省吧，这么一点小钱都出不起，坐不起出租车就去坐公交！");
 	    cm.safeDispose();
 	} else {
 	    cm.gainMeso(-cost);

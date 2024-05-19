@@ -1,5 +1,5 @@
 function start() {
-	cm.sendYesNo("现在带你回到活动地图?");
+	cm.sendYesNo("鐜板湪甯︿綘鍥炲埌娲诲姩鍦板浘?");
 }
 
 function action(mode, type, selection) {

@@ -18,7 +18,7 @@ function action(mode, type, selection) {
 
     switch (status) {
         case 0: 
-	    cm.sendOk("如果你愿意带我去兜风的话，我可以给你个宝贝！");
+	    cm.sendOk("濡傛灉浣犳効鎰忓甫鎴戝幓鍏滈鐨勮瘽锛屾垜鍙互缁欎綘涓疂璐濓紒");
 		cm.dispose();
             break;
         case 1: //

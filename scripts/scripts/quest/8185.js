@@ -1,13 +1,13 @@
 var status = -1;
 
 function start(mode, type, selection) {
-    qm.sendNext("ÇëÈ¥ÕÒÉúÃüÖ®ÁÖÑı¾«ÂêÀöÌ¸»°¡£");
+    qm.sendNext("è¯·å»æ‰¾ç”Ÿå‘½ä¹‹æ—å¦–ç²¾ç›ä¸½è°ˆè¯ã€‚");
     qm.forceCompleteQuest();
     qm.dispose();
 }
 
 function end(mode, type, selection) {
-    qm.sendNext("ÇëÈ¥ÕÒÉúÃüÖ®ÁÖÑı¾«ÂêÀöÌ¸»°¡£");
+    qm.sendNext("è¯·å»æ‰¾ç”Ÿå‘½ä¹‹æ—å¦–ç²¾ç›ä¸½è°ˆè¯ã€‚");
     qm.forceCompleteQuest();
     qm.dispose();
 }

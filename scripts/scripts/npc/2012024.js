@@ -10,12 +10,12 @@ function action(mode, type, selection) {
 	} else {
 		status++;
 		if(mode == 0) {
-			cm.sendOk("ÂÃÍ¾»¹ºÜÂş³¤...");
+			cm.sendOk("æ—…é€”è¿˜å¾ˆæ¼«é•¿...");
 			cm.dispose();
 			return;
 		}
 		if(status == 0) {
-			cm.sendYesNo("ÄãÈ·¶¨ÒªÀë¿ªÕâÀïÂğ£¿");
+			cm.sendYesNo("ä½ ç¡®å®šè¦ç¦»å¼€è¿™é‡Œå—ï¼Ÿ");
 		} else if(status == 1) {
 			cm.warp(200000151);
 			cm.dispose();

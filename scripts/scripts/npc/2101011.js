@@ -4,7 +4,7 @@
 
 
 function start() {
-    cm.sendNext("¹âÃ÷ÓëºÚ°µ×ÜÊÇ¹²´æµÄ...");
+    cm.sendNext("å…‰æ˜Žä¸Žé»‘æš—æ€»æ˜¯å…±å­˜çš„...");
 }
 
 function action() {

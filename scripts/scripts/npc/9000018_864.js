@@ -12,7 +12,7 @@ function action(mode, type, selection) {
         cm.dispose();
     } else {
         if (mode == 0) {
-            cm.sendOk("¿È¿È¡£¡£");
+            cm.sendOk("å’³å’³ã€‚ã€‚");
             cm.dispose();
             return;
         }	
@@ -21,32 +21,32 @@ function action(mode, type, selection) {
         else
             status--;
 		var MC = cm.getServerName();
-		var µãÈ¯ = cm.getPlayer().getCSPoints(1);
-		var ÍÚ¿óÊıÁ¿¿¨ = cm.getBossRank("ÍÚ¿óÊıÁ¿¿¨",2);
-		var ÍÚ¿óÊıÁ¿¿¨µ¥¼Û = 100;
+		var ç‚¹åˆ¸ = cm.getPlayer().getCSPoints(1);
+		var æŒ–çŸ¿æ•°é‡å¡ = cm.getBossRank("æŒ–çŸ¿æ•°é‡å¡",2);
+		var æŒ–çŸ¿æ•°é‡å¡å•ä»· = 100;
 
           if (status == 0) {
-            cm.sendGetText("µ±Ç°#bÍÚ¿óÊıÁ¿¿¨#kµ¥¼Û£»#r"+ÍÚ¿óÊıÁ¿¿¨µ¥¼Û+"#k\r\nÄãÏÖÔÚ×î¶à¿ÉÒÔ¹ºÂò£»#r"+(µãÈ¯/ÍÚ¿óÊıÁ¿¿¨µ¥¼Û).toFixed(0)+"#k\r\n\r\nÇëÊäÈëĞèÒª¹ºÂòµÄÊıÁ¿£»");
+            cm.sendGetText("å½“å‰#bæŒ–çŸ¿æ•°é‡å¡#kå•ä»·ï¼›#r"+æŒ–çŸ¿æ•°é‡å¡å•ä»·+"#k\r\nä½ ç°åœ¨æœ€å¤šå¯ä»¥è´­ä¹°ï¼›#r"+(ç‚¹åˆ¸/æŒ–çŸ¿æ•°é‡å¡å•ä»·).toFixed(0)+"#k\r\n\r\nè¯·è¾“å…¥éœ€è¦è´­ä¹°çš„æ•°é‡ï¼›");
         } else if (status == 1) {
             fee = cm.getText();
-            cm.sendYesNo("ÄãĞèÒª£» #r "+fee*ÍÚ¿óÊıÁ¿¿¨µ¥¼Û+" #k µãÈ¯¡£\r\nÀ´¹ºÂò£» #r"+fee+"#k   ÕÅÊıÁ¿¿¨¡£");
+            cm.sendYesNo("ä½ éœ€è¦ï¼› #r "+fee*æŒ–çŸ¿æ•°é‡å¡å•ä»·+" #k ç‚¹åˆ¸ã€‚\r\næ¥è´­ä¹°ï¼› #r"+fee+"#k   å¼ æ•°é‡å¡ã€‚");
 		} else if (fee < 0) {
-                cm.sendOk("ÊäÈëÓĞÎó!");
+                cm.sendOk("è¾“å…¥æœ‰è¯¯!");
                 cm.dispose();
-        } else if (cm.getPlayer().getCSPoints(1) < fee*ÍÚ¿óÊıÁ¿¿¨µ¥¼Û ) {
-                cm.sendOk("ÄãµÄµãÈ¯²»¹»Å¶¡£");
+        } else if (cm.getPlayer().getCSPoints(1) < fee*æŒ–çŸ¿æ•°é‡å¡å•ä»· ) {
+                cm.sendOk("ä½ çš„ç‚¹åˆ¸ä¸å¤Ÿå“¦ã€‚");
                 cm.dispose();
 				} else {
 
                  if (chance <= 1) { 
-					   cm.setBossRankCount("ÍÚ¿óÊıÁ¿¿¨",fee);
-					   cm.gainNX(-fee*ÍÚ¿óÊıÁ¿¿¨µ¥¼Û);
-					   cm.playerMessage(6,"³É¹¦¹ºÂòÁË "+fee+" ÕÅ[ÍÚ¿óÊıÁ¿¿¨]");
+					   cm.setBossRankCount("æŒ–çŸ¿æ•°é‡å¡",fee);
+					   cm.gainNX(-fee*æŒ–çŸ¿æ•°é‡å¡å•ä»·);
+					   cm.playerMessage(6,"æˆåŠŸè´­ä¹°äº† "+fee+" å¼ [æŒ–çŸ¿æ•°é‡å¡]");
 	                   cm.dispose();
                        cm.openNpc(2000,3);	
 	                } 
 	                else  { 
-                         cm.sendOk("Î´Öª´íÎó£¬ÇëÁªÏµ´óÍõ");
+                         cm.sendOk("æœªçŸ¥é”™è¯¯ï¼Œè¯·è”ç³»å¤§ç‹");
 	                     cm.dispose(); 
 	                } 
 
