@@ -46,7 +46,7 @@ public class Start {
     private MapleClient c;
 
     public static void main(final String[] args) throws InterruptedException {
-        String cfgPath = System.getProperty("homePath", "./config");
+        String cfgPath = System.getProperty("cfgPath", "./config");
         String scriptsPath = System.getProperty("scriptsPath", "./scripts/scripts");
         String wzPath = System.getProperty("wzPath", "./scripts/wz");
         System.setProperty("server_property_file_path", cfgPath + "/server.properties");
