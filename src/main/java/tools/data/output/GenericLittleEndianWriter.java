@@ -8,7 +8,11 @@ public class GenericLittleEndianWriter implements LittleEndianWriter
 {
     private static Charset Encoding;
     private ByteOutputStream bos;
-    
+
+    static {
+        GenericLittleEndianWriter.Encoding = Charset.forName("GBK");
+    }
+
     protected GenericLittleEndianWriter() {
     }
     
@@ -73,6 +77,10 @@ public class GenericLittleEndianWriter implements LittleEndianWriter
     public void writeAsciiString(String s, final int max) {
         byte[] bytes = s.getBytes(GenericLittleEndianWriter.Encoding);
 
+        if (GenericLittleEndianWriter.Encoding == Charset.forName("GBK")) {
+            bytes = trimGBKString(bytes, max);
+        }
+
         if (bytes.length > max) {
             this.write(Arrays.copyOf(bytes, max));
         } else {
@@ -106,8 +114,29 @@ public class GenericLittleEndianWriter implements LittleEndianWriter
         this.bos.writeByte((byte)(l >>> 48 & 0xFFL));
         this.bos.writeByte((byte)(l >>> 56 & 0xFFL));
     }
-    
-    static {
-        GenericLittleEndianWriter.Encoding = Charset.forName("GBK");
+
+    public static byte[] trimGBKString(byte[] gbkBytes, int maxBytes) {
+        if (gbkBytes.length <= maxBytes) {
+            return gbkBytes;
+        }
+
+        int validLength = 0;
+        for (int i = 0; i < gbkBytes.length; i++) {
+            int want = isGBKCharFirstByte(gbkBytes[i]) ? 2 : 1;
+            if (validLength + want > maxBytes) {
+                break;
+            }
+            validLength += want;
+
+            if (isGBKCharFirstByte(gbkBytes[i])) {
+                i++;
+            }
+        }
+
+        return Arrays.copyOf(gbkBytes, validLength);
+    }
+
+    private static boolean isGBKCharFirstByte(byte b) {
+        return (b & 0xFF) >= 0x81 && (b & 0xFF) <= 0xFE;
     }
 }
