@@ -33,7 +33,7 @@ public class LieDetectorScript {
         } catch (IOException ex) {
             ex.printStackTrace();
             String scriptsPath = System.getProperty("scripts_path");
-            final File directory = new File(scriptsPath + "scripts" + File.separator + "lieDetector");
+            final File directory = new File(scriptsPath + File.separator + "lieDetector");
             if (!directory.exists()) {
                 log.error("lieDetector folder does not exist!");
                 return null;
@@ -42,7 +42,7 @@ public class LieDetectorScript {
             String answer = filename[Randomizer.nextInt(filename.length)];
             answer = answer.substring(0, answer.length() - 4);
             try {
-                return new Pair<String, String>(HexTool.toString(getBytesFromFile(new File(scriptsPath + "scripts" + File.separator + "lieDetector" + File.separator + answer + ".jpg"))), answer);
+                return new Pair<String, String>(HexTool.toString(getBytesFromFile(new File(scriptsPath + File.separator + "lieDetector" + File.separator + answer + ".jpg"))), answer);
             } catch (IOException ex2) {
                 ex2.printStackTrace();
                 return null;

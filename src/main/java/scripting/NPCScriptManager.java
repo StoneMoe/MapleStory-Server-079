@@ -254,13 +254,13 @@ public class NPCScriptManager extends AbstractScriptManager {
             this.mapleClientNPCConversationManagerMap.remove(c);
             if (npccm.getType() == -1) {
                 if (npccm.getwh() == 0) {
-                    c.removeScriptEngine(scriptsPath + "scripts" + File.separator + "npc" + File.separator + npccm.getNpc() + ".js");
+                    c.removeScriptEngine(scriptsPath + File.separator + "npc" + File.separator + npccm.getNpc() + ".js");
                 } else {
-                    c.removeScriptEngine(scriptsPath + "scripts" + File.separator + "npc" + File.separator + npccm.getNpc() + "_" + npccm.getwh() + ".js");
+                    c.removeScriptEngine(scriptsPath + File.separator + "npc" + File.separator + npccm.getNpc() + "_" + npccm.getwh() + ".js");
                 }
-                c.removeScriptEngine(scriptsPath + "scripts" + File.separator + "npc" + File.separator + "notcoded.js");
+                c.removeScriptEngine(scriptsPath + File.separator + "npc" + File.separator + "notcoded.js");
             } else {
-                c.removeScriptEngine(scriptsPath + "scripts" + File.separator + "quest" + File.separator + npccm.getQuest() + ".js");
+                c.removeScriptEngine(scriptsPath + File.separator + "quest" + File.separator + npccm.getQuest() + ".js");
             }
         }
         if (c.getPlayer() != null && c.getPlayer().getConversation() == 1) {

@@ -40,7 +40,7 @@ public class PortalScriptManager {
             return this.scripts.get(scriptName);
         }
         String scriptsPath = System.getProperty("scripts_path");
-        final File scriptFile = new File(scriptsPath + "scripts" + File.separator + "portal" + File.separator + scriptName + ".js");
+        final File scriptFile = new File(scriptsPath + File.separator + "portal" + File.separator + scriptName + ".js");
         if (!scriptFile.exists()) {
             return null;
         }

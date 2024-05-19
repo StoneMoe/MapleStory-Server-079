@@ -22,8 +22,8 @@ public abstract class AbstractScriptManager {
     protected Invocable getInvocable(String path, final MapleClient c, final boolean npc) {
         InputStream fr = null;
         try {
-            String serverPath = System.getProperty("scripts_path");
-            path = serverPath + "scripts" + File.separator + path;
+            String scriptsPath = System.getProperty("scripts_path");
+            path = scriptsPath + File.separator + path;
             ScriptEngine engine = null;
             if (c != null) {
                 engine = c.getScriptEngine(path);
