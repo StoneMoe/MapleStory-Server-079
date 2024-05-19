@@ -18,14 +18,18 @@ public class StringUtil
         return bt.length;
     }
     
-    public static String getRightPaddedStr(final String in, final char padchar, final int length) {
+    public static String getRightPaddedStr(final String in, final char padChar, final int length) {
         var buf = new byte[length];
         var splitedString = splitGBKString(in, length);
         var stringBytes = splitedString.getBytes(Charset.forName("GBK"));
-        for (int i = 0; i < stringBytes.length; ++i) {
-            if (stringBytes[i] != '\0')
+        for (int i = 0; i < length; ++i) {
+            if (i < stringBytes.length && stringBytes[i] != '\0')
             {
                 buf[i] = stringBytes[i];
+            }
+            else
+            {
+                buf[i] = (byte) padChar;
             }
         }
         return new String(buf, Charset.forName("GBK"));
