@@ -53,8 +53,8 @@ public class Start {
         System.setProperty("server_property_db_path", cfgPath + "/db.properties");
         System.setProperty("server_property_shop_path", cfgPath + "/shop.properties");
         System.setProperty("server_property_fish_path", cfgPath + "/fish.properties");
-        System.setProperty("wzPath", wzPath);
-        System.setProperty("scripts_path", scriptsPath);
+        System.setProperty("wzPath", wzPath + '/');
+        System.setProperty("scripts_path", scriptsPath + '/');
         System.setProperty("server_name", "冒险岛");
         OtherSettings.getInstance();
         Start.instance.run();
