@@ -123,7 +123,7 @@ public class MapleServerHandler extends IoHandlerAdapter implements MapleServerH
     }
 
     private static FileWriter isLoggedIP(final IoSession sess) {
-        final String a = sess.getRemoteAddress().toString();
+        final String a = (String) sess.getAttribute("REMOTE_ADDRESS");
         final String realIP = a.substring(a.indexOf(47) + 1, a.indexOf(58));
         return MapleServerHandler.logIPMap.get(realIP);
     }
@@ -208,6 +208,7 @@ public class MapleServerHandler extends IoHandlerAdapter implements MapleServerH
 
     public void sessionOpened(final IoSession session) throws Exception {
         final String address = session.getRemoteAddress().toString().split(":")[0];
+        session.setAttribute("REMOTE_ADDRESS",  session.getRemoteAddress().toString());
         final Pair<Long, Byte> track = this.tracker.get(address);
         byte count;
         if (track == null) {
@@ -296,7 +297,12 @@ public class MapleServerHandler extends IoHandlerAdapter implements MapleServerH
                     fw.flush();
                 }
                 client.disconnect(true, this.cs);
-            } finally {
+            }
+            catch (Exception ex)
+            {
+                log.error("sessionClosed", ex);
+            }
+            finally {
                 World.Client.removeClient(client);
                 session.close(true);
                 session.removeAttribute(MapleClient.CLIENT_KEY);
