@@ -1,15 +1,3 @@
-/*
--- MrCoffee JavaScript --
-        NPC脚本 
--------------------------
-   MrCoffee MapleStory
------ Version Info ------
-     Version - 1.0.0 
--------------------------
-*/
-
-importPackage(net.sf.MrCoffee.client);
-
 var mapid = new Array(200000110,200000120,200000130,200000140,200000150);
 var platform = new Array("魔法密林","玩具城","神木村","武陵","阿里安特");
 var flight = new Array("ship","ship","ship","Hak","Geenie");
