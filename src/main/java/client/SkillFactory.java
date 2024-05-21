@@ -15,12 +15,8 @@ public class SkillFactory {
     private static final MapleData stringData;
     private static final MapleDataProvider datasource;
 
-
-    public static ISkill getSkill(final int id) {
-        if (SkillFactory.skills.size() != 0) {
-            return SkillFactory.skills.get(id);
-        }
-        log.info("加载 技能完成");
+    public static Integer Initialize()
+    {
         final MapleDataProvider datasource = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/Skill.wz"));
         final MapleDataDirectoryEntry root = datasource.getRoot();
         for (final MapleDataFileEntry topDir : root.getFiles()) {
@@ -29,16 +25,12 @@ public class SkillFactory {
                     if (data.getName().equals("skill")) {
                         for (final MapleData data2 : data) {
                             if (data2 != null) {
-                                final int skillid = Integer.parseInt(data2.getName());
-                                final Skill skil = Skill.loadFromData(skillid, data2);
-                                List<Integer> job = SkillFactory.skillsByJob.get(skillid / 10000);
-                                if (job == null) {
-                                    job = new ArrayList<Integer>();
-                                    SkillFactory.skillsByJob.put(skillid / 10000, job);
-                                }
-                                job.add(skillid);
-                                skil.setName(getName(skillid));
-                                SkillFactory.skills.put(skillid, skil);
+                                final int skillId = Integer.parseInt(data2.getName());
+                                final Skill skill = Skill.loadFromData(skillId, data2);
+                                List<Integer> job = SkillFactory.skillsByJob.computeIfAbsent(skillId / 10000, k -> new ArrayList<Integer>());
+                                job.add(skillId);
+                                skill.setName(getName(skillId));
+                                SkillFactory.skills.put(skillId, skill);
                                 final MapleData summon_data = data2.getChildByPath("summon/attack1/info");
                                 if (summon_data == null) {
                                     continue;
@@ -47,14 +39,18 @@ public class SkillFactory {
                                 sse.attackAfter = (short) MapleDataTool.getInt("attackAfter", summon_data, 999999);
                                 sse.type = (byte) MapleDataTool.getInt("type", summon_data, 0);
                                 sse.mobCount = (byte) MapleDataTool.getInt("mobCount", summon_data, 1);
-                                SkillFactory.SummonSkillInformation.put(skillid, sse);
+                                SkillFactory.SummonSkillInformation.put(skillId, sse);
                             }
                         }
                     }
                 }
             }
         }
-        return null;
+        return skills.size();
+    }
+
+    public static ISkill getSkill(final int id) {
+        return SkillFactory.skills.get(id);
     }
 
     public static ISkill getSkill1(final int id) {
@@ -66,8 +62,8 @@ public class SkillFactory {
             ret = SkillFactory.skills.get(id);
             if (ret == null) {
                 final int job = id / 10000;
-                final MapleData skillroot = SkillFactory.datasource.getData(StringUtil.getLeftPaddedStr(String.valueOf(job), '0', 3) + ".img");
-                final MapleData skillData = skillroot.getChildByPath("skill/" + StringUtil.getLeftPaddedStr(String.valueOf(id), '0', 7));
+                final MapleData skillRoot = SkillFactory.datasource.getData(StringUtil.getLeftPaddedStr(String.valueOf(job), '0', 3) + ".img");
+                final MapleData skillData = skillRoot.getChildByPath("skill/" + StringUtil.getLeftPaddedStr(String.valueOf(id), '0', 7));
                 if (skillData != null) {
                     ret = Skill.loadFromData(id, skillData);
                 }
@@ -82,9 +78,9 @@ public class SkillFactory {
     }
 
     public static String getSkillName(final int id) {
-        final ISkill skil = getSkill(id);
-        if (skil != null) {
-            return skil.getName();
+        final ISkill skill = getSkill(id);
+        if (skill != null) {
+            return skill.getName();
         }
         return null;
     }
@@ -92,9 +88,9 @@ public class SkillFactory {
     public static String getName(final int id) {
         String strId = Integer.toString(id);
         strId = StringUtil.getLeftPaddedStr(strId, '0', 7);
-        final MapleData skillroot = SkillFactory.stringData.getChildByPath(strId);
-        if (skillroot != null) {
-            return MapleDataTool.getString(skillroot.getChildByPath("name"), "");
+        final MapleData skillRoot = SkillFactory.stringData.getChildByPath(strId);
+        if (skillRoot != null) {
+            return MapleDataTool.getString(skillRoot.getChildByPath("name"), "");
         }
         return null;
     }
