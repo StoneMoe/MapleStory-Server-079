@@ -1,7 +1,7 @@
 package api.handler;
 
 import api.Response;
-import api.model.AddItemRequest;
+import api.model.CharacterResponse;
 import client.MapleCharacter;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.sun.net.httpserver.HttpExchange;
@@ -12,19 +12,20 @@ import server.MapleInventoryManipulator;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @Slf4j
-public class ItemHandler implements HttpHandler {
+public class CharacterHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         var method = exchange.getRequestMethod();
         var response = new Response();
         switch (method) {
-            case "POST":
-                response = addItem(exchange);
-                break;
             case "GET":
+                response = getCharacter(exchange);
             default:
                 response.setResponse("Not implemented.");
                 response.setCode(404);
@@ -37,32 +38,31 @@ public class ItemHandler implements HttpHandler {
         responseStream.close();
     }
 
-    private Response addItem(HttpExchange exchange) throws IOException {
+    private Response getCharacter(HttpExchange exchange) throws IOException {
         var response = new Response();
+        var channelCharactersMap = new HashMap<Integer, ArrayList<CharacterResponse>>();
         try
         {
-            var jsonString = new String(exchange.getRequestBody().readAllBytes());
-            var mapper = new JsonMapper();
-            var addItemRequest = mapper.readValue(jsonString, AddItemRequest.class);
-
-            MapleCharacter character = null;
             for (final var channel: ChannelServer.getAllInstances())
             {
-                character = channel.getPlayerStorage().getCharacterById(addItemRequest.getCharacterId());
-                if (character != null)
+                var characters = channel.getPlayerStorage().getAllCharacters();
+                if (characters.size() > 0)
                 {
-                    MapleInventoryManipulator.addById(character.getClient(), addItemRequest.getItemId(), addItemRequest.getQuantity(), (byte) 0);
-                    response.setResponse(String.format("Add %d of %d to %s.", addItemRequest.getQuantity(), addItemRequest.getItemId(), character.getName()));
-                    response.setCode(200);
-                    break;
+                    var result = new ArrayList<CharacterResponse>();
+                    for (final var character: characters)
+                    {
+                        var item = new CharacterResponse();
+                        item.setId(character.getId());
+                        item.setName(character.getName());
+                        result.add(item);
+                    }
+
+                    channelCharactersMap.put(channel.getChannel(), result);
                 }
             }
 
-            if (character == null)
-            {
-                response.setResponse("Character not found.");
-                response.setCode(404);
-            }
+            var mapper = new JsonMapper();
+            response.setResponse(mapper.writeValueAsString(channelCharactersMap));
         }
         catch (Exception e)
         {

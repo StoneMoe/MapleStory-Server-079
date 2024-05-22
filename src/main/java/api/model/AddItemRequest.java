@@ -1,11 +1,9 @@
 package api.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-public class addItemRequest {
+@Data
+public class AddItemRequest {
     private int characterId;
     private int itemId;
     private short quantity;
