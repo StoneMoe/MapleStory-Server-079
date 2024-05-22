@@ -1,5 +1,6 @@
 package constants;
 
+import client.inventory.MapleInventoryType;
 import lombok.Getter;
 import server.ServerProperties;
 
@@ -138,14 +139,24 @@ public class ServerConstants
     @Getter
     public enum CommandType
     {
-        PlayerCommand('@'),
-        AdminCommand('!');
+        PlayerCommand('@', 0),
+        GMCommand('!', 2);
 
         private final char prefix;
+        private final int gmLevel;
 
-        CommandType(final char prefix)
+        CommandType(final char prefix, final int gmLevel)
         {
             this.prefix = prefix;
+            this.gmLevel = gmLevel;
+        }
+
+        public static CommandType getByPrefix(char prefix) {
+            for (CommandType type : values()) {
+                if (type.getPrefix() == prefix)
+                    return type;
+            }
+            return null;
         }
     }
     

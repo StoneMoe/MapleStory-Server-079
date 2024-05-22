@@ -1,31 +1,21 @@
-package client.commands.admin;
+package client.commands.gm;
 
 import client.MapleClient;
-import client.commands.CommandResult;
-import client.commands.ICommand;
+import client.commands.Command;
+import client.commands.CommandAbstract;
 import client.commands.Tools;
+import client.commands.models.CommandResult;
 import constants.ServerConstants;
 import lombok.extern.slf4j.Slf4j;
 import server.MapleInventoryManipulator;
 import server.MapleItemInformationProvider;
 
 @Slf4j
-public class GiveItemCommand implements ICommand {
-    @Override
-    public ServerConstants.CommandType getCommandType() {
-        return ServerConstants.CommandType.AdminCommand;
-    }
-
-    @Override
-    public String getCommand() {
-        return "give";
-    }
-
+@Command(command = "giveItem", commandType = ServerConstants.CommandType.GMCommand)
+public class GiveItemCommand extends CommandAbstract {
     @Override
     public CommandResult execute(MapleClient mapleClient, String[] args) {
-        var result = new CommandResult();
-        result.setType(ServerConstants.CommandType.AdminCommand);
-        result.setCommand(getCommand());
+        var result = createResult();
 
         var character = Tools.getCharacter(args[0]);
         if (character == null) {
@@ -40,13 +30,17 @@ public class GiveItemCommand implements ICommand {
             MapleInventoryManipulator.addById(character.getClient(), itemId, quantity, (byte) 0);
             result.setMessage(String.format("Add %d of %s to %s.", quantity, MapleItemInformationProvider.getInstance().getName(itemId), character.getName()));
             result.setSuccess(true);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             result.setMessage(String.format("Unknown error occurred. %s", e.getMessage()));
             result.setSuccess(false);
             log.error("Unknown error occurred.", e);
         }
 
         return result;
+    }
+
+    @Override
+    public String showHelp() {
+        return "Give item to player. Usage: giveItem {PlayerName} {ItemId} {ItemQuantity}";
     }
 }

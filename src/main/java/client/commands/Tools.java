@@ -1,8 +1,7 @@
 package client.commands;
 
 import client.MapleCharacter;
-import client.commands.model.ItemData;
-import client.commands.player.RemoveInvalidItemCommand;
+import client.commands.models.ItemData;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import handling.channel.ChannelServer;
@@ -19,31 +18,25 @@ public class Tools {
     private static final Map<Integer, ItemData> validItemMap = new HashMap<>();
 
     public static void LoadValidItems() {
-        try
-        {
-            var jsonStream = RemoveInvalidItemCommand.class.getClassLoader().getResourceAsStream("validItems.json");
+        try {
+            var jsonStream = Tools.class.getClassLoader().getResourceAsStream("validItems.json");
             var mapper = new JsonMapper();
-            var items = mapper.readValue(jsonStream, new TypeReference<ArrayList<ItemData>>(){});
-            for (var item: items)
-            {
+            var items = mapper.readValue(jsonStream, new TypeReference<ArrayList<ItemData>>() {
+            });
+            for (var item : items) {
                 validItemMap.put(item.getId(), item);
             }
             log.info("Loaded {} valid items", items.size());
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             log.error("Failed to load validItems.json", ex);
         }
     }
 
-    public static MapleCharacter getCharacter(Integer characterId)
-    {
+    public static MapleCharacter getCharacter(Integer characterId) {
         MapleCharacter character = null;
-        for (final var channel: ChannelServer.getAllInstances())
-        {
+        for (final var channel : ChannelServer.getAllInstances()) {
             character = channel.getPlayerStorage().getCharacterById(characterId);
-            if (character != null)
-            {
+            if (character != null) {
                 break;
             }
         }
@@ -51,14 +44,11 @@ public class Tools {
         return character;
     }
 
-    public static MapleCharacter getCharacter(String characterName)
-    {
+    public static MapleCharacter getCharacter(String characterName) {
         MapleCharacter character = null;
-        for (final var channel: ChannelServer.getAllInstances())
-        {
+        for (final var channel : ChannelServer.getAllInstances()) {
             character = channel.getPlayerStorage().getCharacterByName(characterName);
-            if (character != null)
-            {
+            if (character != null) {
                 break;
             }
         }

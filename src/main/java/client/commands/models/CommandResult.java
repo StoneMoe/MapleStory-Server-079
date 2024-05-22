@@ -1,4 +1,4 @@
-package client.commands;
+package client.commands.models;
 
 import constants.ServerConstants;
 import lombok.Data;
