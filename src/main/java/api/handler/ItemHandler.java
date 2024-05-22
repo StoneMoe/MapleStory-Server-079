@@ -7,13 +7,11 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import handling.channel.ChannelServer;
-import lombok.extern.slf4j.Slf4j;
 import server.MapleInventoryManipulator;
-
+import server.MapleItemInformationProvider;
 
 import java.io.IOException;
 
-@Slf4j
 public class ItemHandler implements HttpHandler {
 
     @Override
@@ -46,15 +44,23 @@ public class ItemHandler implements HttpHandler {
             var addItemRequest = mapper.readValue(jsonString, AddItemRequest.class);
 
             MapleCharacter character = null;
+            var itemName = MapleItemInformationProvider.getInstance().getName(addItemRequest.getItemId());
+            if (itemName == null)
+            {
+                response.setResponse(String.format("Item %d not found.", addItemRequest.getItemId()));
+                response.setCode(404);
+                return response;
+            }
+
             for (final var channel: ChannelServer.getAllInstances())
             {
                 character = channel.getPlayerStorage().getCharacterById(addItemRequest.getCharacterId());
                 if (character != null)
                 {
                     MapleInventoryManipulator.addById(character.getClient(), addItemRequest.getItemId(), addItemRequest.getQuantity(), (byte) 0);
-                    response.setResponse(String.format("Add %d of %d to %s.", addItemRequest.getQuantity(), addItemRequest.getItemId(), character.getName()));
+                    response.setResponse(String.format("Add %d of %s to %s.", addItemRequest.getQuantity(), MapleItemInformationProvider.getInstance().getName(addItemRequest.getItemId()), character.getName()));
                     response.setCode(200);
-                    break;
+                    return response;
                 }
             }
 
@@ -62,6 +68,7 @@ public class ItemHandler implements HttpHandler {
             {
                 response.setResponse("Character not found.");
                 response.setCode(404);
+                return response;
             }
         }
         catch (Exception e)

@@ -2,21 +2,15 @@ package api.handler;
 
 import api.Response;
 import api.model.CharacterResponse;
-import client.MapleCharacter;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import handling.channel.ChannelServer;
-import lombok.extern.slf4j.Slf4j;
-import server.MapleInventoryManipulator;
-
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-@Slf4j
 public class CharacterHandler implements HttpHandler {
 
     @Override
