@@ -1,6 +1,8 @@
 package constants;
 
+import lombok.Getter;
 import server.ServerProperties;
+
 public class ServerConstants
 {
     public static boolean PollEnabled;
@@ -132,20 +134,18 @@ public class ServerConstants
             return this.level;
         }
     }
-    
+
+    @Getter
     public enum CommandType
     {
-        NORMAL(0), 
-        TRADE(1);
-        
-        private final int level;
-        
-        private CommandType(final int level) {
-            this.level = level;
-        }
-        
-        public int getType() {
-            return this.level;
+        PlayerCommand('@'),
+        AdminCommand('!');
+
+        private final char prefix;
+
+        CommandType(final char prefix)
+        {
+            this.prefix = prefix;
         }
     }
     

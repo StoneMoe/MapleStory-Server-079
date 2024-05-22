@@ -1,5 +1,4 @@
-package api.model;
-
+package client.commands.model;
 import lombok.Data;
 
 @Data

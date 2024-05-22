@@ -1,8 +1,8 @@
 package server;
 
-import api.APIServer;
 import client.MapleCharacter;
 import client.SkillFactory;
+import client.commands.CommandProcessor;
 import constants.GameConstants;
 import constants.OtherSettings;
 import constants.ServerConstants;
@@ -34,7 +34,6 @@ import java.util.*;
 @Slf4j
 public class Start {
     public static boolean Check;
-    private static APIServer apiServer;
     public static Start instance;
 
     public static void main(final String[] args) throws InterruptedException {
@@ -102,7 +101,7 @@ public class Start {
         final long now = System.currentTimeMillis() - start;
         final long seconds = now / 1000L;
         final long ms = now % 1000L;
-        startAPIServer();
+        log.info("Load commands: {}", CommandProcessor.Initialize());
         log.info("加载完成, 耗时: {}秒{}毫秒\r\n", seconds, ms);
         AutoSave(Integer.parseInt(ServerProperties.getProperty("Server.AutoSaveMinutes", "5")));
     }
@@ -305,24 +304,6 @@ public class Start {
         @Override
         public void run() {
             new Thread(ShutdownServer.getInstance()).start();
-        }
-    }
-
-    private static void startAPIServer() {
-        if (Start.apiServer != null)
-        {
-            Start.apiServer.stop();
-        }
-
-        Start.apiServer = new APIServer(
-                ServerProperties.getProperty("APIServer.ListenIP", "0.0.0.0"),
-                Integer.parseInt(ServerProperties.getProperty("APIServer.ListenPort", "8000"))
-        );
-        try {
-            Start.apiServer.start();
-        }
-        catch (Exception e) {
-            log.error("API Server start failed", e);
         }
     }
 }

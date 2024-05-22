@@ -2,8 +2,7 @@ package handling.channel.handler;
 
 import client.MapleCharacter;
 import client.MapleClient;
-import client.messages.CommandProcessor;
-import constants.ServerConstants;
+import client.commands.CommandProcessor;
 import handling.channel.ChannelServer;
 import handling.world.MapleMessenger;
 import handling.world.MapleMessengerCharacter;
@@ -17,7 +16,7 @@ public class ChatHandler {
     public static final void GeneralChat(final String text, final byte unk, final MapleClient c, final MapleCharacter chr) {
         if (chr != null) {
             try {
-                final boolean condition = CommandProcessor.processCommand(c, text, ServerConstants.CommandType.NORMAL);
+                final boolean condition = CommandProcessor.processCommand(c, text);
                 if (condition) {
                     return;
                 }
@@ -48,7 +47,7 @@ public class ChatHandler {
             c.getSession().write(MaplePacketCreator.serverNotice(6, "你已经被禁言，因此无法说话."));
             return;
         }
-        if (CommandProcessor.processCommand(c, chattext, ServerConstants.CommandType.NORMAL)) {
+        if (CommandProcessor.processCommand(c, chattext)) {
             return;
         }
         chr.getCheatTracker().checkMsg();
