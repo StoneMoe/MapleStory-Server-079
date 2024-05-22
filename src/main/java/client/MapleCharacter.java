@@ -7122,10 +7122,6 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
         }
     }
     
-    public void gainIten(final int id, final int amount) {
-        MapleInventoryManipulator.addById(this.getClient(), id, (short)amount, (byte)0);
-    }
-    
     public long getLastHM() {
         return this.lastGainHM;
     }

@@ -88,6 +88,7 @@ public class CommandProcessor {
                 character.dropMessage(6, result.getMessage());
                 logToDatabase(character, commandLine);
             } else {
+                character.dropMessage(6, String.format("Error: %s", result.getMessage()));
                 character.dropMessage(6, command.showHelp());
             }
             return true;

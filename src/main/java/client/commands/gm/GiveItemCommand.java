@@ -16,6 +16,12 @@ public class GiveItemCommand extends CommandAbstract {
     @Override
     public CommandResult execute(MapleClient mapleClient, String[] args) {
         var result = createResult();
+        if (args.length < 3)
+        {
+            result.setMessage("No enough arguments.");
+            result.setSuccess(false);
+            return result;
+        }
 
         var character = Tools.getCharacter(args[0]);
         if (character == null) {
@@ -28,7 +34,7 @@ public class GiveItemCommand extends CommandAbstract {
             var itemId = Integer.parseInt(args[1]);
             var quantity = Short.parseShort(args[2]);
             MapleInventoryManipulator.addById(character.getClient(), itemId, quantity, (byte) 0);
-            result.setMessage(String.format("Add %d of %s to %s.", quantity, MapleItemInformationProvider.getInstance().getName(itemId), character.getName()));
+            result.setMessage(String.format("Give %d of %s to %s.", quantity, MapleItemInformationProvider.getInstance().getName(itemId), character.getName()));
             result.setSuccess(true);
         } catch (Exception e) {
             result.setMessage(String.format("Unknown error occurred. %s", e.getMessage()));
