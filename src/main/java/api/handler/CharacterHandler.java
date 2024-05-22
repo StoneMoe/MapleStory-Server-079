@@ -20,6 +20,7 @@ public class CharacterHandler implements HttpHandler {
         switch (method) {
             case "GET":
                 response = getCharacter(exchange);
+                break;
             default:
                 response.setResponse("Not implemented.");
                 response.setCode(404);

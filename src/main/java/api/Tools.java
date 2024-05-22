@@ -1,5 +1,6 @@
 package api;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,16 +14,20 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class Tools {
-    private static Map<Integer, ItemData> itemMap;
+    private static Map<Integer, ItemData> itemMap = new HashMap<>();
 
     public static Map<Integer, ItemData> getItemMap() {
         if (itemMap.isEmpty())
         {
             try
             {
-                var jsonStream = Tools.class.getResourceAsStream("items.json");
+                var jsonStream = Tools.class.getClassLoader().getResourceAsStream("items.json");
                 var mapper = new JsonMapper();
-                itemMap = mapper.readValue(jsonStream, new TypeReference<Map<Integer, ItemData>>(){});
+                var items = mapper.readValue(jsonStream, new TypeReference<ArrayList<ItemData>>(){});
+                for (var item: items)
+                {
+                    itemMap.put(item.getId(), item);
+                }
             }
             catch (Exception ex)
             {
