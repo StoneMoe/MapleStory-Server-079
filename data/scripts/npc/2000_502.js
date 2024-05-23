@@ -19,15 +19,15 @@ function action(mode, type, selection) {
         else
             status--;
         if (status == 0) {
-            cm.sendYesNo("ÇĞ»»µ½±ùÀ×Ä£Ê½£¿");
+            cm.sendYesNo("åˆ‡æ¢åˆ°å†°é›·æ¨¡å¼ï¼Ÿ");
         }else if(status == 1){
 			if(cm.getPlayer().getJob() == 200 || cm.getPlayer().getJob() == 210 ){
             cm.changeJob(220);
 			//cm.getPlayer().setRemainingSp(0);
-			cm.sendOk("ÇĞ»»³É¹¦~");
+			cm.sendOk("åˆ‡æ¢æˆåŠŸ~");
             cm.dispose();
 			}else{
-				cm.sendOk("ÄãÒÑ¾­ÊÇ±ùÀ×Ä£Ê½¡£")
+				cm.sendOk("ä½ å·²ç»æ˜¯å†°é›·æ¨¡å¼ã€‚")
 				cm.dispose();
 			}
         }

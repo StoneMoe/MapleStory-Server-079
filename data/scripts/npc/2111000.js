@@ -3,7 +3,7 @@
 */
 
 function start() {
-    cm.sendNext("ÄúºÃ£¬ÎÒÊÇ#p2111000#");
+    cm.sendNext("æ‚¨å¥½ï¼Œæˆ‘æ˜¯#p2111000#");
 }
 
 function action() {

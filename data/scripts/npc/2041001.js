@@ -10,12 +10,12 @@ function action(mode, type, selection) {
 	} else {
 		status++;
 		if(mode == 0) {
-			cm.sendOk("Äã»á×÷³öÄãµÄ¾ö¶¨µÄ£¬ºÍÆäËûÈËÁÄÌì°É£¡");
+			cm.sendOk("ä½ ä¼šä½œå‡ºä½ çš„å†³å®šçš„ï¼Œå’Œå…¶ä»–äººèŠå¤©å§ï¼");
 			cm.dispose();
 			return;
 		}
 		if(status == 0) {
-			cm.sendYesNo("ÄãÕæµÄÒªÀë¿ªºò³µÊÒÂğ£¿ÕâÑùÊÇ²»ÍË³µÆ±µÄÅ¶¡£ÄãÈ·¶¨ÒªÀë¿ª£¿");
+			cm.sendYesNo("ä½ çœŸçš„è¦ç¦»å¼€å€™è½¦å®¤å—ï¼Ÿè¿™æ ·æ˜¯ä¸é€€è½¦ç¥¨çš„å“¦ã€‚ä½ ç¡®å®šè¦ç¦»å¼€ï¼Ÿ");
 		} else if(status == 1) {
 			if(cm.getChar().getMapId() == 220000111)
 				cm.warp(220000110);

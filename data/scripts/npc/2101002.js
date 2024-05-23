@@ -4,7 +4,7 @@
 
 
 function start() {
-    cm.sendOk("远离我，如果你不想要任何危险.");
+    cm.sendOk("杩滅鎴戯紝濡傛灉浣犱笉鎯宠浠讳綍鍗遍櫓.");
 }
 
 function action() {

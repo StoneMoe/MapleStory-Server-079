@@ -21,29 +21,29 @@ function action(mode, type, selection) {
             status--;
         }
        // if (status === 0) {
-            //cm.sendOk("ÕâÊÇ¹ÖÎï´óÀŞÌ¨¡£ÄãÒªºÍÄãµÄÅóÓÑÃÇ×é¶Ó½øÈ¥Å¶£¬µ«ÊÇ×îÖÕµÄÊ¤ÕßÖ»ÓĞÒ»¸ö£¬ËùÒÔÄãÒª¼ÓÓÍÒÔ×î¿ìµÄËÙ¶ÈÄÃµ½µÀ¾ß²¢ÇÒÁìÈ¡½±Àø~\r\n\r\nÁìÈ¡½±ÀøµÄ·½·¨#r @gwlt @¹ÖÎïÀŞÌ¨~");
+            //cm.sendOk("è¿™æ˜¯æ€ªç‰©å¤§æ“‚å°ã€‚ä½ è¦å’Œä½ çš„æœ‹å‹ä»¬ç»„é˜Ÿè¿›å»å“¦ï¼Œä½†æ˜¯æœ€ç»ˆçš„èƒœè€…åªæœ‰ä¸€ä¸ªï¼Œæ‰€ä»¥ä½ è¦åŠ æ²¹ä»¥æœ€å¿«çš„é€Ÿåº¦æ‹¿åˆ°é“å…·å¹¶ä¸”é¢†å–å¥–åŠ±~\r\n\r\né¢†å–å¥–åŠ±çš„æ–¹æ³•#r @gwlt @æ€ªç‰©æ“‚å°~");
       //  }
          if (status === 0) {
-             if (cm.getMap(221024500).getCharactersSize() > 0) { //ÅĞ¶ÏµØÍ¼ÊÇ·ñÓĞÈË
-                    cm.sendOk("¸ÃÀŞÌ¨ÒÑ¾­ÓĞÈËÁËÅ¶~");
+             if (cm.getMap(221024500).getCharactersSize() > 0) { //åˆ¤æ–­åœ°å›¾æ˜¯å¦æœ‰äºº
+                    cm.sendOk("è¯¥æ“‚å°å·²ç»æœ‰äººäº†å“¦~");
                     cm.dispose();
                 }
 
-            if (cm.getParty()==null) {//ÅĞ¶Ï×é¶Ó
-                cm.sendOk("Çë×é¶Ó~²¢±£Ö¤ËùÓĞ¶ÓÓÑÔÚÕâÀï~");
+            if (cm.getParty()==null) {//åˆ¤æ–­ç»„é˜Ÿ
+                cm.sendOk("è¯·ç»„é˜Ÿ~å¹¶ä¿è¯æ‰€æœ‰é˜Ÿå‹åœ¨è¿™é‡Œ~");
                  cm.dispose();
             }else{
             //     var party = cm.getParty().getMembers();
             //    if (party.size() < minPartySize || party.size() > maxPartySize || inMap < minPartySize) {
-            //                   cm.sendOk("ÇëÈ·ÈÏÄãµÄ×é¶ÓÔ±£º\r\n\r\n#b1¡¢×é¶ÓÔ±±ØĞëÒª" + minPartySize + "ÈËÒÔÉÏ£¬" + maxPartySize + "ÈËÒÔÏÂ");
+            //                   cm.sendOk("è¯·ç¡®è®¤ä½ çš„ç»„é˜Ÿå‘˜ï¼š\r\n\r\n#b1ã€ç»„é˜Ÿå‘˜å¿…é¡»è¦" + minPartySize + "äººä»¥ä¸Šï¼Œ" + maxPartySize + "äººä»¥ä¸‹");
             //                   cm.dispose();
             //                 }else{
             var players = cm.getMap().getCharactersThreadsafe();
              for (var i = 0; i < players.size(); i++) {
              var cPlayer = players.get(i);
-             if (!cPlayer.haveItem(2000005,0)){//ÅĞ¶ÏµÀ¾ß²¢´«ËÍ
+             if (!cPlayer.haveItem(2000005,0)){//åˆ¤æ–­é“å…·å¹¶ä¼ é€
                  
-                 cm.sendOk("´øÉÏ³¬¼¶Ò©Ë®~");
+                 cm.sendOk("å¸¦ä¸Šè¶…çº§è¯æ°´~");
                 //  cm.dispose();
               }else{
                 var map = cm.getMap(221024500);

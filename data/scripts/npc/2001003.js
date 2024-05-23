@@ -3,7 +3,7 @@
  */
 
 function start() {
-    cm.sendSimple("���� ���� #p2001003# ��Ҫȥ�ĸ�С����? PS�ɽ��ͬ�� \n\r #b#L0#�¹�ɭ��11#l \n\r #L1#�¹�ɭ��12#l \n\r #L2#�¹�ɭ��13#l \n\r #L3#�¹�ɭ��14#l \n\r #L4#�¹�ɭ��15#l");
+    cm.sendSimple("安安 我是 #p2001003# 你要去哪个小房间? PS可结伴同行 \n\r #b#L0#月光森林11#l \n\r #L1#月光森林12#l \n\r #L2#月光森林13#l \n\r #L3#月光森林14#l \n\r #L4#月光森林15#l");
 }
 
 function action(mode, type, selection) {

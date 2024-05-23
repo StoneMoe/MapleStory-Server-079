@@ -2,9 +2,9 @@ importPackage(Packages.tools);
 
 var eim;
 
-var closeTime = 24000; //¹ØÃÅµÄÊ±¼äµ½ÁË
-var beginTime = 30000; //¿ªÊ¼ĞĞÊ»µÄÊ±¼äµ½ÁË
-var rideTime = 60000; //ĞèÒªÒÆ¶¯µ½Ä¿µÄµØµÄÊ±¼ä
+var closeTime = 24000; //å…³é—¨çš„æ—¶é—´åˆ°äº†
+var beginTime = 30000; //å¼€å§‹è¡Œé©¶çš„æ—¶é—´åˆ°äº†
+var rideTime = 60000; //éœ€è¦ç§»åŠ¨åˆ°ç›®çš„åœ°çš„æ—¶é—´
 
 function init() {
     scheduleNew();
@@ -14,9 +14,9 @@ function scheduleNew() {
     eim = em.newInstance("Cabin");
     em.setProperty("docked", "true");
     em.setProperty("entry", "true");
-    em.getChannelServer().getMapFactory().getMap(240000110).broadcastMessage(MaplePacketCreator.serverNotice(6, "ÉñÄ¾´å¿ªÍùÌì¿ÕÖ®³ÇµÄ´¬ÒÑ¾­µ½´ï.Çë×¥½ôÊ±¼äÉÏ´¬"));
+    em.getChannelServer().getMapFactory().getMap(240000110).broadcastMessage(MaplePacketCreator.serverNotice(6, "ç¥æœ¨æ‘å¼€å¾€å¤©ç©ºä¹‹åŸçš„èˆ¹å·²ç»åˆ°è¾¾.è¯·æŠ“ç´§æ—¶é—´ä¸Šèˆ¹"));
     em.getChannelServer().getMapFactory().getMap(240000110).broadcastMessage(MaplePacketCreator.playSound("Whistle"));
-    em.getChannelServer().getMapFactory().getMap(200000131).broadcastMessage(MaplePacketCreator.serverNotice(6, "Ìì¿ÕÖ®³Ç¿ªÍùÉñÄ¾´åµÄ´¬ÒÑ¾­µ½´ï.Çë×¥½ôÊ±¼äÉÏ´¬"));
+    em.getChannelServer().getMapFactory().getMap(200000131).broadcastMessage(MaplePacketCreator.serverNotice(6, "å¤©ç©ºä¹‹åŸå¼€å¾€ç¥æœ¨æ‘çš„èˆ¹å·²ç»åˆ°è¾¾.è¯·æŠ“ç´§æ—¶é—´ä¸Šèˆ¹"));
     em.getChannelServer().getMapFactory().getMap(200000131).broadcastMessage(MaplePacketCreator.playSound("Whistle"));
     em.schedule("stopEntry", closeTime);
     em.schedule("takeoff", beginTime);
@@ -41,9 +41,9 @@ function takeoff() {
             }
         }
     }
-    em.getChannelServer().getMapFactory().getMap(240000110).broadcastMessage(MaplePacketCreator.serverNotice(6, "ÉñÄ¾´å¿ªÍùÌì¿ÕÖ®³ÇµÄ´¬ÒÑ¾­³ö·¢."));
+    em.getChannelServer().getMapFactory().getMap(240000110).broadcastMessage(MaplePacketCreator.serverNotice(6, "ç¥æœ¨æ‘å¼€å¾€å¤©ç©ºä¹‹åŸçš„èˆ¹å·²ç»å‡ºå‘."));
     em.getChannelServer().getMapFactory().getMap(240000110).broadcastMessage(MaplePacketCreator.playSound("Whistle"));
-    em.getChannelServer().getMapFactory().getMap(200000131).broadcastMessage(MaplePacketCreator.serverNotice(6, "Ìì¿ÕÖ®³Ç¿ªÍùÉñÄ¾´åµÄ´¬ÒÑ¾­³ö·¢."));
+    em.getChannelServer().getMapFactory().getMap(200000131).broadcastMessage(MaplePacketCreator.serverNotice(6, "å¤©ç©ºä¹‹åŸå¼€å¾€ç¥æœ¨æ‘çš„èˆ¹å·²ç»å‡ºå‘."));
     em.getChannelServer().getMapFactory().getMap(200000131).broadcastMessage(MaplePacketCreator.playSound("Whistle"));
     em.schedule("arrived", rideTime);
 }

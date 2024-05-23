@@ -22,10 +22,10 @@ function action(mode, type, selection) {
     else
 	status--;
     if (status == 0) {
-	cm.sendNext("¹§Ï²À´µ½ÕâÀï£¬ºÃ°ÉÎÒÏëÎÒ±ØĞë¸øÄúÒ»µã½±ÀøÀ´×÷Îª´ú¼Û¡£");
+	cm.sendNext("æ­å–œæ¥åˆ°è¿™é‡Œï¼Œå¥½å§æˆ‘æƒ³æˆ‘å¿…é¡»ç»™æ‚¨ä¸€ç‚¹å¥–åŠ±æ¥ä½œä¸ºä»£ä»·ã€‚");
     }
     else if (status == 1) {
-	cm.sendNextPrev("À´£¬ÕâÊÇÎÒ¸øÄãµÄ½±Àø#b#t4031062##k¡£");
+	cm.sendNextPrev("æ¥ï¼Œè¿™æ˜¯æˆ‘ç»™ä½ çš„å¥–åŠ±#b#t4031062##kã€‚");
     }
     else if (status == 2) {
 	cm.gainItem(4031062,1);

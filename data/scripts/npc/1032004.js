@@ -24,7 +24,7 @@ function action(mode, type, selection) {
     else
 	status--;
     if (status == 0) {
-	cm.sendYesNo("ÄãÏëÒª»ØÈ¥Ä§·¨#m101000000#ÁË£¿£¿");
+	cm.sendYesNo("ä½ æƒ³è¦å›å»é­”æ³•#m101000000#äº†ï¼Ÿï¼Ÿ");
     } else if (status == 1) {
 	cm.warp(101000000,0);
 	cm.dispose();

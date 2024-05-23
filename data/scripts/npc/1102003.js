@@ -5,6 +5,6 @@
 */
 
 function start(){
-	cm.sendOk("»¶Ó­À´µ½ÆïÊ¿Ö®µî¡£");
+	cm.sendOk("æ¬¢è¿æ¥åˆ°éª‘å£«ä¹‹æ®¿ã€‚");
 	cm.dispose();
 }

@@ -8,15 +8,15 @@ function action(mode, type, selection) {
     if (mode == 1) {
 	status++;
     } else {
-	cm.sendNext("¿´À´ÄãÔÚÕâÒ»¶¨»¹ÓĞÒ»Ğ©ÊÂÒª´¦Àí. ");
+	cm.sendNext("çœ‹æ¥ä½ åœ¨è¿™ä¸€å®šè¿˜æœ‰ä¸€äº›äº‹è¦å¤„ç†. ");
 	cm.safeDispose();
 	return;
     }
     if (status == 0) {
 	returnmap = cm.getSavedLocation("FLORINA");
-	cm.sendNext("ÄãÏëÀë¿ª #b#m110000000##k? Èç¹ûÄãÔ¸Òâ, ÎÒ¿ÉÒÔËÍÄã»Øµ½ #b#m"+returnmap+"##k.");
+	cm.sendNext("ä½ æƒ³ç¦»å¼€ #b#m110000000##k? å¦‚æœä½ æ„¿æ„, æˆ‘å¯ä»¥é€ä½ å›åˆ° #b#m"+returnmap+"##k.");
     } else if (status == 1) {
-	cm.sendYesNo("ÄãÈ·¶¨Òª·µ»Øµ½ #b#m"+returnmap+"##k? ºÃ°É, ÎÒÃÇÁ¢¼´³ö·¢.")
+	cm.sendYesNo("ä½ ç¡®å®šè¦è¿”å›åˆ° #b#m"+returnmap+"##k? å¥½å§, æˆ‘ä»¬ç«‹å³å‡ºå‘.")
     } else if (status == 2) {
 	if (returnmap < 0) {
 		returnmap = 104000000;

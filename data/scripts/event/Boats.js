@@ -2,11 +2,11 @@ importPackage(Packages.client);
 importPackage(Packages.tools);
 importPackage(Packages.server.life);
 
-var closeTime = 120000; //´¬¹Ø±Õ´î³ËµÄÊ±¼ä
-var beginTime = 120000; //´¬Æôº½µÄÊ±¼ä
-// 1Ãë=1000ºÁÃë10·ÖÖÓ=10*60*1000=600000 ºÁÃë
-var rideTime = 600000; //´î´¬ËùĞèÊ±¼ä
-var invasionTime = 60000; //È·ÈÏòùòğ¹ÖÕÙ»½µÄÊ±¼ä
+var closeTime = 120000; //èˆ¹å…³é—­æ­ä¹˜çš„æ—¶é—´
+var beginTime = 120000; //èˆ¹å¯èˆªçš„æ—¶é—´
+// 1ç§’=1000æ¯«ç§’10åˆ†é’Ÿ=10*60*1000=600000 æ¯«ç§’
+var rideTime = 600000; //æ­èˆ¹æ‰€éœ€æ—¶é—´
+var invasionTime = 60000; //ç¡®è®¤è™è æ€ªå¬å”¤çš„æ—¶é—´
 var Orbis_btf;
 var Boat_to_Orbis;
 var Orbis_Boat_Cabin;

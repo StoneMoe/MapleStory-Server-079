@@ -5,7 +5,7 @@
 
 
 function start() {
-    cm.sendNext ("嘿，不要试图开始麻烦与任何人。我不想和你做任何事.");
+    cm.sendNext ("鍢匡紝涓嶈璇曞浘寮�濮嬮夯鐑︿笌浠讳綍浜恒�傛垜涓嶆兂鍜屼綘鍋氫换浣曚簨.");
 }
 
 function action() {

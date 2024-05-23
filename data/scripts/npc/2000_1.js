@@ -12,11 +12,11 @@ function action(mode, type, selection) {
 
     if (status == 0) {
         if (cm.getMap().getAllMonstersThreadsafe().size() <= 0) {
-            cm.sendOk("当前地图没有怪物");
+            cm.sendOk("褰撳墠鍦板浘娌℃湁鎬墿锟紺");
             cm.dispose();
             return;
         }
-        var selStr = "#r#"+MC+"#k- 爆物查询 -\r\n\r\n#b";
+        var selStr = "#r#"+MC+"#k- 鐖嗙墿鏌ヨ -\r\n\r\n#b";
         var iz = cm.getMap().getAllUniqueMonsters().iterator();
         while (iz.hasNext()) {
             var zz = iz.next();

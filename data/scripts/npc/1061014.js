@@ -15,7 +15,7 @@ function action(mode, type, selection) {
     //         status = 0;
     //         switch (cm.getChannelNumber()) {
     //             default:
-    //                 cm.sendNext("Ä¿Ç°Ä£Ê½Îª #i3994116# Èç¹ûÄãÏë¼ÓÈëÕâ¸öÄ£Ê½Çë°´ÏÂÒ»²½  Ìõ¼þÊÇ µÈ¼¶ 1 ~ µÈ¼¶ 255 / Ô¶Õ÷¶ÓÈËÊý 1 ¸ö");
+    //                 cm.sendNext("ç›®å‰æ¨¡å¼ä¸º #i3994116# å¦‚æžœä½ æƒ³åŠ å…¥è¿™ä¸ªæ¨¡å¼è¯·æŒ‰ä¸‹ä¸€æ­¥  æ¡ä»¶æ˜¯ ç­‰çº§ 1 ~ ç­‰çº§ 255 / è¿œå¾é˜Ÿäººæ•° 1 ä¸ª");
     //                 break;
     //         }
     //         break;
@@ -23,7 +23,7 @@ function action(mode, type, selection) {
     //         var em = cm.getEventManager("BossBalrog");
 
     //         if (em == null) {
-    //             cm.sendOk("Ä¿Ç°¸±±¾³öÁËÒ»µãÎÊÌâ£¬ÇëÁªÏµGM£¡");
+    //             cm.sendOk("ç›®å‰å‰¯æœ¬å‡ºäº†ä¸€ç‚¹é—®é¢˜ï¼Œè¯·è”ç³»GMï¼");
     //             cm.safeDispose();
     //             return;
     //         }
@@ -33,51 +33,51 @@ function action(mode, type, selection) {
     //             var squadAvailability = cm.getSquadAvailability("BossBalrog");
     //             if (squadAvailability == -1) {
     //                 status = 1;
-    //                 cm.sendYesNo("ÏÖÔÚ¿ÉÒÔÉêÇëÔ¶Õ÷¶Ó£¬ÄãÏë³ÉÎªÔ¶Õ÷¶Ó¶Ó³¤Âð£¿");
+    //                 cm.sendYesNo("çŽ°åœ¨å¯ä»¥ç”³è¯·è¿œå¾é˜Ÿï¼Œä½ æƒ³æˆä¸ºè¿œå¾é˜Ÿé˜Ÿé•¿å—ï¼Ÿ");
 
     //             } else if (squadAvailability == 1) {
     //                 // -1 = Cancelled, 0 = not, 1 = true
     //                 var type = cm.isSquadLeader("BossBalrog");
     //                 if (type == -1) {
-    //                     cm.sendOk("ÒÑ¾­½áÊøÁËÉêÇë¡£");
+    //                     cm.sendOk("å·²ç»ç»“æŸäº†ç”³è¯·ã€‚");
     //                     cm.safeDispose();
     //                 } else if (type == 0) {
     //                     var memberType = cm.isSquadMember("BossBalrog");
     //                     if (memberType == 2) {
-    //                         cm.sendOk("ÔÚÔ¶Õ÷¶ÓµÄÖÆ²ÃÃûµ¥¡£");
+    //                         cm.sendOk("åœ¨è¿œå¾é˜Ÿçš„åˆ¶è£åå•ã€‚");
     //                         cm.safeDispose();
     //                     } else if (memberType == 1) {
     //                         status = 5;
-    //                         cm.sendSimple("ÄãÒª×öÊ²Ã´? \r\n#b#L0#¼ÓÈëÔ¶Õ÷¶Ó#l \r\n#b#L1#ÍË³öÔ¶Õ÷¶Ó#l \r\n#b#L2#²é¿´Ô¶Õ÷¶ÓÃûµ¥#l");
+    //                         cm.sendSimple("ä½ è¦åšä»€ä¹ˆ? \r\n#b#L0#åŠ å…¥è¿œå¾é˜Ÿ#l \r\n#b#L1#é€€å‡ºè¿œå¾é˜Ÿ#l \r\n#b#L2#æŸ¥çœ‹è¿œå¾é˜Ÿåå•#l");
     //                     } else if (memberType == -1) {
-    //                         cm.sendOk("Ô¶Õ÷¶ÓÔ±ÒÑ¾­´ïµ½30Ãû£¬ÇëÉÔºóÔÙÊÔ¡£");
+    //                         cm.sendOk("è¿œå¾é˜Ÿå‘˜å·²ç»è¾¾åˆ°30åï¼Œè¯·ç¨åŽå†è¯•ã€‚");
     //                         cm.safeDispose();
     //                     } else {
     //                         status = 5;
-    //                         cm.sendSimple("ÄãÒª×öÊ²Ã´? \r\n#b#L0#²é¿´Ô¶Õ÷¶ÓÃûµ¥#l \r\n#b#L1#¼ÓÈëÔ¶Õ÷¶Ó#l \r\n#b#L2#ÍË³öÔ¶Õ÷¶Ó#l");
+    //                         cm.sendSimple("ä½ è¦åšä»€ä¹ˆ? \r\n#b#L0#æŸ¥çœ‹è¿œå¾é˜Ÿåå•#l \r\n#b#L1#åŠ å…¥è¿œå¾é˜Ÿ#l \r\n#b#L2#é€€å‡ºè¿œå¾é˜Ÿ#l");
     //                     }
     //                 } else { // Is leader
     //                     status = 10;
-    //                     cm.sendSimple("ÄãÏÖÔÚÏë×öÊ²Ã´£¿\r\n#b#L0#²é¿´Ô¶Õ÷¶Ó³ÉÔ±¡£#l \r\n#b#L1#¹ÜÀíÔ¶Õ÷¶Ó³ÉÔ±¡£#l \r\n#b#L2#±à¼­ÏÞÖÆÁÐ±í¡£#l \r\n#r#L3#½øÈëµØÍ¼¡£#l");
+    //                     cm.sendSimple("ä½ çŽ°åœ¨æƒ³åšä»€ä¹ˆï¼Ÿ\r\n#b#L0#æŸ¥çœ‹è¿œå¾é˜Ÿæˆå‘˜ã€‚#l \r\n#b#L1#ç®¡ç†è¿œå¾é˜Ÿæˆå‘˜ã€‚#l \r\n#b#L2#ç¼–è¾‘é™åˆ¶åˆ—è¡¨ã€‚#l \r\n#r#L3#è¿›å…¥åœ°å›¾ã€‚#l");
     //                     // TODO viewing!
     //                 }
     //             } else {
     //                 var eim = cm.getDisconnected("BossBalrog");
     //                 if (eim == null) {
-    //                     cm.sendOk("Ô¶Õ÷¶ÓµÄÌôÕ½ÒÑ¾­¿ªÊ¼.");
+    //                     cm.sendOk("è¿œå¾é˜Ÿçš„æŒ‘æˆ˜å·²ç»å¼€å§‹.");
     //                     cm.safeDispose();
     //                 } else {
-    //                     cm.sendYesNo("ÄãÒª¼ÌÐø½øÐÐÔ¶Õ÷ÈÎÎñÂð£¿");
+    //                     cm.sendYesNo("ä½ è¦ç»§ç»­è¿›è¡Œè¿œå¾ä»»åŠ¡å—ï¼Ÿ");
     //                     status = 2;
     //                 }
     //             }
     //         } else {
     //             var eim = cm.getDisconnected("BossBalrog");
     //             if (eim == null) {
-    //                 cm.sendOk("Ô¶Õ÷¶ÓµÄÌôÕ½ÒÑ¾­¿ªÊ¼.");
+    //                 cm.sendOk("è¿œå¾é˜Ÿçš„æŒ‘æˆ˜å·²ç»å¼€å§‹.");
     //                 cm.safeDispose();
     //             } else {
-    //                 cm.sendYesNo("ÄãÒª¼ÌÐø½øÐÐÔ¶Õ÷ÈÎÎñÂð£¿");
+    //                 cm.sendYesNo("ä½ è¦ç»§ç»­è¿›è¡Œè¿œå¾ä»»åŠ¡å—ï¼Ÿ");
     //                 status = 2;
     //             }
     //         }
@@ -87,29 +87,29 @@ function action(mode, type, selection) {
     //             var lvl = cm.getPlayerStat("LVL");
     //             if (lvl >= 1 && lvl <= 256) {
 
-    //                 if (cm.registerSquad("BossBalrog", 5, " ÒÑ¾­³ÉÎªÁËÔ¶Õ÷¶Ó¶Ó³¤¡£Èç¹ûÄãÏë¼ÓÈëÔ¶Õ÷¶Ó£¬ÇëÖØÐÂ´ò¿ª¶Ô»°ÉêÇë¼ÓÈëÔ¶Õ÷¶Ó¡£")) {
-    //                     cm.sendOk("ÄãÒÑ¾­³ÉÎªÁËÔ¶Õ÷¶Ó¶Ó³¤¡£½ÓÏÂÀ´µÄ5·ÖÖÓ£¬ÇëµÈ´ý¶ÓÔ±ÃÇµÄÉêÇë¡£");
+    //                 if (cm.registerSquad("BossBalrog", 5, " å·²ç»æˆä¸ºäº†è¿œå¾é˜Ÿé˜Ÿé•¿ã€‚å¦‚æžœä½ æƒ³åŠ å…¥è¿œå¾é˜Ÿï¼Œè¯·é‡æ–°æ‰“å¼€å¯¹è¯ç”³è¯·åŠ å…¥è¿œå¾é˜Ÿã€‚")) {
+    //                     cm.sendOk("ä½ å·²ç»æˆä¸ºäº†è¿œå¾é˜Ÿé˜Ÿé•¿ã€‚æŽ¥ä¸‹æ¥çš„5åˆ†é’Ÿï¼Œè¯·ç­‰å¾…é˜Ÿå‘˜ä»¬çš„ç”³è¯·ã€‚");
     //                 } else {
-    //                     cm.sendOk("Î´Öª´íÎó.");
+    //                     cm.sendOk("æœªçŸ¥é”™è¯¯.");
     //                 }
     //             } else {
-    //                 cm.sendNext("ÓÐÒ»¸öÔ¶Õ÷¶Ó³ÉÔ±µÄµÈ¼¶²»ÊÇ50µ½120Ö®¼ä¡£");
+    //                 cm.sendNext("æœ‰ä¸€ä¸ªè¿œå¾é˜Ÿæˆå‘˜çš„ç­‰çº§ä¸æ˜¯50åˆ°120ä¹‹é—´ã€‚");
     //             }
     //         } else {
-    //             cm.sendOk("Èç¹ûÄãÏëÔÙ´ÎÉêÇëÔ¶Õ÷¶ÓµÄ»°Çë¸æËßÎÒ¡£")
+    //             cm.sendOk("å¦‚æžœä½ æƒ³å†æ¬¡ç”³è¯·è¿œå¾é˜Ÿçš„è¯è¯·å‘Šè¯‰æˆ‘ã€‚")
     //         }
     //         cm.safeDispose();
     //         break;
     //     case 2:
     //         if (!cm.reAdd("BossBalrog", "BossBalrog")) {
-    //             cm.sendOk("ÓÉÓÚÎ´ÖªµÄ´íÎó£¬²Ù×÷Ê§°Ü¡£");
+    //             cm.sendOk("ç”±äºŽæœªçŸ¥çš„é”™è¯¯ï¼Œæ“ä½œå¤±è´¥ã€‚");
     //         }
     //         cm.safeDispose();
     //         break;
     //     case 5:
     //         if (selection == 0) {
     //             if (!cm.getSquadList("BossBalrog", 0)) {
-    //                 cm.sendOk("ÓÉÓÚÎ´ÖªµÄ´íÎó£¬²Ù×÷Ê§°Ü¡£");
+    //                 cm.sendOk("ç”±äºŽæœªçŸ¥çš„é”™è¯¯ï¼Œæ“ä½œå¤±è´¥ã€‚");
     //                 cm.safeDispose();
     //             } else {
     //                 cm.dispose();
@@ -117,22 +117,22 @@ function action(mode, type, selection) {
     //         } else if (selection == 1) { // join
     //             var ba = cm.addMember("BossBalrog", true);
     //             if (ba == 2) {
-    //                 cm.sendOk("Ô¶Õ÷¶ÓÔ±ÒÑ¾­´ïµ½30Ãû£¬ÇëÉÔºóÔÙÊÔ¡£");
+    //                 cm.sendOk("è¿œå¾é˜Ÿå‘˜å·²ç»è¾¾åˆ°30åï¼Œè¯·ç¨åŽå†è¯•ã€‚");
     //                 cm.safeDispose();
     //             } else if (ba == 1) {
-    //                 cm.sendOk("ÉêÇë¼ÓÈëÔ¶Õ÷¶Ó³É¹¦£¬ÇëµÈºò¶Ó³¤Ö¸Ê¾¡£");
+    //                 cm.sendOk("ç”³è¯·åŠ å…¥è¿œå¾é˜ŸæˆåŠŸï¼Œè¯·ç­‰å€™é˜Ÿé•¿æŒ‡ç¤ºã€‚");
     //                 cm.safeDispose();
     //             } else {
-    //                 cm.sendOk("ÄãÒÑ¾­²Î¼ÓÁËÔ¶Õ÷¶Ó£¬ÇëµÈºò¶Ó³¤Ö¸Ê¾¡£");
+    //                 cm.sendOk("ä½ å·²ç»å‚åŠ äº†è¿œå¾é˜Ÿï¼Œè¯·ç­‰å€™é˜Ÿé•¿æŒ‡ç¤ºã€‚");
     //                 cm.safeDispose();
     //             }
     //         } else { // withdraw
     //             var baa = cm.addMember("BossBalrog", false);
     //             if (baa == 1) {
-    //                 cm.sendOk("³É¹¦ÍË³öÔ¶Õ÷¶Ó¡£");
+    //                 cm.sendOk("æˆåŠŸé€€å‡ºè¿œå¾é˜Ÿã€‚");
     //                 cm.safeDispose();
     //             } else {
-    //                 cm.sendOk("ÄãÃ»ÓÐ²Î¼ÓÔ¶Õ÷¶Ó¡£");
+    //                 cm.sendOk("ä½ æ²¡æœ‰å‚åŠ è¿œå¾é˜Ÿã€‚");
     //                 cm.safeDispose();
     //             }
     //         }
@@ -140,19 +140,19 @@ function action(mode, type, selection) {
     //     case 10:
     //         if (selection == 0) {
     //             if (!cm.getSquadList("BossBalrog", 0)) {
-    //                 cm.sendOk("ÓÉÓÚÎ´ÖªµÄ´íÎó£¬²Ù×÷Ê§°Ü¡£");
+    //                 cm.sendOk("ç”±äºŽæœªçŸ¥çš„é”™è¯¯ï¼Œæ“ä½œå¤±è´¥ã€‚");
     //             }
     //             cm.safeDispose();
     //         } else if (selection == 1) {
     //             status = 11;
     //             if (!cm.getSquadList("BossBalrog", 1)) {
-    //                 cm.sendOk("ÓÉÓÚÎ´ÖªµÄ´íÎó£¬²Ù×÷Ê§°Ü¡£");
+    //                 cm.sendOk("ç”±äºŽæœªçŸ¥çš„é”™è¯¯ï¼Œæ“ä½œå¤±è´¥ã€‚");
     //             }
     //             cm.safeDispose();
     //         } else if (selection == 2) {
     //             status = 12;
     //             if (!cm.getSquadList("BossBalrog", 2)) {
-    //                 cm.sendOk("ÓÉÓÚÎ´ÖªµÄ´íÎó£¬²Ù×÷Ê§°Ü¡£");
+    //                 cm.sendOk("ç”±äºŽæœªçŸ¥çš„é”™è¯¯ï¼Œæ“ä½œå¤±è´¥ã€‚");
     //             }
     //             cm.safeDispose();
     //         } else if (selection == 3) { // get insode
@@ -161,7 +161,7 @@ function action(mode, type, selection) {
     //                 dd.startInstance(cm.getSquad("BossBalrog"), cm.getMap());
     //                 cm.dispose();
     //             } else {
-    //                 cm.sendOk("ÓÉÓÚÎ´ÖªµÄ´íÎó£¬²Ù×÷Ê§°Ü¡£");
+    //                 cm.sendOk("ç”±äºŽæœªçŸ¥çš„é”™è¯¯ï¼Œæ“ä½œå¤±è´¥ã€‚");
     //                 cm.safeDispose();
     //             }
     //         }

@@ -22,25 +22,25 @@ function cancelSchedule() {
 
 function start() {
     scheduleNew();
-	var random = java.lang.Math.floor(Math.random() * 3 + 1);//Ëæ»úÆµµÀ1-3ÆµµÀ
-var mapid = java.lang.Math.floor(Math.random() * 4 + 1);//Ëæ»úµØÍ¼Ò»¹²4¸öµØÍ¼ Ã÷Öé¸Û ÉäÊÖ ·ÏÆú ÓÂÊ¿
-var BOSS = java.lang.Math.floor(Math.random() * 4 + 1);//Ëæ»úÉèÖÃBOSS	1-4¸öÑ¡ÏîËæ»ú
-var »î¶¯¿ªÆôÊ±¼ä = 21;//19 = 19µã
-var »î¶¯ÏŞÖÆÊ±¼ä = 10;//´ËÑ¡ÏîÎŞĞ§¡£Ò²±ğĞŞ¸Ä£¡
-var ¹ÖÎïÑªÁ¿;
+	var random = java.lang.Math.floor(Math.random() * 3 + 1);//éšæœºé¢‘é“1-3é¢‘é“
+var mapid = java.lang.Math.floor(Math.random() * 4 + 1);//éšæœºåœ°å›¾ä¸€å…±4ä¸ªåœ°å›¾ æ˜ç æ¸¯ å°„æ‰‹ åºŸå¼ƒ å‹‡å£«
+var BOSS = java.lang.Math.floor(Math.random() * 4 + 1);//éšæœºè®¾ç½®BOSS	1-4ä¸ªé€‰é¡¹éšæœº
+var æ´»åŠ¨å¼€å¯æ—¶é—´ = 21;//19 = 19ç‚¹
+var æ´»åŠ¨é™åˆ¶æ—¶é—´ = 10;//æ­¤é€‰é¡¹æ— æ•ˆã€‚ä¹Ÿåˆ«ä¿®æ”¹ï¼
+var æ€ªç‰©è¡€é‡;
 var bossid;
 	if(BOSS <= 1){
 		 bossid = 100100;
-		¹ÖÎïÑªÁ¿ = 1000;
+		æ€ªç‰©è¡€é‡ = 1000;
 	}else if(BOSS == 2){
 		 bossid = 100101;
-		¹ÖÎïÑªÁ¿ = 1000;
+		æ€ªç‰©è¡€é‡ = 1000;
 	}else if(BOSS == 3){
 		 bossid = 100120;
-		¹ÖÎïÑªÁ¿ = 1000;
+		æ€ªç‰©è¡€é‡ = 1000;
 	}else if(BOSS >= 4){
 		 bossid = 100121;
-		¹ÖÎïÑªÁ¿ = 1000;
+		æ€ªç‰©è¡€é‡ = 1000;
 	}
 	if(mapid <= 1){
     

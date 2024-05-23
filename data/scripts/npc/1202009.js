@@ -6,7 +6,7 @@ function action(mode, type, selection) {
     else
 	status--;
     if (status == 0) {
-        cm.sendOk("是人类吗？？没事的话赶紧离开这里吧！");
+        cm.sendOk("鏄汉绫诲悧锛燂紵娌′簨鐨勮瘽璧剁揣绂诲紑杩欓噷鍚э紒");
 	cm.dispose();
     }
 }

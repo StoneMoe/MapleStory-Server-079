@@ -25,9 +25,9 @@ function action(mode, type, selection) {
             cm.removeAll(i); //holy
         }
         if (cm.getParty() == null) { // No Party
-            cm.sendSimple("ÄãÏë²Î¼ÓÅ®Éñ×é¶Ó¸±±¾Ã´£¿\r\n\r\n#r½øÈëÌõ¼ş×îµÍ: " + minPartySize + " ¸öÈË, µÈ¼¶ÒªÇó×îµÍ " + minLevel + " ×î¸ßµÈ¼¶ " + maxLevel + ".#b\r\n#L0#ÎÒÏë²Î¼ÓÅ®Éñ¸±±¾.#l\r\n#L1#ÎÒÏë¶Ò»»Å®ÉñÎïÆ·.#l");
+            cm.sendSimple("ä½ æƒ³å‚åŠ å¥³ç¥ç»„é˜Ÿå‰¯æœ¬ä¹ˆï¼Ÿ\r\n\r\n#rè¿›å…¥æ¡ä»¶æœ€ä½: " + minPartySize + " ä¸ªäºº, ç­‰çº§è¦æ±‚æœ€ä½ " + minLevel + " æœ€é«˜ç­‰çº§ " + maxLevel + ".#b\r\n#L0#æˆ‘æƒ³å‚åŠ å¥³ç¥å‰¯æœ¬.#l\r\n#L1#æˆ‘æƒ³å…‘æ¢å¥³ç¥ç‰©å“.#l");
         } else if (!cm.isLeader()) { // Not Party Leader
-            cm.sendSimple("If you want to try the quest, please tell the #bleader of your party#k to talk to me.#b\r\n#L0#ÎÒÏë²Î¼ÓÅ®Éñ¸±±¾.#l\r\n#L1#ÎÒÏë¶Ò»»Å®ÉñÎïÆ·.#l");
+            cm.sendSimple("If you want to try the quest, please tell the #bleader of your party#k to talk to me.#b\r\n#L0#æˆ‘æƒ³å‚åŠ å¥³ç¥å‰¯æœ¬.#l\r\n#L1#æˆ‘æƒ³å…‘æ¢å¥³ç¥ç‰©å“.#l");
         } else {
             // Check if all party members are within PQ levels
             var party = cm.getParty().getMembers();
@@ -54,7 +54,7 @@ function action(mode, type, selection) {
             if (next) {
                 var em = cm.getEventManager("OrbisPQ");
                 if (em == null) {
-                    cm.sendSimple("ÄãÏë²Î¼ÓÅ®Éñ×é¶Ó¸±±¾Ã´£¿.#b\r\n#L0#ÎÒÏë²Î¼ÓÅ®Éñ¸±±¾.#l\r\n#L1#ÎÒÏë¶Ò»»Å®ÉñÎïÆ·.#l");
+                    cm.sendSimple("ä½ æƒ³å‚åŠ å¥³ç¥ç»„é˜Ÿå‰¯æœ¬ä¹ˆï¼Ÿ.#b\r\n#L0#æˆ‘æƒ³å‚åŠ å¥³ç¥å‰¯æœ¬.#l\r\n#L1#æˆ‘æƒ³å…‘æ¢å¥³ç¥ç‰©å“.#l");
                 } else {
                     var prop = em.getProperty("state");
                     if (prop.equals("0") || prop == null) {
@@ -62,17 +62,17 @@ function action(mode, type, selection) {
                         cm.dispose();
                         return;
                     } else {
-            cm.sendSimple("ÄãÏë²Î¼ÓÅ®Éñ×é¶Ó¸±±¾Ã´£¿\r\n\r\n#r½øÈëÌõ¼ş×îµÍ: " + minPartySize + " ¸öÈË, µÈ¼¶ÒªÇó×îµÍ " + minLevel + " ×î¸ßµÈ¼¶ " + maxLevel + ".#b\r\n#L0#ÎÒÏë²Î¼ÓÅ®Éñ¸±±¾.#l\r\n#L1#ÎÒÏë¶Ò»»Å®ÉñÎïÆ·.#l");
+            cm.sendSimple("ä½ æƒ³å‚åŠ å¥³ç¥ç»„é˜Ÿå‰¯æœ¬ä¹ˆï¼Ÿ\r\n\r\n#rè¿›å…¥æ¡ä»¶æœ€ä½: " + minPartySize + " ä¸ªäºº, ç­‰çº§è¦æ±‚æœ€ä½ " + minLevel + " æœ€é«˜ç­‰çº§ " + maxLevel + ".#b\r\n#L0#æˆ‘æƒ³å‚åŠ å¥³ç¥å‰¯æœ¬.#l\r\n#L1#æˆ‘æƒ³å…‘æ¢å¥³ç¥ç‰©å“.#l");
                     }
                 }
             } else {
-            cm.sendSimple("ÄãÏë²Î¼ÓÅ®Éñ×é¶Ó¸±±¾Ã´£¿\r\n\r\n#r½øÈëÌõ¼ş×îµÍ: " + minPartySize + " ¸öÈË, µÈ¼¶ÒªÇó×îµÍ " + minLevel + " ×î¸ßµÈ¼¶ " + maxLevel + ".#b\r\n#L0#ÎÒÏë²Î¼ÓÅ®Éñ¸±±¾.#l\r\n#L1#ÎÒÏë¶Ò»»Å®ÉñÎïÆ·.#l");
+            cm.sendSimple("ä½ æƒ³å‚åŠ å¥³ç¥ç»„é˜Ÿå‰¯æœ¬ä¹ˆï¼Ÿ\r\n\r\n#rè¿›å…¥æ¡ä»¶æœ€ä½: " + minPartySize + " ä¸ªäºº, ç­‰çº§è¦æ±‚æœ€ä½ " + minLevel + " æœ€é«˜ç­‰çº§ " + maxLevel + ".#b\r\n#L0#æˆ‘æƒ³å‚åŠ å¥³ç¥å‰¯æœ¬.#l\r\n#L1#æˆ‘æƒ³å…‘æ¢å¥³ç¥ç‰©å“.#l");
             }
         }
     } else { //broken glass
         if (selection == 0) {
             if (!cm.isGMS()) { //TODO Jump
-                cm.sendOk("Äã²»Âú×ã½øÈëÌõ¼ş.");
+                cm.sendOk("ä½ ä¸æ»¡è¶³è¿›å…¥æ¡ä»¶.");
             } else if (cm.haveItem(1082232, 1)) {
                 if (!cm.canHold(1082322, 1)) {
                     cm.sendOk("Make room for this Wristband.");
@@ -92,7 +92,7 @@ function action(mode, type, selection) {
             }
         } else if (selection == 1) {
             if (!cm.isGMS()) { //TODO Jump
-                cm.sendOk("Äã²»Âú×ã¶Ò»»Ìõ¼ş.");
+                cm.sendOk("ä½ ä¸æ»¡è¶³å…‘æ¢æ¡ä»¶.");
             } else if (cm.haveItem(1072455, 1)) {
                 if (!cm.canHold(1072534, 1)) {
                     cm.sendOk("Make room for this shoe.");

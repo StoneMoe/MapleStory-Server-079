@@ -36,23 +36,23 @@ function action(mode, type, selection) {
 	cm.dispose();
 	return;
     } if (mode == 0 && status == 2) {
-	cm.sendNext("����Ҳ�ṩ�������񣬾�����֮ǰ����ϸ���롣");
+	cm.sendNext("我们也提供其他服务，决定好之前请仔细想想。");
 	cm.dispose();
 	return;
     }
     if (status == 0) {
-	cm.sendNext("��ӭ������ô��ùݡ���������Ϊ���ṩ��õķ�����������ˣ���������Ϣһ����Σ�");
+	cm.sendNext("欢迎来到奇幻村旅馆。我们致力为您提供最好的服务。如果您累了，来这里休息一下如何？");
     }
     if (status == 1) {
-	cm.sendSimple("�����ṩ���ַ��䣬��ѡ������Ҫ��\r\n#b#L0#һ��ɣ���� (ÿ�� " + regcost + " ���)#l\r\n#L1#�߼�ɣ���� (ÿ��" + vipcost + " ���)#l");
+	cm.sendSimple("我们提供两种房间，请选择你想要的\r\n#b#L0#一般桑拿室 (每次 " + regcost + " 枫币)#l\r\n#L1#高级桑拿室 (每次" + vipcost + " 枫币)#l");
     }
     if (status == 2) {
 	tempvar = selection;
 	if (tempvar == 0) {
-	    cm.sendYesNo("��ѡ����һ��ɣ���ң����HP��MP��ظ��úܿ죬��Ҳ���������湺����Ʒ����ȷ��Ҫ������");
+	    cm.sendYesNo("你选择了一般桑拿室，你的HP和MP会回复得很快，你也可以在里面购买商品，你确定要进入吗？");
 	}
 	if (tempvar == 1) {
-		cm.sendYesNo("��ѡ���˸߼�ɣ���ң����HP��MP���һ��ɣ���һظ��ø��죬Ҳ�����������ҵ��������Ʒ����ȷ��Ҫ������");
+		cm.sendYesNo("你选择了高级桑拿室，你的HP和MP会比一般桑拿室回复得更快，也可以在里面找到特殊的物品，你确定要进入吗？");
 	}
     }
     if (status == 3) {
@@ -61,14 +61,14 @@ function action(mode, type, selection) {
 		cm.warp(105040401);
 		cm.gainMeso(-regcost);
 	    } else {
-        cm.sendNext("�ܱ�Ǹ�����������ƺ�û���㹻�ķ�ҡ�������Ҫ�� " + regcost + " ��Ҳ��ܴ������ǵ�һ��ɣ���ҡ�");
+        cm.sendNext("很抱歉，看起来您似乎没有足够的枫币。你至少要有 " + regcost + " 枫币才能待在我们的一般桑拿室。");
 	    }
 	} if (tempvar == 1) {
 	    if (cm.getMeso() >= vipcost) {
 		cm.warp(105040402);
 		cm.gainMeso(-vipcost);
 	    } else {
-        cm.sendNext("�ܱ�Ǹ�����������ƺ�û���㹻�ķ�ҡ�������Ҫ�� " + vipcost + " ��Ҳ��ܴ������ǵĸ߼�ɣ���ҡ�");
+        cm.sendNext("很抱歉，看起来您似乎没有足够的枫币。你至少要有 " + vipcost + " 枫币才能待在我们的高级桑拿室。");
 	    }
 	}
 	cm.dispose();

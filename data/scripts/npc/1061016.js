@@ -12,22 +12,22 @@ function action(mode, type, selection) {
     }
     status++;
     if (status == 0) {
-        cm.sendSimple("�����ˣ����Ѿ����ö���ˡ����������е��������������Ҫ�����ң��Ѿ�ȡ�ð���ŵ�Ƥ�ˣ�\r\n\r\n#r#L1#�һ�һЩ����#l#k");
+        cm.sendSimple("又来了？你已经来好多次了。看样子蛮闲的嘛！看起来你有事要拜托我？已经取得巴洛古的皮了？\r\n\r\n#r#L1#兑换一些东西#l#k");
     } else if (status == 1) {
-        var selStr = "Ҫ���ɺ��־���? ���ž�������࣬�����Ƥ������Ҳ��ͬ��\r\n\r\n#b";
+        var selStr = "要做成何种卷轴? 随着卷轴的种类，所需的皮件个数也不同。\r\n\r\n#b";
         for (var i = 0; i < itemids.length; i++) {
             selStr += "#L" + i + "##i" + itemids[i] + "##z" + itemids[i] + "##l\r\n";
         }
         cm.sendSimple(selStr);
     } else if (status == 2) {
         if (!cm.canHold(itemids[selection], 1)) {
-            cm.sendOk("��ճ�һЩ��λ��");
+            cm.sendOk("请空出一些栏位。");
         } else if (cm.itemQuantity(4001261) < 1) {
-            cm.sendOk("��û���㹻��#b#t4001261##k��");
+            cm.sendOk("你没有足够的#b#t4001261##k。");
         } else {
             cm.gainItem(4001261, -1);
             cm.gainItem(itemids[selection], 1);
-            cm.sendOk("��л���٣���ӭ�´�����~");
+            cm.sendOk("感谢光临，欢迎下次再来~");
         }
         cm.dispose();
     }

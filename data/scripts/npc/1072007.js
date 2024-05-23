@@ -16,9 +16,9 @@ function action(mode, type, selection) {
 	    cm.removeAll(4031013);
 	    cm.completeQuest(100010);
 	    cm.startQuest(100011);
-	    cm.sendOk("ÄãÊÇÒ»¸öÓ¢ĞÛ£¬ÄÃ×ÅÕâ¸ö#i4031012# ´ïÂ³¿Ë»áÈÏ¿ÉÄãµÄ¡£");
+	    cm.sendOk("ä½ æ˜¯ä¸€ä¸ªè‹±é›„ï¼Œæ‹¿ç€è¿™ä¸ª#i4031012# è¾¾é²å…‹ä¼šè®¤å¯ä½ çš„ã€‚");
 	} else {
-	    cm.sendOk("¿ªÊ¼¿¼Ñé¡£ÄãÒª½»¸øÎÒ #b30¸ö #t4031013##k. ×£ÄãºÃÔË.")
+	    cm.sendOk("å¼€å§‹è€ƒéªŒã€‚ä½ è¦äº¤ç»™æˆ‘ #b30ä¸ª #t4031013##k. ç¥ä½ å¥½è¿.")
 	    cm.safeDispose();
 	}
     } else if (status == 1) {

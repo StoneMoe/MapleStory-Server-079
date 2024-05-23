@@ -5,6 +5,6 @@
 */
 
 function start(){
-	cm.sendOk("在世界上什么，你说什么？");
+	cm.sendOk("鍦ㄤ笘鐣屼笂浠�涔堬紝浣犺浠�涔堬紵");
 	cm.dispose();
 	}

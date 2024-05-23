@@ -19,14 +19,14 @@ function action(mode, type, selection) {
         else
             status--;
         if (status == 0) {
-            cm.sendYesNo("ÇĞ»»µ½»ğ¶¾Ä£Ê½£¿");
+            cm.sendYesNo("åˆ‡æ¢åˆ°ç«æ¯’æ¨¡å¼ï¼Ÿ");
         }else if(status == 1){
 			if(cm.getPlayer().getJob() == 210 || cm.getPlayer().getJob() == 220 || cm.getPlayer().getJob() == 221 ){
             cm.changeJob(211);
-			cm.getPlayer().setRemainingSp(0);cm.sendOk("ÇĞ»»³É¹¦~");
+			cm.getPlayer().setRemainingSp(0);cm.sendOk("åˆ‡æ¢æˆåŠŸ~");
             cm.dispose();
 			}else{
-				cm.sendOk("ÄãÒÑ¾­ÊÇ»ğ¶¾Ä£Ê½¡£")
+				cm.sendOk("ä½ å·²ç»æ˜¯ç«æ¯’æ¨¡å¼ã€‚")
 				cm.dispose();
 			}
         }

@@ -32,14 +32,14 @@ function start() {
 
 function action(mode, type, selection) {
 	if (status == 0) {
-		cm.sendYesNo("ÄãÕæµÄÏëÏÂ·É»ú?");
+		cm.sendYesNo("ä½ çœŸçš„æƒ³ä¸‹é£æœº?");
 		status++;
 	} else {
 		if ((status == 1 && type == 1 && selection == -1 && mode == 0) || mode == -1) {
 			cm.dispose();
 		} else {
 			if (status == 1) {
-					cm.sendNext ("ÄÇÃ´ºÃµÄ£¬ÏÂ´ÎÔÙ¼û£¬Ò»Â·Ğ¡ĞÄ.");
+					cm.sendNext ("é‚£ä¹ˆå¥½çš„ï¼Œä¸‹æ¬¡å†è§ï¼Œä¸€è·¯å°å¿ƒ.");
 					status++;
 			} else if (status == 2) {
 					cm.warp(240000110, 0);// back to Leafre

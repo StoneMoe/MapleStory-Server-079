@@ -4,12 +4,12 @@
     Made by Daenerys
 */
 function start() {
-    cm.sendYesNo("ÄãÏëÒªÈ¥Ò®À×¸¥±ØÐëÖ§¸¶#b 5000 ·ã±Ò#k ´ó¸ÅÒ»·ÖÖÓ...");
+    cm.sendYesNo("ä½ æƒ³è¦åŽ»è€¶é›·å¼—å¿…é¡»æ”¯ä»˜#b 5000 æž«å¸#k å¤§æ¦‚ä¸€åˆ†é’Ÿ...");
 }
 
 function action(mode, type, selection) {
     if (mode == 0) {
-	cm.sendOk("µÈÄã¿¼ÂÇºÃÔÙÀ´ÕÒÎÒ°É!");
+	cm.sendOk("ç­‰ä½ è€ƒè™‘å¥½å†æ¥æ‰¾æˆ‘å§!");
 	cm.dispose();
 	} else {
     if(cm.getPlayer().getMeso() >= 5000) {

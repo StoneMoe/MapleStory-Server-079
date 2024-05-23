@@ -24,11 +24,11 @@ function action(mode, type, selection) {
 		}
 	if(status == 0){
 		if(cm.isQuestActive(2314))
-			cm.PlayerToNpc("ÕâÊÇÒ»¸ö#b¾Ş´óµÄÄ§·¨ÆÁÕÏ#k ...");
+			cm.PlayerToNpc("è¿™æ˜¯ä¸€ä¸ª#bå·¨å¤§çš„é­”æ³•å±éšœ#k ...");
 		else if(cm.isQuestActive(2322))
-			cm.PlayerToNpc("Õâ¸öµØ·½»¹ÊÇÏÈ±¨¸æ¸ø #b#p1300003##k ÖªµÀ°É£¡");
+			cm.PlayerToNpc("è¿™ä¸ªåœ°æ–¹è¿˜æ˜¯å…ˆæŠ¥å‘Šç»™ #b#p1300003##k çŸ¥é“å§ï¼");
 		else {
-			cm.PlayerToNpc("ÎÒÊÇ·ñ¸ÃÊ¹ÓÃ #t2430014#£¿£¿");
+			cm.PlayerToNpc("æˆ‘æ˜¯å¦è¯¥ä½¿ç”¨ #t2430014#ï¼Ÿï¼Ÿ");
 			cm.dispose();
 		}
 	}if(status == 1){
@@ -37,7 +37,7 @@ function action(mode, type, selection) {
 			cm.forceCompleteQuest(2314);
 			cm.dispose();
 		} else {
-			cm.playerMessage("ÇëÏÈ»ØÈ¥±¨¸æ°É¡£");
+			cm.playerMessage("è¯·å…ˆå›å»æŠ¥å‘Šå§ã€‚");
 		}
 	}
 }

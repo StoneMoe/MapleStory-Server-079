@@ -27,7 +27,7 @@ var skin = Array(0, 1, 2, 3, 4);
 var price;
 
 function start() {
-    cm.sendSimple("»¶Ó­À´µ½¹­¼ıÊÖ´å»¤·¢ÖĞĞÄ! ÊÇ·ñÓĞÏëÒªÈ¾µÄÆ¤·ôÄØ?? ¾ÍÏñÎÒµÄ½¡¿µÆ¤·ô??  Èç¹ûÄãÓĞ #b#t5153000##k, ¾Í¿ÉÒÔËæÒâÈ¾µÄÏëµ½µÄÆ¤·ô~~~\r\n\#L2#ÎÒÒÑ¾­ÓĞÒ»¸ö»»·ô¿¨!#l");
+    cm.sendSimple("æ¬¢è¿æ¥åˆ°å¼“ç®­æ‰‹æ‘æŠ¤å‘ä¸­å¿ƒ! æ˜¯å¦æœ‰æƒ³è¦æŸ“çš„çš®è‚¤å‘¢?? å°±åƒæˆ‘çš„å¥åº·çš®è‚¤??  å¦‚æœä½ æœ‰ #b#t5153000##k, å°±å¯ä»¥éšæ„æŸ“çš„æƒ³åˆ°çš„çš®è‚¤~~~\r\n\#L2#æˆ‘å·²ç»æœ‰ä¸€ä¸ªæ¢è‚¤å¡!#l");
 }
 
 function action(mode, type, selection) {
@@ -36,14 +36,14 @@ function action(mode, type, selection) {
     else {
         status++;
         if (status == 1)
-            cm.sendStyle("Ñ¡Ò»¸öÏëÒªµÄ·ç¸ñ.", 5153000, skin);
+            cm.sendStyle("é€‰ä¸€ä¸ªæƒ³è¦çš„é£æ ¼.", 5153000, skin);
         else {
             if (cm.haveItem(5153000)) {
                 cm.gainItem(5153000, -1);
                 cm.setSkin(selection);
-                cm.sendOk("ÏíÊÜ!");
+                cm.sendOk("äº«å—!");
             } else
-                cm.sendOk("ÄúÃ²ËÆÃ»ÓĞ#b#t5153000##k..");
+                cm.sendOk("æ‚¨è²Œä¼¼æ²¡æœ‰#b#t5153000##k..");
             cm.dispose();
         }
     }

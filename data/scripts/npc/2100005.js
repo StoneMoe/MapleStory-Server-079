@@ -1,4 +1,4 @@
 function start() {
- cm.sendOk("ÎÒµÄÊÖÒÕ²¢²»ºÃ£¬Ò²Ðí»á¸øÄãÍ··¢¼ôÆ°£¬ËùÒÔÄã»¹ÊÇÀÏÀÏÊµÊµÓÃÅÄÂôÀïµÄÃÀ·¢°É...");
+ cm.sendOk("æˆ‘çš„æ‰‹è‰ºå¹¶ä¸å¥½ï¼Œä¹Ÿè®¸ä¼šç»™ä½ å¤´å‘å‰ªç“¢ï¼Œæ‰€ä»¥ä½ è¿˜æ˜¯è€è€å®žå®žç”¨æ‹å–é‡Œçš„ç¾Žå‘å§...");
  cm.dispose();
 }

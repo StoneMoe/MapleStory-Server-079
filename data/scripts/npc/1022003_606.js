@@ -1,4 +1,4 @@
 function start() {
- cm.sendOk("正在更新...");
+ cm.sendOk("姝ｅ湪鏇存柊...");
  cm.dispose();
 }

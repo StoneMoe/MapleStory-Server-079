@@ -11,7 +11,7 @@ function action(mode, type, selection) {
     }
 
     if (status == 0) {
-        cm.sendSimple("àË£¬ÎÒÊÇ#p1012104# Èç¹ûÄãÓĞ #b#t5150000##k »òÕß #b#t5151000##k, ÎÒ¾Í¿ÉÒÔÃâ·Ñ°ïÄãÅªºÃ¿´µÄÍ··¢¡£ \r\n#L0#Ê¹ÓÃ: #i5150000##t5150000##l\r\n#L1#Ê¹ÓÃ: #i5151000##t5151000##l");
+        cm.sendSimple("å—¨ï¼Œæˆ‘æ˜¯#p1012104# å¦‚æœä½ æœ‰ #b#t5150000##k æˆ–è€… #b#t5151000##k, æˆ‘å°±å¯ä»¥å…è´¹å¸®ä½ å¼„å¥½çœ‹çš„å¤´å‘ã€‚ \r\n#L0#ä½¿ç”¨: #i5150000##t5150000##l\r\n#L1#ä½¿ç”¨: #i5151000##t5151000##l");
     } else if (status == 1) {
         if (selection == 0) {
             var hair = cm.getPlayerStat("HAIR");
@@ -26,7 +26,7 @@ function action(mode, type, selection) {
             for (var i = 0; i < hair_Colo_new.length; i++) {
                 hair_Colo_new[i] = hair_Colo_new[i] + (hair % 10);
             }
-            cm.sendYesNo("È·¶¨ÒªÊ¹ÓÃ #b#t5150000##k Ëæ»ú¼ô·¢ÁË£¿£¿");
+            cm.sendYesNo("ç¡®å®šè¦ä½¿ç”¨ #b#t5150000##k éšæœºå‰ªå‘äº†ï¼Ÿï¼Ÿ");
 
         } else if (selection == 1) {
             var currenthaircolo = Math.floor((cm.getPlayerStat("HAIR") / 10)) * 10;
@@ -36,20 +36,20 @@ function action(mode, type, selection) {
             for (var i = 0; i < 8; i++) {
                 hair_Colo_new[i] = currenthaircolo + i;
             }
-            cm.sendYesNo("È·¶¨ÒªÊ¹ÓÃ #b#t5151000##k Ëæ»úÈ¾·¢ÁË£¿£¿");
+            cm.sendYesNo("ç¡®å®šè¦ä½¿ç”¨ #b#t5151000##k éšæœºæŸ“å‘äº†ï¼Ÿï¼Ÿ");
         }
     } else if (status == 2) {
         if (beauty == 1) {
             if (cm.setRandomAvatar(5150000, hair_Colo_new) == 1) {
-                cm.sendOk("ÏíÊÜ£¡");
+                cm.sendOk("äº«å—ï¼");
             } else {
-                cm.sendOk("¯z.... Ã²ËÆÃ»ÓĞ#b#t5150000##k¡£");
+                cm.sendOk("ï¿½z.... è²Œä¼¼æ²¡æœ‰#b#t5150000##kã€‚");
             }
         } else {
             if (cm.setRandomAvatar(5151000, hair_Colo_new) == 1) {
-                cm.sendOk("ÏíÊÜ£¡");
+                cm.sendOk("äº«å—ï¼");
             } else {
-                cm.sendOk("¯z.... Ã²ËÆÃ»ÓĞ#b#t5151000##k¡£");
+                cm.sendOk("ï¿½z.... è²Œä¼¼æ²¡æœ‰#b#t5151000##kã€‚");
             }
         }
         cm.safeDispose();

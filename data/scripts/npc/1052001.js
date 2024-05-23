@@ -1,7 +1,7 @@
 /**
- * @���ߣ�MinaMS
- * @�ع����ư汾
- * @��; ����תְ 1~3ת ����NPC 1052001.js ��ͼ 103000003 - ������ - �϶��ư�
+ * @作者：MinaMS
+ * @重构完善版本
+ * @用途 飞侠转职 1~3转 触发NPC 1052001.js 地图 103000003 - 金银岛 - 废都酒吧
  */
 
 var status = 0;
@@ -14,7 +14,7 @@ function start() {
 
 function action(mode, type, selection) {
     if (mode == 0 && status == 2) {
-        cm.sendOk("�¶������������ҡ�");
+        cm.sendOk("下定决心再来找我。");
         cm.dispose();
         return;
     }
@@ -23,161 +23,161 @@ function action(mode, type, selection) {
     else
         status--;
     if (status == 0) {
-//��ʼд����
-        if (cm.getJob() == 0) {//���������
-            if (cm.getPlayer().getLevel() >= 10) {//�����ɫ�ȼ����ڵ���10
-                cm.sendNext("�����Ϊһ�� #r����#k ��\r\n���� ӵ��������һЩ���ݼ�����,��ս���п���ͻϮ���˻���ʹ�����������⼼��.����ӵ�зǳ����ݵ��ƶ����ر�,��������Ķ��������ܿ��Գ�����ܲ�������Ȥ��");
+//开始写代码
+        if (cm.getJob() == 0) {//如果是新手
+            if (cm.getPlayer().getLevel() >= 10) {//如果角色等级大于等于10
+                cm.sendNext("你想成为一名 #r飞侠#k 吗？\r\n飞侠 拥有运气和一些敏捷及力量,在战场中可以突袭敌人或者使用隐身等特殊技能.飞侠拥有非常敏捷的移动及回避,配合自身的多样化技能可以充分享受操作的乐趣。");
             } else {
-                cm.sendOk("��ĵȼ�����10�����޷�תְ��Ϊ������");
+                cm.sendOk("你的等级不足10级。无法转职成为飞侠。");
                 cm.dispose();
             }
         } else {
-            //��������
-            //�����ɫ�ȼ����ڵ���30 ����ְҵ�Ƿ��������ж���׼����ת
+            //不是新手
+            //如果角色等级大于等于30 并且职业是飞侠。即判定其准备二转
             if (cm.getPlayer().getLevel() >= 30 && cm.getJob() == 400) {
-                //����������������ж����Ƿ���4031012 - Ӣ��֤�� - �ڶ���תְʱ�̹������Ӣ��֤��.
-                if (cm.haveItem(4031012, 1)) {//�����Ӣ��֤�� ,������ɽ̹��������
+                //如果条件成立，则判断其是否有4031012 - 英雄证书 - 第二次转职时教官授予的英雄证书.
+                if (cm.haveItem(4031012, 1)) {//如果有英雄证书 ,代表完成教官任务归来
                     if (cm.haveItem(4031012, 1)) {
-                        status = 30; //��ʼִ�ж�ת����ת��21
-                        cm.sendNext("��ϲ������˲��ԡ��õ���Ӣ��֤�顣��Ҫ����תְ��������һҳ!");
-                    } else {//���û��Ӣ��֤��
-                        //��ֹ������߶�ʧ,�޷�����תְ
-                        if (!cm.haveItem(4031011)) {//�������û��4031011 - ���³���ż� - �ӷ������еĴ��³�յ����ż�.Ӧ��ת���������̹�.
-                            cm.gainItem(4031011, 1);//�����ż���
+                        status = 30; //开始执行二转。跳转到21
+                        cm.sendNext("恭喜你完成了测试。拿到了英雄证书。想要继续转职，请点击下一页!");
+                    } else {//如果没有英雄证书
+                        //防止任务道具丢失,无法进行转职
+                        if (!cm.haveItem(4031011)) {//如果背包没有4031011 - 达克鲁的信件 - 从废弃都市的达克鲁收到的信件.应该转交给飞侠教官.
+                            cm.gainItem(4031011, 1);//给予信件。
                         }
 
-                        //102040000 - ������ - �϶���������
-                        cm.sendNext("��ȥ�� #r������ת�̹�#k.������ #r- ������ - �϶���������#k.");
+                        //102040000 - 金银岛 - 废都北方工地
+                        cm.sendNext("请去找 #r飞侠二转教官#k.他就在 #r- 金银岛 - 废都北方工地#k.");
                         cm.dispose();
                     }
                 } else {
-                    status = 10;//��ת��11
-                    cm.sendNext("���Ѿ�����תְ��,Ҫתְ�����һҳ.");
+                    status = 10;//跳转到11
+                    cm.sendNext("你已经可以转职了,要转职请点下一页.");
                 }
             } else if (cm.getPlayer().getLevel() >= 70 && cm.getJob() == 410 || cm.getJob() == 420) {
-                //����������������ж����Ƿ���4031059  - �ڷ� - �������˷������ȡ�ĵ�����
-                if (cm.haveItem(4031059, 1)) {// - �ڷ� - �������˷������ȡ�ĵ�����
-                    //�����4031059
+                //如果条件成立，则判断其是否有4031059  - 黑符 - 在异界打退分身后获取的道符。
+                if (cm.haveItem(4031059, 1)) {// - 黑符 - 在异界打退分身后获取的道符。
+                    //如果有4031059
                     status = 50;
-                    cm.gainItem(4031057, 1);//���� 4031057 - �������� - �������˷��������߸�������
-                    cm.gainItem(4031059, -1);//ɾ���ڷ�
-                    cm.sendNext("��ϲ���ܷ������õ��ڷ�������˲��ԣ������������ #r#t4031057##k ȥ���Ϲ����� #b̩��˹#k.");
+                    cm.gainItem(4031057, 1);//给予 4031057 - 力气项链 - 在异界打退分身后贤者给的项链
+                    cm.gainItem(4031059, -1);//删除黑符
+                    cm.sendNext("恭喜你打败分身，拿到黑符，完成了测试！现在拿着这个 #r#t4031057##k 去长老公馆找 #b泰勒斯#k.");
                 } else {
-                    //���û��
+                    //如果没有
                     status = 40;
-                    cm.sendNext("��ϲ��ﵽ70�����������Ѿ�������ת�ˡ������Ҫ��ת�뵥����һҳ.");
+                    cm.sendNext("恭喜你达到70级，你现在已经可以三转了。如果需要三转请单击下一页.");
                 }
             } else {
-                cm.sendOk("��á����Ƿ���תְ�̹١���Ҫ��ת����ת���������Ұɣ�");
+                cm.sendOk("你好。我是飞侠转职教官。需要二转、三转，就来找我吧！");
                 cm.dispose();
             }
         }
-        //�˴���ʼִ�з���һת
+        //此处开始执行飞侠一转
     } else if (status == 1) {
-        cm.sendNextPrev("һ��תְ�˾Ͳ��ܷ���,�������תְ�����һҳ.");
+        cm.sendNextPrev("一旦转职了就不能反悔,如果不想转职请点上一页.");
     } else if (status == 2) {
-        cm.sendYesNo("��������Ϊһ�� #r����#k ��?");
+        cm.sendYesNo("你真的想成为一名 #r飞侠#k 吗?");
     } else if (status == 3) {
         if (cm.getJob() == 0) {
-            cm.changeJob(400); // �ı�ְҵΪ����
+            cm.changeJob(400); // 改变职业为飞侠
             cm.resetStats(4, 25, 4, 4);
         }
-        cm.gainItem(1332063, 1);//1332063 - ���������Ķ̽� - (�o����)
-        cm.gainItem(1472061, 1);//1472061 - ��������ȭ�� - (�o����)
-        cm.gainItem(2070015, 500);//2070015 - ��ѧ�߱� - Ϊ��������׼���ı꣮��һ��ı겻һ���޷����䣮\r\n������ + 15
-        cm.gainItem(2070015, 500);//2070015 - ��ѧ�߱� - Ϊ��������׼���ı꣮��һ��ı겻һ���޷����䣮\r\n������ + 15
-        cm.sendOk("תְ�ɹ� ! ��������һ��������.");
+        cm.gainItem(1332063, 1);//1332063 - 初级盗贼的短剑 - (�o描述)
+        cm.gainItem(1472061, 1);//1472061 - 初级飞侠拳套 - (�o描述)
+        cm.gainItem(2070015, 500);//2070015 - 初学者标 - 为初级飞侠准备的标．与一般的标不一样无法补充．\r\n攻击力 + 15
+        cm.gainItem(2070015, 500);//2070015 - 初学者标 - 为初级飞侠准备的标．与一般的标不一样无法补充．\r\n攻击力 + 15
+        cm.sendOk("转职成功 ! 你现在是一名飞侠了.");
         if (cm.getPlayer().getGender() == 0) {
-            cm.worldMessage("[תְ�챨]����ϲ˧��." + cm.getChar().getName() + "  �ɹ�תְ��Ϊһ�����������������ҵ�ף�����ɣ�����");
+            cm.worldMessage("[转职快报]：恭喜帅哥." + cm.getChar().getName() + "  成功转职成为一名飞侠，让我们热烈的祝福他吧！！！");
         } else {
-            cm.worldMessage("[תְ�챨]����ϲ��Ů." + cm.getChar().getName() + "  �ɹ�תְ��Ϊһ�����������������ҵ�ף�����ɣ�����");
+            cm.worldMessage("[转职快报]：恭喜美女." + cm.getChar().getName() + "  成功转职成为一名飞侠，让我们热烈的祝福她吧！！！");
         }
         cm.dispose();
-        //����һת����
+        //飞侠一转结束
 
 
-        //������ת����ʼ���ж�û��Ӣ��֤��ʱ��ִ��
+        //飞侠二转，开始，判断没有英雄证书时，执行
     } else if (status == 11) {
-        cm.sendNextPrev("������תʱ�������ѡ������ְҵ��\r\n #r�̿�#k �� #r����#k.");
+        cm.sendNextPrev("飞侠二转时，你可以选择如下职业：\r\n #r刺客#k 或 #r侠客#k.");
     } else if (status == 12) {
-        cm.askAcceptDecline("�����ұ����Ȳ����㣬��û���ʸ���ж�ת,��׼�������� ?");
+        cm.askAcceptDecline("但是我必须先测试你，有没有资格进行二转,你准备好了吗 ?");
     } else if (status == 13) {//4031011
-        cm.gainItem(4031011, 1);//- ���³���ż� - �ӷ������еĴ��³�յ����ż�.Ӧ��ת���������̹�. -
-        //cm.warp(102020300);//���͵���ת�̹ٵĵ�ͼ
-        status = 20;//��ת��21
-        cm.sendNext("��ȥ�� #b����תְ�̹�#k . ���������ô����.");
+        cm.gainItem(4031011, 1);//- 达克鲁的信件 - 从废弃都市的达克鲁收到的信件.应该转交给飞侠教官. -
+        //cm.warp(102020300);//传送到二转教官的地图
+        status = 20;//跳转到21
+        cm.sendNext("请去找 #b飞侠转职教官#k . 他会教你怎么做！.");
         //cm.dispose();
 
 
-        //�˴����ж��Ѿ����˽������ţ��ٴε��NPC ���͹�ȥ�Ĵ���
+        //此处是判断已经有了教练的信，再次点击NPC 传送过去的代码
     } else if (status == 21) {
-        cm.sendNextPrev("ʲô���㲻֪�� #r- ������ - �϶���������#k �����");
+        cm.sendNextPrev("什么？你不知道 #r- 金银岛 - 废都北方工地#k 在哪里？");
     } else if (status == 22) {
-        cm.askAcceptDecline("�ðɣ��ҿ��������ȥ������Ҫ�շ�Ŷ�����ͷ�����Ҫʮ����");
+        cm.askAcceptDecline("好吧，我可以送你过去。但是要收费哦！传送费用需要十万金币");
     } else if (status == 23) {
-        if (cm.getPlayer().getMeso() >= 100000) {//�ж���ҽ���Ƿ����ʮ��
-            cm.gainMeso(-100000);//�۳�ʮ����
-            cm.warp(102040000);//���͵���ת�̹ٵĵ�ͼ  //102040000 - ������ - �϶���������
-            cm.sendOk("���Ѿ����㴫�͵���ת�̹����ڵ�ͼ�ˡ��������⣬ȥ�����ɣ�");
+        if (cm.getPlayer().getMeso() >= 100000) {//判断玩家金币是否大于十万
+            cm.gainMeso(-100000);//扣除十万金币
+            cm.warp(102040000);//传送到二转教官的地图  //102040000 - 金银岛 - 废都北方工地
+            cm.sendOk("我已经将你传送到二转教官所在地图了。他就在这，去找他吧！");
             cm.dispose();
         } else {
-            cm.sendOk("��Ľ�Ҳ���10�����޷������ȥ��\r\n�����㻹���Լ�ȥ�ٶ����Ǹ���ͼ��ôȥ�ɣ������\r\n��Ŀǰӵ�� " + cm.getPlayer().getMeso() + " ���.");
+            cm.sendOk("你的金币不足10万，我无法送你过去！\r\n所以你还是自己去百度下那个地图怎么去吧！穷鬼！\r\n你目前拥有 " + cm.getPlayer().getMeso() + " 金币.");
         }
 
-        //�˴���ʼִ�ж�ת
+        //此处开始执行二转
     } else if (status == 31) {
-        cm.sendSimple("����תְ��Ϊʲôְҵ ? #b\r\n#L0#�̿�#l\r\n#L1#����#l#k");
+        cm.sendSimple("你想转职成为什么职业 ? #b\r\n#L0#刺客#l\r\n#L1#侠客#l#k");
     } else if (status == 32) {
         var jobName;
         if (selection == 0) {
-            jobName = "�̿�";
-            job = 410; // ����
+            jobName = "刺客";
+            job = 410; // 猎手
         } else {
-            jobName = "����";
-            job = 420; // ����
+            jobName = "侠客";
+            job = 420; // 弩弓手
         }
-        cm.sendYesNo("�����Ҫ��Ϊһ�� #r" + jobName + "#k?");
+        cm.sendYesNo("你真的要成为一名 #r" + jobName + "#k?");
     } else if (status == 33) {
-        cm.changeJob(job);//�ı�ְҵ
-        //4031012 - Ӣ��֤�� - �ڶ���תְʱ�̹������Ӣ��֤��.
-        cm.gainItem(4031012, -1);//ɾ��Ӣ��֤��
-        cm.sendOk("תְ�ɹ���");
+        cm.changeJob(job);//改变职业
+        //4031012 - 英雄证书 - 第二次转职时教官授予的英雄证书.
+        cm.gainItem(4031012, -1);//删除英雄证书
+        cm.sendOk("转职成功！");
         if (cm.getPlayer().getGender() == 0) {
-            cm.worldMessage("[תְ�챨]����ϲ˧��." + cm.getChar().getName() + "  �ɹ����ж�ת�����������ҵ�ף�����ɣ�����");
+            cm.worldMessage("[转职快报]：恭喜帅哥." + cm.getChar().getName() + "  成功进行二转，让我们热烈的祝福他吧！！！");
         } else {
-            cm.worldMessage("[תְ�챨]����ϲ��Ů." + cm.getChar().getName() + "  �ɹ����ж�ת�����������ҵ�ף�����ɣ�����");
+            cm.worldMessage("[转职快报]：恭喜美女." + cm.getChar().getName() + "  成功进行二转，让我们热烈的祝福她吧！！！");
         }
         cm.dispose();
     } else if (status == 41) {
-        cm.sendNextPrev("��Ҫ��ת���ұ����Ȳ��������������ȥ - ������ - ���III \r\n��ȥ֮��������һ����ħ��ʦð����ҵķ�������������������õ�������� #r�ڷ�#k�����������ҡ�");
+        cm.sendNextPrev("想要三转，我必须先测试你的能力！请去 - 金银岛 - 异界III \r\n进去之后，里面有一个黑魔法师冒充的我的分身。请击败他，并且拿到他掉落的 #r黑符#k，回来交给我。");
     } else if (status == 42) {
-        cm.sendNextPrev("ʲô���㲻֪�� - ������ - ���IIII ��ôȥ��");
+        cm.sendNextPrev("什么？你不知道 - 金银岛 - 异界IIII 怎么去？");
     } else if (status == 43) {
-        cm.askAcceptDecline("�ðɣ��ҿ��������ȥ������Ҫ�շ�Ŷ�����ͷ�����Ҫ��ʮ����!");
+        cm.askAcceptDecline("好吧，我可以送你过去。但是要收费哦！传送费用需要二十万金币!");
     } else if (status == 44) {
-        if (cm.getPlayer().getMeso() >= 200000) {//�ж���ҽ���Ƿ����20��
-            cm.gainMeso(-200000);//�۳�20����
-            cm.warp(108010401);//���͵���ת�̹ٵĵ�ͼ
-            cm.spawnMobOnMap(9001003, 1, 299, 20, 108010401);//�ٻ�������//9001002 - �����ȵķ���
-            cm.sendOk("���Ѿ������͵������ˡ����ܺ�ħ��ʦð��ķ������õ� #r�ڷ�#k ����������.");
+        if (cm.getPlayer().getMeso() >= 200000) {//判断玩家金币是否大于20万
+            cm.gainMeso(-200000);//扣除20万金币
+            cm.warp(108010401);//传送到二转教官的地图
+            cm.spawnMobOnMap(9001003, 1, 299, 20, 108010401);//召唤出分身//9001002 - 赫丽娜的分身
+            cm.sendOk("我已经把你送到这里了。请打败黑魔法师冒充的分身，拿到 #r黑符#k 回来交给我.");
             cm.dispose();
         } else {
-            cm.sendOk("��Ľ�Ҳ���20�����޷������ȥ��\r\n�����㻹���Լ�ȥ�ٶ����Ǹ���ͼ��ôȥ�ɣ������\r\n��Ŀǰӵ�� " + cm.getPlayer().getMeso() + " ���.");
+            cm.sendOk("你的金币不足20万，我无法送你过去！\r\n所以你还是自己去百度下那个地图怎么去吧！穷鬼！\r\n你目前拥有 " + cm.getPlayer().getMeso() + " 金币.");
 
         }
         cm.dispose();
     } else if (status == 50) {
-        cm.sendNextPrev("��ȥѩ���Ϲ��ݣ�������ȥħ�����ָۿڣ����ɴ�ǰ�����֮�ǣ�Ȼ������֮��ǰ��ѩ��");
+        cm.sendNextPrev("想去雪域长老公馆，必须先去魔法密林港口，做飞船前往天空之城，然后从天空之城前往雪域。");
     } else if (status == 51) {
-        cm.askAcceptDecline("ʲô���㲻�����������԰����ҿ��������ȥ�������շ�Ŷ����Ҫ100�����أ�");
+        cm.askAcceptDecline("什么？你不想坐船？可以啊！我可以送你过去！但是收费哦！需要100万金币呢！");
     } else if (status == 52) {
-        if (cm.getPlayer().getMeso() >= 1000000) {//�ж���ҽ���Ƿ����100��
-            cm.gainMeso(-1000000);//�۳�100����
-            cm.warp(211000001);//���͵����Ϲ���
-            cm.sendOk("���Ѿ������͵����Ϲ����ˡ���� #b�����#k �Ի���");
+        if (cm.getPlayer().getMeso() >= 1000000) {//判断玩家金币是否大于100万
+            cm.gainMeso(-1000000);//扣除100万金币
+            cm.warp(211000001);//传送到长老公馆
+            cm.sendOk("我已经把你送到长老公馆了。请和 #b艾瑞克#k 对话！");
             cm.dispose();
         } else {
-            cm.sendOk("��Ľ�Ҳ���20�����޷������ȥ��\r\n�����㻹������ʵʵ����ȥ�ɣ������\r\n��Ŀǰӵ�� " + cm.getPlayer().getMeso() + " ���.");
+            cm.sendOk("你的金币不足20万，我无法送你过去！\r\n所以你还是老老实实坐船去吧！穷鬼！\r\n你目前拥有 " + cm.getPlayer().getMeso() + " 金币.");
         }
         cm.dispose();
     }

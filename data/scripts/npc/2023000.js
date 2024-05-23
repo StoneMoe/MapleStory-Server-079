@@ -8,7 +8,7 @@ function action(mode, type, selection) {
     if (mode == 1) {
         status++;
     } else {
-        cm.sendNext("àÅ¡­¡­ÔÙ¿¼ÂÇÒ»ÏÂ°É¡£µ«ÄãÒ»¶¨²»»áºó»ÚµÄ£¡");
+        cm.sendNext("å—¯â€¦â€¦å†è€ƒè™‘ä¸€ä¸‹å§ã€‚ä½†ä½ ä¸€å®šä¸ä¼šåæ‚”çš„ï¼");
         cm.dispose();
         return;
     }
@@ -54,12 +54,12 @@ function action(mode, type, selection) {
             mapname = "Ossyria Continent";
             break;
         }
-        cm.sendNext("ÄãºÃ£¡ÎÒÊÇËæÊ±¿ÉÒÔÈ¥Î£ÏÕµØÇøµÄÎ£ÏÕµØÇø¿ìËÙ³ö×â³µ£¡ÏÖÔËÓªÏßÂ·Îª#m" + cm.getMapId() + "#µ½#b#m" + map + "##kÖ®¼ä£¡¼Û¸ñÎª #b" + cost + " ½ğ±Ò#k¡£");
+        cm.sendNext("ä½ å¥½ï¼æˆ‘æ˜¯éšæ—¶å¯ä»¥å»å±é™©åœ°åŒºçš„å±é™©åœ°åŒºå¿«é€Ÿå‡ºç§Ÿè½¦ï¼ç°è¿è¥çº¿è·¯ä¸º#m" + cm.getMapId() + "#åˆ°#b#m" + map + "##kä¹‹é—´ï¼ä»·æ ¼ä¸º #b" + cost + " é‡‘å¸#kã€‚");
     } else if (status == 1) {
-        cm.sendYesNo("#b" + cost + "½ğ±Ò#kÖ§¸¶ºó£¬ÒªÒÆ¶¯µ½#b#m" + map + "##kÂğ£¿");
+        cm.sendYesNo("#b" + cost + "é‡‘å¸#kæ”¯ä»˜åï¼Œè¦ç§»åŠ¨åˆ°#b#m" + map + "##kå—ï¼Ÿ");
     } else if (status == 2) {
         if (cm.getMeso() < cost) {
-            cm.sendNext("ÄãµÄ½ğ±ÒºÃÏñ²»¹»¡£·Ç³£±§Ç¸£¬²»Ö§¸¶½ğ±ÒµÄ»°£¬ÊÇ²»ÄÜÊ¹ÓÃ³ö×â³µµÄ¡£¼ÌĞøÅ¬Á¦´òÁÔ£¬»ñÈ¡½ğ±ÒºóÔÙÀ´°É¡£");
+            cm.sendNext("ä½ çš„é‡‘å¸å¥½åƒä¸å¤Ÿã€‚éå¸¸æŠ±æ­‰ï¼Œä¸æ”¯ä»˜é‡‘å¸çš„è¯ï¼Œæ˜¯ä¸èƒ½ä½¿ç”¨å‡ºç§Ÿè½¦çš„ã€‚ç»§ç»­åŠªåŠ›æ‰“çŒï¼Œè·å–é‡‘å¸åå†æ¥å§ã€‚");
             cm.dispose();
         } else {
             cm.gainMeso( - cost);

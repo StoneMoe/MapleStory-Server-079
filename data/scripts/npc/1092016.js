@@ -6,9 +6,9 @@
 
 function start() {
     if(cm.getQuestStatus(2166) == 1) {
-        cm.sendNext("ÕâÊÇÒ»¸öÃÀÀöµÄ£¬ÉÁÁÁµÄÑÒÊ¯¡£ÎÒÄÜ¸Ð¾õµ½ËüÖÜÎ§µÄÉñÃØÁ¦Á¿¡£");
+        cm.sendNext("è¿™æ˜¯ä¸€ä¸ªç¾Žä¸½çš„ï¼Œé—ªäº®çš„å²©çŸ³ã€‚æˆ‘èƒ½æ„Ÿè§‰åˆ°å®ƒå‘¨å›´çš„ç¥žç§˜åŠ›é‡ã€‚");
 		cm.forceCompleteQuest(2166);
     } else
-        cm.sendNext("ÎÒÓÃÎÒµÄÊÖÃþÁËÃþ·¢ÁÁµÄÑÒÊ¯£¬ÎÒ¸Ðµ½Ò»ÖÖÉñÃØµÄÁ¦Á¿Á÷½øÎÒµÄÉíÌå¡£");
+        cm.sendNext("æˆ‘ç”¨æˆ‘çš„æ‰‹æ‘¸äº†æ‘¸å‘äº®çš„å²©çŸ³ï¼Œæˆ‘æ„Ÿåˆ°ä¸€ç§ç¥žç§˜çš„åŠ›é‡æµè¿›æˆ‘çš„èº«ä½“ã€‚");
     cm.dispose();
 }

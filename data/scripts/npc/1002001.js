@@ -2,7 +2,7 @@
 */
 
 function start() {
-    cm.sendOk("嗨，我是#p1002001# 很高兴认识你=)");
+    cm.sendOk("鍡紝鎴戞槸#p1002001# 寰堥珮鍏磋璇嗕綘=)");
 }
 
 function action(mode, type, selection) {

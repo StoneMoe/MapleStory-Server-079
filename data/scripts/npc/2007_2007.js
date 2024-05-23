@@ -1,12 +1,12 @@
 var ca = java.util.Calendar.getInstance();
-var year = ca.get(java.util.Calendar.YEAR); //»ñµÃÄê·İ
-var month = ca.get(java.util.Calendar.MONTH) + 1; //»ñµÃÔÂ·İ
-var day = ca.get(java.util.Calendar.DATE);//»ñÈ¡ÈÕ
-var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //»ñµÃĞ¡Ê±
-var minute = ca.get(java.util.Calendar.MINUTE);//»ñµÃ·ÖÖÓ
-var second = ca.get(java.util.Calendar.SECOND); //»ñµÃÃë
+var year = ca.get(java.util.Calendar.YEAR); //è·å¾—å¹´ä»½
+var month = ca.get(java.util.Calendar.MONTH) + 1; //è·å¾—æœˆä»½
+var day = ca.get(java.util.Calendar.DATE);//è·å–æ—¥
+var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //è·å¾—å°æ—¶
+var minute = ca.get(java.util.Calendar.MINUTE);//è·å¾—åˆ†é’Ÿ
+var second = ca.get(java.util.Calendar.SECOND); //è·å¾—ç§’
 var weekday = ca.get(java.util.Calendar.DAY_OF_WEEK);
-var Ç©µ½ = "#fEffect/SkillName1.img/1001003/Ç©µ½#";
+var ç­¾åˆ° = "#fEffect/SkillName1.img/1001003/ç­¾åˆ°#";
 
 
 
@@ -28,7 +28,7 @@ function action(mode, type, selection) {
 	    
 
 	if (cm.getPlayer().getLevel() < 10000) {
-        cm.sendOk("ÄãµÄÌì¸³ºÜÆ½Ó¹¡£");
+        cm.sendOk("ä½ çš„å¤©èµ‹å¾ˆå¹³åº¸ã€‚");
         cm.dispose();
 		 }
   
@@ -39,7 +39,7 @@ function action(mode, type, selection) {
 		
 		selStr = ""+cm.getPlayerCount(130000000)+"\r\n\r\n";
 		
-		selStr += "#L2#ÕÙ»½Ìì¸³#l\r\n\r\n";
+		selStr += "#L2#å¬å”¤å¤©èµ‹#l\r\n\r\n";
 		  
 
 		cm.sendSimple(selStr);

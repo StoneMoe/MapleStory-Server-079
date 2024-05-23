@@ -22,7 +22,7 @@ function action(mode, type, selection) {
         else
             status--;
         if (status == 0) {
-            cm.sendSimple("ÄãºÃ,ÎÒÊÇ²î²»¶àÒ½Éú!ÈçÄãÏëÒª¸ü»»ÑÛ¾¦ÑÕÉ«Âğ,ÎÒ¿ÉÒÔ°ïÄã¸ü»»Å¶ÄÇÃ´ÄãÒª×öÊ²Ã´£¿\r\n\#L2##b¸Ä±äÑÛ¾¦ÑÕÉ«#l");
+            cm.sendSimple("ä½ å¥½,æˆ‘æ˜¯å·®ä¸å¤šåŒ»ç”Ÿ!å¦‚ä½ æƒ³è¦æ›´æ¢çœ¼ç›é¢œè‰²å—,æˆ‘å¯ä»¥å¸®ä½ æ›´æ¢å“¦é‚£ä¹ˆä½ è¦åšä»€ä¹ˆï¼Ÿ\r\n\#L2##bæ”¹å˜çœ¼ç›é¢œè‰²#l");
         } else if (status == 1) {
             if (selection == 1) {
                 cm.dispose();
@@ -35,11 +35,11 @@ function action(mode, type, selection) {
                 }
                 colors = Array();
                 colors = Array(current, current + 100, current + 200, current + 300, current + 400, current + 500, current + 600, current + 700);
-                cm.sendStyle("ÇëÑ¡ÔñÄãÏ²»¶µÄÑÕÉ«.", 0, colors);
+                cm.sendStyle("è¯·é€‰æ‹©ä½ å–œæ¬¢çš„é¢œè‰².", 0, colors);
             }
         } else if (status == 2) {
             cm.setFace(colors[selection]);
-            cm.sendOk("ºÃÁË,ÄãµÄÅóÓÑÃÇÒ»¶¨ÈÏ²»³öÀ´ÊÇÄãÁË!");
+            cm.sendOk("å¥½äº†,ä½ çš„æœ‹å‹ä»¬ä¸€å®šè®¤ä¸å‡ºæ¥æ˜¯ä½ äº†!");
             cm.dispose();
 
         }

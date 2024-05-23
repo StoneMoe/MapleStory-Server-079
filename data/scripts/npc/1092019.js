@@ -8,7 +8,7 @@ function start() {
 	    cm.teachSkill(5221003, 0, 10);
 	}
     }
-    cm.sendOk("你是谁你在跟我说话？如果你只是无聊，去找别人！！");
+    cm.sendOk("浣犳槸璋佷綘鍦ㄨ窡鎴戣璇濓紵濡傛灉浣犲彧鏄棤鑱婏紝鍘绘壘鍒汉锛侊紒");
 }
 
 function action(mode, type, selection) {
