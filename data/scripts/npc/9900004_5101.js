@@ -1,10 +1,10 @@
 var ca = java.util.Calendar.getInstance();
-var year = ca.get(java.util.Calendar.YEAR); //»ñµÃÄê·İ
-var month = ca.get(java.util.Calendar.MONTH) + 1; //»ñµÃÔÂ·İ
-var day = ca.get(java.util.Calendar.DATE);//»ñÈ¡ÈÕ
-var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //»ñµÃĞ¡Ê±
-var minute = ca.get(java.util.Calendar.MINUTE);//»ñµÃ·ÖÖÓ
-var second = ca.get(java.util.Calendar.SECOND); //»ñµÃÃë
+var year = ca.get(java.util.Calendar.YEAR); //è·å¾—å¹´ä»½
+var month = ca.get(java.util.Calendar.MONTH) + 1; //è·å¾—æœˆä»½
+var day = ca.get(java.util.Calendar.DATE);//è·å–æ—¥
+var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //è·å¾—å°æ—¶
+var minute = ca.get(java.util.Calendar.MINUTE);//è·å¾—åˆ†é’Ÿ
+var second = ca.get(java.util.Calendar.SECOND); //è·å¾—ç§’
 var weekday = ca.get(java.util.Calendar.DAY_OF_WEEK);
 var Z = "#fUI/GuildMark.img/Mark/Letter/00005025/1#";
 var Y = "#fUI/GuildMark.img/Mark/Letter/00005024/3#";
@@ -14,19 +14,19 @@ var M = "#fUI/GuildMark.img/Mark/Letter/00005012/1#";
 var A = "#fUI/GuildMark.img/Mark/Letter/00005000/1#";
 var P = "#fUI/GuildMark.img/Mark/Letter/00005015/1#";
 var Z = "#fUI/GuildMark.img/Mark/Letter/00005025/9#";
-var ¾Å = "#fUI/GuildMark.img/Mark/Letter/00005035/15#";
-var Æß = "#fUI/GuildMark.img/Mark/Letter/00005033/15#";
-var Áã = "#fUI/GuildMark.img/Mark/Letter/00005026/15#";
-var ·µ»ØÊĞ³¡ = "#fEffect/SkillName1.img/1001003/·µ»ØÊĞ³¡#";
-var Ô¶³Ì´«ËÍ = "#fEffect/SkillName1.img/1001003/Ô¶³Ì´«ËÍ#";
-var »îÔ¾³É¾Í = "#fEffect/SkillName1.img/1001003/»îÔ¾³É¾Í#";
-var ÇåÀí±³°ü = "#fEffect/SkillName1.img/1001003/ÇåÀí±³°ü#";
-var ¿ì½İÉÌµê = "#fEffect/SkillName1.img/1001003/¿ì½İÉÌµê#";
-var ¿ìËÙ×ªÖ° = "#fEffect/SkillName1.img/1001003/¿ìËÙ×ªÖ°#";
-var ÒôÀÖµã²¥ = "#fEffect/SkillName1.img/1001003/ÒôÀÖµã²¥#";
-var ËæÉí²Ö¿â = "#fEffect/SkillName1.img/1001003/ËæÉí²Ö¿â#";
-var ¸½ÊôÖ°Òµ = "#fEffect/SkillName1.img/1001003/¸½ÊôÖ°Òµ#";
-var Ç©µ½ = "#fEffect/SkillName1.img/1001003/Ç©µ½#";
+var ä¹ = "#fUI/GuildMark.img/Mark/Letter/00005035/15#";
+var ä¸ƒ = "#fUI/GuildMark.img/Mark/Letter/00005033/15#";
+var é›¶ = "#fUI/GuildMark.img/Mark/Letter/00005026/15#";
+var è¿”å›å¸‚åœº = "#fEffect/SkillName1.img/1001003/è¿”å›å¸‚åœº#";
+var è¿œç¨‹ä¼ é€ = "#fEffect/SkillName1.img/1001003/è¿œç¨‹ä¼ é€#";
+var æ´»è·ƒæˆå°± = "#fEffect/SkillName1.img/1001003/æ´»è·ƒæˆå°±#";
+var æ¸…ç†èƒŒåŒ… = "#fEffect/SkillName1.img/1001003/æ¸…ç†èƒŒåŒ…#";
+var å¿«æ·å•†åº— = "#fEffect/SkillName1.img/1001003/å¿«æ·å•†åº—#";
+var å¿«é€Ÿè½¬èŒ = "#fEffect/SkillName1.img/1001003/å¿«é€Ÿè½¬èŒ#";
+var éŸ³ä¹ç‚¹æ’­ = "#fEffect/SkillName1.img/1001003/éŸ³ä¹ç‚¹æ’­#";
+var éšèº«ä»“åº“ = "#fEffect/SkillName1.img/1001003/éšèº«ä»“åº“#";
+var é™„å±èŒä¸š = "#fEffect/SkillName1.img/1001003/é™„å±èŒä¸š#";
+var ç­¾åˆ° = "#fEffect/SkillName1.img/1001003/ç­¾åˆ°#";
 
 
 
@@ -46,17 +46,17 @@ function action(mode, type, selection) {
         status--;
     }
 	    if (cm.getMapId() == 20000 || cm.getMapId() == 10000) {
-            cm.sendOk(" ×Ô ÓÉ Ã° ÏÕ µº ¾³ Íâ ÎŞ ·¨ Ê¹ ÓÃ ´Ë ¹¦ ÄÜ ¡£");
+            cm.sendOk(" è‡ª ç”± å†’ é™© å²› å¢ƒ å¤– æ—  æ³• ä½¿ ç”¨ æ­¤ åŠŸ èƒ½ ã€‚");
             cm.dispose();
         }
 
 	if (cm.getPlayer().getLevel() < 10) {
-        cm.sendOk("ÄãµÄµÈ¼¶Î´´ïµ½10¼¶£¬Òò´ËÎ´ÄÜ½âËø±¾¹¦ÄÜ");
+        cm.sendOk("ä½ çš„ç­‰çº§æœªè¾¾åˆ°10çº§ï¼Œå› æ­¤æœªèƒ½è§£é”æœ¬åŠŸèƒ½");
         cm.dispose();
 		 }
   
     else if (status == 0) {
-        var     selStr = " #e#r³õ¼¶#kÕÙ»½Êõ£»#n \r\n";
+        var     selStr = " #e#råˆçº§#kå¬å”¤æœ¯ï¼›#n \r\n";
 	   selStr += " #L1##o100101# x 10#l  #L2##o130101# x 10#l   \r\n";
 
 
@@ -74,12 +74,12 @@ function action(mode, type, selection) {
              cm.gainItem(4032225,-20);
 			 cm.gainItem(4000000,-50);
              cm.spawnMonster(100101,10);
-             cm.setBossRankCount("ÕÙ»½ÊìÁ·¶È","10");    
-			 cm.sendOk("ÕÙ»½³É¹¦,ÊìÁ·¶È + 10");
+             cm.setBossRankCount("å¬å”¤ç†Ÿç»ƒåº¦","10");    
+			 cm.sendOk("å¬å”¤æˆåŠŸ,ç†Ÿç»ƒåº¦ + 10");
              cm.dispose();
 						
                }else{
-            cm.sendOk("²ÄÁÏ²»¹»£¬ÎŞ·¨ÕÙ»½.\r\nĞèÒª£»#i4032225# x 20,#i4000000# x 50");
+            cm.sendOk("ææ–™ä¸å¤Ÿï¼Œæ— æ³•å¬å”¤.\r\néœ€è¦ï¼›#i4032225# x 20,#i4000000# x 50");
 			cm.dispose();	
 			 break;}
              
@@ -88,12 +88,12 @@ function action(mode, type, selection) {
              cm.gainItem(4032225,-20);
 			 cm.gainItem(4000016,-50);
              cm.spawnMonster(130101,10);
-             cm.setBossRankCount("ÕÙ»½ÊìÁ·¶È","10");    
-			 cm.sendOk("ÕÙ»½³É¹¦,ÊìÁ·¶È + 10");
+             cm.setBossRankCount("å¬å”¤ç†Ÿç»ƒåº¦","10");    
+			 cm.sendOk("å¬å”¤æˆåŠŸ,ç†Ÿç»ƒåº¦ + 10");
              cm.dispose();
 						
                }else{
-            cm.sendOk("²ÄÁÏ²»¹»£¬ÎŞ·¨ÕÙ»½.\r\nĞèÒª£»#i4032225# x 20,#i4000016# x 50");
+            cm.sendOk("ææ–™ä¸å¤Ÿï¼Œæ— æ³•å¬å”¤.\r\néœ€è¦ï¼›#i4032225# x 20,#i4000016# x 50");
 			cm.dispose();	
 			 break;}
 			 

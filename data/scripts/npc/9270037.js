@@ -1,4 +1,4 @@
 function start() {
- cm.sendOk("下班啦，关门啦，你还是明天再来吧...");
+ cm.sendOk("涓嬬彮鍟︼紝鍏抽棬鍟︼紝浣犺繕鏄槑澶╁啀鏉ュ惂...");
  cm.dispose();
 }

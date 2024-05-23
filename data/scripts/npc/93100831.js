@@ -4,14 +4,14 @@
 
 
 function start() {
-    cm.sendYesNo("怎么样，要跟着我去幸福村吗?");
+    cm.sendYesNo("鎬庝箞鏍凤紝瑕佽窡鐫�鎴戝幓骞哥鏉戝悧?");
 }
 
 function action(mode, type, selection) {
     if (mode == 1) {
 	cm.warp(209080100);
     } else {
-	cm.sendNext("想好在找我！");
+	cm.sendNext("鎯冲ソ鍦ㄦ壘鎴戯紒");
     }
     cm.dispose();
 }

@@ -1,6 +1,6 @@
 var status = 0;
-//ÉùÃ÷±äÁ¿£¬¸³ÓèÒ»¸öÊı×éµÄÖµ
-var types = new Array("×°±¸À¸", "ÏûºÄÀ¸", "ÉèÖÃÀ¸", "ÆäËûÀ¸", "ÌØÊâÀ¸");
+//å£°æ˜å˜é‡ï¼Œèµ‹äºˆä¸€ä¸ªæ•°ç»„çš„å€¼
+var types = new Array("è£…å¤‡æ ", "æ¶ˆè€—æ ", "è®¾ç½®æ ", "å…¶ä»–æ ", "ç‰¹æ®Šæ ");
 
 function start() {
     status = -1;
@@ -21,14 +21,14 @@ function action(mode, type, selection) {
             return;
         }
         if (status == 0) {
-            var a = "ÇëÎÊÄúÒªÇå¿Õ£º\r\n#b"
-            for (var i = 0; i < types.length; i++) {//ÏÔÊ¾³öÁĞ±í
+            var a = "è¯·é—®æ‚¨è¦æ¸…ç©ºï¼š\r\n#b"
+            for (var i = 0; i < types.length; i++) {//æ˜¾ç¤ºå‡ºåˆ—è¡¨
                 a += "\r\n#L" + i + "#" + types[ i ] + "";
             }
             cm.sendSimple(a);
         } else if (status == 1) {
-            cm.deleteItem(selection + 1);//Ö´ĞĞÇåÀí
-            cm.sendOk("ÇåÀí³É¹¦!");
+            cm.deleteItem(selection + 1);//æ‰§è¡Œæ¸…ç†
+            cm.sendOk("æ¸…ç†æˆåŠŸ!");
             cm.dispose();
         }
     }

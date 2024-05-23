@@ -28,9 +28,9 @@ var sss ="#fUI/UIWindow.img/QuestIcon/3/0#";
 
 	if (status == 0) {
 
-	    var textz = "\r\nÄãºÃ£¬ÎÒÊÇ´ó½ã´ó£¬ÇëÑ¡ÔñÄãĞèÒª×âµÄ×°±¸ \r\nËùÓĞ×°±¸³ö×âµÄÖ»ÓĞÒ»ÌìÈ¨\r\n";
+	    var textz = "\r\nä½ å¥½ï¼Œæˆ‘æ˜¯å¤§å§å¤§ï¼Œè¯·é€‰æ‹©ä½ éœ€è¦ç§Ÿçš„è£…å¤‡ \r\næ‰€æœ‰è£…å¤‡å‡ºç§Ÿçš„åªæœ‰ä¸€å¤©æƒ\r\n";
 		
-		textz += "#r#L6##v1122017##z1122017#   ¾«Áéµõ×¹ - Ïî Á´ #l\r\n\r\n";
+		textz += "#r#L6##v1122017##z1122017#   ç²¾çµåŠå  - é¡¹ é“¾ #l\r\n\r\n";
 
 		cm.sendSimple (textz);  
 
@@ -38,237 +38,237 @@ var sss ="#fUI/UIWindow.img/QuestIcon/3/0#";
 
 	if (selection == 0) {
 		if (cm.getMeso() < 0) {
- 			cm.sendOk("Çë´øÀ´#r1ÒÚ#k½ğ±Ò#k");
+ 			cm.sendOk("è¯·å¸¦æ¥#r1äº¿#ké‡‘å¸#k");
       			cm.dispose();
 		} else if (!cm.haveItem(5220007,1)) {
- 			cm.sendOk("#v5220007##z5220007#ÄúÃ»ÓĞ¸ÃÎïÆ· ĞèÒªÔÚÉÌ³Ç¹ºÂòºóÔÚÀ´°É");
+ 			cm.sendOk("#v5220007##z5220007#æ‚¨æ²¡æœ‰è¯¥ç‰©å“ éœ€è¦åœ¨å•†åŸè´­ä¹°ååœ¨æ¥å§");
       			cm.dispose();
 		} else if (cm.getInventory(1).isFull(3)){
-			cm.sendOk("#bÇë±£Ö¤×°±¸À¸Î»ÖÁÉÙÓĞ3¸ö¿Õ¸ñ,·ñÔòÎŞ·¨¶Ò»».");
+			cm.sendOk("#bè¯·ä¿è¯è£…å¤‡æ ä½è‡³å°‘æœ‰3ä¸ªç©ºæ ¼,å¦åˆ™æ— æ³•å…‘æ¢.");
 			cm.dispose();
 		} else {
         var ii = MapleItemInformationProvider.getInstance();		                
-		var type = ii.getInventoryType(1302208); //»ñµÃ×°±¸µÄÀàĞÎ/////////////////////////////////////////////////////////////////////
-		var toDrop = ii.randomizeStats(ii.getEquipById(1302208)).copy(); // Éú³ÉÒ»¸öEquipÀà
-		var temptime = (System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000); //Ê±¼ä
+		var type = ii.getInventoryType(1302208); //è·å¾—è£…å¤‡çš„ç±»å½¢/////////////////////////////////////////////////////////////////////
+		var toDrop = ii.randomizeStats(ii.getEquipById(1302208)).copy(); // ç”Ÿæˆä¸€ä¸ªEquipç±»
+		var temptime = (System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000); //æ—¶é—´
 		toDrop.setExpiration(temptime); 
-		cm.getPlayer().getInventory(type).addItem(toDrop);//½«Õâ¸ö×°±¸·ÅÈë°üÖĞ
-		cm.getC().getSession().write(MaplePacketCreator.addInventorySlot(type, toDrop)); //Ë¢ĞÂ±³°ü	
+		cm.getPlayer().getInventory(type).addItem(toDrop);//å°†è¿™ä¸ªè£…å¤‡æ”¾å…¥åŒ…ä¸­
+		cm.getC().getSession().write(MaplePacketCreator.addInventorySlot(type, toDrop)); //åˆ·æ–°èƒŒåŒ…	
 		cm.getChar().saveToDB(false, false);
 		cm.gainItem(5220007,-1);
-		cm.sendOk("¶Ò»»³É¹¦!")
+		cm.sendOk("å…‘æ¢æˆåŠŸ!")
 		cm.dispose();
 		}
 	} else if (selection == 1) {
 		if (cm.getMeso() < 0) {
- 			cm.sendOk("Çë´øÀ´#r5000W#k½ğ±Ò#k");
+ 			cm.sendOk("è¯·å¸¦æ¥#r5000W#ké‡‘å¸#k");
       			cm.dispose();
 		} else if (!cm.haveItem(5220007,1)) {
- 			cm.sendOk("#v5220007##z5220007#ÄúÃ»ÓĞ¸ÃÎïÆ· ĞèÒªÔÚÉÌ³Ç¹ºÂòºóÔÚÀ´°É#k");
+ 			cm.sendOk("#v5220007##z5220007#æ‚¨æ²¡æœ‰è¯¥ç‰©å“ éœ€è¦åœ¨å•†åŸè´­ä¹°ååœ¨æ¥å§#k");
       			cm.dispose();
 		} else if (cm.getInventory(1).isFull(3)){
-			cm.sendOk("#bÇë±£Ö¤×°±¸À¸Î»ÖÁÉÙÓĞ3¸ö¿Õ¸ñ,·ñÔòÎŞ·¨¶Ò»».");
+			cm.sendOk("#bè¯·ä¿è¯è£…å¤‡æ ä½è‡³å°‘æœ‰3ä¸ªç©ºæ ¼,å¦åˆ™æ— æ³•å…‘æ¢.");
 			cm.dispose();
 		} else {
 			var ii = MapleItemInformationProvider.getInstance();		                
-            var type = ii.getInventoryType(1332025); //»ñµÃ×°±¸µÄÀàĞÎ/////////////////////////////////////////////////////////////////////
-            var toDrop = ii.randomizeStats(ii.getEquipById(1332025)).copy(); // Éú³ÉÒ»¸öEquipÀà
-            var temptime = (System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000); //Ê±¼ä
+            var type = ii.getInventoryType(1332025); //è·å¾—è£…å¤‡çš„ç±»å½¢/////////////////////////////////////////////////////////////////////
+            var toDrop = ii.randomizeStats(ii.getEquipById(1332025)).copy(); // ç”Ÿæˆä¸€ä¸ªEquipç±»
+            var temptime = (System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000); //æ—¶é—´
 			toDrop.setExpiration(temptime); 
-			cm.getPlayer().getInventory(type).addItem(toDrop);//½«Õâ¸ö×°±¸·ÅÈë°üÖĞ
-			cm.getC().getSession().write(MaplePacketCreator.addInventorySlot(type, toDrop)); //Ë¢ĞÂ±³°ü	
+			cm.getPlayer().getInventory(type).addItem(toDrop);//å°†è¿™ä¸ªè£…å¤‡æ”¾å…¥åŒ…ä¸­
+			cm.getC().getSession().write(MaplePacketCreator.addInventorySlot(type, toDrop)); //åˆ·æ–°èƒŒåŒ…	
 			cm.getChar().saveToDB(false, false);
 			cm.gainItem(5220007,-1);
-			cm.sendOk("¶Ò»»³É¹¦!")
+			cm.sendOk("å…‘æ¢æˆåŠŸ!")
       			cm.dispose();
 			}
 
 	}else if (selection == 2){
 		if (cm.getMeso() < 0) {
- 			cm.sendOk("Çë´øÀ´#r5000W#k½ğ±Ò#k");
+ 			cm.sendOk("è¯·å¸¦æ¥#r5000W#ké‡‘å¸#k");
       			cm.dispose();
 		} else if (!cm.haveItem(5220007,1)) {
- 			cm.sendOk("#v5220007##z5220007#ÄúÃ»ÓĞ¸ÃÎïÆ· ĞèÒªÔÚÉÌ³Ç¹ºÂòºóÔÚÀ´°É#k");
+ 			cm.sendOk("#v5220007##z5220007#æ‚¨æ²¡æœ‰è¯¥ç‰©å“ éœ€è¦åœ¨å•†åŸè´­ä¹°ååœ¨æ¥å§#k");
       			cm.dispose();
 		} else if (cm.getInventory(1).isFull(3)){
-			cm.sendOk("#bÇë±£Ö¤×°±¸À¸Î»ÖÁÉÙÓĞ3¸ö¿Õ¸ñ,·ñÔòÎŞ·¨¶Ò»».");
+			cm.sendOk("#bè¯·ä¿è¯è£…å¤‡æ ä½è‡³å°‘æœ‰3ä¸ªç©ºæ ¼,å¦åˆ™æ— æ³•å…‘æ¢.");
 			cm.dispose();
 		} else{
 			var ii = MapleItemInformationProvider.getInstance();		                
-            var type = ii.getInventoryType(1382012); //»ñµÃ×°±¸µÄÀàĞÎ/////////////////////////////////////////////////////////////////////
-            var toDrop = ii.randomizeStats(ii.getEquipById(1382012)).copy(); // Éú³ÉÒ»¸öEquipÀà
-            var temptime = (System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000); //Ê±¼ä
+            var type = ii.getInventoryType(1382012); //è·å¾—è£…å¤‡çš„ç±»å½¢/////////////////////////////////////////////////////////////////////
+            var toDrop = ii.randomizeStats(ii.getEquipById(1382012)).copy(); // ç”Ÿæˆä¸€ä¸ªEquipç±»
+            var temptime = (System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000); //æ—¶é—´
 toDrop.setExpiration(temptime); 
-cm.getPlayer().getInventory(type).addItem(toDrop);//½«Õâ¸ö×°±¸·ÅÈë°üÖĞ
-cm.getC().getSession().write(MaplePacketCreator.addInventorySlot(type, toDrop)); //Ë¢ĞÂ±³°ü	
+cm.getPlayer().getInventory(type).addItem(toDrop);//å°†è¿™ä¸ªè£…å¤‡æ”¾å…¥åŒ…ä¸­
+cm.getC().getSession().write(MaplePacketCreator.addInventorySlot(type, toDrop)); //åˆ·æ–°èƒŒåŒ…	
 cm.getChar().saveToDB(false, false);
 			cm.gainItem(5220007,-1);
-			cm.sendOk("¶Ò»»³É¹¦!")
+			cm.sendOk("å…‘æ¢æˆåŠŸ!")
       			cm.dispose();
 			}
 
 	}else if (selection == 3){
 		if (cm.getMeso() < 0) {
- 			cm.sendOk("Çë´øÀ´#r5000W#k½ğ±Ò#k");
+ 			cm.sendOk("è¯·å¸¦æ¥#r5000W#ké‡‘å¸#k");
       			cm.dispose();
 		} else if (!cm.haveItem(5220007,1)) {
- 			cm.sendOk("#v5220007##z5220007#ÄúÃ»ÓĞ¸ÃÎïÆ· ĞèÒªÔÚÉÌ³Ç¹ºÂòºóÔÚÀ´°É#k");
+ 			cm.sendOk("#v5220007##z5220007#æ‚¨æ²¡æœ‰è¯¥ç‰©å“ éœ€è¦åœ¨å•†åŸè´­ä¹°ååœ¨æ¥å§#k");
       			cm.dispose();
 		} else if (cm.getInventory(1).isFull(3)){
-			cm.sendOk("#bÇë±£Ö¤×°±¸À¸Î»ÖÁÉÙÓĞ3¸ö¿Õ¸ñ,·ñÔòÎŞ·¨¶Ò»».");
+			cm.sendOk("#bè¯·ä¿è¯è£…å¤‡æ ä½è‡³å°‘æœ‰3ä¸ªç©ºæ ¼,å¦åˆ™æ— æ³•å…‘æ¢.");
 			cm.dispose();
 		} else{
          var ii = MapleItemInformationProvider.getInstance();		                
-            var type = ii.getInventoryType(1452022); //»ñµÃ×°±¸µÄÀàĞÎ/////////////////////////////////////////////////////////////////////
-            var toDrop = ii.randomizeStats(ii.getEquipById(1452022)).copy(); // Éú³ÉÒ»¸öEquipÀà
-            var temptime = (System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000); //Ê±¼ä
+            var type = ii.getInventoryType(1452022); //è·å¾—è£…å¤‡çš„ç±»å½¢/////////////////////////////////////////////////////////////////////
+            var toDrop = ii.randomizeStats(ii.getEquipById(1452022)).copy(); // ç”Ÿæˆä¸€ä¸ªEquipç±»
+            var temptime = (System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000); //æ—¶é—´
 			toDrop.setExpiration(temptime); 
-			cm.getPlayer().getInventory(type).addItem(toDrop);//½«Õâ¸ö×°±¸·ÅÈë°üÖĞ
-			cm.getC().getSession().write(MaplePacketCreator.addInventorySlot(type, toDrop)); //Ë¢ĞÂ±³°ü	
+			cm.getPlayer().getInventory(type).addItem(toDrop);//å°†è¿™ä¸ªè£…å¤‡æ”¾å…¥åŒ…ä¸­
+			cm.getC().getSession().write(MaplePacketCreator.addInventorySlot(type, toDrop)); //åˆ·æ–°èƒŒåŒ…	
 			cm.getChar().saveToDB(false, false);
 			cm.gainItem(5220007,-1);
-			cm.sendOk("¶Ò»»³É¹¦!")
+			cm.sendOk("å…‘æ¢æˆåŠŸ!")
 			cm.dispose();
 			}
 
 	}else if (selection == 4){
 		if (cm.getMeso() < 0) {
- 			cm.sendOk("Çë´øÀ´#r5000W#k½ğ±Ò#k");
+ 			cm.sendOk("è¯·å¸¦æ¥#r5000W#ké‡‘å¸#k");
       			cm.dispose();
 		} else if (!cm.haveItem(5220007,1)) {
- 			cm.sendOk("#v5220007##z5220007#ÄúÃ»ÓĞ¸ÃÎïÆ· ĞèÒªÔÚÉÌ³Ç¹ºÂòºóÔÚÀ´°É#k");
+ 			cm.sendOk("#v5220007##z5220007#æ‚¨æ²¡æœ‰è¯¥ç‰©å“ éœ€è¦åœ¨å•†åŸè´­ä¹°ååœ¨æ¥å§#k");
       			cm.dispose();
 		} else if (cm.getInventory(1).isFull(3)){
-			cm.sendOk("#bÇë±£Ö¤×°±¸À¸Î»ÖÁÉÙÓĞ3¸ö¿Õ¸ñ,·ñÔòÎŞ·¨¶Ò»».");
+			cm.sendOk("#bè¯·ä¿è¯è£…å¤‡æ ä½è‡³å°‘æœ‰3ä¸ªç©ºæ ¼,å¦åˆ™æ— æ³•å…‘æ¢.");
 			cm.dispose();
 		} else{
          var ii = MapleItemInformationProvider.getInstance();		                
-            var type = ii.getInventoryType(1462019); //»ñµÃ×°±¸µÄÀàĞÎ/////////////////////////////////////////////////////////////////////
-            var toDrop = ii.randomizeStats(ii.getEquipById(1462019)).copy(); // Éú³ÉÒ»¸öEquipÀà
-            var temptime = (System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000); //Ê±¼ä
+            var type = ii.getInventoryType(1462019); //è·å¾—è£…å¤‡çš„ç±»å½¢/////////////////////////////////////////////////////////////////////
+            var toDrop = ii.randomizeStats(ii.getEquipById(1462019)).copy(); // ç”Ÿæˆä¸€ä¸ªEquipç±»
+            var temptime = (System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000); //æ—¶é—´
 			toDrop.setExpiration(temptime); 
-			cm.getPlayer().getInventory(type).addItem(toDrop);//½«Õâ¸ö×°±¸·ÅÈë°üÖĞ
-			cm.getC().getSession().write(MaplePacketCreator.addInventorySlot(type, toDrop)); //Ë¢ĞÂ±³°ü	
+			cm.getPlayer().getInventory(type).addItem(toDrop);//å°†è¿™ä¸ªè£…å¤‡æ”¾å…¥åŒ…ä¸­
+			cm.getC().getSession().write(MaplePacketCreator.addInventorySlot(type, toDrop)); //åˆ·æ–°èƒŒåŒ…	
 			cm.getChar().saveToDB(false, false);
 			cm.gainItem(5220007,-1);
-			cm.sendOk("¶Ò»»³É¹¦!")
+			cm.sendOk("å…‘æ¢æˆåŠŸ!")
       			cm.dispose();
 			}
 
 	}else if (selection == 5){
 		if (cm.getMeso() < 0) {
- 			cm.sendOk("Çë´øÀ´#r5000W#k½ğ±Ò#k");
+ 			cm.sendOk("è¯·å¸¦æ¥#r5000W#ké‡‘å¸#k");
       			cm.dispose();
 		} else if (!cm.haveItem(5220007,1)) {
- 			cm.sendOk("#v5220007##z5220007#ÄúÃ»ÓĞ¸ÃÎïÆ· ĞèÒªÔÚÉÌ³Ç¹ºÂòºóÔÚÀ´°É#k");
+ 			cm.sendOk("#v5220007##z5220007#æ‚¨æ²¡æœ‰è¯¥ç‰©å“ éœ€è¦åœ¨å•†åŸè´­ä¹°ååœ¨æ¥å§#k");
       			cm.dispose();
 		} else if (cm.getInventory(1).isFull(3)){
-			cm.sendOk("#bÇë±£Ö¤×°±¸À¸Î»ÖÁÉÙÓĞ3¸ö¿Õ¸ñ,·ñÔòÎŞ·¨¶Ò»».");
+			cm.sendOk("#bè¯·ä¿è¯è£…å¤‡æ ä½è‡³å°‘æœ‰3ä¸ªç©ºæ ¼,å¦åˆ™æ— æ³•å…‘æ¢.");
 			cm.dispose();
 		} else{
          var ii = MapleItemInformationProvider.getInstance();		                
-            var type = ii.getInventoryType(1472032); //»ñµÃ×°±¸µÄÀàĞÎ/////////////////////////////////////////////////////////////////////
-            var toDrop = ii.randomizeStats(ii.getEquipById(1472032)).copy(); // Éú³ÉÒ»¸öEquipÀà
-            var temptime = (System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000); //Ê±¼ä
+            var type = ii.getInventoryType(1472032); //è·å¾—è£…å¤‡çš„ç±»å½¢/////////////////////////////////////////////////////////////////////
+            var toDrop = ii.randomizeStats(ii.getEquipById(1472032)).copy(); // ç”Ÿæˆä¸€ä¸ªEquipç±»
+            var temptime = (System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000); //æ—¶é—´
 			toDrop.setExpiration(temptime); 
-			cm.getPlayer().getInventory(type).addItem(toDrop);//½«Õâ¸ö×°±¸·ÅÈë°üÖĞ
-			cm.getC().getSession().write(MaplePacketCreator.addInventorySlot(type, toDrop)); //Ë¢ĞÂ±³°ü	
+			cm.getPlayer().getInventory(type).addItem(toDrop);//å°†è¿™ä¸ªè£…å¤‡æ”¾å…¥åŒ…ä¸­
+			cm.getC().getSession().write(MaplePacketCreator.addInventorySlot(type, toDrop)); //åˆ·æ–°èƒŒåŒ…	
 			cm.getChar().saveToDB(false, false);
 			cm.gainItem(5220007,-1);
-			cm.sendOk("¶Ò»»³É¹¦!")
+			cm.sendOk("å…‘æ¢æˆåŠŸ!")
       			cm.dispose();
 			}
 
 	}else if (selection == 6){
 		if (cm.getMeso() < 0) {
- 			cm.sendOk("Çë´øÀ´#r5000W#k½ğ±Ò#k");
+ 			cm.sendOk("è¯·å¸¦æ¥#r5000W#ké‡‘å¸#k");
       			cm.dispose();
 		} else if (!cm.haveItem(5220007,1)) {
- 			cm.sendOk("#v5220007##z5220007#ÄúÃ»ÓĞ¸ÃÎïÆ· ĞèÒªÔÚÉÌ³Ç¹ºÂòºóÔÚÀ´°É#k");
+ 			cm.sendOk("#v5220007##z5220007#æ‚¨æ²¡æœ‰è¯¥ç‰©å“ éœ€è¦åœ¨å•†åŸè´­ä¹°ååœ¨æ¥å§#k");
       			cm.dispose();
 		} else if (cm.getInventory(1).isFull(3)){
-			cm.sendOk("#bÇë±£Ö¤×°±¸À¸Î»ÖÁÉÙÓĞ3¸ö¿Õ¸ñ,·ñÔòÎŞ·¨¶Ò»».");
+			cm.sendOk("#bè¯·ä¿è¯è£…å¤‡æ ä½è‡³å°‘æœ‰3ä¸ªç©ºæ ¼,å¦åˆ™æ— æ³•å…‘æ¢.");
 			cm.dispose();
 		} else{
          var ii = MapleItemInformationProvider.getInstance();		                
-            var type = ii.getInventoryType(1122017); //»ñµÃ×°±¸µÄÀàĞÎ/////////////////////////////////////////////////////////////////////
-            var toDrop = ii.randomizeStats(ii.getEquipById(1122017)).copy(); // Éú³ÉÒ»¸öEquipÀà
-            var temptime = (System.currentTimeMillis() + 3 * 24 * 60 * 60 * 1000); //Ê±¼ä
+            var type = ii.getInventoryType(1122017); //è·å¾—è£…å¤‡çš„ç±»å½¢/////////////////////////////////////////////////////////////////////
+            var toDrop = ii.randomizeStats(ii.getEquipById(1122017)).copy(); // ç”Ÿæˆä¸€ä¸ªEquipç±»
+            var temptime = (System.currentTimeMillis() + 3 * 24 * 60 * 60 * 1000); //æ—¶é—´
 			toDrop.setExpiration(temptime); 
-			cm.getPlayer().getInventory(type).addItem(toDrop);//½«Õâ¸ö×°±¸·ÅÈë°üÖĞ
-			cm.getC().getSession().write(MaplePacketCreator.addInventorySlot(type, toDrop)); //Ë¢ĞÂ±³°ü	
+			cm.getPlayer().getInventory(type).addItem(toDrop);//å°†è¿™ä¸ªè£…å¤‡æ”¾å…¥åŒ…ä¸­
+			cm.getC().getSession().write(MaplePacketCreator.addInventorySlot(type, toDrop)); //åˆ·æ–°èƒŒåŒ…	
 			cm.getChar().saveToDB(false, false);
 			cm.gainItem(5220007,-1);
-			cm.sendOk("¶Ò»»³É¹¦!")
+			cm.sendOk("å…‘æ¢æˆåŠŸ!")
       			cm.dispose();
 			}
 	}else if (selection == 7){
 		if (cm.getMeso() < 0) {
- 			cm.sendOk("Çë´øÀ´#r5000W#k½ğ±Ò#k");
+ 			cm.sendOk("è¯·å¸¦æ¥#r5000W#ké‡‘å¸#k");
       			cm.dispose();
 		} else if (!cm.haveItem(5220007,1)) {
- 			cm.sendOk("#v5220007##z5220007#ÄúÃ»ÓĞ¸ÃÎïÆ· ĞèÒªÔÚÉÌ³Ç¹ºÂòºóÔÚÀ´°É#k");
+ 			cm.sendOk("#v5220007##z5220007#æ‚¨æ²¡æœ‰è¯¥ç‰©å“ éœ€è¦åœ¨å•†åŸè´­ä¹°ååœ¨æ¥å§#k");
       			cm.dispose();
 		} else if (cm.getInventory(1).isFull(3)){
-			cm.sendOk("#bÇë±£Ö¤×°±¸À¸Î»ÖÁÉÙÓĞ3¸ö¿Õ¸ñ,·ñÔòÎŞ·¨¶Ò»».");
+			cm.sendOk("#bè¯·ä¿è¯è£…å¤‡æ ä½è‡³å°‘æœ‰3ä¸ªç©ºæ ¼,å¦åˆ™æ— æ³•å…‘æ¢.");
 			cm.dispose();
 		} else {
          var ii = MapleItemInformationProvider.getInstance();		                
-            var type = ii.getInventoryType(1492042); //»ñµÃ×°±¸µÄÀàĞÎ/////////////////////////////////////////////////////////////////////
-            var toDrop = ii.randomizeStats(ii.getEquipById(1492042)).copy(); // Éú³ÉÒ»¸öEquipÀà
-            var temptime = (System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000); //Ê±¼ä
+            var type = ii.getInventoryType(1492042); //è·å¾—è£…å¤‡çš„ç±»å½¢/////////////////////////////////////////////////////////////////////
+            var toDrop = ii.randomizeStats(ii.getEquipById(1492042)).copy(); // ç”Ÿæˆä¸€ä¸ªEquipç±»
+            var temptime = (System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000); //æ—¶é—´
 			toDrop.setExpiration(temptime); 
-			cm.getPlayer().getInventory(type).addItem(toDrop);//½«Õâ¸ö×°±¸·ÅÈë°üÖĞ
-			cm.getC().getSession().write(MaplePacketCreator.addInventorySlot(type, toDrop)); //Ë¢ĞÂ±³°ü	
+			cm.getPlayer().getInventory(type).addItem(toDrop);//å°†è¿™ä¸ªè£…å¤‡æ”¾å…¥åŒ…ä¸­
+			cm.getC().getSession().write(MaplePacketCreator.addInventorySlot(type, toDrop)); //åˆ·æ–°èƒŒåŒ…	
 			cm.getChar().saveToDB(false, false);
 			cm.gainItem(5220007,-1);
-			cm.sendOk("¶Ò»»³É¹¦!")
+			cm.sendOk("å…‘æ¢æˆåŠŸ!")
       			cm.dispose();
 			}
    }else if (selection == 8){
 		if (cm.getMeso() < 0) {
- 			cm.sendOk("Çë´øÀ´#r5000W#k½ğ±Ò#k");
+ 			cm.sendOk("è¯·å¸¦æ¥#r5000W#ké‡‘å¸#k");
       			cm.dispose();
 		} else if (!cm.haveItem(5220007,1)) {
- 			cm.sendOk("#v5220007##z5220007#ÄúÃ»ÓĞ¸ÃÎïÆ· ĞèÒªÔÚÉÌ³Ç¹ºÂòºóÔÚÀ´°É#k");
+ 			cm.sendOk("#v5220007##z5220007#æ‚¨æ²¡æœ‰è¯¥ç‰©å“ éœ€è¦åœ¨å•†åŸè´­ä¹°ååœ¨æ¥å§#k");
       			cm.dispose();
 		} else if (cm.getInventory(1).isFull(3)){
-			cm.sendOk("#bÇë±£Ö¤×°±¸À¸Î»ÖÁÉÙÓĞ3¸ö¿Õ¸ñ,·ñÔòÎŞ·¨¶Ò»».");
+			cm.sendOk("#bè¯·ä¿è¯è£…å¤‡æ ä½è‡³å°‘æœ‰3ä¸ªç©ºæ ¼,å¦åˆ™æ— æ³•å…‘æ¢.");
 			cm.dispose();
 		} else {
          var ii = MapleItemInformationProvider.getInstance();		                
-            var type = ii.getInventoryType(1432012); //»ñµÃ×°±¸µÄÀàĞÎ/////////////////////////////////////////////////////////////////////
-            var toDrop = ii.randomizeStats(ii.getEquipById(1432012)).copy(); // Éú³ÉÒ»¸öEquipÀà
-            var temptime = (System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000); //Ê±¼ä
+            var type = ii.getInventoryType(1432012); //è·å¾—è£…å¤‡çš„ç±»å½¢/////////////////////////////////////////////////////////////////////
+            var toDrop = ii.randomizeStats(ii.getEquipById(1432012)).copy(); // ç”Ÿæˆä¸€ä¸ªEquipç±»
+            var temptime = (System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000); //æ—¶é—´
 			toDrop.setExpiration(temptime); 
-			cm.getPlayer().getInventory(type).addItem(toDrop);//½«Õâ¸ö×°±¸·ÅÈë°üÖĞ
-			cm.getC().getSession().write(MaplePacketCreator.addInventorySlot(type, toDrop)); //Ë¢ĞÂ±³°ü	
+			cm.getPlayer().getInventory(type).addItem(toDrop);//å°†è¿™ä¸ªè£…å¤‡æ”¾å…¥åŒ…ä¸­
+			cm.getC().getSession().write(MaplePacketCreator.addInventorySlot(type, toDrop)); //åˆ·æ–°èƒŒåŒ…	
 			cm.getChar().saveToDB(false, false);
 			cm.gainItem(5220007,-1);
-			cm.sendOk("¶Ò»»³É¹¦!")
+			cm.sendOk("å…‘æ¢æˆåŠŸ!")
       			cm.dispose();
 	       }
 	 }else if (selection == 9){
 		if (cm.getMeso() < 0) {
- 			cm.sendOk("Çë´øÀ´#r5000W#k½ğ±Ò#k");
+ 			cm.sendOk("è¯·å¸¦æ¥#r5000W#ké‡‘å¸#k");
       			cm.dispose();
 		} else if (!cm.haveItem(5220007,1)) {
- 			cm.sendOk("#v5220007##z5220007#ÄúÃ»ÓĞ¸ÃÎïÆ· ĞèÒªÔÚÉÌ³Ç¹ºÂòºóÔÚÀ´°É#k");
+ 			cm.sendOk("#v5220007##z5220007#æ‚¨æ²¡æœ‰è¯¥ç‰©å“ éœ€è¦åœ¨å•†åŸè´­ä¹°ååœ¨æ¥å§#k");
       			cm.dispose();
 		} else if (cm.getInventory(1).isFull(3)){
-			cm.sendOk("#bÇë±£Ö¤×°±¸À¸Î»ÖÁÉÙÓĞ3¸ö¿Õ¸ñ,·ñÔòÎŞ·¨¶Ò»».");
+			cm.sendOk("#bè¯·ä¿è¯è£…å¤‡æ ä½è‡³å°‘æœ‰3ä¸ªç©ºæ ¼,å¦åˆ™æ— æ³•å…‘æ¢.");
 			cm.dispose();
 		} else {
          var ii = MapleItemInformationProvider.getInstance();		                
-            var type = ii.getInventoryType(1442024); //»ñµÃ×°±¸µÄÀàĞÎ/////////////////////////////////////////////////////////////////////
-            var toDrop = ii.randomizeStats(ii.getEquipById(1442024)).copy(); // Éú³ÉÒ»¸öEquipÀà
-            var temptime = (System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000); //Ê±¼ä
+            var type = ii.getInventoryType(1442024); //è·å¾—è£…å¤‡çš„ç±»å½¢/////////////////////////////////////////////////////////////////////
+            var toDrop = ii.randomizeStats(ii.getEquipById(1442024)).copy(); // ç”Ÿæˆä¸€ä¸ªEquipç±»
+            var temptime = (System.currentTimeMillis() + 1 * 24 * 60 * 60 * 1000); //æ—¶é—´
 			toDrop.setExpiration(temptime); 
-			cm.getPlayer().getInventory(type).addItem(toDrop);//½«Õâ¸ö×°±¸·ÅÈë°üÖĞ
-			cm.getC().getSession().write(MaplePacketCreator.addInventorySlot(type, toDrop)); //Ë¢ĞÂ±³°ü	
+			cm.getPlayer().getInventory(type).addItem(toDrop);//å°†è¿™ä¸ªè£…å¤‡æ”¾å…¥åŒ…ä¸­
+			cm.getC().getSession().write(MaplePacketCreator.addInventorySlot(type, toDrop)); //åˆ·æ–°èƒŒåŒ…	
 			cm.getChar().saveToDB(false, false);
 			cm.gainItem(5220007,-1);
-			cm.sendOk("¶Ò»»³É¹¦!")
+			cm.sendOk("å…‘æ¢æˆåŠŸ!")
       			cm.dispose();
 }       }
 }

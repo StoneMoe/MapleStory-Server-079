@@ -4,7 +4,7 @@ function start() {
 }
 
 function action(mode, type, selection) {
-      cm.sendNext("ÄãÀ´ÍíÁË£¬Ôç¶¼±»ÈË³Ô¹â¹âÁË£¡£¡");
+      cm.sendNext("ä½ æ¥æ™šäº†ï¼Œæ—©éƒ½è¢«äººåƒå…‰å…‰äº†ï¼ï¼");
      cm.dispose();
 
     if (mode == -1) {
@@ -12,7 +12,7 @@ function action(mode, type, selection) {
     } else {
         if (status >= 0 && mode == 0) {
 
-            cm.sendOk("¸ĞĞ»ÄãµÄ¹âÁÙ£¡");
+            cm.sendOk("æ„Ÿè°¢ä½ çš„å…‰ä¸´ï¼");
             cm.dispose();
             return;
         }
@@ -26,21 +26,21 @@ function action(mode, type, selection) {
             for (i = 0; i < 10; i++) {
                 text += "";
             }
-            text += " \t\t     #e»¶Ó­À´µ½#r÷Ò÷ÑÊ¢Ñç#n\r\n"
+            text += " \t\t     #eæ¬¢è¿æ¥åˆ°#ré¥•é¤®ç››å®´#n\r\n"
             
-            //text += "\t\t\t#e#dµ±Ç°ÔÚÏßÊ±¼ä£º" + cm.getGamePoints() + "·ÖÖÓ£¡#k#n\r\n"
+            //text += "\t\t\t#e#då½“å‰åœ¨çº¿æ—¶é—´ï¼š" + cm.getGamePoints() + "åˆ†é’Ÿï¼#k#n\r\n"
             
-            //text += "\t#e#dÕË»§Óà¶î£ºÊ£Óàµã¾í" + cm.getNX(1) + "#k\tÊ£ÓàµÖÓÃ¾í" + cm.getNX(2) + "#k#n\r\n"#L2#ºÏ³ÉË®¾§#l#L3#ºÏ³É¿óÊ¯#l#L4#ºÏ³É±¦Ê¯#l
+            //text += "\t#e#dè´¦æˆ·ä½™é¢ï¼šå‰©ä½™ç‚¹å·" + cm.getNX(1) + "#k\tå‰©ä½™æŠµç”¨å·" + cm.getNX(2) + "#k#n\r\n"#L2#åˆæˆæ°´æ™¶#l#L3#åˆæˆçŸ¿çŸ³#l#L4#åˆæˆå®çŸ³#l
             
-          //  text += "    #L1#ÖÆ×÷Ñ«ÕÂ(#v4170007##v4170001#³ö´¦£ºÍæ¾ß¸±±¾¡¢Ìì¿Õ¸±±¾)#l\r\n\r\n"
+          //  text += "    #L1#åˆ¶ä½œå‹‹ç« (#v4170007##v4170001#å‡ºå¤„ï¼šç©å…·å‰¯æœ¬ã€å¤©ç©ºå‰¯æœ¬)#l\r\n\r\n"
 			
-			//text += "    #L2#¸±±¾¶Ò»»#l#L9#ÀÏ¹«ÀÏÆÅ½äÖ¸Éı¼¶#l\r\n\r\n"
+			//text += "    #L2#å‰¯æœ¬å…‘æ¢#l#L9#è€å…¬è€å©†æˆ’æŒ‡å‡çº§#l\r\n\r\n"
 			
-			text += "    #L3#ÁãÊ³Ğ¡³Ô#l#L4#ÂúººÈ«Ï¯#l#L5#Áã»¨Ç®#l\r\n\r\n"
+			text += "    #L3#é›¶é£Ÿå°åƒ#l#L4#æ»¡æ±‰å…¨å¸­#l#L5#é›¶èŠ±é’±#l\r\n\r\n"
 			
-			//text += "    #L5#ÑªÒÂºÏ³É#l\r\n\r\n"
+			//text += "    #L5#è¡€è¡£åˆæˆ#l\r\n\r\n"
 			
-			//text += "    #L4#±©¾ıÉı¼¶#l\r\n\r\n"
+			//text += "    #L4#æš´å›å‡çº§#l\r\n\r\n"
 			
             
             cm.sendSimple(text);

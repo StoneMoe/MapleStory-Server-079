@@ -1,5 +1,5 @@
 /*
-    Ììô¥Ö®Òô NPC
+    å¤©ç±ä¹‹éŸ³ NPC
     Made by Calan from xDreamerMS
  */
 var status = 0;
@@ -34,7 +34,7 @@ function action(mode, type, selection) {
         cm.dispose();
     } else {
         if (status >= 2 && mode == 0) {
-            cm.sendOk("Ììô¥ÖĞ....");
+            cm.sendOk("å¤©ç±ä¸­....");
             cm.dispose();
             return;
         }
@@ -43,18 +43,18 @@ function action(mode, type, selection) {
         else
             status--;
         if (status == 0) {
-            var Ììô¥Ö®Òô = "#b#eÌìô¥Ö®Òô#k#n";
-            Ììô¥Ö®Òô += "\r\nÆ£±¹µÄÊ±ºî,Å¼¶ûñöÌıÌìô¥Ö®Òô,¶ÀÓĞ·çÎ¶.\r\n";
+            var å¤©ç±ä¹‹éŸ³ = "#b#eå¤©ç±ä¹‹éŸ³#k#n";
+            å¤©ç±ä¹‹éŸ³ += "\r\nç–²æƒ«çš„æ—¶ä¾¯,å¶å°”è†å¬å¤©ç±ä¹‹éŸ³,ç‹¬æœ‰é£å‘³.\r\n";
             for (var i = 0; i < music.length; i++) {
-                Ììô¥Ö®Òô += "\r\n#L" + i + "# " +music[i]+ "#l";
+                å¤©ç±ä¹‹éŸ³ += "\r\n#L" + i + "# " +music[i]+ "#l";
             }
-            cm.sendSimple(Ììô¥Ö®Òô);
+            cm.sendSimple(å¤©ç±ä¹‹éŸ³);
         } else if (status == 1) {
             if (selection >= 0) {
-                cm.sendYesNo("¾ö¶¨ºÃñöÌı#r "+music[selection]+" #k?");
+                cm.sendYesNo("å†³å®šå¥½è†å¬#r "+music[selection]+" #k?");
                 mc = selection;
             } else {
-                cm.sendOk("´íÎó!");
+                cm.sendOk("é”™è¯¯!");
                 cm.dispose();
             }
         } else if (status == 2) {

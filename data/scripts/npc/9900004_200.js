@@ -1,13 +1,13 @@
 var ca = java.util.Calendar.getInstance();
-var year = ca.get(java.util.Calendar.YEAR); //»ñµÃÄê·İ
-var month = ca.get(java.util.Calendar.MONTH) + 1; //»ñµÃÔÂ·İ
-var day = ca.get(java.util.Calendar.DATE);//»ñÈ¡ÈÕ
-var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //»ñµÃĞ¡Ê±
-var minute = ca.get(java.util.Calendar.MINUTE);//»ñµÃ·ÖÖÓ
-var second = ca.get(java.util.Calendar.SECOND); //»ñµÃÃë
+var year = ca.get(java.util.Calendar.YEAR); //è·å¾—å¹´ä»½
+var month = ca.get(java.util.Calendar.MONTH) + 1; //è·å¾—æœˆä»½
+var day = ca.get(java.util.Calendar.DATE);//è·å–æ—¥
+var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //è·å¾—å°æ—¶
+var minute = ca.get(java.util.Calendar.MINUTE);//è·å¾—åˆ†é’Ÿ
+var second = ca.get(java.util.Calendar.SECOND); //è·å¾—ç§’
 var weekday = ca.get(java.util.Calendar.DAY_OF_WEEK);
-var Õı·½¼ıÍ· = "#fUI/Basic/BtHide3/mouseOver/0#";
-//var tz = "#fEffect/CharacterEff/1082565/4/0#";  //ÍÃ×Ó·Û
+var æ­£æ–¹ç®­å¤´ = "#fUI/Basic/BtHide3/mouseOver/0#";
+//var tz = "#fEffect/CharacterEff/1082565/4/0#";  //å…”å­ç²‰
 
 function start() {
     status = -1;
@@ -25,21 +25,21 @@ function action(mode, type, selection) {
         status--;
     }
 	if (cm.getPlayer().getLevel() < 10) {
-        cm.sendOk("ÄãµÄµÈ¼¶Î´´ïµ½10¼¶£¬Òò´ËÎ´ÄÜ½âËø±¾¹¦ÄÜ");
+        cm.sendOk("ä½ çš„ç­‰çº§æœªè¾¾åˆ°10çº§ï¼Œå› æ­¤æœªèƒ½è§£é”æœ¬åŠŸèƒ½");
         cm.dispose();
 		 }
     if (cm.getMapId() == 180000001) {
-            cm.sendOk("ºÜÒÅº¶£¬ÄúÒòÎªÎ¥·´ÓÃ»§ÊØÔò±»½ûÖ¹ÓÎÏ·»î¶¯£¬ÈçÓĞÒìÒéÇëÁªÏµ¹ÜÀíÔ±.");
+            cm.sendOk("å¾ˆé—æ†¾ï¼Œæ‚¨å› ä¸ºè¿åç”¨æˆ·å®ˆåˆ™è¢«ç¦æ­¢æ¸¸æˆæ´»åŠ¨ï¼Œå¦‚æœ‰å¼‚è®®è¯·è”ç³»ç®¡ç†å‘˜.");
             cm.dispose();
         }  
     else if (status == 0) {
-        var selStr = "#e©³©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©·\r\n©§#b    ×Ô  ÓÉ  Ã°  ÏÕ  µº  ¿ì  ËÙ  ×ª  Ö°    #k  ©§\r\n©»©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¿#n\r\n\r\n";
+        var selStr = "#eâ”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”“\r\nâ”ƒ#b    è‡ª  ç”±  å†’  é™©  å²›  å¿«  é€Ÿ  è½¬  èŒ    #k  â”ƒ\r\nâ”—â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”›#n\r\n\r\n";
  
-          selStr += "#L0##bÕ½Ê¿#l#k  #L1##bÄ§·¨Ê¦#l#k #L2##b·ÉÏÀ#l#k #L3##b¹­¼ıÊÖ#l#k #L4##bº£µÁ#l#k \r\n\r\n";
+          selStr += "#L0##bæˆ˜å£«#l#k  #L1##bé­”æ³•å¸ˆ#l#k #L2##bé£ä¾ #l#k #L3##bå¼“ç®­æ‰‹#l#k #L4##bæµ·ç›—#l#k \r\n\r\n";
 		  
-		 selStr += "#L5##b»êÆïÊ¿#l#k#L6##bÑ×ÊõÊ¿#l#k #L7##b·çÁéÊ¹Õß#l#k #L8##bÒ¹ĞĞÕß#l#k #L9##bÆæÏ®Õß#l#k \r\n\r\n";
+		 selStr += "#L5##bé­‚éª‘å£«#l#k#L6##bç‚æœ¯å£«#l#k #L7##bé£çµä½¿è€…#l#k #L8##bå¤œè¡Œè€…#l#k #L9##bå¥‡è¢­è€…#l#k \r\n\r\n";
 		   
-		    selStr += "#L10##bÕ½Éñ#l#k  \r\n\r\n";
+		    selStr += "#L10##bæˆ˜ç¥#l#k  \r\n\r\n";
 		cm.sendSimple(selStr);
     } else if (status == 1) {
         switch (selection) {

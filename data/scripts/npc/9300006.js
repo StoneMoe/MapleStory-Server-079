@@ -10,7 +10,7 @@ function action(mode, type, selection) {
     } else {
         if (status >= 0 && mode == 0) {
 
-            cm.sendOk("¸ĞĞ»ÄãµÄ¹âÁÙ£¡");
+            cm.sendOk("æ„Ÿè°¢ä½ çš„å…‰ä¸´ï¼");
             cm.dispose();
             return;
         }
@@ -24,25 +24,25 @@ function action(mode, type, selection) {
             for (i = 0; i < 10; i++) {
                 text += "";
             }
-            text += " \t\t\t  #e#d»¶Ó­À´µ½#r»³¾ÉÃ°ÏÕµº#k#n\r\n"
+            text += " \t\t\t  #e#dæ¬¢è¿æ¥åˆ°#ræ€€æ—§å†’é™©å²›#k#n\r\n"
 
-            text += "\t\t\t#e#dµ±Ç°ÔÚÏßÊ±¼ä£º" + cm.getGamePoints() + "·ÖÖÓ£¡#k#n\r\n"
+            text += "\t\t\t#e#då½“å‰åœ¨çº¿æ—¶é—´ï¼š" + cm.getGamePoints() + "åˆ†é’Ÿï¼#k#n\r\n"
 
-            text += "\t#e#dÕË»§Óà¶î£ºÊ£Óàµã¾í" + cm.getNX(1) + "#k\tÊ£ÓàµÖÓÃ¾í" + cm.getNX(2) + "#k#n\r\n"
+            text += "\t#e#dè´¦æˆ·ä½™é¢ï¼šå‰©ä½™ç‚¹å·" + cm.getNX(1) + "#k\tå‰©ä½™æŠµç”¨å·" + cm.getNX(2) + "#k#n\r\n"
 
-            text += " #L1#ÁìÈ¡½á»é¸£Àû#l\r\n\r\n"
+            text += " #L1#é¢†å–ç»“å©šç¦åˆ©#l\r\n\r\n"
 
             cm.sendSimple(text);
-        } else if (selection == 1) {//Ã¿ÈÕÃâ·ÑÁìÈ¡¸£Àû
+        } else if (selection == 1) {//æ¯æ—¥å…è´¹é¢†å–ç¦åˆ©
             if (cm.getPlayer().getOneTimeLog("LoveChair") > 0) {
-                cm.sendOk("ÄúÒÑ¾­ÁìÈ¡¹ıÁË");
+                cm.sendOk("æ‚¨å·²ç»é¢†å–è¿‡äº†");
 				cm.dispose();
             } else {
                 cm.getPlayer().setOneTimeLog("LoveChair");
                 cm.gainItem(3012003, 1);
                 cm.gainItem(1112320, 5, 5, 5, 5, 200, 200, 5, 5, 10, 10, 10, 10, 10, 10);
-                cm.À®°È(3, "Íæ¼Ò£º[" + cm.getPlayer().getName() + "]ÎªËû/ËıµÄÏÀÂÂ´÷ÉÏÁË½á»é½äÖ¸£¬ÓĞÇë±ö¿ÍÈë³¡£¡");
-                cm.sendOk("#v" + 3012003 + "#¡¢#v1112804#ÒÑ¾­·Åµ½ÁËÄãµÄ±³°ü¡¢ÖØĞÂµÇÂ½ºó£¬¾ÍÓĞ½á»é¾­ÑéÁË£¡");
+                cm.å–‡å­(3, "ç©å®¶ï¼š[" + cm.getPlayer().getName() + "]ä¸ºä»–/å¥¹çš„ä¾ ä¾£æˆ´ä¸Šäº†ç»“å©šæˆ’æŒ‡ï¼Œæœ‰è¯·å®¾å®¢å…¥åœºï¼");
+                cm.sendOk("#v" + 3012003 + "#ã€#v1112804#å·²ç»æ”¾åˆ°äº†ä½ çš„èƒŒåŒ…ã€é‡æ–°ç™»é™†åï¼Œå°±æœ‰ç»“å©šç»éªŒäº†ï¼");
                 cm.dispose();
             }
         }

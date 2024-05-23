@@ -1,13 +1,13 @@
 var ca = java.util.Calendar.getInstance();
-var year = ca.get(java.util.Calendar.YEAR); //»ñµÃÄê·İ
-var month = ca.get(java.util.Calendar.MONTH) + 1; //»ñµÃÔÂ·İ
-var day = ca.get(java.util.Calendar.DATE);//»ñÈ¡ÈÕ
-var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //»ñµÃĞ¡Ê±
-var minute = ca.get(java.util.Calendar.MINUTE);//»ñµÃ·ÖÖÓ
-var second = ca.get(java.util.Calendar.SECOND); //»ñµÃÃë
+var year = ca.get(java.util.Calendar.YEAR); //è·å¾—å¹´ä»½
+var month = ca.get(java.util.Calendar.MONTH) + 1; //è·å¾—æœˆä»½
+var day = ca.get(java.util.Calendar.DATE);//è·å–æ—¥
+var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //è·å¾—å°æ—¶
+var minute = ca.get(java.util.Calendar.MINUTE);//è·å¾—åˆ†é’Ÿ
+var second = ca.get(java.util.Calendar.SECOND); //è·å¾—ç§’
 var weekday = ca.get(java.util.Calendar.DAY_OF_WEEK);
-var Õı·½¼ıÍ· = "#fUI/Basic/BtHide3/mouseOver/0#";
-//var tz = "#fEffect/CharacterEff/1082565/4/0#";  //ÍÃ×Ó·Û
+var æ­£æ–¹ç®­å¤´ = "#fUI/Basic/BtHide3/mouseOver/0#";
+//var tz = "#fEffect/CharacterEff/1082565/4/0#";  //å…”å­ç²‰
 
 function start() {
     status = -1;
@@ -25,295 +25,295 @@ function action(mode, type, selection) {
         status--;
     }
 	//if (cm.getQuestStatus(21728) == 0) {
-          //  cm.sendOk("ÄãÎ´Ï°µÃ´Ëµã¸èÌì¸³¡£");
+          //  cm.sendOk("ä½ æœªä¹ å¾—æ­¤ç‚¹æ­Œå¤©èµ‹ã€‚");
            // cm.dispose();
        // }
     if (cm.getMapId() == 180000001) {
-            cm.sendOk("ºÜÒÅº¶£¬ÄúÒòÎªÎ¥·´ÓÃ»§ÊØÔò±»½ûÖ¹ÓÎÏ·»î¶¯£¬ÈçÓĞÒìÒéÇëÁªÏµ¹ÜÀíÔ±.");
+            cm.sendOk("å¾ˆé—æ†¾ï¼Œæ‚¨å› ä¸ºè¿åç”¨æˆ·å®ˆåˆ™è¢«ç¦æ­¢æ¸¸æˆæ´»åŠ¨ï¼Œå¦‚æœ‰å¼‚è®®è¯·è”ç³»ç®¡ç†å‘˜.");
             cm.dispose();
         }  
     else if (status == 0) {
-        var selStr = "               #n#r µã    #d¸è    #gÖú    #bÊÖ#k#n\r\n#r×¢Òâ#k£»½öµ±Ç°µØÍ¼ÓĞĞ§¡£Ä¿Ç°ÊÕÂ¼¸èÇú£»#r39#k\r\nÊ¹ÓÃ´Ë¹¦ÄÜÇëÏÂÔØ¸èÇú²¹¶¡°ü£¬·ñÔò»á³öÏÖÓÎÏ·±ÀÀ£¡£\r\n";
+        var selStr = "               #n#r ç‚¹    #dæ­Œ    #gåŠ©    #bæ‰‹#k#n\r\n#ræ³¨æ„#kï¼›ä»…å½“å‰åœ°å›¾æœ‰æ•ˆã€‚ç›®å‰æ”¶å½•æ­Œæ›²ï¼›#r39#k\r\nä½¿ç”¨æ­¤åŠŸèƒ½è¯·ä¸‹è½½æ­Œæ›²è¡¥ä¸åŒ…ï¼Œå¦åˆ™ä¼šå‡ºç°æ¸¸æˆå´©æºƒã€‚\r\n";
 
  
-		 selStr += "©³©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©·\r\n"; 
-		 selStr += "#r#L1#ÏÂÍêÕâ³¡Óê#l\r\n";
-		 selStr += "#L2#ÔÙ¼ûÖ»ÊÇÄ°ÉúÈË#l\r\n";
-		 selStr += "#L3#°ÚÍÑ#l\r\n";
-		 selStr += "#L4#°é»¢#l\r\n";
-		 selStr += "#L5#²ğ¶«Ç½#l\r\n";
-		 selStr += "#L6#µ¯Ö¸Ò»»Ó¼ä#l\r\n";
-		 selStr += "#L7#µÈµ½ÑÌ»ğÇåÁ¹#l\r\n";
-		 selStr += "#L8#¶Ô»°ÀÏÊ¦#l\r\n";
-		 selStr += "#L9#¹ëÃÛ#l\r\n";
-		 selStr += "#L10#ºÓÉ½´óºÃ#l\r\n";
-		 selStr += "#L11#ºúÂÜ²·Ğë#l\r\n";
-		 selStr += "#L12#»ÃÅÖ#l\r\n";
-		 selStr += "#L13#»ÃÌı#l\r\n";
-		 selStr += "#L14#»ÙÈË²»¾ë#l\r\n";
-		 selStr += "#L15#½µÎÂ#l\r\n";
-		 selStr += "#L16#¾´¾Æ²»³Ô#l\r\n";
-		 selStr += "#L17#Æ½ĞĞÓîÖæ#l\r\n";
-		 selStr += "#L18#ÆßÏ¦#l\r\n";
-		 selStr += "#L19#ÆæÌ¸#l\r\n";
-		 selStr += "#L20#Ç§°Ù¶È#l\r\n";
-		 selStr += "#L21#Ç×ÇéÊ½°®Çé#l\r\n";
-		 selStr += "#L22#È«Çò±äÀä#l\r\n";
-		 selStr += "#L23#É½Ë®Ö®¼ä#l\r\n";
-		 selStr += "#L24#ÉãÓ°ÒÕÊõ#l\r\n";
-		 selStr += "#L25#Ë«ÈËÅÔ#l\r\n";
-		 selStr += "#L26#Î¢²©¿Ø#l\r\n";
-		 selStr += "#L27#ÎàÍ©µÆ#l\r\n";
-		 selStr += "#L28#ÏëÏóÖ®ÖĞ#l\r\n";
-		 selStr += "#L29#ĞÄÌÛÄãµÄ¹ıÈ¥#l\r\n";
-		 selStr += "#L30#ÑÅË×¹²ÉÍ#l\r\n";
-		 selStr += "#L31#Ñà¹é³²#l\r\n";
-		 selStr += "#L32#Ò½Éú#l\r\n";
-		 selStr += "#L33#ÒşÒşÔ¼Ô¼#l\r\n";
-		 selStr += "#L34#ÓĞÌÒ»¨#l\r\n";
-		 selStr += "#L35#ÓîÖæÖ®´ó#l\r\n";
-		 selStr += "#L36#ÔçË¯ÉíÌåºÃ#l\r\n";
-		 selStr += "#L37#×°ºıÍ¿#l\r\n";
-		 selStr += "#L38#×î¼Ñ¸èÊÖ#l\r\n";
-		 selStr += "#L39#¾ªºèÒ»Ãæ#l\r\n";
+		 selStr += "â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”“\r\n"; 
+		 selStr += "#r#L1#ä¸‹å®Œè¿™åœºé›¨#l\r\n";
+		 selStr += "#L2#å†è§åªæ˜¯é™Œç”Ÿäºº#l\r\n";
+		 selStr += "#L3#æ‘†è„±#l\r\n";
+		 selStr += "#L4#ä¼´è™#l\r\n";
+		 selStr += "#L5#æ‹†ä¸œå¢™#l\r\n";
+		 selStr += "#L6#å¼¹æŒ‡ä¸€æŒ¥é—´#l\r\n";
+		 selStr += "#L7#ç­‰åˆ°çƒŸç«æ¸…å‡‰#l\r\n";
+		 selStr += "#L8#å¯¹è¯è€å¸ˆ#l\r\n";
+		 selStr += "#L9#é—ºèœœ#l\r\n";
+		 selStr += "#L10#æ²³å±±å¤§å¥½#l\r\n";
+		 selStr += "#L11#èƒ¡èåœé¡»#l\r\n";
+		 selStr += "#L12#å¹»èƒ–#l\r\n";
+		 selStr += "#L13#å¹»å¬#l\r\n";
+		 selStr += "#L14#æ¯äººä¸å€¦#l\r\n";
+		 selStr += "#L15#é™æ¸©#l\r\n";
+		 selStr += "#L16#æ•¬é…’ä¸åƒ#l\r\n";
+		 selStr += "#L17#å¹³è¡Œå®‡å®™#l\r\n";
+		 selStr += "#L18#ä¸ƒå¤•#l\r\n";
+		 selStr += "#L19#å¥‡è°ˆ#l\r\n";
+		 selStr += "#L20#åƒç™¾åº¦#l\r\n";
+		 selStr += "#L21#äº²æƒ…å¼çˆ±æƒ…#l\r\n";
+		 selStr += "#L22#å…¨çƒå˜å†·#l\r\n";
+		 selStr += "#L23#å±±æ°´ä¹‹é—´#l\r\n";
+		 selStr += "#L24#æ‘„å½±è‰ºæœ¯#l\r\n";
+		 selStr += "#L25#åŒäººæ—#l\r\n";
+		 selStr += "#L26#å¾®åšæ§#l\r\n";
+		 selStr += "#L27#æ¢§æ¡ç¯#l\r\n";
+		 selStr += "#L28#æƒ³è±¡ä¹‹ä¸­#l\r\n";
+		 selStr += "#L29#å¿ƒç–¼ä½ çš„è¿‡å»#l\r\n";
+		 selStr += "#L30#é›…ä¿—å…±èµ#l\r\n";
+		 selStr += "#L31#ç‡•å½’å·¢#l\r\n";
+		 selStr += "#L32#åŒ»ç”Ÿ#l\r\n";
+		 selStr += "#L33#éšéšçº¦çº¦#l\r\n";
+		 selStr += "#L34#æœ‰æ¡ƒèŠ±#l\r\n";
+		 selStr += "#L35#å®‡å®™ä¹‹å¤§#l\r\n";
+		 selStr += "#L36#æ—©ç¡èº«ä½“å¥½#l\r\n";
+		 selStr += "#L37#è£…ç³Šæ¶‚#l\r\n";
+		 selStr += "#L38#æœ€ä½³æ­Œæ‰‹#l\r\n";
+		 selStr += "#L39#æƒŠé¸¿ä¸€é¢#l\r\n";
 
-         selStr +="#k\r\n©»©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¿\r\n"		
+         selStr +="#k\r\nâ”—â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”›\r\n"		
  
 		cm.sendSimple(selStr);
     } else if (status == 1) {
         switch (selection) {
             case 1:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/ÏÂÍêÕâ³¡Óê");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - ÏÂÍêÕâ³¡Óê¡£");
+            cm.changeMusic("Bgm00/ä¸‹å®Œè¿™åœºé›¨");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - ä¸‹å®Œè¿™åœºé›¨ã€‚");
 			cm.dispose();
             break; 
 			case 2:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/ÔÙ¼ûÖ»ÊÇÄ°ÉúÈË");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - ÔÙ¼ûÖ»ÊÇÄ°ÉúÈË¡£");
+            cm.changeMusic("Bgm00/å†è§åªæ˜¯é™Œç”Ÿäºº");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - å†è§åªæ˜¯é™Œç”Ÿäººã€‚");
 			cm.dispose();
             break; 
 			case 3:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/°ÚÍÑ");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - °ÚÍÑ");
+            cm.changeMusic("Bgm00/æ‘†è„±");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - æ‘†è„±");
 			cm.dispose();
             break;
 case 4:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/°é»¢");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - °é»¢");
+            cm.changeMusic("Bgm00/ä¼´è™");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - ä¼´è™");
 			cm.dispose();
             break;
 case 5:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/²ğ¶«Ç½");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - ²ğ¶«Ç½");
+            cm.changeMusic("Bgm00/æ‹†ä¸œå¢™");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - æ‹†ä¸œå¢™");
 			cm.dispose();
             break;
 case 6:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/µ¯Ö¸Ò»»Ó¼ä");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - µ¯Ö¸Ò»»Ó¼ä");
+            cm.changeMusic("Bgm00/å¼¹æŒ‡ä¸€æŒ¥é—´");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - å¼¹æŒ‡ä¸€æŒ¥é—´");
 			cm.dispose();
             break;
 case 7:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/µÈµ½ÑÌ»ğÇåÁ¹");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - µÈµ½ÑÌ»ğÇåÁ¹");
+            cm.changeMusic("Bgm00/ç­‰åˆ°çƒŸç«æ¸…å‡‰");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - ç­‰åˆ°çƒŸç«æ¸…å‡‰");
 			cm.dispose();
             break;
 case 8:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/¶Ô»°ÀÏÊ¦");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - ¶Ô»°ÀÏÊ¦");
+            cm.changeMusic("Bgm00/å¯¹è¯è€å¸ˆ");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - å¯¹è¯è€å¸ˆ");
 			cm.dispose();
             break;
 case 9:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/¹ëÃÛ");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - ¹ëÃÛ");
+            cm.changeMusic("Bgm00/é—ºèœœ");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - é—ºèœœ");
 			cm.dispose();
             break;
 case 10:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/ºÓÉ½´óºÃ");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - ºÓÉ½´óºÃ");
+            cm.changeMusic("Bgm00/æ²³å±±å¤§å¥½");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - æ²³å±±å¤§å¥½");
 			cm.dispose();
             break;
 case 11:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/ºúÂÜ²·Ğë");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - ºúÂÜ²·Ğë");
+            cm.changeMusic("Bgm00/èƒ¡èåœé¡»");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - èƒ¡èåœé¡»");
 			cm.dispose();
             break;
 case 12:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/»ÃÅÖ");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - »ÃÅÖ");
+            cm.changeMusic("Bgm00/å¹»èƒ–");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - å¹»èƒ–");
 			cm.dispose();
             break;
 case 13:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/»ÃÌı");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - »ÃÌı");
+            cm.changeMusic("Bgm00/å¹»å¬");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - å¹»å¬");
 			cm.dispose();
             break;
 			case 14:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/»ÙÈË²»¾ë");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - »ÙÈË²»¾ë");
+            cm.changeMusic("Bgm00/æ¯äººä¸å€¦");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - æ¯äººä¸å€¦");
 			cm.dispose();
             break;
 			case 15:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/½µÎÂ");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - ½µÎÂ");
+            cm.changeMusic("Bgm00/é™æ¸©");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - é™æ¸©");
 			cm.dispose();
             break;
 			case 16:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/¾´¾Æ²»³Ô");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - ¾´¾Æ²»³Ô");
+            cm.changeMusic("Bgm00/æ•¬é…’ä¸åƒ");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - æ•¬é…’ä¸åƒ");
 			cm.dispose();
             break;
 			case 17:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/Æ½ĞĞÓîÖæ");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - Æ½ĞĞÓîÖæ");
+            cm.changeMusic("Bgm00/å¹³è¡Œå®‡å®™");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - å¹³è¡Œå®‡å®™");
 			cm.dispose();
             break;
 			case 18:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/ÆßÏ¦");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - ÆßÏ¦");
+            cm.changeMusic("Bgm00/ä¸ƒå¤•");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - ä¸ƒå¤•");
 			cm.dispose();
             break;
 			case 19:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/ÆæÌ¸");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - ÆæÌ¸");
+            cm.changeMusic("Bgm00/å¥‡è°ˆ");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - å¥‡è°ˆ");
 			cm.dispose();
             break;
 			case 20:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/Ç§°Ù¶È");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - Ç§°Ù¶È");
+            cm.changeMusic("Bgm00/åƒç™¾åº¦");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - åƒç™¾åº¦");
 			cm.dispose();
             break;
 			case 21:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/Ç×ÇéÊ½µÄ°®Çé");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - Ç×ÇéÊ½µÄ°®Çé");
+            cm.changeMusic("Bgm00/äº²æƒ…å¼çš„çˆ±æƒ…");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - äº²æƒ…å¼çš„çˆ±æƒ…");
 			cm.dispose();
             break;
 			case 22:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/È«Çò±äÀä");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - È«Çò±äÀä");
+            cm.changeMusic("Bgm00/å…¨çƒå˜å†·");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - å…¨çƒå˜å†·");
 			cm.dispose();
             break;
 			case 23:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/É½Ë®Ö®¼ä");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - É½Ë®Ö®¼ä");
+            cm.changeMusic("Bgm00/å±±æ°´ä¹‹é—´");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - å±±æ°´ä¹‹é—´");
 			cm.dispose();
             break;
 			case 24:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/ÉãÓ°ÒÕÊõ");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - ÉãÓ°ÒÕÊõ");
+            cm.changeMusic("Bgm00/æ‘„å½±è‰ºæœ¯");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - æ‘„å½±è‰ºæœ¯");
 			cm.dispose();
             break;
 			case 25:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/Ë«ÈËÅÔ");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - Ë«ÈËÅÔ");
+            cm.changeMusic("Bgm00/åŒäººæ—");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - åŒäººæ—");
 			cm.dispose();
             break;
 			case 26:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/Î¢²©¿Ø");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - Î¢²©¿Ø");
+            cm.changeMusic("Bgm00/å¾®åšæ§");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - å¾®åšæ§");
 			cm.dispose();
             break;
 			case 27:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/ÎàÍ©µÆ");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - ÎàÍ©µÆ");
+            cm.changeMusic("Bgm00/æ¢§æ¡ç¯");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - æ¢§æ¡ç¯");
 			cm.dispose();
             break;
 			case 28:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/ÏëÏóÖ®ÖĞ");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - ÏëÏóÖ®ÖĞ");
+            cm.changeMusic("Bgm00/æƒ³è±¡ä¹‹ä¸­");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - æƒ³è±¡ä¹‹ä¸­");
 			cm.dispose();
             break;
 			case 29:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/ĞÄÌÛÄãµÄ¹ıÈ¥");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - ĞÄÌÛÄãµÄ¹ıÈ¥");
+            cm.changeMusic("Bgm00/å¿ƒç–¼ä½ çš„è¿‡å»");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - å¿ƒç–¼ä½ çš„è¿‡å»");
 			cm.dispose();
             break;
 			case 30:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/ ÑÅË×¹²ÉÍ");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú -  ÑÅË×¹²ÉÍ");
+            cm.changeMusic("Bgm00/ é›…ä¿—å…±èµ");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² -  é›…ä¿—å…±èµ");
 			cm.dispose();
             break;
 			case 31:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/Ñà¹é³²");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - Ñà¹é³²");
+            cm.changeMusic("Bgm00/ç‡•å½’å·¢");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - ç‡•å½’å·¢");
 			cm.dispose();
             break;
 			case 32:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/Ò½Éú");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - Ò½Éú");
+            cm.changeMusic("Bgm00/åŒ»ç”Ÿ");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - åŒ»ç”Ÿ");
 			cm.dispose();
             break;
 			case 33:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/¾ªºèÒ»Ãæ");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - ¾ªºèÒ»Ãæ");
+            cm.changeMusic("Bgm00/æƒŠé¸¿ä¸€é¢");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - æƒŠé¸¿ä¸€é¢");
 			cm.dispose();
             break;
 			case 34:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/ÓĞÌÒ»¨");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - ÓĞÌÒ»¨");
+            cm.changeMusic("Bgm00/æœ‰æ¡ƒèŠ±");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - æœ‰æ¡ƒèŠ±");
 			cm.dispose();
             break;
 			case 35:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/ÓîÖæÖ®´ó");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - ÓîÖæÖ®´ó");
+            cm.changeMusic("Bgm00/å®‡å®™ä¹‹å¤§");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - å®‡å®™ä¹‹å¤§");
 			cm.dispose();
             break;
 			case 36:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/ÔçË¯ÉíÌåºÃ");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - ÔçË¯ÉíÌåºÃ");
+            cm.changeMusic("Bgm00/æ—©ç¡èº«ä½“å¥½");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - æ—©ç¡èº«ä½“å¥½");
 			cm.dispose();
             break;
 			case 37:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/×°ºıÍ¿");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - ×°ºıÍ¿");
+            cm.changeMusic("Bgm00/è£…ç³Šæ¶‚");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - è£…ç³Šæ¶‚");
 			cm.dispose();
             break;
 			case 38:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/×î¼Ñ¸èÊÖ");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - ×î¼Ñ¸èÊÖ");
+            cm.changeMusic("Bgm00/æœ€ä½³æ­Œæ‰‹");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - æœ€ä½³æ­Œæ‰‹");
 			cm.dispose();
             break;
 			case 39:
 			cm.setBossLog("dj");
-            cm.changeMusic("Bgm00/¾ªºèÒ»Ãæ");;
-			cm.worldMessage(5,""+ cm.getChar().getName() +"  µã²¥¸èÇú - ¾ªºèÒ»Ãæ");
+            cm.changeMusic("Bgm00/æƒŠé¸¿ä¸€é¢");;
+			cm.worldMessage(5,""+ cm.getChar().getName() +"  ç‚¹æ’­æ­Œæ›² - æƒŠé¸¿ä¸€é¢");
 			cm.dispose();
             break;
 		

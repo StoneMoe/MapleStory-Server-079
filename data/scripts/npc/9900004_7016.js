@@ -32,7 +32,7 @@ function action(mode, type, selection) {
     }
     if (status == 0) {
         var msg = "";
-        msg += "\r\n#dĞèÒª:#b ";
+        msg += "\r\n#déœ€è¦:#b ";
         msg += "\r\n\r\n";
         for (var ii = 0; ii < req.length; ii++) {
             msg += "#i" + req[ii][0] + "##z" + req[ii][0] + "#x" + req[ii][1];
@@ -46,31 +46,31 @@ function action(mode, type, selection) {
             msg += "#r#L" + i + "#";
             msg += "#i" + weapon[i] + "##z" + weapon[i] + "##l\r\n";
         }
-        cm.sendSimple("#b#eÄúºÃ£¬ÖÆ×÷#rÊ×ÊÎ#bĞèÒªÒÔÏÂ²ÄÁÏ£¬Ã»ÓĞ²ÄÁÏ¿É²»ĞĞÅ¶\r\n\r\n" + msg + "");
+        cm.sendSimple("#b#eæ‚¨å¥½ï¼Œåˆ¶ä½œ#ré¦–é¥°#béœ€è¦ä»¥ä¸‹ææ–™ï¼Œæ²¡æœ‰ææ–™å¯ä¸è¡Œå“¦\r\n\r\n" + msg + "");
     } else if (status == 1) {
         sels = selection;
         if (!cm.canHold(weapon[sels])) {
-            cm.sendNext("#r±³°ü¿Õ¼ä²»×ã");
+            cm.sendNext("#rèƒŒåŒ…ç©ºé—´ä¸è¶³");
             cm.dispose();
             return;
         }
         for (var i = 0; i < req.length; i++) {
             if (!cm.haveItem(req[i][0], req[i][1])) {
-                cm.sendNext("#bÄãÉíÉÏÃ»ÓĞ#r×ã¹»µÄ²ÄÁÏ#k£¬¼ÌĞøÊÕ¼¯²ÄÁÏÈ¥°É£¡");
+                cm.sendNext("#bä½ èº«ä¸Šæ²¡æœ‰#rè¶³å¤Ÿçš„ææ–™#kï¼Œç»§ç»­æ”¶é›†ææ–™å»å§ï¼");
                 cm.dispose();
                 return;
             }
         }
-        cm.sendYesNo("#bÊÇ·ñÒª¶Ò»»#r²¼À³¿ËÎäÆ÷ÏµÁĞ#r #i" + weapon[sels] + "#? \r\n");
+        cm.sendYesNo("#bæ˜¯å¦è¦å…‘æ¢#rå¸ƒè±å…‹æ­¦å™¨ç³»åˆ—#r #i" + weapon[sels] + "#? \r\n");
     } else if (status == 2) {
         for (var i = 0; i < req.length; i++) {
             cm.gainItem(req[i][0], -req[i][1]);
         }
         cm.gainItem(weapon[sels], 1);
-        cm.sendNext("#bÒÑ¾­¶Ò»»ºÃÁË£¬ÇëÇ°Íù±³°ü²é¿´ #i" + weapon[sels] + "#");
+        cm.sendNext("#bå·²ç»å…‘æ¢å¥½äº†ï¼Œè¯·å‰å¾€èƒŒåŒ…æŸ¥çœ‹ #i" + weapon[sels] + "#");
         cm.dispose();
     } else {
-        cm.sendNext("#r·¢Éú´íÎó: mode : " + mode + " status : " + status);
+        cm.sendNext("#rå‘ç”Ÿé”™è¯¯: mode : " + mode + " status : " + status);
         cm.dispose();
     }
 }

@@ -1,10 +1,10 @@
 var ca = java.util.Calendar.getInstance();
-var year = ca.get(java.util.Calendar.YEAR); //»ñµÃÄê·İ
-var month = ca.get(java.util.Calendar.MONTH) + 1; //»ñµÃÔÂ·İ
-var day = ca.get(java.util.Calendar.DATE);//»ñÈ¡ÈÕ
-var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //»ñµÃĞ¡Ê±
-var minute = ca.get(java.util.Calendar.MINUTE);//»ñµÃ·ÖÖÓ
-var second = ca.get(java.util.Calendar.SECOND); //»ñµÃÃë
+var year = ca.get(java.util.Calendar.YEAR); //è·å¾—å¹´ä»½
+var month = ca.get(java.util.Calendar.MONTH) + 1; //è·å¾—æœˆä»½
+var day = ca.get(java.util.Calendar.DATE);//è·å–æ—¥
+var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //è·å¾—å°æ—¶
+var minute = ca.get(java.util.Calendar.MINUTE);//è·å¾—åˆ†é’Ÿ
+var second = ca.get(java.util.Calendar.SECOND); //è·å¾—ç§’
 var weekday = ca.get(java.util.Calendar.DAY_OF_WEEK);
 var Z = "#fUI/GuildMark.img/Mark/Letter/00005025/1#";
 var Y = "#fUI/GuildMark.img/Mark/Letter/00005024/3#";
@@ -14,21 +14,21 @@ var M = "#fUI/GuildMark.img/Mark/Letter/00005012/1#";
 var A = "#fUI/GuildMark.img/Mark/Letter/00005000/1#";
 var P = "#fUI/GuildMark.img/Mark/Letter/00005015/1#";
 var Z = "#fUI/GuildMark.img/Mark/Letter/00005025/9#";
-var ¾Å = "#fUI/GuildMark.img/Mark/Letter/00005035/15#";
-var Æß = "#fUI/GuildMark.img/Mark/Letter/00005033/15#";
-var Áã = "#fUI/GuildMark.img/Mark/Letter/00005026/15#";
-var Ò» = "#fUI/GuildMark.img/Mark/Letter/00005027/15#";
-var Ò» = "#fUI/GuildMark.img/Mark/Letter/00005027/15#";
-var ¶ş = "#fUI/GuildMark.img/Mark/Letter/00005028/15#";
-var Èı = "#fUI/GuildMark.img/Mark/Letter/00005029/15#";
-var ËÄ = "#fUI/GuildMark.img/Mark/Letter/00005030/15#";
-var Îå = "#fUI/GuildMark.img/Mark/Letter/00005031/15#";
-var Áù = "#fUI/GuildMark.img/Mark/Letter/00005032/15#";
-var Æß = "#fUI/GuildMark.img/Mark/Letter/00005033/15#";
-var Áã = "#fUI/GuildMark.img/Mark/Letter/00005026/15#";
-var ¾Å = "#fUI/GuildMark.img/Mark/Letter/00005035/15#";
-var Æß = "#fUI/GuildMark.img/Mark/Letter/00005033/15#";
-var Áã = "#fUI/GuildMark.img/Mark/Letter/00005026/15#";
+var ä¹ = "#fUI/GuildMark.img/Mark/Letter/00005035/15#";
+var ä¸ƒ = "#fUI/GuildMark.img/Mark/Letter/00005033/15#";
+var é›¶ = "#fUI/GuildMark.img/Mark/Letter/00005026/15#";
+var ä¸€ = "#fUI/GuildMark.img/Mark/Letter/00005027/15#";
+var ä¸€ = "#fUI/GuildMark.img/Mark/Letter/00005027/15#";
+var äºŒ = "#fUI/GuildMark.img/Mark/Letter/00005028/15#";
+var ä¸‰ = "#fUI/GuildMark.img/Mark/Letter/00005029/15#";
+var å›› = "#fUI/GuildMark.img/Mark/Letter/00005030/15#";
+var äº” = "#fUI/GuildMark.img/Mark/Letter/00005031/15#";
+var å…­ = "#fUI/GuildMark.img/Mark/Letter/00005032/15#";
+var ä¸ƒ = "#fUI/GuildMark.img/Mark/Letter/00005033/15#";
+var é›¶ = "#fUI/GuildMark.img/Mark/Letter/00005026/15#";
+var ä¹ = "#fUI/GuildMark.img/Mark/Letter/00005035/15#";
+var ä¸ƒ = "#fUI/GuildMark.img/Mark/Letter/00005033/15#";
+var é›¶ = "#fUI/GuildMark.img/Mark/Letter/00005026/15#";
 
 
 function start() {
@@ -47,22 +47,22 @@ function action(mode, type, selection) {
         status--;
     }
 	    if (cm.getMapId() == 20000 || cm.getMapId() == 10000) {
-            cm.sendOk(" ×Ô ÓÉ Ã° ÏÕ µº ¾³ Íâ ÎŞ ·¨ Ê¹ ÓÃ ´Ë ¹¦ ÄÜ ¡£");
+            cm.sendOk(" è‡ª ç”± å†’ é™© å²› å¢ƒ å¤– æ—  æ³• ä½¿ ç”¨ æ­¤ åŠŸ èƒ½ ã€‚");
             cm.dispose();
         }
 	if (cm.getPlayer().getLevel() < 10) {
-        cm.sendOk("ÄãµÄµÈ¼¶Î´´ïµ½10¼¶£¬Òò´ËÎ´ÄÜ½âËø±¾¹¦ÄÜ");
+        cm.sendOk("ä½ çš„ç­‰çº§æœªè¾¾åˆ°10çº§ï¼Œå› æ­¤æœªèƒ½è§£é”æœ¬åŠŸèƒ½");
         cm.dispose();
 		 }
   
     else if (status == 0) {
-        var selStr = ""+Áã+""+Áã+""+¶ş+"ºÅĞ¡ÎİĞÅÏ¢\r\n\r\n"
+        var selStr = ""+é›¶+""+é›¶+""+äºŒ+"å·å°å±‹ä¿¡æ¯\r\n\r\n"
  
-          selStr += "Ğ¡Îİ»§Ö÷£»#rÆß±¦#k\r\n";
+          selStr += "å°å±‹æˆ·ä¸»ï¼›#rä¸ƒå®#k\r\n";
 		  
-		//  selStr += "  #L3##b¡óÇåÀí±³°ü#l#k #L4##b¡óÓÎÉ½ÍæË®#l#k #L5##b¡ó»îÔ¾³É¾Í#l#k  \r\n\r\n";
+		//  selStr += "  #L3##bâ—‡æ¸…ç†èƒŒåŒ…#l#k #L4##bâ—‡æ¸¸å±±ç©æ°´#l#k #L5##bâ—‡æ´»è·ƒæˆå°±#l#k  \r\n\r\n";
 		   
-		 // selStr += "  #L6##b¡óÈ«·şµ¯´°#l#k #L7##b¡ó¿ìËÙ×ªÖ°#l#k #L8##b¡óË½ÈË¹«Ô¢#l#k  \r\n\r\n";
+		 // selStr += "  #L6##bâ—‡å…¨æœå¼¹çª—#l#k #L7##bâ—‡å¿«é€Ÿè½¬èŒ#l#k #L8##bâ—‡ç§äººå…¬å¯“#l#k  \r\n\r\n";
 		cm.sendSimple(selStr);
     
     }

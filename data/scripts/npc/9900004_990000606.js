@@ -1,5 +1,5 @@
 //////////////////////////////
-//Æß±¦*×ÔÓÉÃ°ÏÕµº*×î¾ß´´Òâ////
+//ä¸ƒå®*è‡ªç”±å†’é™©å²›*æœ€å…·åˆ›æ„////
 //1346464664/992916233//////
 ///////////////////////////
 importPackage(java.lang);
@@ -7,14 +7,14 @@ importPackage(Packages.tools);
 importPackage(Packages.client);
 importPackage(Packages.server);
 var ca = java.util.Calendar.getInstance();
-var year = ca.get(java.util.Calendar.YEAR); //»ñµÃÄê·İ
-var month = ca.get(java.util.Calendar.MONTH) + 1; //»ñµÃÔÂ·İ
-var day = ca.get(java.util.Calendar.DATE);//»ñÈ¡ÈÕ
-var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //»ñµÃĞ¡Ê±
-var minute = ca.get(java.util.Calendar.MINUTE);//»ñµÃ·ÖÖÓ
-var second = ca.get(java.util.Calendar.SECOND); //»ñµÃÃë
+var year = ca.get(java.util.Calendar.YEAR); //è·å¾—å¹´ä»½
+var month = ca.get(java.util.Calendar.MONTH) + 1; //è·å¾—æœˆä»½
+var day = ca.get(java.util.Calendar.DATE);//è·å–æ—¥
+var hour = ca.get(java.util.Calendar.HOUR_OF_DAY); //è·å¾—å°æ—¶
+var minute = ca.get(java.util.Calendar.MINUTE);//è·å¾—åˆ†é’Ÿ
+var second = ca.get(java.util.Calendar.SECOND); //è·å¾—ç§’
 var weekday = ca.get(java.util.Calendar.DAY_OF_WEEK);
-var ¼ıÍ· = "#fUI/Basic/BtHide3/mouseOver/0#";
+var ç®­å¤´ = "#fUI/Basic/BtHide3/mouseOver/0#";
 
 
 
@@ -35,7 +35,7 @@ function action(mode, type, selection) {
         status--;
     }
 	    if ( cm.getMapId() == 10000) {
-            cm.sendOk(" ×Ô ÓÉ Ã° ÏÕ µº ¾³ Íâ ÎŞ ·¨ Ê¹ ÓÃ ´Ë ¹¦ ÄÜ ¡£");
+            cm.sendOk(" è‡ª ç”± å†’ é™© å²› å¢ƒ å¤– æ—  æ³• ä½¿ ç”¨ æ­¤ åŠŸ èƒ½ ã€‚");
             cm.dispose();
         }
 
@@ -45,14 +45,14 @@ function action(mode, type, selection) {
 		
 		
    var  
-	    selStr = "×°±¸Õ¹Ê¾£»#v1022079#\r\n";
-		//selStr += "ËùĞèÊìÁ·¶È£»400 \r\n";
-		selStr += "#b#L0#"+¼ıÍ·+"·µ»Ø½çÃæ#l\r\n";
-		selStr += "#L2#"+¼ıÍ·+"²ÄÁÏÏêÏ¸ \r\n";
-		selStr += "#L3#"+¼ıÍ·+"×°±¸ÌØĞÔ \r\n";
+	    selStr = "è£…å¤‡å±•ç¤ºï¼›#v1022079#\r\n";
+		//selStr += "æ‰€éœ€ç†Ÿç»ƒåº¦ï¼›400 \r\n";
+		selStr += "#b#L0#"+ç®­å¤´+"è¿”å›ç•Œé¢#l\r\n";
+		selStr += "#L2#"+ç®­å¤´+"ææ–™è¯¦ç»† \r\n";
+		selStr += "#L3#"+ç®­å¤´+"è£…å¤‡ç‰¹æ€§ \r\n";
 		
 		if(cm.haveItem(4000007,999)&&cm.haveItem(4000004,999)&&!cm.getInventory(1).isFull()) {
-		selStr += "#r#e#L1#"+¼ıÍ·+"¿ªÊ¼¶ÍÔì#l\r\n";
+		selStr += "#r#e#L1#"+ç®­å¤´+"å¼€å§‹é”»é€ #l\r\n";
    }else {}
 				
 		cm.sendSimple(selStr);
@@ -75,39 +75,39 @@ function action(mode, type, selection) {
                    var toDrop = ii.randomizeStats(ii.getEquipById(1022079)).copy();
 				  // var mz =  cm.getChar().getName();
                        //toDrop.setExp(1);
-                        toDrop.setFlag(1);//¿ÉÒÔ//1·âÓ¡//2¿ÉÒÔ½»+»¬//3·â+·À»¬//4¿ÉÒÔ½»Ò×+º®Àä//5º®+Ëø//6¿ÉÒÔ½»Ò×+º®+»¬//7º®»¬//8²»¿É½»Ò×//9²»¿ÉÒÔ½»Ò×+Ëø//10²»¿É½»»»+»¬//²»¿ÉÒÔ½»Ò×+Ëø+»¬
-						toDrop.setStr(10);//Á¦Á¿
-						toDrop.setDex(10);//Ãô½İ
-						toDrop.setInt(10);//ÔËÆø
-						toDrop.setLuk(10);//ÖÇÁ¦
-                        toDrop.setWatk(0);//ÎïÀí¹¥»÷
-						toDrop.setMatk(0);//Ä§·¨¹¥»÷
-						toDrop.setWdef(0);//ÎïÀí·ÀÓù
-						toDrop.setMdef(0);//Ä§·¨·ÀÓù
-						toDrop.setSpeed(0);//ÒÆ¶¯ËÙ¶È
-						toDrop.setJump(0)//ÌøÔ¾
+                        toDrop.setFlag(1);//å¯ä»¥//1å°å°//2å¯ä»¥äº¤+æ»‘//3å°+é˜²æ»‘//4å¯ä»¥äº¤æ˜“+å¯’å†·//5å¯’+é”//6å¯ä»¥äº¤æ˜“+å¯’+æ»‘//7å¯’æ»‘//8ä¸å¯äº¤æ˜“//9ä¸å¯ä»¥äº¤æ˜“+é”//10ä¸å¯äº¤æ¢+æ»‘//ä¸å¯ä»¥äº¤æ˜“+é”+æ»‘
+						toDrop.setStr(10);//åŠ›é‡
+						toDrop.setDex(10);//æ•æ·
+						toDrop.setInt(10);//è¿æ°”
+						toDrop.setLuk(10);//æ™ºåŠ›
+                        toDrop.setWatk(0);//ç‰©ç†æ”»å‡»
+						toDrop.setMatk(0);//é­”æ³•æ”»å‡»
+						toDrop.setWdef(0);//ç‰©ç†é˜²å¾¡
+						toDrop.setMdef(0);//é­”æ³•é˜²å¾¡
+						toDrop.setSpeed(0);//ç§»åŠ¨é€Ÿåº¦
+						toDrop.setJump(0)//è·³è·ƒ
 						toDrop.setHp(1000);
 						toDrop.setMp(1000);
-						toDrop.setOwner("³õ¼¶");
+						toDrop.setOwner("åˆçº§");
                         cm.getPlayer().getInventory(type).addItem(toDrop);
                         cm.getC().getSession().write(MaplePacketCreator.addInventorySlot(type, toDrop));
-					cm.sendOk("ÖÆ×÷Íê³É");
-				//	cm.setBossRankCount("¶ÍÔìÊìÁ·¶È",100);
-				//	cm.setBossRankCount("¸ß¼¶ÑÛ¾µ");	
+					cm.sendOk("åˆ¶ä½œå®Œæˆ");
+				//	cm.setBossRankCount("é”»é€ ç†Ÿç»ƒåº¦",100);
+				//	cm.setBossRankCount("é«˜çº§çœ¼é•œ");	
 				cm.completeQuest(1200000000);
-					//cm.worldMessage(6,"Íæ¼Ò "+cm.getName()+" ¾­¹ı²»Ğ¸Å¬Á¦£¬ÖÕÓÚ¶ÍÔì³ö³õ¼¶ËÄÎ¬ÑÛ¾µ¡£");
+					//cm.worldMessage(6,"ç©å®¶ "+cm.getName()+" ç»è¿‡ä¸æ‡ˆåŠªåŠ›ï¼Œç»ˆäºé”»é€ å‡ºåˆçº§å››ç»´çœ¼é•œã€‚");
 					cm.dispose();
 				}else{
-				cm.sendOk("ÄãÈ·¶¨ÄãµÄ²ÄÁÏ×ã¹»»òÕßÇ®´ø¹»ÁËÂğ!");
+				cm.sendOk("ä½ ç¡®å®šä½ çš„ææ–™è¶³å¤Ÿæˆ–è€…é’±å¸¦å¤Ÿäº†å—!");
 				cm.dispose();
 				}
             break;
 		case 2:
-          var sld = cm.getBossRank("¶ÍÔìÊìÁ·¶È",2);
-		    cm.sendOk("ËùĞèÒªµÄ²ÄÁÏ£»\r\n\r\n#v4000007#   £¨999 / #r#c4000007##k)\r\n#v4000004#   £¨999 / #r#c4000004##k)\r\n");
+          var sld = cm.getBossRank("é”»é€ ç†Ÿç»ƒåº¦",2);
+		    cm.sendOk("æ‰€éœ€è¦çš„ææ–™ï¼›\r\n\r\n#v4000007#   ï¼ˆ999 / #r#c4000007##k)\r\n#v4000004#   ï¼ˆ999 / #r#c4000004##k)\r\n");
 			cm.dispose();
 		case 3:
-		    cm.sendOk("\tÌØĞÔ£»\r\n\r\n\t#rÁ¦Á¿£¬Ãô½İ£¬ÖÇÁ¦£¬ÔËÆø+10 HP,MP+1000\r\n\r\n");
+		    cm.sendOk("\tç‰¹æ€§ï¼›\r\n\r\n\t#råŠ›é‡ï¼Œæ•æ·ï¼Œæ™ºåŠ›ï¼Œè¿æ°”+10 HP,MP+1000\r\n\r\n");
             cm.dispose();
           
             break;	
