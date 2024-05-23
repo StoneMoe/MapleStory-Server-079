@@ -4,7 +4,7 @@ function action(mode, type, selection) {
     if (cm.isQuestActive(2236)) {
 	cm.forceCompleteQuest(2236);
 	cm.removeAll(4032263);
-	cm.sendOk("Íê³ÉÈÎÎñ¡£");
+	cm.sendOk("å®Œæˆä»»åŠ¡ã€‚");
     }
     cm.dispose();
 }

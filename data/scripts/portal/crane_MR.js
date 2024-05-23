@@ -1,6 +1,6 @@
 function enter(pi) {
 
-	pi.showInstruction("º½º£ÖĞ\r\n¿ªÍùÎäÁê..", 110, 20);
+	pi.showInstruction("èˆªæµ·ä¸­\r\nå¼€å¾€æ­¦é™µ..", 110, 20);
 	return false;
 
 }

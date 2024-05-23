@@ -1,5 +1,5 @@
 function start() {
-    cm.sendYesNo("ÄúÏëÒªÀë¿ªÁË£¿£¿");
+    cm.sendYesNo("æ‚¨æƒ³è¦ç¦»å¼€äº†ï¼Ÿï¼Ÿ");
 }
 
 function action(mode, type, selection) {

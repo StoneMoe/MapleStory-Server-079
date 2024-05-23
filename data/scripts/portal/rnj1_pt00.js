@@ -3,6 +3,6 @@ function enter(pi) {
     if (em != null && em.getProperty("stage1").equals("1")) {
 	pi.warp(926100001,0);
     } else {
-	pi.playerMessage(5, "ÃÅÉÐÎ´¿ª·Å");
+	pi.playerMessage(5, "é—¨å°šæœªå¼€æ”¾");
     }
 }

@@ -1,4 +1,4 @@
 function start() {
- cm.sendOk("理发吗？找别人吧...");
+ cm.sendOk("鐞嗗彂鍚楋紵鎵惧埆浜哄惂...");
  cm.dispose();
 }
