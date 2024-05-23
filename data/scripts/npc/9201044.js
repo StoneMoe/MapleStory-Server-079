@@ -129,7 +129,7 @@ function action(mode, type, selection) {
 			    }
 			    em.setProperty("apq3_tries", "0");
 			} else {*/
-			    cm.sendOk("´íÎó");
+			    cm.sendOk("é”™è¯¯");
 //			    var rand = java.lang.Math.floor(java.lang.Math.random() * 4);
 //			    cm.spawnMob(9400519 + rand, num_correct, 1663, 196);
 //			}

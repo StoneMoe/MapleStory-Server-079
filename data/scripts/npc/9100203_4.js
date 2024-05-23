@@ -14,18 +14,18 @@ function action(mode, type, selection) {
         cm.dispose();
     } else {
         if (mode == 0) {
-            cm.sendOk("Ò¡Ò»Ò¡£¬ÖĞ´ó½±");
+            cm.sendOk("æ‘‡ä¸€æ‘‡ï¼Œä¸­å¤§å¥–");
             cm.dispose();
             return;
         }
 		if(cm.getBossLog("3") == 0 ){
-    		cm.sendOk("ÄãµÚÈı¸öºÅÂë»¹Ã»Ò¡ÄØ¡£");
+    		cm.sendOk("ä½ ç¬¬ä¸‰ä¸ªå·ç è¿˜æ²¡æ‘‡å‘¢ã€‚");
     		cm.dispose();
     		return;
 			 }
 		
     	if(cm.getBossLog("4") > 0){
-    		cm.sendOk("µÚËÄ¸öºÅÂëÒÑ¾­Ò¡µ½ÁË¡£");
+    		cm.sendOk("ç¬¬å››ä¸ªå·ç å·²ç»æ‘‡åˆ°äº†ã€‚");
     		cm.dispose();
     		return;
 			 }
@@ -34,32 +34,32 @@ function action(mode, type, selection) {
         else
             status--;
         if (status == 0) {
-            cm.sendAcceptDecline("ÕâÀïÊÇµÚËÄ¸öºÅÂëÒ¡ºÅ¡£");
+            cm.sendAcceptDecline("è¿™é‡Œæ˜¯ç¬¬å››ä¸ªå·ç æ‘‡å·ã€‚");
         } else if (status == 1) {
-            cm.sendAcceptDecline("ÄãÈ·¶¨ÒªÒ¡Âğ£¿");
+            cm.sendAcceptDecline("ä½ ç¡®å®šè¦æ‘‡å—ï¼Ÿ");
 
         } else if (status == 2) {
             if (cm.getMeso() < fee) {
-                cm.sendOk("Å¶ºÇ£¬²»ºÃÒâË¼ÄãÃ»ÄÇÃ´¶àÇ®ÁË£¬È¥×¬µãÇ®ÔÙÀ´°É£¬Õâ¿É²»ÊÇÃâ·ÑµÄ,¿ìÈ¥µ±µôÒ»Ğ©¶«Î÷ÔÙÀ´°É!");
+                cm.sendOk("å“¦å‘µï¼Œä¸å¥½æ„æ€ä½ æ²¡é‚£ä¹ˆå¤šé’±äº†ï¼Œå»èµšç‚¹é’±å†æ¥å§ï¼Œè¿™å¯ä¸æ˜¯å…è´¹çš„,å¿«å»å½“æ‰ä¸€äº›ä¸œè¥¿å†æ¥å§!");
                 cm.dispose();
             //} else if (cm.getMeso() < 100) {
-               // cm.sendOk("ÇëÏÈÈ·¶¨°üÀïµÄ½ğ±Ò²»ÄÜµÍÓÚ#r50000000!");
+               // cm.sendOk("è¯·å…ˆç¡®å®šåŒ…é‡Œçš„é‡‘å¸ä¸èƒ½ä½äº#r50000000!");
               //  cm.dispose();
            // } else if (cm.getText() < 100) {
-               // cm.sendOk("#i3994125# µÍÓÚ#r10000000#k½ğ±Ò£¿ÄÇÄã»¹ÊÇÈ¥±ğµÄ¶Ä²©»úÍæ°É¡£");
+               // cm.sendOk("#i3994125# ä½äº#r10000000#ké‡‘å¸ï¼Ÿé‚£ä½ è¿˜æ˜¯å»åˆ«çš„èµŒåšæœºç©å§ã€‚");
                // cm.dispose();
             } else {
                  if (chance <= 1) { 
 	                     
 						cm.setBossLog("4");
-	                    cm.sendNext("Äã³éÈ¡µ½ÁËºÅÂë#r 1 #k"); 
+	                    cm.sendNext("ä½ æŠ½å–åˆ°äº†å·ç #r 1 #k"); 
                         cm.dispose(); 
 	                } 
 	                else if (chance == 2) { 
 	                     
 	                     cm.setBossLog("4");
 						 cm.setBossLog("4");
-	                     cm.sendNext("Äã³éÈ¡µ½ÁËºÅÂë#r 2 #k"); 
+	                     cm.sendNext("ä½ æŠ½å–åˆ°äº†å·ç #r 2 #k"); 
 	                     cm.dispose(); 
 	                } 
 					else if (chance == 3) { 
@@ -67,7 +67,7 @@ function action(mode, type, selection) {
 	                    cm.setBossLog("4");
 						cm.setBossLog("4");
 						cm.setBossLog("4");
-	                    cm.sendNext("Äã³éÈ¡µ½ÁËºÅÂë#r 3 #k"); 
+	                    cm.sendNext("ä½ æŠ½å–åˆ°äº†å·ç #r 3 #k"); 
 	                    cm.dispose(); 
 	                } 
 					else if (chance == 4) { 
@@ -76,7 +76,7 @@ function action(mode, type, selection) {
 						cm.setBossLog("4");
 						cm.setBossLog("4");
 						cm.setBossLog("4");
-	                    cm.sendNext("Äã³éÈ¡µ½ÁËºÅÂë#r 4 #k"); 
+	                    cm.sendNext("ä½ æŠ½å–åˆ°äº†å·ç #r 4 #k"); 
 	                    cm.dispose(); 
 				   }else if (chance == 5) { 
 	                     
@@ -85,7 +85,7 @@ function action(mode, type, selection) {
 						cm.setBossLog("4");
 						cm.setBossLog("4");
 						cm.setBossLog("4");
-	                    cm.sendNext("Äã³éÈ¡µ½ÁËºÅÂë#r 5 #k"); 
+	                    cm.sendNext("ä½ æŠ½å–åˆ°äº†å·ç #r 5 #k"); 
 	                    cm.dispose(); 
 					}else if (chance == 6) { 
 	                    
@@ -95,7 +95,7 @@ function action(mode, type, selection) {
 						cm.setBossLog("4");
 						cm.setBossLog("4");
 						cm.setBossLog("4");
-	                    cm.sendNext("Äã³éÈ¡µ½ÁËºÅÂë#r 6 #k"); 
+	                    cm.sendNext("ä½ æŠ½å–åˆ°äº†å·ç #r 6 #k"); 
 	                    cm.dispose(); 
 					}else if (chance == 7) { 
 	                   
@@ -106,7 +106,7 @@ function action(mode, type, selection) {
 						cm.setBossLog("4");
 						cm.setBossLog("4");
 						cm.setBossLog("4");
-	                    cm.sendNext("Äã³éÈ¡µ½ÁËºÅÂë#r 7 #k"); 
+	                    cm.sendNext("ä½ æŠ½å–åˆ°äº†å·ç #r 7 #k"); 
 	                    cm.dispose(); 
 					}else if (chance == 8) { 
 	                    
@@ -118,7 +118,7 @@ function action(mode, type, selection) {
 						cm.setBossLog("4");
 						cm.setBossLog("4");
 						cm.setBossLog("4");
-	                    cm.sendNext("Äã³éÈ¡µ½ÁËºÅÂë#r 8 #k"); 
+	                    cm.sendNext("ä½ æŠ½å–åˆ°äº†å·ç #r 8 #k"); 
 	                    cm.dispose(); 
 					}else if (chance == 9) { 
 	                    
@@ -132,7 +132,7 @@ function action(mode, type, selection) {
 						cm.setBossLog("4");
 						cm.setBossLog("4");
 						
-	                    cm.sendNext("Äã³éÈ¡µ½ÁËºÅÂë#r 9 #k"); 
+	                    cm.sendNext("ä½ æŠ½å–åˆ°äº†å·ç #r 9 #k"); 
 	                    cm.dispose(); 
 	
 					
