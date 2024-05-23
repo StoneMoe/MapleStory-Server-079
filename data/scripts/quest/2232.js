@@ -4,9 +4,9 @@ function start(mode, type, selection) {
     if (qm.getPlayer().getJunior1() > 0) {
         qm.forceCompleteQuest();
         qm.gainExp(3000);
-        qm.sendNext("°ô¼«ÁË£¡£¡");
+        qm.sendNext("æ£’æäº†ï¼ï¼");
     } else {
-        qm.sendNext("ÇëÕÒÒ»¸öÍ½µÜÀ´¼ûÎÒ£¡");
+        qm.sendNext("è¯·æ‰¾ä¸€ä¸ªå¾’å¼Ÿæ¥è§æˆ‘ï¼");
     }
     qm.dispose();
 }
@@ -14,9 +14,9 @@ function end(mode, type, selection) {
     if (qm.getPlayer().getJunior1() > 0) {
         qm.forceCompleteQuest();
         qm.gainExp(3000);
-        qm.sendNext("°ô¼«ÁË£¡£¡");
+        qm.sendNext("æ£’æäº†ï¼ï¼");
     } else {
-        qm.sendNext("ÇëÕÒÒ»¸öÍ½µÜÀ´¼ûÎÒ£¡");
+        qm.sendNext("è¯·æ‰¾ä¸€ä¸ªå¾’å¼Ÿæ¥è§æˆ‘ï¼");
     }
     qm.dispose();
 }

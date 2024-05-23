@@ -6,7 +6,7 @@ function start(mode, type, selection) {
 function end(mode, type, selection) {
     status++;
     if (status == 0) {
-        qm.sendNext("ÎÒµÄÑÛ¾µÔÚÄÄÀï£¬°¡ÕÒµ½ÁË£¡Ğ»Ğ»Äã^^\r\n\r\n#fUI/UIWindow.img/QuestIcon/4/0#\r\n#v2030019# 5 #t2030019#s\r\n\r\n#fUI/UIWindow.img/QuestIcon/8/0#  1000 ¾­ÑéÖµ");
+        qm.sendNext("æˆ‘çš„çœ¼é•œåœ¨å“ªé‡Œï¼Œå•Šæ‰¾åˆ°äº†ï¼è°¢è°¢ä½ ^^\r\n\r\n#fUI/UIWindow.img/QuestIcon/4/0#\r\n#v2030019# 5 #t2030019#s\r\n\r\n#fUI/UIWindow.img/QuestIcon/8/0#  1000 ç»éªŒå€¼");
     } else {
         qm.gainItem(2030019, 5);
         qm.gainExp(1000);

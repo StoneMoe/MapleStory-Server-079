@@ -9,9 +9,9 @@ function start(mode, type, selection) {
         else
             status--;
         if (status == 0) {
-            qm.sendNext("ÊÇ·ñÒÑ¾­×¼±¸ºÃÇ°½øÉ³Ä®ÁË??");
+            qm.sendNext("æ˜¯å¦å·²ç»å‡†å¤‡å¥½å‰è¿›æ²™æ¼ äº†??");
         } else if (status == 1) {
-            qm.sendAcceptDecline("±ğ¹ÖÎÒËµÃ»ÓĞ¾¯¸æÄã...");
+            qm.sendAcceptDecline("åˆ«æ€ªæˆ‘è¯´æ²¡æœ‰è­¦å‘Šä½ ...");
         } else if (status == 2) {
             qm.forceStartQuest();
             qm.dispose();
@@ -29,14 +29,14 @@ function end(mode, type, selection) {
             status--;
         if (status == 0) {
             if (qm.getPlayerStat("HP") < 50) {
-                qm.sendNext("ÎÒ¿´ÄãºÃÏñ»¹Ã»×¼±¸ºÃ£¬×¼±¸ºÃÔÚÀ´ÕÒÎÒ°É¡£");
+                qm.sendNext("æˆ‘çœ‹ä½ å¥½åƒè¿˜æ²¡å‡†å¤‡å¥½ï¼Œå‡†å¤‡å¥½åœ¨æ¥æ‰¾æˆ‘å§ã€‚");
                 qm.dispose();
             } else {
-                qm.sendNext("ÊÇ·ñÒÑ¾­×¼±¸ºÃÇ°½øÉ³Ä®ÁË??");
+                qm.sendNext("æ˜¯å¦å·²ç»å‡†å¤‡å¥½å‰è¿›æ²™æ¼ äº†??");
             }
 
         } else if (status == 1) {
-            qm.sendNextPrev("ÎÒÒÑ¾­¾¯¸æ¹ıÄã.");
+            qm.sendNextPrev("æˆ‘å·²ç»è­¦å‘Šè¿‡ä½ .");
         } else if (status == 2) {
             qm.warp(260000000);
             qm.forceCompleteQuest();

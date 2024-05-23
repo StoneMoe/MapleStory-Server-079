@@ -1,11 +1,11 @@
 var status = -1;
 
 function start(mode, type, selection) {
-	qm.sendNext("请去长老公馆找战士转职教官转职.");
+	qm.sendNext("璇峰幓闀胯�佸叕棣嗘壘鎴樺＋杞亴鏁欏畼杞亴.");
 	qm.dispose();
 }
 
 function end(mode, type, selection) {
-	qm.sendNext("请去长老公馆找战士转职教官转职.");
+	qm.sendNext("璇峰幓闀胯�佸叕棣嗘壘鎴樺＋杞亴鏁欏畼杞亴.");
 	qm.dispose();
 }

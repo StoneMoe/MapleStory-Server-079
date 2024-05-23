@@ -1,12 +1,12 @@
 var status = -1;
 
 function start(mode, type, selection) {
-    qm.sendNext("Å¶£¬ÄãÒÑ¾­ÓĞÁË¹ÖÎïµÄÊé¡£");
+    qm.sendNext("å“¦ï¼Œä½ å·²ç»æœ‰äº†æ€ªç‰©çš„ä¹¦ã€‚");
     qm.forceCompleteQuest();
     qm.dispose();
 }
 function end(mode, type, selection) {
-    qm.sendNext("Å¶£¬ÄãÒÑ¾­ÓĞÁË¹ÖÎïµÄÊé¡£");
+    qm.sendNext("å“¦ï¼Œä½ å·²ç»æœ‰äº†æ€ªç‰©çš„ä¹¦ã€‚");
     qm.forceCompleteQuest();
     qm.dispose();
 }

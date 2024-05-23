@@ -1,7 +1,7 @@
 var status = -1;
 
 function start(mode, type, selection) {
-    qm.sendNext("ÎÒ²»»á·ÅÆúµÄ£¡");
+    qm.sendNext("æˆ‘ä¸ä¼šæ”¾å¼ƒçš„ï¼");
     qm.gainExp(5000);
     qm.forceCompleteQuest();
     qm.dispose();

@@ -3,7 +3,7 @@ var status = -1;
 function start(mode, type, selection) {
     qm.getMap().killAllMonsters(true);
     qm.spawnMonster(3300008, 1);
-    qm.sendNext("请帮我除掉这个人！！");
+    qm.sendNext("璇峰府鎴戦櫎鎺夎繖涓汉锛侊紒");
     qm.forceCompleteQuest(2332);
     qm.forceStartQuest();
     qm.dispose();

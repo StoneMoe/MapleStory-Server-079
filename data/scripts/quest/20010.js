@@ -38,7 +38,7 @@ function end(mode, type, selection) {
         status--;
     }
     if (status == 0) {
-        qm.sendNext("���ǹ���?? �Ҹ�� #p1102004# ������? �ܸ�����ʶ��! ���� #p1102005#. �ҽ����� #p1102004# . ��ǵã�����԰���ĵ����� #bI ��#k. ��ҩˮ�ܰ�����ָ�HP��ɫҩˮ�ܰ�����ָ�MP������һ��������ѧϰ���ʹ���������������ȳ���˽⵱�㴦��Σ��֮��ʹ�á�. \r\n\r\n#fUI/UIWindow.img/QuestIcon/4/0# \r\n#i2000020# 5 #t2000020# \r\n#i2000021# 5 #t2000021# 5 \r\n\r\n#fUI/UIWindow.img/QuestIcon/8/0# 15 ����ֵ");
+        qm.sendNext("你是贵族? 我哥哥 #p1102004# 派来的? 很高兴认识你! 我是 #p1102005#. 我将送你 #p1102004# . 请记得，你可以按你的道具栏 #bI 键#k. 红药水能帮助你恢复HP蓝色药水能帮助你恢复MP，这是一个好主意学习如何使用它们能让你事先充分了解当你处于危险之中使用。. \r\n\r\n#fUI/UIWindow.img/QuestIcon/4/0# \r\n#i2000020# 5 #t2000020# \r\n#i2000021# 5 #t2000021# 5 \r\n\r\n#fUI/UIWindow.img/QuestIcon/8/0# 15 经验值");
     } else if (status == 1) {
         qm.gainItem(2000020, 5);
         qm.gainItem(2000021, 5);

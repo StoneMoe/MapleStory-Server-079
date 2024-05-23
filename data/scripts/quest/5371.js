@@ -9,9 +9,9 @@ function start(mode, type, selection) {
         return;
     }
     if (status == 0)
-        qm.sendAcceptDecline("ÄãÈ·¶¨ÒªÁìÑ«ÕÂÁËÂğ??");
+        qm.sendAcceptDecline("ä½ ç¡®å®šè¦é¢†å‹‹ç« äº†å—?");
     else if (status == 1) {
-        qm.sendOk("¹§Ï²ÄãÍê³É¡£");
+        qm.sendOk("æ­å–œä½ å®Œæˆã€‚");
         qm.gainItem(1142103, 1)
         qm.forceCompleteQuest();
         qm.dispose();
