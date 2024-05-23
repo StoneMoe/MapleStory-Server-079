@@ -16,8 +16,7 @@ public class GiveItemCommand extends CommandAbstract {
     @Override
     public CommandResult execute(MapleClient mapleClient, String[] args) {
         var result = createResult();
-        if (args.length < 3)
-        {
+        if (args.length < 3) {
             result.setMessage("No enough arguments.");
             result.setSuccess(false);
             return result;
