@@ -16,26 +16,26 @@ function action(mode, type, selection) {
 
 		if (cm.haveItem(4001008, 13)) { // Clear stage
         	    eim.setProperty("4stageclear",1);
-		    cm.sendNext("��ϲ�㣡 ��ɹ�ͨ���˵�4�׶Σ���㣬���5�׶�ǰ���ɣ�");
+		    cm.sendNext("恭喜你！ 你成功通过了第4阶段！快点，向第5阶段前进吧！");
 		    cm.gainItem(4001008, -13);
 		    clear(1, eim, cm);
 		    cm.givePartyExp(2100, eim.getPlayers());
 		    cm.dispose();
 		} else { // Not done yet
-		    cm.sendNext("ȷ��������� #r13 ��ͨ��֤#k ���� ����һ����ı���~");
+		    cm.sendNext("确定你带来了 #r13 张通行证#k 了吗？ 请检查一下你的背包~");
 		}
 		cm.dispose();
 	    } else {
-		cm.sendOk("��ã���ӭ������4�׶Σ��������ߣ����ܻᷢ�ֺܶ����͵Ĺ��������ǣ���ȡͨ��֤#r13#k�ţ��ٰ����ǽ����ҡ���ס��������ܱ���ǿ��ܶ࣬��С��һ�㣬ף��ͨ����һ�ء�");
+		cm.sendOk("你好，欢迎来到第4阶段，到处走走，可能会发现很多凶猛的怪物，打败它们，获取通行证#r13#k张，再把他们交给我。记住，怪物可能比你强大很多，请小心一点，祝你通过这一关。");
 		eim.setProperty("stage2leader","done");
 		cm.dispose();
 	    }
 	} else { // Members
-	    cm.sendNext("��ӭ������4�׶Σ��ڵ�ͼ�����ߣ���ͻῴ���������͵Ĺ��������ǻ�ȡ�������ϵ�ͨ��֤#r13#k�ţ��������ǵ���ӳ���");
+	    cm.sendNext("欢迎来到第4阶段，在地图上走走，你就会看见许多凶猛的怪物，打败他们获取他们身上的通行证#r13#k张，交给你们的组队长。");
 	    cm.dispose();
 	}
     } else {
-	cm.sendNext("��ϲ�㣡 ��ɹ�ͨ���˵�4�׶Σ���㣬���5�׶�ǰ���ɣ�");
+	cm.sendNext("恭喜你！ 你成功通过了第4阶段！快点，向第5阶段前进吧！");
 	cm.dispose();
     }
 }

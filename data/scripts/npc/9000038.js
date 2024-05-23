@@ -1,7 +1,7 @@
 function action(mode, type, selection) {
-	var text = "\t\t\t\t#e#r¡ï BOSSÍ¨¹Ø°ñ ¡ï#k#n\r\n\r\n";
-			text += "\t#eÃû´Î#n\t#e Íæ¼ÒêÇ³Æ#n\t\t\t#e ¹Ø¿¨#n\t\t #e#n\r\n#k";
-			var rankinfo_list=cm.getBossRankCountTop("BOSSÑµÁ·³¡");
+	var text = "\t\t\t\t#e#râ˜… BOSSé€šå…³æ¦œ â˜…#k#n\r\n\r\n";
+			text += "\t#eåæ¬¡#n\t#e ç©å®¶æ˜µç§°#n\t\t\t#e å…³å¡#n\t\t #e#n\r\n#k";
+			var rankinfo_list=cm.getBossRankCountTop("BOSSè®­ç»ƒåœº");
 			if(rankinfo_list!=null){
 				for(var i=0;i<rankinfo_list.size();i++){
 					if(i==10){
@@ -11,7 +11,7 @@ function action(mode, type, selection) {
 
 					text+=i==0?"#r":i==1?"#r":i==2?"#g":i==3?"#b":"";
 					text += "\t " + (i+1) + "\t\t ";
-					// Ìî³äÃû×Ö¿Õ¸ñ
+					// å¡«å……åå­—ç©ºæ ¼
 					text += info.getCname();
 					for (var j = 16 - info.getCname().getBytes().length; j > 0 ; j--) {
 						text += " ";

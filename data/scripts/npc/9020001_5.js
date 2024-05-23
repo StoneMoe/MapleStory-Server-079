@@ -20,21 +20,21 @@ function action(mode, type, selection) {
 		    cm.givePartyExp(2100, eim.getPlayers());
 		    cm.dispose();
 		} else { // Not done yet
-		    cm.sendNext("�����ͼ���Ƿ񻹴��ڹ�������޷�ͨ����");
+		    cm.sendNext("请检查地图上是否还存在怪物，否则无法通过！");
 		}
 		cm.dispose();
 	    } else {
-		cm.sendOk("��ã���ӭ������5���׶Σ�����BOSS��Ȼ����ӳ��ٺ��ҽ������Ϳ���˳��ͨ���ˣ���ôף��һ��˳����");
+		cm.sendOk("你好，欢迎来到第5个阶段，消灭BOSS，然后组队长再和我讲话，就可以顺利通关了，那么祝你一切顺利！");
 		cm.spawnMonster(9300003,1);
 		eim.setProperty("stage3leader","done");
 		cm.dispose();
 	    }
 	} else { // Members
-	    cm.sendNext("��ã���ӭ������5���׶Σ�����BOSS��Ȼ����ӳ��ٺ��ҽ������Ϳ���˳��ͨ���ˣ���ôף��һ��˳����");
+	    cm.sendNext("你好，欢迎来到第5个阶段，消灭BOSS，然后组队长再和我讲话，就可以顺利通关了，那么祝你一切顺利！");
 	    cm.dispose();
 	}
     } else {
-	cm.sendNext("��ϲ�㣡 ��ɹ�ͨ���˵�5�׶Σ���㣬�����׶�ǰ���ɣ�");
+	cm.sendNext("恭喜你！ 你成功通过了第5阶段！快点，向最后阶段前进吧！");
 	cm.dispose();
     }
 }

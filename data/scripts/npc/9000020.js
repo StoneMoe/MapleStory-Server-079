@@ -1,12 +1,12 @@
 /*var status = 0;
 
 var maps = Array(
-        Array(500000000, 3000, 2900), //Ì©¹ú(Ë®ÉÏÊÐ³¡)
-        Array(702000000, 3000, 2900), //¶«·½ÉñÖÝ(áÔÉ½ÉÙÁÖ)
-        Array(800000000, 3000, 2900), //½­»§´å(¹Å´úÉñÉç)
-        Array(701000000, 3000, 2900), //¶«·½ÉñÖÝ(ÉÏº£ÍâÌ²)
-        Array(550000000, 3000, 2900), //ÂíÀ´Î÷ÑÇ(¼ªÂ¡´ó¶¼ÊÐ)
-        Array(540000000, 3000, 2900)//ÐÂ¼ÓÆÂ(ÖÐÐÄÉÌÎñÇø)
+        Array(500000000, 3000, 2900), //æ³°å›½(æ°´ä¸Šå¸‚åœº)
+        Array(702000000, 3000, 2900), //ä¸œæ–¹ç¥žå·ž(åµ©å±±å°‘æž—)
+        Array(800000000, 3000, 2900), //æ±Ÿæˆ·æ‘(å¤ä»£ç¥žç¤¾)
+        Array(701000000, 3000, 2900), //ä¸œæ–¹ç¥žå·ž(ä¸Šæµ·å¤–æ»©)
+        Array(550000000, 3000, 2900), //é©¬æ¥è¥¿äºš(å‰éš†å¤§éƒ½å¸‚)
+        Array(540000000, 3000, 2900)//æ–°åŠ å¡(ä¸­å¿ƒå•†åŠ¡åŒº)
         );
 
 */
@@ -21,7 +21,7 @@ Array(800000000,3000,300),
 Array(701000000,3000,300),
 Array(702100000,3000,300),
 Array(550000000,3000,300)
-);//ÂÃÓÎµØÍ¼²¿·Ö
+);//æ—…æ¸¸åœ°å›¾éƒ¨åˆ†
 var selectedMap = -1;
 var cost = 0;
 
@@ -46,21 +46,21 @@ function action(mode, type, selection) {
 		if (status == 0) {
 			status = 1;
 			if (cm.getJob() == 0) {
-				cm.sendNext("ÎªÁË´Ó·±Ã¦µÄÈÕ³£ÖÐ½âÍÑ£¬È¥ÏíÊÜÒ»ÌËÂÃÓÎÔõÃ´Ñù£¿²»½ö¿ÉÒÔÌåÑéÐÂÓ±µÄÒì¹úÎÄ»¯£¬»¹ÄÜÑ§µ½²»ÉÙ¶«Î÷µÄ»ú»á£¡ÎÒÃÇÃ°ÏÕµºÂÃÓÎ¹«Ë¾ÎªÄú×¼±¸ÁË£¬·á¸»ÓÐÈ¤µÄ#bÊÀ½çÂÃÓÎ#kÌ×²Í¡£Ë­Ëµ»·ÓÎÊÀ½çºÜ¹ó£¿Çë·ÅÒ»Íò¸öÐÄ¡£ÎÒÃÇµÄ#bÃ°ÏÕµºÊÀ½çÂÃÓÎÌ×²Í#kÖ»ÐèÒª#b2900½ð±Ò#k¾Í¿ÉÒÔÏíÊÜÈ«³Ì¡£");
+				cm.sendNext("ä¸ºäº†ä»Žç¹å¿™çš„æ—¥å¸¸ä¸­è§£è„±ï¼ŒåŽ»äº«å—ä¸€è¶Ÿæ—…æ¸¸æ€Žä¹ˆæ ·ï¼Ÿä¸ä»…å¯ä»¥ä½“éªŒæ–°é¢–çš„å¼‚å›½æ–‡åŒ–ï¼Œè¿˜èƒ½å­¦åˆ°ä¸å°‘ä¸œè¥¿çš„æœºä¼šï¼æˆ‘ä»¬å†’é™©å²›æ—…æ¸¸å…¬å¸ä¸ºæ‚¨å‡†å¤‡äº†ï¼Œä¸°å¯Œæœ‰è¶£çš„#bä¸–ç•Œæ—…æ¸¸#kå¥—é¤ã€‚è°è¯´çŽ¯æ¸¸ä¸–ç•Œå¾ˆè´µï¼Ÿè¯·æ”¾ä¸€ä¸‡ä¸ªå¿ƒã€‚æˆ‘ä»¬çš„#bå†’é™©å²›ä¸–ç•Œæ—…æ¸¸å¥—é¤#kåªéœ€è¦#b2900é‡‘å¸#kå°±å¯ä»¥äº«å—å…¨ç¨‹ã€‚");
 			} else {
-				cm.sendNext("ÎªÁË´Ó·±Ã¦µÄÈÕ³£ÖÐ½âÍÑ£¬È¥ÏíÊÜÒ»ÌËÂÃÓÎÔõÃ´Ñù£¿²»½ö¿ÉÒÔÌåÑéÐÂÓ±µÄÒì¹úÎÄ»¯£¬»¹ÄÜÑ§µ½²»ÉÙ¶«Î÷µÄ»ú»á£¡ÎÒÃÇÃ°ÏÕµºÂÃÓÎ¹«Ë¾ÎªÄú×¼±¸ÁË£¬·á¸»ÓÐÈ¤µÄ#bÊÀ½çÂÃÓÎ#kÌ×²Í¡£Ë­Ëµ»·ÓÎÊÀ½çºÜ¹ó£¿Çë·ÅÒ»Íò¸öÐÄ¡£ÎÒÃÇµÄ#bÃ°ÏÕµºÊÀ½çÂÃÓÎÌ×²Í#kÖ»ÐèÒª#b3000½ð±Ò#k¾Í¿ÉÒÔÏíÊÜÈ«³Ì¡£");
+				cm.sendNext("ä¸ºäº†ä»Žç¹å¿™çš„æ—¥å¸¸ä¸­è§£è„±ï¼ŒåŽ»äº«å—ä¸€è¶Ÿæ—…æ¸¸æ€Žä¹ˆæ ·ï¼Ÿä¸ä»…å¯ä»¥ä½“éªŒæ–°é¢–çš„å¼‚å›½æ–‡åŒ–ï¼Œè¿˜èƒ½å­¦åˆ°ä¸å°‘ä¸œè¥¿çš„æœºä¼šï¼æˆ‘ä»¬å†’é™©å²›æ—…æ¸¸å…¬å¸ä¸ºæ‚¨å‡†å¤‡äº†ï¼Œä¸°å¯Œæœ‰è¶£çš„#bä¸–ç•Œæ—…æ¸¸#kå¥—é¤ã€‚è°è¯´çŽ¯æ¸¸ä¸–ç•Œå¾ˆè´µï¼Ÿè¯·æ”¾ä¸€ä¸‡ä¸ªå¿ƒã€‚æˆ‘ä»¬çš„#bå†’é™©å²›ä¸–ç•Œæ—…æ¸¸å¥—é¤#kåªéœ€è¦#b3000é‡‘å¸#kå°±å¯ä»¥äº«å—å…¨ç¨‹ã€‚");
 			}
 		} else if (status == 1) {
-			cm.sendSimple("ÏÖÔÚ¾Í¿ÉÒÔÈ¥Íù #bÌ©¹úµÄË®ÉÏÊÐ³¡,ÉÙÁÖËÂ,ÈÕ±¾¹Å´úÉñÉç#kÓÎÀÀÒ»·¬¡£ÔÚ¸÷ÂÃÓÎµØÎÒ¶¼»áÎª´ó¼ÒÌá¹©ÂúÒâÈÈ³ÏµÄ·þÎñ¡£ÄÇÃ´Çë×¼±¸ºÃ£¬ÐÂÊÖ¿ÉÒÔ9ÕÛÓÅ»Ý¡£\r\n#b#L0#²é¿´ÂÃÓÎÏßÂ·.#k#l");
+			cm.sendSimple("çŽ°åœ¨å°±å¯ä»¥åŽ»å¾€ #bæ³°å›½çš„æ°´ä¸Šå¸‚åœº,å°‘æž—å¯º,æ—¥æœ¬å¤ä»£ç¥žç¤¾#kæ¸¸è§ˆä¸€ç•ªã€‚åœ¨å„æ—…æ¸¸åœ°æˆ‘éƒ½ä¼šä¸ºå¤§å®¶æä¾›æ»¡æ„çƒ­è¯šçš„æœåŠ¡ã€‚é‚£ä¹ˆè¯·å‡†å¤‡å¥½ï¼Œæ–°æ‰‹å¯ä»¥9æŠ˜ä¼˜æƒ ã€‚\r\n#b#L0#æŸ¥çœ‹æ—…æ¸¸çº¿è·¯.#k#l");
 		} else if (status == 2) {
-var selStr = "ÏÖÔÚ¾Í¿ÉÒÔÈ¥Íù #bÌ©¹úµÄË®ÉÏÊÐ³¡,ÉÙÁÖËÂ,ÈÕ±¾¹Å´úÉñÉç#kÓÎÀÀÒ»·¬¡£ÔÚ¸÷ÂÃÓÎµØÎÒ¶¼»áÎª´ó¼ÒÌá¹©ÂúÒâÈÈ³ÏµÄ·þÎñ¡£ÄÇÃ´Çë×¼±¸ºÃ£¬ÐÂÊÖ¿ÉÒÔ9ÕÛÓÅ»Ý¡£#b";
+var selStr = "çŽ°åœ¨å°±å¯ä»¥åŽ»å¾€ #bæ³°å›½çš„æ°´ä¸Šå¸‚åœº,å°‘æž—å¯º,æ—¥æœ¬å¤ä»£ç¥žç¤¾#kæ¸¸è§ˆä¸€ç•ªã€‚åœ¨å„æ—…æ¸¸åœ°æˆ‘éƒ½ä¼šä¸ºå¤§å®¶æä¾›æ»¡æ„çƒ­è¯šçš„æœåŠ¡ã€‚é‚£ä¹ˆè¯·å‡†å¤‡å¥½ï¼Œæ–°æ‰‹å¯ä»¥9æŠ˜ä¼˜æƒ ã€‚#b";
 				if (cm.getJob() == 0) {
 					for (var i = 0; i < maps.length; i++) {
-						selStr += "\r\n#L" + i + "##m" + maps[i][0] + "# ("+maps[i][2]+"½ð±Ò)#l";
+						selStr += "\r\n#L" + i + "##m" + maps[i][0] + "# ("+maps[i][2]+"é‡‘å¸)#l";
 					}
 				}else{
 					for (var i = 0; i < maps.length; i++) {
-						selStr += "\r\n#L" + i + "##m" + maps[i][0] + "# ("+maps[i][1]+"½ð±Ò)#l";
+						selStr += "\r\n#L" + i + "##m" + maps[i][0] + "# ("+maps[i][1]+"é‡‘å¸)#l";
 					}
 				}
 				cm.sendSimple(selStr);
@@ -71,10 +71,10 @@ var selStr = "ÏÖÔÚ¾Í¿ÉÒÔÈ¥Íù #bÌ©¹úµÄË®ÉÏÊÐ³¡,ÉÙÁÖËÂ,ÈÕ±¾¹Å´úÉñÉç#kÓÎÀÀÒ»·¬¡£ÔÚ¸
 			} else {
 				cost = maps[selectedMap][1];
 			}
-			cm.sendYesNo("ÄãÒÑ¾­¾ö¶¨ºÃ£¬È·¶¨ÒªÈ¥ #b#m" + maps[selectedMap][0] + "##kÂð£¿ÄÇÃ´Äã½«Òª¸¶¸øÎÒ #b" + cost +"½ð±Ò#k. ÄãÕæµÄÏëÈ¥£¿");
+			cm.sendYesNo("ä½ å·²ç»å†³å®šå¥½ï¼Œç¡®å®šè¦åŽ» #b#m" + maps[selectedMap][0] + "##kå—ï¼Ÿé‚£ä¹ˆä½ å°†è¦ä»˜ç»™æˆ‘ #b" + cost +"é‡‘å¸#k. ä½ çœŸçš„æƒ³åŽ»ï¼Ÿ");
 		} else if (status == 4) {
 			if (cm.getMeso() < cost) {
-				cm.sendPrev("ÌìÀ²,ÄãÇ®²»¹»! ÕâÊµÔÚÊÇÌ«¿Ö²ÀÁË!ÎÒ²»ÄÜ´øÄãÈ¥.");
+				cm.sendPrev("å¤©å•¦,ä½ é’±ä¸å¤Ÿ! è¿™å®žåœ¨æ˜¯å¤ªææ€–äº†!æˆ‘ä¸èƒ½å¸¦ä½ åŽ».");
 			} else {
 				cm.gainMeso(-cost);
 				cm.saveLocation("WORLDTOUR");
@@ -84,12 +84,12 @@ var selStr = "ÏÖÔÚ¾Í¿ÉÒÔÈ¥Íù #bÌ©¹úµÄË®ÉÏÊÐ³¡,ÉÙÁÖËÂ,ÈÕ±¾¹Å´úÉñÉç#kÓÎÀÀÒ»·¬¡£ÔÚ¸
 		}	
 	} else if (cm.getChar().getMapId() == 500000000 || cm.getChar().getMapId() == 702000000 || cm.getChar().getMapId() == 800000000 || cm.getChar().getMapId() == 600000000 || cm.getChar().getMapId() == 540000000 || cm.getChar().getMapId() == 550000000 || cm.getChar().getMapId() == 551000000 || cm.getChar().getMapId() == 541000000 || cm.getChar().getMapId() == 220000000 || cm.getChar().getMapId() == 240000000) {
 		if (status == 0) {
-			cm.sendSimple ("ÊÀ½çÂÃÓÎÔõÃ´Ñù£¿ºÜÓÐÈ¤°É¡£\r\n#L0##b·µ»Ø£º#m" + cm.getSavedLocation("WORLDTOUR") + "# #k#l\r\n#L1##b¼ÌÐø¹Û¹â#k#l");
+			cm.sendSimple ("ä¸–ç•Œæ—…æ¸¸æ€Žä¹ˆæ ·ï¼Ÿå¾ˆæœ‰è¶£å§ã€‚\r\n#L0##bè¿”å›žï¼š#m" + cm.getSavedLocation("WORLDTOUR") + "# #k#l\r\n#L1##bç»§ç»­è§‚å…‰#k#l");
 		} else if (status == 1) {
 			if (selection == 0) {
-				cm.sendOk("ºÃµÄ£¬Èç¹ûÐèÒªµ½±ðµÄµØ·½ÂÃÓÎÇë¼ÇµÄ¸æËßÎÒ¡£");
+				cm.sendOk("å¥½çš„ï¼Œå¦‚æžœéœ€è¦åˆ°åˆ«çš„åœ°æ–¹æ—…æ¸¸è¯·è®°çš„å‘Šè¯‰æˆ‘ã€‚");
 			} else if (selection == 1) {
-				cm.sendOk("²»Ïë»ØÈ¥¾ÍÔÙµ½´¦¿´¿´°É¡£µÈÄãÏë»ØÈ¥µÄÊ±ºòÔÙÀ´¸æËßÎÒ¡£");
+				cm.sendOk("ä¸æƒ³å›žåŽ»å°±å†åˆ°å¤„çœ‹çœ‹å§ã€‚ç­‰ä½ æƒ³å›žåŽ»çš„æ—¶å€™å†æ¥å‘Šè¯‰æˆ‘ã€‚");
 				cm.dispose();
 			} 
 		} else if (status == 2) {

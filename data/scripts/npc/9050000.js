@@ -1,4 +1,4 @@
 function action(mode, type, selection) {
-	cm.sendOk("ÄãÌıËµ¹ıÒ»¸ö³¬¼¶´óÏÀÃ´£¿");
+	cm.sendOk("ä½ å¬è¯´è¿‡ä¸€ä¸ªè¶…çº§å¤§ä¾ ä¹ˆï¼Ÿ");
 	cm.safeDispose();
 }

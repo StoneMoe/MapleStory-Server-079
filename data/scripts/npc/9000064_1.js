@@ -9,14 +9,14 @@ var year = myDate.getFullYear();
 var month = myDate.getMonth() + 1;
 var days = myDate.getDate();
 var status = 0;
-var ºÚË®¾§ = 4021008;
-var À¶É«¼ıÍ· = "#fUI/UIWindow/Quest/icon2/7#";
-var ºìÉ«¼ıÍ· = "#fUI/UIWindow/Quest/icon6/7#";
-var Ô²ĞÎ = "#fUI/UIWindow/Quest/icon3/6#";
-var ÃÀ»¯new = "#fUI/UIWindow/Quest/icon5/1#";
-var ¸ĞÌ¾ºÅ = "#fUI/UIWindow/Quest/icon0#";
-var Õı·½¼ıÍ· = "#fUI/Basic/BtHide3/mouseOver/0#";
-var ÖÒ¸æ = "#kÎÂÜ°ÌáÊ¾£ºÈÎºÎ·Ç·¨³ÌĞòºÍÍâ¹Ò·âºÅ´¦Àí.·âÉ±½ÄĞÒĞÄÀí.";
+var é»‘æ°´æ™¶ = 4021008;
+var è“è‰²ç®­å¤´ = "#fUI/UIWindow/Quest/icon2/7#";
+var çº¢è‰²ç®­å¤´ = "#fUI/UIWindow/Quest/icon6/7#";
+var åœ†å½¢ = "#fUI/UIWindow/Quest/icon3/6#";
+var ç¾åŒ–new = "#fUI/UIWindow/Quest/icon5/1#";
+var æ„Ÿå¹å· = "#fUI/UIWindow/Quest/icon0#";
+var æ­£æ–¹ç®­å¤´ = "#fUI/Basic/BtHide3/mouseOver/0#";
+var å¿ å‘Š = "#kæ¸©é¦¨æç¤ºï¼šä»»ä½•éæ³•ç¨‹åºå’Œå¤–æŒ‚å°å·å¤„ç†.å°æ€ä¾¥å¹¸å¿ƒç†.";
 function start() {
     status = -1;
     action(1, 0, 0);
@@ -35,10 +35,10 @@ function action(mode, type, selection) {
         else
             status--;
         if (status == 0) {
-        	var strlen = "Ç×°®µÄ#b#e#h ##n#k£¬ÕâÀïÊÇÃ¿ÈÕÇ©µ½ÖĞĞÄ0\r\n\r\n";
-        	strlen +="#r#L0# ¡Ì ÎÒ Òª Ç© µ½#l\r\n\r\n";
-    		//strlen +="#r#L1# ¡Ì »ı ·Ö ¶Ò »»#l\r\n\r\n";
-			//strlen +="#r#L2# ¡Ì Í¼ ÕÂ ¶Ò »»#l\r\n";
+        	var strlen = "äº²çˆ±çš„#b#e#h ##n#kï¼Œè¿™é‡Œæ˜¯æ¯æ—¥ç­¾åˆ°ä¸­å¿ƒ0\r\n\r\n";
+        	strlen +="#r#L0# âˆš æˆ‘ è¦ ç­¾ åˆ°#l\r\n\r\n";
+    		//strlen +="#r#L1# âˆš ç§¯ åˆ† å…‘ æ¢#l\r\n\r\n";
+			//strlen +="#r#L2# âˆš å›¾ ç«  å…‘ æ¢#l\r\n";
 			cm.sendSimple(strlen);
 		}else if(status == 1){
 			switch(selection){

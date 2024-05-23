@@ -14,7 +14,7 @@ function action(mode, type, selection) {
         cm.removeAll(4001134);
         cm.removeAll(4001135);
         if (cm.getPlayer().getParty() == null || !cm.isLeader()) {
-            cm.sendOk("¶Ó³¤±ØĞëÔÚÕâÀï£¬ÇëÈÃËûºÍÎÒËµ»°.");
+            cm.sendOk("é˜Ÿé•¿å¿…é¡»åœ¨è¿™é‡Œï¼Œè¯·è®©ä»–å’Œæˆ‘è¯´è¯.");
         } else {
             var party = cm.getPlayer().getParty().getMembers();
             var mapId = cm.getPlayer().getMapId();
@@ -38,7 +38,7 @@ function action(mode, type, selection) {
                     cm.sendOk("Another party quest has already entered this channel.");
                 }
             } else {
-                cm.sendOk("¶ÓÔ±±ØĞëÒª70¼¶ÒÔÉÏ.");
+                cm.sendOk("é˜Ÿå‘˜å¿…é¡»è¦70çº§ä»¥ä¸Š.");
             }
         }
         break;
@@ -53,12 +53,12 @@ function action(mode, type, selection) {
         break;
     case 926100200:
         if (cm.haveItem(4001130, 1)) {
-            cm.sendOk("ÔÙµãÎÒÒ»´Î£¬²ÅÄÜ¹ı¹Ø£¡");
+            cm.sendOk("å†ç‚¹æˆ‘ä¸€æ¬¡ï¼Œæ‰èƒ½è¿‡å…³ï¼");
             cm.gainItem(4001130, -1);
             em.setProperty("stage", "1");
         } else if (cm.haveItem(4001134, 1)) {
             cm.gainItem(4001134, -1);
-            cm.sendOk("Ì«¸ĞĞ»ÄãÁË£¬ÏÖÔÚÄãÃÇÄÜ½øÈ¥ÁË£¬ÖĞ¼äµÄÃÅ¡£¶Ó³¤½øÈë°É£¡");
+            cm.sendOk("å¤ªæ„Ÿè°¢ä½ äº†ï¼Œç°åœ¨ä½ ä»¬èƒ½è¿›å»äº†ï¼Œä¸­é—´çš„é—¨ã€‚é˜Ÿé•¿è¿›å…¥å§ï¼");
             em.setProperty("stage4", "2");
 			cm.getMap().getReactorByName("rnj3_out3").hitReactor(cm.getClient());
         } else if (cm.haveItem(4001135, 1) && cm.isLeader()) {
@@ -66,15 +66,15 @@ function action(mode, type, selection) {
 	//	pi.warpParty(926100200);
 	
             cm.gainItem(4001135, -1);
-            cm.sendOk("Ì«¸ĞĞ»ÄãÁË£¬ÏÖÔÚÄãÃÇÄÜ½øÈ¥ÁË.");
+            cm.sendOk("å¤ªæ„Ÿè°¢ä½ äº†ï¼Œç°åœ¨ä½ ä»¬èƒ½è¿›å»äº†.");
             em.setProperty("stage4", "2");
             cm.getMap().getReactorByName("rnj3_out3").hitReactor(cm.getClient());
         } else {
-            cm.sendOk("·¨Ê¦Í¨¹ıÓÒ±ßµÄÃÅ£¬»ñÈ¡Í¨¹Ø²ÄÁÏ½»¸ø¶Ó³¤£¬¶Ó³¤ÖØĞÂµãÎÒÒ»´Î¡£");
+            cm.sendOk("æ³•å¸ˆé€šè¿‡å³è¾¹çš„é—¨ï¼Œè·å–é€šå…³ææ–™äº¤ç»™é˜Ÿé•¿ï¼Œé˜Ÿé•¿é‡æ–°ç‚¹æˆ‘ä¸€æ¬¡ã€‚");
         }
         break;
     case 926100300:
-        cm.sendOk("ÎÒÃÇ±ØĞë´ïµ½ÊµÑéÊÒ¶¥²¿, each of your members.");
+        cm.sendOk("æˆ‘ä»¬å¿…é¡»è¾¾åˆ°å®éªŒå®¤é¡¶éƒ¨, each of your members.");
         break;
     case 926100400:
         cm.sendOk("Whenever you are ready, we shall go and save my love.");

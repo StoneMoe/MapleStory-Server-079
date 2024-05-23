@@ -10,7 +10,7 @@ function action(mode, type, selection) {
 	status--;
     }
     if (status == 0) {
-	cm.sendYesNo("ÇëÎÊÄúÏëÀë¿ª#rÃÔÎíÉ­ÁÖPQ#k£¿£¿");
+	cm.sendYesNo("è¯·é—®æ‚¨æƒ³ç¦»å¼€#rè¿·é›¾æ£®æ—PQ#kï¼Ÿï¼Ÿ");
     } else if (status == 1) {
 	    cm.removeAll(4001163);
 	    cm.removeAll(4001169);

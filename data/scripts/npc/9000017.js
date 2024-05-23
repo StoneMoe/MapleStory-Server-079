@@ -18,7 +18,7 @@ function action(mode, type, selection) {
 
     switch (status) {
         case 0: 
-	    cm.sendOk("你见过像我们这样的小可爱么？");
+	    cm.sendOk("浣犺杩囧儚鎴戜滑杩欐牱鐨勫皬鍙埍涔堬紵");
 		cm.dispose();
             break;
         case 1: //

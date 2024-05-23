@@ -10,11 +10,11 @@ function action(mode, type, selection) {
 	status--;
     }
     if (status == 0) {
-	    cm.removeAll(4001169);//¹ÖÎïÖ®Öé
-	    cm.removeAll(2270004);//¾»»¯Ö®Öé
+	    cm.removeAll(4001169);//æ€ªç‰©ä¹‹ç 
+	    cm.removeAll(2270004);//å‡€åŒ–ä¹‹ç 
 	    cm.removeAll(4001162);
 	    cm.removeAll(4001163);
-	cm.sendOk("#kÕâÀïÊÇ£º°¬ÁÕÉ­ÁÖ×é¶Ó¸±±¾\r\n×îÉÙÈËÊı1ÈË¿ÉÒÔ½øÈë.ÇëÕÙ¼¯»ï°éÒ»ÆğÌôÕ½°É£¡\r\n\r\n#d#L2#½øÈë°¬ÁÕÉ­ÁÖ×é¶Ó¸±±¾#l\r\n\r\n");
+	cm.sendOk("#kè¿™é‡Œæ˜¯ï¼šè‰¾ç³æ£®æ—ç»„é˜Ÿå‰¯æœ¬\r\næœ€å°‘äººæ•°1äººå¯ä»¥è¿›å…¥.è¯·å¬é›†ä¼™ä¼´ä¸€èµ·æŒ‘æˆ˜å§ï¼\r\n\r\n#d#L2#è¿›å…¥è‰¾ç³æ£®æ—ç»„é˜Ÿå‰¯æœ¬#l\r\n\r\n");
     } else if (status == 1) {
 	if (selection == 0) {
 		cm.warp(910000000);
@@ -36,7 +36,7 @@ function action(mode, type, selection) {
 	    }
 	} else if (selection == 2) {
 	    if (cm.getPlayer().getParty() == null || !cm.isLeader()) {
-		cm.sendOk("¶Ó³¤±ØĞëÔÚÕâÀï£¬ÇëÈÃËûºÍÎÒËµ»°.");
+		cm.sendOk("é˜Ÿé•¿å¿…é¡»åœ¨è¿™é‡Œï¼Œè¯·è®©ä»–å’Œæˆ‘è¯´è¯.");
 		}else if (cm.getPlayerCount(930000000) <= 0 && cm.getPlayerCount(930000010) <= 0 && cm.getPlayerCount(930000100) <= 0 && cm.getPlayerCount(930000200) <= 0 && cm.getPlayerCount(930000300) <= 0 && cm.getPlayerCount(930000400) <= 0 && cm.getPlayerCount(930000500) <= 0 && cm.getPlayerCount(930000600) <= 0 && cm.getPlayerCount(930000700) <= 0) {
 		
 		var party = cm.getPlayer().getParty().getMembers();
@@ -55,21 +55,21 @@ function action(mode, type, selection) {
 		}	
 		if (next && size >= 1) {
 			var em = cm.getEventManager("Ellin");
-	                cm.À®°È(1, "["+cm.getPlayer().getName()+"]´øÁì¶ÓÎé¿ªÊ¼ÌôÕ½Ğ°¶ñµÄ[¶¾Îí¸±±¾]£¡");
+	                cm.å–‡å­(1, "["+cm.getPlayer().getName()+"]å¸¦é¢†é˜Ÿä¼å¼€å§‹æŒ‘æˆ˜é‚ªæ¶çš„[æ¯’é›¾å‰¯æœ¬]ï¼");
 			if (em == null) {
 				cm.sendOk("Please try again later.");
 			} else {
 				em.startInstance(cm.getPlayer().getParty(), cm.getPlayer().getMap());
 			}
 		} else {
-			cm.sendOk("×îµÍÈËÊı1ÈË¡£×îµÍµÈ¼¶45¼¶¡£");
+			cm.sendOk("æœ€ä½äººæ•°1äººã€‚æœ€ä½ç­‰çº§45çº§ã€‚");
 		}
 	    } else {
-			cm.sendOk("ÒÑ¾­ÓĞ¶ÓÎé½øÈë¡£ÇëÆäËûÆµµÀ½øĞĞ¸±±¾£¡");
+			cm.sendOk("å·²ç»æœ‰é˜Ÿä¼è¿›å…¥ã€‚è¯·å…¶ä»–é¢‘é“è¿›è¡Œå‰¯æœ¬ï¼");
 	    }
 	} else if (selection == 3) {
             cm.openNpc(9310084, 26);
-			//cm.sendOk("£¡");
+			//cm.sendOk("ï¼");
 	}
 	cm.dispose();
     }
