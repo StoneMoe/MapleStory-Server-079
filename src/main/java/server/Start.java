@@ -38,8 +38,8 @@ public class Start {
 
     public static void main(final String[] args) throws InterruptedException {
         String cfgPath = System.getProperty("cfgPath", "./config");
-        String scriptsPath = System.getProperty("scriptsPath", "./scripts/scripts");
-        String wzPath = System.getProperty("wzPath", "./scripts/wz");
+        String scriptsPath = System.getProperty("scriptsPath", "./data/scripts");
+        String wzPath = System.getProperty("wzPath", "./data/wz");
         System.setProperty("server_property_file_path", cfgPath + "/server.properties");
         System.setProperty("server_property_db_path", cfgPath + "/db.properties");
         System.setProperty("server_property_shop_path", cfgPath + "/shop.properties");

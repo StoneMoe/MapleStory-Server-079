@@ -19,7 +19,7 @@ COPY --from=build /app/config /app/config
 COPY --from=build /app/docker/config/db.properties /app/config/
 COPY --from=build /app/docker/config/server.properties /app/config/
 COPY --from=build /app/docker/start.sh /app/
-COPY --from=build /app/scripts /app/scripts
+COPY --from=build /app/data /app/data
 COPY --from=build /app/logs /app/logs
 COPY --from=build /app/docs/ms_20210813_234816.sql /app/
 
