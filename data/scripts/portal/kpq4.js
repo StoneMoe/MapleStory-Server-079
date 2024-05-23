@@ -7,7 +7,7 @@ function enter(pi) {
 
     // only let people through if the eim is ready
     if (eim.getProperty("4stageclear") == null) { // do nothing; send message to player
-	pi.playerMessage(5, "Ô“¶´¿ÚÄ¿Ç°Ÿo·¨ßMÈë¡£");
+	pi.playerMessage(5, "è©²æ´å£ç›®å‰ç„¡æ³•é€²å…¥ã€‚");
     } else {
 	pi.warp(103000804, "st00");
     }
