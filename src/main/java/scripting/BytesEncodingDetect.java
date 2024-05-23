@@ -522,7 +522,7 @@ class BytesEncodingDetect extends Encoding {
     }
 
     int utf16_probability(final byte[] rawtext) {
-        if ((rawtext.length > 1 && -2 == rawtext[0] && -1 == rawtext[1]) || (-1 == rawtext[0] && -2 == rawtext[1])) {
+        if ((rawtext.length > 1 && -2 == rawtext[0] && -1 == rawtext[1]) || (rawtext.length > 1 && -1 == rawtext[0] && -2 == rawtext[1])) {
             return 100;
         }
         return 0;
