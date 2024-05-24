@@ -43,7 +43,7 @@ public class CashShopDumper {
                 }
             }
         } catch (Exception ex) {
-            FilePrinter.printError("CashShopDumper.txt", ex);
+            log.error("CashShopDumper failed to getModInfo", ex);
         }
         return ret;
     }
@@ -104,7 +104,7 @@ public class CashShopDumper {
                     ps.close();
                 }
             } catch (SQLException ex) {
-                FilePrinter.printError("CashShopDumper.txt", ex);
+                log.error("CashShopDumper INSERT failed", ex);
             }
         }
         for (final Integer key : dics.keySet()) {
@@ -123,16 +123,16 @@ public class CashShopDumper {
                 }
                 bw.close();
             } catch (FileNotFoundException ex2) {
-                FilePrinter.printError("CashShopDumper.txt", ex2);
+                log.error("CashShopDumper failed to open sql file", ex2);
             } catch (IOException ex3) {
-                FilePrinter.printError("CashShopDumper.txt", ex3);
+                log.error("CashShopDumper failed to write sql file", ex3);
             } finally {
                 try {
                     if (fos != null) {
                         fos.close();
                     }
                 } catch (IOException ex4) {
-                    FilePrinter.printError("CashShopDumper.txt", ex4);
+                    log.error("CashShopDumper failed to close sql file", ex4);
                 }
             }
         }
