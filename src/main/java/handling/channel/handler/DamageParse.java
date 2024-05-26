@@ -32,9 +32,9 @@ import server.maps.MapleMapObject;
 import server.maps.MapleMapObjectType;
 import tools.AttackPair;
 import utils.FileoutputUtil;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 import tools.Pair;
-import tools.data.input.LittleEndianAccessor;
+import networking.input.LittleEndianAccessor;
 
 public class    DamageParse
 {

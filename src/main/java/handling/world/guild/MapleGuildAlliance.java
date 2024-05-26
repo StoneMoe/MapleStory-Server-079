@@ -4,7 +4,7 @@ import database.DatabaseConnection;
 import handling.MaplePacket;
 import handling.world.World;
 import lombok.extern.slf4j.Slf4j;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 import java.io.Serializable;
 import java.sql.Connection;

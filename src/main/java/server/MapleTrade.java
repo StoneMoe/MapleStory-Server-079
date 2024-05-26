@@ -9,8 +9,8 @@ import constants.GameConstants;
 import java.lang.ref.WeakReference;
 import java.util.LinkedList;
 import java.util.List;
-import tools.MaplePacketCreator;
-import tools.packet.PlayerShopPacket;
+import networking.packet.MaplePacketCreator;
+import networking.packet.PlayerShopPacket;
 public class MapleTrade
 {
     private MapleTrade partner;

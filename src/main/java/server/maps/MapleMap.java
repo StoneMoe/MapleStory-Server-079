@@ -21,12 +21,12 @@ import server.*;
 import server.events.MapleEvent;
 import server.life.*;
 import utils.FileoutputUtil;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 import tools.Pair;
 import utils.StringUtil;
-import tools.packet.MTSCSPacket;
-import tools.packet.MobPacket;
-import tools.packet.PetPacket;
+import networking.packet.MTSCSPacket;
+import networking.packet.MobPacket;
+import networking.packet.PetPacket;
 
 import java.awt.*;
 import java.lang.ref.WeakReference;

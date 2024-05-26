@@ -10,7 +10,7 @@ import provider.MapleDataProviderFactory;
 import provider.MapleDataTool;
 import scripting.NPCScriptManager;
 import utils.FileoutputUtil;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 import tools.Pair;
 
 import java.io.File;

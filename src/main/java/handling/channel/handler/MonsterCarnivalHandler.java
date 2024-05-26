@@ -8,10 +8,10 @@ import server.MapleCarnivalFactory;
 import server.Randomizer;
 import server.life.MapleLifeFactory;
 import server.life.MapleMonster;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 import tools.Pair;
-import tools.data.input.SeekableLittleEndianAccessor;
-import tools.packet.MonsterCarnivalPacket;
+import networking.input.SeekableLittleEndianAccessor;
+import networking.packet.MonsterCarnivalPacket;
 
 import java.util.List;
 

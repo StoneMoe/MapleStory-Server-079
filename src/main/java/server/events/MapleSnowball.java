@@ -6,7 +6,7 @@ import java.util.concurrent.ScheduledFuture;
 import server.Timer;
 import server.life.MobSkillFactory;
 import server.maps.MapleMap;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 public class MapleSnowball extends MapleEvent
 {

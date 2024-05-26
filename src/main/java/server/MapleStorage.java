@@ -8,7 +8,7 @@ import constants.GameConstants;
 import database.DatabaseConnection;
 import database.DatabaseException;
 import lombok.extern.slf4j.Slf4j;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 import tools.Pair;
 
 import java.io.Serializable;

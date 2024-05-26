@@ -4,7 +4,7 @@ import client.MapleCharacter;
 import java.util.concurrent.ScheduledFuture;
 import server.Randomizer;
 import server.Timer;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 public class MapleOla extends MapleEvent
 {

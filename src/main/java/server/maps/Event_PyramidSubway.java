@@ -10,7 +10,7 @@ import server.Randomizer;
 import server.Timer;
 import server.life.MapleLifeFactory;
 import server.quest.MapleQuest;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 public class Event_PyramidSubway
 {

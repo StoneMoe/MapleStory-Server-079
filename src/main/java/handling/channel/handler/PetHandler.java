@@ -20,9 +20,9 @@ import server.life.MapleMonster;
 import server.maps.FieldLimitType;
 import server.maps.MapleMapItem;
 import server.movement.LifeMovementFragment;
-import tools.MaplePacketCreator;
-import tools.data.input.SeekableLittleEndianAccessor;
-import tools.packet.PetPacket;
+import networking.packet.MaplePacketCreator;
+import networking.input.SeekableLittleEndianAccessor;
+import networking.packet.PetPacket;
 
 public class PetHandler
 {

@@ -7,8 +7,7 @@ import client.inventory.ItemFlag;
 import java.util.ArrayList;
 import java.util.List;
 import server.MapleInventoryManipulator;
-import server.maps.MapleMapObject;
-import tools.packet.PlayerShopPacket;
+import networking.packet.PlayerShopPacket;
 
 public class MaplePlayerShop extends AbstractPlayerStore
 {

@@ -3,7 +3,7 @@ package handling.channel.handler;
 import lombok.extern.slf4j.Slf4j;
 import server.maps.AnimatedMapleMapObject;
 import server.movement.*;
-import tools.data.input.SeekableLittleEndianAccessor;
+import networking.input.SeekableLittleEndianAccessor;
 
 import java.awt.*;
 import java.util.ArrayList;

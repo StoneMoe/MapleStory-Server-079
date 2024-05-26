@@ -5,7 +5,7 @@ import constants.GameConstants;
 import lombok.extern.slf4j.Slf4j;
 import server.quest.MapleQuest;
 import utils.FileoutputUtil;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;

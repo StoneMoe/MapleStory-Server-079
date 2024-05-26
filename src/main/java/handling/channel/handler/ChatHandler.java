@@ -8,8 +8,8 @@ import handling.world.MapleMessenger;
 import handling.world.MapleMessengerCharacter;
 import handling.world.World;
 import lombok.extern.slf4j.Slf4j;
-import tools.MaplePacketCreator;
-import tools.data.input.SeekableLittleEndianAccessor;
+import networking.packet.MaplePacketCreator;
+import networking.input.SeekableLittleEndianAccessor;
 
 @Slf4j
 public class ChatHandler {

@@ -9,7 +9,7 @@ import database.DatabaseConnection;
 import handling.MaplePacket;
 import lombok.extern.slf4j.Slf4j;
 import tools.Pair;
-import tools.packet.MTSCSPacket;
+import networking.packet.MTSCSPacket;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

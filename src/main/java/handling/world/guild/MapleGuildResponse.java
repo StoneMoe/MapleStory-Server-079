@@ -1,7 +1,7 @@
 package handling.world.guild;
 
 import handling.MaplePacket;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 public enum MapleGuildResponse
 {

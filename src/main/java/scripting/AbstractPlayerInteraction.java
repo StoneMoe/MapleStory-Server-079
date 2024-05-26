@@ -25,9 +25,9 @@ import server.life.MapleMonster;
 import server.life.OverrideMonsterStats;
 import server.maps.*;
 import server.quest.MapleQuest;
-import tools.MaplePacketCreator;
-import tools.packet.PetPacket;
-import tools.packet.UIPacket;
+import networking.packet.MaplePacketCreator;
+import networking.packet.PetPacket;
+import networking.packet.UIPacket;
 
 import java.awt.*;
 import java.sql.Connection;

@@ -3,7 +3,7 @@ package scripting;
 import client.MapleClient;
 import lombok.extern.slf4j.Slf4j;
 import utils.FileoutputUtil;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;

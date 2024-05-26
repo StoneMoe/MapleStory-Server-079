@@ -7,7 +7,7 @@ import constants.GameConstants;
 import handling.world.World;
 import server.Timer;
 import utils.FileoutputUtil;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 import utils.StringUtil;
 
 import java.awt.Point;

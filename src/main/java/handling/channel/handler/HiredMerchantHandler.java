@@ -22,10 +22,10 @@ import server.MapleInventoryManipulator;
 import server.MapleItemInformationProvider;
 import server.MerchItemPackage;
 import utils.FileoutputUtil;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 import tools.Pair;
-import tools.data.input.SeekableLittleEndianAccessor;
-import tools.packet.PlayerShopPacket;
+import networking.input.SeekableLittleEndianAccessor;
+import networking.packet.PlayerShopPacket;
 
 @Slf4j
 public class HiredMerchantHandler {

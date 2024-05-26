@@ -9,7 +9,7 @@ import server.RandomRewards;
 import server.Timer;
 import server.maps.MapleMap;
 import server.maps.SavedLocationType;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 public abstract class MapleEvent
 {

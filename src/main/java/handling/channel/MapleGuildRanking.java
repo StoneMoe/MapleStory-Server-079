@@ -4,7 +4,7 @@ import client.MapleClient;
 import database.DatabaseConnection;
 import lombok.extern.slf4j.Slf4j;
 import server.Timer;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -26,7 +26,7 @@ import server.maps.MapleMapFactory;
 import server.shops.HiredMerchant;
 import utils.CollectionUtil;
 import tools.ConcurrentEnumMap;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 import java.io.IOException;
 import java.io.Serializable;

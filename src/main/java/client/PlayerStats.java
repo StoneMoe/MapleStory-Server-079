@@ -7,8 +7,8 @@ import server.MapleInventoryManipulator;
 import server.MapleItemInformationProvider;
 import server.MapleStatEffect;
 import server.StructSetItem;
-import tools.MaplePacketCreator;
-import tools.data.output.MaplePacketLittleEndianWriter;
+import networking.packet.MaplePacketCreator;
+import networking.output.MaplePacketLittleEndianWriter;
 
 import java.io.Serializable;
 import java.lang.ref.WeakReference;

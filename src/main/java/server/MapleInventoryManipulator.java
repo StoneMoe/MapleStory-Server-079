@@ -21,8 +21,8 @@ import java.util.List;
 import java.util.Map;
 
 import utils.FileoutputUtil;
-import tools.MaplePacketCreator;
-import tools.packet.MTSCSPacket;
+import networking.packet.MaplePacketCreator;
+import networking.packet.MTSCSPacket;
 
 public class MapleInventoryManipulator
 {

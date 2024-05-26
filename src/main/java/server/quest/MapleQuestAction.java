@@ -10,7 +10,7 @@ import provider.MapleDataTool;
 import server.MapleInventoryManipulator;
 import server.MapleItemInformationProvider;
 import server.Randomizer;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -51,12 +51,12 @@ import server.maps.MapleMist;
 import server.quest.MapleQuest;
 import server.shops.HiredMerchant;
 import server.shops.IMaplePlayerShop;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 import tools.Pair;
-import tools.data.input.SeekableLittleEndianAccessor;
-import tools.packet.MTSCSPacket;
-import tools.packet.PetPacket;
-import tools.packet.PlayerShopPacket;
+import networking.input.SeekableLittleEndianAccessor;
+import networking.packet.MTSCSPacket;
+import networking.packet.PetPacket;
+import networking.packet.PlayerShopPacket;
 
 @Slf4j
 public class InventoryHandler {

@@ -18,10 +18,10 @@ import server.maps.MapleMap;
 import server.maps.MapleMapObjectType;
 import server.movement.LifeMovementFragment;
 import server.quest.MapleQuest;
-import tools.MaplePacketCreator;
-import tools.data.input.SeekableLittleEndianAccessor;
-import tools.packet.MTSCSPacket;
-import tools.packet.MobPacket;
+import networking.packet.MaplePacketCreator;
+import networking.input.SeekableLittleEndianAccessor;
+import networking.packet.MTSCSPacket;
+import networking.packet.MobPacket;
 
 import java.awt.*;
 import java.lang.ref.WeakReference;

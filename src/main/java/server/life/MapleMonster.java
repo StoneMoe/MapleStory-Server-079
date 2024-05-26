@@ -23,9 +23,9 @@ import server.maps.MapleMap;
 import server.maps.MapleMapObject;
 import server.maps.MapleMapObjectType;
 import tools.ConcurrentEnumMap;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 import tools.Pair;
-import tools.packet.MobPacket;
+import networking.packet.MobPacket;
 
 import java.lang.ref.WeakReference;
 import java.util.*;

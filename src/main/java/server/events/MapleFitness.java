@@ -3,7 +3,7 @@ package server.events;
 import client.MapleCharacter;
 import java.util.concurrent.ScheduledFuture;
 import server.Timer;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 public class MapleFitness extends MapleEvent
 {

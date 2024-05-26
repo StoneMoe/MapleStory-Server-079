@@ -4,8 +4,8 @@ import client.MapleClient;
 import handling.channel.ChannelServer;
 import java.util.Map;
 import server.Timer;
-import tools.MaplePacketCreator;
-import tools.packet.LoginPacket;
+import networking.packet.MaplePacketCreator;
+import networking.packet.LoginPacket;
 
 public class LoginWorker
 {

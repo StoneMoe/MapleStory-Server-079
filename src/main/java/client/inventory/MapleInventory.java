@@ -11,7 +11,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import server.MapleItemInformationProvider;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 public class MapleInventory implements Iterable<IItem>, Serializable {
     private final Map<Short, IItem> inventory;

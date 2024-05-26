@@ -4,7 +4,7 @@ import client.MapleCharacter;
 import client.MapleClient;
 import handling.MaplePacket;
 import java.awt.Point;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 public class MapleLove extends AbstractMapleMapObject
 {

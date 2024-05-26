@@ -15,7 +15,7 @@ import server.maps.AbstractMapleMapObject;
 import server.maps.MapleMap;
 import server.maps.MapleMapObjectType;
 import tools.Pair;
-import tools.packet.PlayerShopPacket;
+import networking.packet.PlayerShopPacket;
 
 import java.lang.ref.WeakReference;
 import java.sql.Connection;

@@ -4,7 +4,7 @@ import java.awt.Point;
 import java.util.concurrent.atomic.AtomicBoolean;
 import server.Randomizer;
 import server.maps.MapleMap;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 public class SpawnPointAreaBoss extends Spawns
 {

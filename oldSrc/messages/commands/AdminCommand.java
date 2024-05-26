@@ -29,8 +29,8 @@ import server.life.*;
 import server.maps.*;
 import server.quest.MapleQuest;
 import tools.*;
-import tools.data.output.MaplePacketLittleEndianWriter;
-import tools.packet.MobPacket;
+import networking.output.MaplePacketLittleEndianWriter;
+import networking.packet.MobPacket;
 
 import java.awt.*;
 import java.io.File;

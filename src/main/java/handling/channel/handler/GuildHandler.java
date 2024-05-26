@@ -9,8 +9,8 @@ import handling.world.guild.MapleGuildResponse;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import tools.MaplePacketCreator;
-import tools.data.input.SeekableLittleEndianAccessor;
+import networking.packet.MaplePacketCreator;
+import networking.input.SeekableLittleEndianAccessor;
 
 public class GuildHandler
 {

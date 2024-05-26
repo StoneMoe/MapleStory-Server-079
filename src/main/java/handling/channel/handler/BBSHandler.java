@@ -3,10 +3,10 @@ package handling.channel.handler;
 import client.MapleClient;
 import handling.world.World;
 import handling.world.guild.MapleBBSThread;
-import java.util.Iterator;
+
 import java.util.List;
-import tools.MaplePacketCreator;
-import tools.data.input.SeekableLittleEndianAccessor;
+import networking.packet.MaplePacketCreator;
+import networking.input.SeekableLittleEndianAccessor;
 
 public class BBSHandler
 {

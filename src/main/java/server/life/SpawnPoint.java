@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import server.MapleCarnivalFactory;
 import server.maps.MapleMap;
 import server.maps.MapleReactor;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 public class SpawnPoint extends Spawns
 {

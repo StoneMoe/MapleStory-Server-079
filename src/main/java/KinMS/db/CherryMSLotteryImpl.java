@@ -9,7 +9,7 @@ import java.util.Date;
 import server.ServerProperties;
 import server.maps.MapleMap;
 import server.maps.MapleMapFactory;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 public class CherryMSLotteryImpl implements CherryMSLottery
 {

@@ -13,10 +13,10 @@ import server.life.MobSkillFactory;
 import server.maps.MapleMap;
 import server.movement.LifeMovementFragment;
 import utils.FileoutputUtil;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 import tools.Pair;
-import tools.data.input.SeekableLittleEndianAccessor;
-import tools.packet.MobPacket;
+import networking.input.SeekableLittleEndianAccessor;
+import networking.packet.MobPacket;
 
 public class MobHandler
 {

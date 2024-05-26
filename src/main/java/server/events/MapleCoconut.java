@@ -4,7 +4,7 @@ import client.MapleCharacter;
 import java.util.LinkedList;
 import java.util.List;
 import server.Timer;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 public class MapleCoconut extends MapleEvent
 {

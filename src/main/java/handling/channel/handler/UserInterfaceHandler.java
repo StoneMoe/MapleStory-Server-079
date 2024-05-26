@@ -4,7 +4,7 @@ import client.MapleClient;
 import lombok.extern.slf4j.Slf4j;
 import scripting.EventManager;
 import scripting.NPCScriptManager;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 @Slf4j
 public class UserInterfaceHandler {

@@ -10,8 +10,8 @@ import server.MTSCart;
 import server.MTSStorage;
 import server.MapleInventoryManipulator;
 import server.MapleItemInformationProvider;
-import tools.data.input.SeekableLittleEndianAccessor;
-import tools.packet.MTSCSPacket;
+import networking.input.SeekableLittleEndianAccessor;
+import networking.packet.MTSCSPacket;
 
 public class MTSOperation
 {

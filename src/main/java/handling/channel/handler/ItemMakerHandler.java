@@ -13,9 +13,9 @@ import server.ItemMakerFactory;
 import server.MapleInventoryManipulator;
 import server.MapleItemInformationProvider;
 import server.Randomizer;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 import tools.Pair;
-import tools.data.input.SeekableLittleEndianAccessor;
+import networking.input.SeekableLittleEndianAccessor;
 
 public class ItemMakerHandler
 {

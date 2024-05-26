@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
 import server.Timer;
 import server.maps.MapleMap;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 import tools.Pair;
 
 public class MapleOxQuiz extends MapleEvent

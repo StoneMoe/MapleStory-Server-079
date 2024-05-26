@@ -20,7 +20,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import tools.Pair;
-import tools.packet.MTSCSPacket;
+import networking.packet.MTSCSPacket;
 
 public class CashShop implements Serializable
 {

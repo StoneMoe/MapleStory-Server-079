@@ -4,7 +4,7 @@ import client.MapleClient;
 import handling.SendPacketOpcode;
 import utils.FileoutputUtil;
 import utils.StringUtil;
-import tools.data.input.SeekableLittleEndianAccessor;
+import networking.input.SeekableLittleEndianAccessor;
 
 public class PacketErrorHandler
 {

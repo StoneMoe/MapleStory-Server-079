@@ -15,8 +15,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import lombok.extern.slf4j.Slf4j;
-import tools.MaplePacketCreator;
-import tools.data.input.SeekableLittleEndianAccessor;
+import networking.packet.MaplePacketCreator;
+import networking.input.SeekableLittleEndianAccessor;
 
 @Slf4j
 public class BuddyListHandler {

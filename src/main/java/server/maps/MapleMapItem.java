@@ -6,7 +6,7 @@ import client.inventory.IItem;
 import java.awt.Point;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 public class MapleMapItem extends AbstractMapleMapObject
 {

@@ -6,11 +6,9 @@ import handling.MaplePacket;
 import handling.world.World;
 import handling.world.guild.MapleGuild;
 
-import java.util.Iterator;
-
 import lombok.extern.slf4j.Slf4j;
-import tools.MaplePacketCreator;
-import tools.data.input.SeekableLittleEndianAccessor;
+import networking.packet.MaplePacketCreator;
+import networking.input.SeekableLittleEndianAccessor;
 
 @Slf4j
 public class AllianceHandler {

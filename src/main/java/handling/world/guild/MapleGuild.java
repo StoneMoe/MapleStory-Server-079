@@ -24,9 +24,9 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import lombok.extern.slf4j.Slf4j;
-import tools.MaplePacketCreator;
-import tools.data.output.MaplePacketLittleEndianWriter;
-import tools.packet.UIPacket;
+import networking.packet.MaplePacketCreator;
+import networking.output.MaplePacketLittleEndianWriter;
+import networking.packet.UIPacket;
 
 @Slf4j
 public class MapleGuild implements Serializable {

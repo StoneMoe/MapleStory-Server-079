@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import tools.Pair;
-import tools.data.output.MaplePacketLittleEndianWriter;
+import networking.output.MaplePacketLittleEndianWriter;
 
 
 public class MapleKeyLayout implements Serializable

@@ -80,10 +80,10 @@ import server.maps.MapleMapObject;
 import server.maps.MapleMapObjectType;
 import server.maps.SpeedRunType;
 import server.quest.MapleQuest;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 import tools.Pair;
 import utils.StringUtil;
-import tools.packet.PlayerShopPacket;
+import networking.packet.PlayerShopPacket;
 
 @Slf4j
 public class NPCConversationManager extends AbstractPlayerInteraction {

@@ -20,9 +20,9 @@ import server.shops.IMaplePlayerShop;
 import server.shops.MapleMiniGame;
 import server.shops.MaplePlayerShop;
 import server.shops.MaplePlayerShopItem;
-import tools.MaplePacketCreator;
-import tools.data.input.SeekableLittleEndianAccessor;
-import tools.packet.PlayerShopPacket;
+import networking.packet.MaplePacketCreator;
+import networking.input.SeekableLittleEndianAccessor;
+import networking.packet.PlayerShopPacket;
 public class PlayerInteractionHandler
 {
     private static final byte CREATE = 0;

@@ -15,9 +15,9 @@ import server.*;
 import server.life.MapleNPC;
 import server.maps.MapleMap;
 import server.quest.MapleQuest;
-import tools.MaplePacketCreator;
-import tools.data.input.SeekableLittleEndianAccessor;
-import tools.data.output.MaplePacketLittleEndianWriter;
+import networking.packet.MaplePacketCreator;
+import networking.input.SeekableLittleEndianAccessor;
+import networking.output.MaplePacketLittleEndianWriter;
 
 @Slf4j
 public class NPCHandler {

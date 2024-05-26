@@ -12,8 +12,8 @@ import server.life.MapleLifeFactory;
 import server.life.MapleMonster;
 import server.life.OverrideMonsterStats;
 import server.quest.MapleQuest;
-import tools.MaplePacketCreator;
-import tools.packet.UIPacket;
+import networking.packet.MaplePacketCreator;
+import networking.packet.UIPacket;
 
 public class MapScriptMethods
 {

@@ -3,11 +3,10 @@ package server;
 import client.MapleCharacter;
 import handling.channel.ChannelServer;
 import java.lang.ref.WeakReference;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import server.maps.MapleMap;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 public class MapleCarnivalParty
 {

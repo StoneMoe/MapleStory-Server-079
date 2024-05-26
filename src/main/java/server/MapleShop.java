@@ -11,7 +11,7 @@ import database.DatabaseConnection;
 import lombok.extern.slf4j.Slf4j;
 import server.life.MapleLifeFactory;
 import server.life.MapleNPC;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

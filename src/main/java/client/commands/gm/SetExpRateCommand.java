@@ -6,7 +6,7 @@ import client.commands.CommandAbstract;
 import client.commands.models.CommandResult;
 import constants.ServerConstants;
 import handling.channel.ChannelServer;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 @Command(command = "setExpRate", commandType = ServerConstants.CommandType.GMCommand)
 public class SetExpRateCommand extends CommandAbstract {

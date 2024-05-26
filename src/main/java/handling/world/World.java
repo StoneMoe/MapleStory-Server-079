@@ -17,8 +17,8 @@ import server.Timer;
 import server.maps.MapleMap;
 import server.maps.MapleMapItem;
 import utils.CollectionUtil;
-import tools.MaplePacketCreator;
-import tools.packet.PetPacket;
+import networking.packet.MaplePacketCreator;
+import networking.packet.PetPacket;
 
 import java.rmi.RemoteException;
 import java.sql.Connection;

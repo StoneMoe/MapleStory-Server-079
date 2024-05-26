@@ -10,7 +10,7 @@ import java.awt.Rectangle;
 import server.MapleStatEffect;
 import server.life.MapleMonster;
 import server.life.MobSkill;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 public class MapleMist extends AbstractMapleMapObject
 {

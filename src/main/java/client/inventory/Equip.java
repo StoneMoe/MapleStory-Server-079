@@ -3,6 +3,7 @@ package client.inventory;
 import java.io.*;
 import constants.*;
 import client.*;
+import networking.packet.MaplePacketCreator;
 import server.*;
 import tools.*;
 import java.util.*;
@@ -568,7 +569,7 @@ public class Equip extends Item implements IEquip, Serializable
         }
         if (this.itemEXP >= expNeeded) {
             this.gainItemLevel(c, timeless);
-            c.getSession().write((Object)MaplePacketCreator.showItemLevelup());
+            c.getSession().write((Object) MaplePacketCreator.showItemLevelup());
         }
     }
     

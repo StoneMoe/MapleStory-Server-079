@@ -6,7 +6,7 @@ import java.awt.Point;
 import server.Randomizer;
 import server.Timer;
 import server.life.MapleLifeFactory;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 public class AramiaFireWorks
 {

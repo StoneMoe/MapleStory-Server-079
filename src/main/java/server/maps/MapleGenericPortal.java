@@ -6,7 +6,7 @@ import handling.channel.ChannelServer;
 import java.awt.Point;
 import scripting.PortalScriptManager;
 import server.MaplePortal;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 public class MapleGenericPortal implements MaplePortal
 {

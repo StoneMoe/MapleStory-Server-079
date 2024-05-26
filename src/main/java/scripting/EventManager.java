@@ -17,7 +17,7 @@ import server.maps.MapleMap;
 import server.maps.MapleMapFactory;
 import server.maps.MapleMapObject;
 import utils.FileoutputUtil;
-import tools.MaplePacketCreator;
+import networking.packet.MaplePacketCreator;
 
 import javax.script.Invocable;
 import javax.script.ScriptException;

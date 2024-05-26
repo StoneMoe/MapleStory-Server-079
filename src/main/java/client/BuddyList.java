@@ -4,7 +4,8 @@ import java.io.*;
 import database.*;
 import java.sql.*;
 import java.util.*;
-import tools.*;
+
+import networking.packet.MaplePacketCreator;
 
 public class BuddyList implements Serializable
 {

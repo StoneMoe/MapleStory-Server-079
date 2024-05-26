@@ -7,9 +7,9 @@ import constants.GameConstants;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import server.maps.MapleMapObject;
+
 import server.quest.MapleQuest;
-import tools.packet.PlayerShopPacket;
+import networking.packet.PlayerShopPacket;
 
 public class MapleMiniGame extends AbstractPlayerStore
 {

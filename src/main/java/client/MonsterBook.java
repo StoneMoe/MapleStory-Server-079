@@ -10,8 +10,8 @@ import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import server.MapleItemInformationProvider;
-import tools.data.output.MaplePacketLittleEndianWriter;
-import tools.packet.MonsterBookPacket;
+import networking.output.MaplePacketLittleEndianWriter;
+import networking.packet.MonsterBookPacket;
 
 
 public class MonsterBook implements Serializable

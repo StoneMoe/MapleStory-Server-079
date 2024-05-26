@@ -13,8 +13,8 @@ import server.Timer;
 import server.maps.MapleMap;
 import server.maps.MapleMapObject;
 import server.maps.MapleMapObjectType;
-import tools.MaplePacketCreator;
-import tools.packet.PlayerShopPacket;
+import networking.packet.MaplePacketCreator;
+import networking.packet.PlayerShopPacket;
 
 import java.awt.*;
 import java.util.Arrays;
