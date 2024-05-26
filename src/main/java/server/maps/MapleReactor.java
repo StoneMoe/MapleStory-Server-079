@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import scripting.ReactorScriptManager;
 import server.Timer;
 import networking.packet.MaplePacketCreator;
-import tools.Pair;
+import utils.datastructures.Pair;
 
 public class MapleReactor extends AbstractMapleMapObject
 {

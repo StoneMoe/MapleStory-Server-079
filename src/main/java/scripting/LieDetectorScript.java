@@ -3,7 +3,7 @@ package scripting;
 import lombok.extern.slf4j.Slf4j;
 import server.Randomizer;
 import utils.HexTool;
-import tools.Pair;
+import utils.datastructures.Pair;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

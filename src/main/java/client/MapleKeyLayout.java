@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import tools.Pair;
+import utils.datastructures.Pair;
 import networking.output.MaplePacketLittleEndianWriter;
 
 

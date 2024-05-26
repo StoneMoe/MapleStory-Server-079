@@ -8,7 +8,7 @@ import java.util.Map;
 import provider.MapleData;
 import provider.MapleDataProviderFactory;
 import provider.MapleDataTool;
-import tools.Pair;
+import utils.datastructures.Pair;
 
 public class ItemMakerFactory
 {

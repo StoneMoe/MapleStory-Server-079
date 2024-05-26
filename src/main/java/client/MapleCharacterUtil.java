@@ -3,7 +3,7 @@ package client;
 import constants.GameConstants;
 import database.DatabaseConnection;
 import lombok.extern.slf4j.Slf4j;
-import tools.Pair;
+import utils.datastructures.Pair;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;

@@ -5,7 +5,8 @@ import constants.*;
 import client.*;
 import networking.packet.MaplePacketCreator;
 import server.*;
-import tools.*;
+import utils.datastructures.Pair;
+
 import java.util.*;
 
 public class Equip extends Item implements IEquip, Serializable

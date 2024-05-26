@@ -9,7 +9,7 @@ import server.MapleItemInformationProvider;
 import server.MapleStatEffect;
 import server.Timer;
 import networking.packet.MaplePacketCreator;
-import tools.Pair;
+import utils.datastructures.Pair;
 
 public class MapleFamilyBuff
 {

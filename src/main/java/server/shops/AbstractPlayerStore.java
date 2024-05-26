@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import server.maps.AbstractMapleMapObject;
 import server.maps.MapleMap;
 import server.maps.MapleMapObjectType;
-import tools.Pair;
+import utils.datastructures.Pair;
 import networking.packet.PlayerShopPacket;
 
 import java.lang.ref.WeakReference;

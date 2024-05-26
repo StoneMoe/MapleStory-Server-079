@@ -25,7 +25,7 @@ import server.life.PlayerNPC;
 import server.maps.MapleMapFactory;
 import server.shops.HiredMerchant;
 import utils.CollectionUtil;
-import tools.ConcurrentEnumMap;
+import utils.datastructures.ConcurrentEnumMap;
 import networking.packet.MaplePacketCreator;
 
 import java.io.IOException;

@@ -66,7 +66,7 @@ import server.ServerProperties;
 import utils.FileoutputUtil;
 import utils.HexTool;
 import networking.MapleAESOFB;
-import tools.Pair;
+import utils.datastructures.Pair;
 import networking.input.ByteArrayByteStream;
 import networking.input.GenericSeekableLittleEndianAccessor;
 import networking.input.SeekableLittleEndianAccessor;

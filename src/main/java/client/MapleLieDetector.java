@@ -6,7 +6,7 @@ import server.maps.MapleMap;
 import server.quest.MapleQuest;
 import utils.HexTool;
 import networking.packet.MaplePacketCreator;
-import tools.Pair;
+import utils.datastructures.Pair;
 
 
 public class MapleLieDetector

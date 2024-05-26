@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
 import server.maps.MapleMap;
 import networking.packet.MaplePacketCreator;
-import tools.Pair;
+import utils.datastructures.Pair;
 
 public class MapleSquad
 {

@@ -5,7 +5,7 @@ import constants.GameConstants;
 import lombok.extern.slf4j.Slf4j;
 import server.Randomizer;
 import networking.packet.MaplePacketCreator;
-import tools.Pair;
+import utils.datastructures.Pair;
 import networking.input.SeekableLittleEndianAccessor;
 
 import java.util.ArrayList;

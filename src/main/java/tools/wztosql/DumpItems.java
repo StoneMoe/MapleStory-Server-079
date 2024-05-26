@@ -22,7 +22,7 @@ import provider.MapleDataFileEntry;
 import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
 import provider.MapleDataTool;
-import tools.Pair;
+import utils.datastructures.Pair;
 
 @Slf4j
 public class DumpItems {

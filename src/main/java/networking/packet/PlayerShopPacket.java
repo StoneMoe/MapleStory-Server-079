@@ -9,7 +9,7 @@ import handling.SendPacketOpcode;
 import lombok.extern.slf4j.Slf4j;
 import server.MerchItemPackage;
 import server.shops.*;
-import tools.Pair;
+import utils.datastructures.Pair;
 import networking.output.MaplePacketLittleEndianWriter;
 
 import java.util.List;

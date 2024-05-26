@@ -8,7 +8,7 @@ import provider.MapleDataProviderFactory;
 import provider.MapleDataTool;
 import server.quest.MapleQuestActionType;
 import server.quest.MapleQuestRequirementType;
-import tools.Pair;
+import utils.datastructures.Pair;
 
 import java.io.File;
 import java.sql.Connection;

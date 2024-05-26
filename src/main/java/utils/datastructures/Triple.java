@@ -1,15 +1,17 @@
-package tools;
+package utils.datastructures;
 
 import java.io.Serializable;
 
-public class Pair<E, F> implements Serializable
+public class Triple<E, F, G> implements Serializable
 {
-    private static final long serialVersionUID = 9179541993413738569L;
+    private static final long serialVersionUID = 9179541993413739999L;
     public E left;
-    public F right;
+    public F mid;
+    public G right;
     
-    public Pair(final E left, final F right) {
+    public Triple(final E left, final F mid, final G right) {
         this.left = left;
+        this.mid = mid;
         this.right = right;
     }
     
@@ -17,21 +19,26 @@ public class Pair<E, F> implements Serializable
         return this.left;
     }
     
-    public F getRight() {
+    public F getMid() {
+        return this.mid;
+    }
+    
+    public G getRight() {
         return this.right;
     }
     
     @Override
     public String toString() {
-        return this.left.toString() + ":" + this.right.toString();
+        return this.left.toString() + ":" + this.mid.toString() + ":" + this.right.toString();
     }
     
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((this.left == null) ? 0 : this.left.hashCode());
-        result = prime * result + ((this.right == null) ? 0 : this.right.hashCode());
+        result = 31 * result + ((this.left == null) ? 0 : this.left.hashCode());
+        result = 31 * result + ((this.mid == null) ? 0 : this.mid.hashCode());
+        result = 31 * result + ((this.right == null) ? 0 : this.right.hashCode());
         return result;
     }
     
@@ -46,13 +53,21 @@ public class Pair<E, F> implements Serializable
         if (this.getClass() != obj.getClass()) {
             return false;
         }
-        final Pair other = (Pair)obj;
+        final Triple other = (Triple)obj;
         if (this.left == null) {
             if (other.left != null) {
                 return false;
             }
         }
         else if (!this.left.equals(other.left)) {
+            return false;
+        }
+        if (this.mid == null) {
+            if (other.mid != null) {
+                return false;
+            }
+        }
+        else if (!this.mid.equals(other.mid)) {
             return false;
         }
         if (this.right == null) {

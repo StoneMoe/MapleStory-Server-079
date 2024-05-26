@@ -7,7 +7,7 @@ import provider.MapleData;
 import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
 import provider.MapleDataTool;
-import tools.Pair;
+import utils.datastructures.Pair;
 
 public class PetDataFactory {
     private static final MapleDataProvider dataRoot = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/Item.wz"));

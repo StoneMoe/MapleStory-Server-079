@@ -3,7 +3,7 @@ package server.events;
 import database.DatabaseConnection;
 import lombok.extern.slf4j.Slf4j;
 import server.Randomizer;
-import tools.Pair;
+import utils.datastructures.Pair;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

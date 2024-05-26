@@ -14,7 +14,7 @@ import server.MapleDueyActions;
 import server.MapleInventoryManipulator;
 import server.MapleItemInformationProvider;
 import networking.packet.MaplePacketCreator;
-import tools.Pair;
+import utils.datastructures.Pair;
 import networking.input.SeekableLittleEndianAccessor;
 
 import java.sql.Connection;

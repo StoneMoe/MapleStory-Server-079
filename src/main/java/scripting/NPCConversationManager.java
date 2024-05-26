@@ -81,7 +81,7 @@ import server.maps.MapleMapObjectType;
 import server.maps.SpeedRunType;
 import server.quest.MapleQuest;
 import networking.packet.MaplePacketCreator;
-import tools.Pair;
+import utils.datastructures.Pair;
 import utils.StringUtil;
 import networking.packet.PlayerShopPacket;
 

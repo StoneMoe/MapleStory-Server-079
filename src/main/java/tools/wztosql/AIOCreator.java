@@ -3,13 +3,12 @@ package tools.wztosql;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 import server.MapleItemInformationProvider;
-import tools.Pair;
+import utils.datastructures.Pair;
 
 @Slf4j
 public class AIOCreator {

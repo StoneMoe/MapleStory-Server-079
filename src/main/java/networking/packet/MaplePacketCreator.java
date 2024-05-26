@@ -30,7 +30,7 @@ import server.shops.HiredMerchant;
 import server.shops.MaplePlayerShopItem;
 import networking.output.LittleEndianWriter;
 import networking.output.MaplePacketLittleEndianWriter;
-import tools.Pair;
+import utils.datastructures.Pair;
 import utils.*;
 
 import java.awt.*;

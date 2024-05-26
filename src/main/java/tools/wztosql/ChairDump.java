@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import server.MapleItemInformationProvider;
-import tools.Pair;
+import utils.datastructures.Pair;
 
 public class ChairDump
 {

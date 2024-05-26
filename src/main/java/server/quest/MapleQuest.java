@@ -11,7 +11,7 @@ import provider.MapleDataTool;
 import scripting.NPCScriptManager;
 import utils.FileoutputUtil;
 import networking.packet.MaplePacketCreator;
-import tools.Pair;
+import utils.datastructures.Pair;
 
 import java.io.File;
 import java.io.Serializable;

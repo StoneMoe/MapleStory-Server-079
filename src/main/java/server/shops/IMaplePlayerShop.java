@@ -4,7 +4,7 @@ import client.MapleCharacter;
 import client.MapleClient;
 import handling.MaplePacket;
 import java.util.List;
-import tools.Pair;
+import utils.datastructures.Pair;
 
 public interface IMaplePlayerShop
 {

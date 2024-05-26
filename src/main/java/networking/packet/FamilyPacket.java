@@ -12,7 +12,7 @@ import handling.world.family.MapleFamilyCharacter;
 import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
-import tools.Pair;
+import utils.datastructures.Pair;
 import networking.output.MaplePacketLittleEndianWriter;
 
 @Slf4j

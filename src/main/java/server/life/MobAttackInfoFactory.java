@@ -7,7 +7,7 @@ import provider.MapleData;
 import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
 import provider.MapleDataTool;
-import tools.Pair;
+import utils.datastructures.Pair;
 import utils.StringUtil;
 
 public class MobAttackInfoFactory

@@ -8,7 +8,7 @@ import constants.ServerConstants;
 import database.DatabaseConnection;
 import handling.MaplePacket;
 import lombok.extern.slf4j.Slf4j;
-import tools.Pair;
+import utils.datastructures.Pair;
 import networking.packet.MTSCSPacket;
 
 import java.sql.Connection;

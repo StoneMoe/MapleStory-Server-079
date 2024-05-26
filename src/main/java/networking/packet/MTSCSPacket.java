@@ -19,7 +19,7 @@ import server.CashShop;
 import server.MTSStorage;
 import utils.HexTool;
 import utils.KoreanDateUtil;
-import tools.Pair;
+import utils.datastructures.Pair;
 import networking.output.MaplePacketLittleEndianWriter;
 
 import java.sql.Connection;

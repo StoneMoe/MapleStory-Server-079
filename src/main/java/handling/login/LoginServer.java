@@ -11,7 +11,7 @@ import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.SocketSessionConfig;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 import server.ServerProperties;
-import tools.Triple;
+import utils.datastructures.Triple;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

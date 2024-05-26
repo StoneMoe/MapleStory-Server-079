@@ -5,7 +5,7 @@ import provider.MapleData;
 import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
 import provider.MapleDataTool;
-import tools.Pair;
+import utils.datastructures.Pair;
 import utils.StringUtil;
 
 import javax.management.InstanceAlreadyExistsException;
@@ -111,7 +111,7 @@ public class MonsterDropCreator {
                 for (MapleData drop : dataz.getChildByPath("reward")) {
                     int itemid = MapleDataTool.getInt(drop);
                     int rate = getChance(itemid, idtoLog, bossCache.containsKey(Integer.valueOf(idtoLog)));
-                    for (tools.Pair<Integer, MobInfo> Pair : mobCache) {
+                    for (utils.datastructures.Pair<Integer, MobInfo> Pair : mobCache) {
                         if (((Integer) Pair.getLeft()).intValue() == monsterId) {
                             if (((MobInfo) Pair.getRight()).getBoss() <= 0 || rate > 100000)
                                 break;
@@ -170,12 +170,12 @@ public class MonsterDropCreator {
         log.info("载入: 怪物书数据.");
         StringBuilder SQL = new StringBuilder();
         StringBuilder bookName = new StringBuilder();
-        for (tools.Pair<Integer, String> Pair : itemNameCache) {
+        for (utils.datastructures.Pair<Integer, String> Pair : itemNameCache) {
             if (((Integer) Pair.getLeft()).intValue() >= 2380000 && ((Integer) Pair.getLeft()).intValue() <= 2388070) {
                 bookName.append((String) Pair.getRight());
                 if (bookName.toString().contains(" Card"))
                     bookName.delete(bookName.length() - 5, bookName.length());
-                for (tools.Pair<Integer, MobInfo> Pair_ : mobCache) {
+                for (utils.datastructures.Pair<Integer, MobInfo> Pair_ : mobCache) {
                     if (((MobInfo) Pair_.getRight()).getName().equalsIgnoreCase(bookName.toString())) {
                         int rate = 1000;
                         if (((MobInfo) Pair_.getRight()).getBoss() > 0)
@@ -201,13 +201,13 @@ public class MonsterDropCreator {
         SQL.append("\n");
         int i = 1;
         int lastmonsterbookid = 0;
-        for (tools.Pair<Integer, String> Pair : itemNameCache) {
+        for (utils.datastructures.Pair<Integer, String> Pair : itemNameCache) {
             if (((Integer) Pair.getLeft()).intValue() >= 2380000 && ((Integer) Pair.getLeft()).intValue() <= 2388070) {
                 bookName.append((String) Pair.getRight());
                 if (bookName.toString().contains(" Card"))
                     bookName.delete(bookName.length() - 5, bookName.length());
                 if (((Integer) Pair.getLeft()).intValue() != lastmonsterbookid) {
-                    for (tools.Pair<Integer, MobInfo> Pair_ : mobCache) {
+                    for (utils.datastructures.Pair<Integer, MobInfo> Pair_ : mobCache) {
                         if (((MobInfo) Pair_.getRight()).getName().equalsIgnoreCase(bookName.toString())) {
                             SQL.append("INSERT INTO ").append("monstercarddata").append(" VALUES (");
                             SQL.append(i).append(", ");
@@ -231,7 +231,7 @@ public class MonsterDropCreator {
     }
 
     private static void retriveNLogItemName(StringBuilder sb, int id) {
-        for (tools.Pair<Integer, String> Pair : itemNameCache) {
+        for (utils.datastructures.Pair<Integer, String> Pair : itemNameCache) {
             if (((Integer) Pair.getLeft()).intValue() == id) {
                 sb.append((String) Pair.getRight());
                 return;

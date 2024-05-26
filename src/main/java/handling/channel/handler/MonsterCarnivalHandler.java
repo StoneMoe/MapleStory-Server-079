@@ -9,7 +9,7 @@ import server.Randomizer;
 import server.life.MapleLifeFactory;
 import server.life.MapleMonster;
 import networking.packet.MaplePacketCreator;
-import tools.Pair;
+import utils.datastructures.Pair;
 import networking.input.SeekableLittleEndianAccessor;
 import networking.packet.MonsterCarnivalPacket;
 

@@ -38,7 +38,7 @@ import server.maps.MapleMist;
 import server.maps.MapleSummon;
 import server.maps.SummonMovementType;
 import networking.packet.MaplePacketCreator;
-import tools.Pair;
+import utils.datastructures.Pair;
 
 public class MapleStatEffect implements Serializable
 {

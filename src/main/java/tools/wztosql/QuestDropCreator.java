@@ -19,7 +19,7 @@ import provider.MapleDataTool;
 import server.MapleItemInformationProvider;
 import server.quest.MapleQuest;
 import server.quest.MapleQuestRequirementType;
-import tools.Pair;
+import utils.datastructures.Pair;
 
 @Slf4j
 public class QuestDropCreator {

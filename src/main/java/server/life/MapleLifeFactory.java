@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import provider.*;
 import provider.WzXML.MapleDataType;
 import utils.FileoutputUtil;
-import tools.Pair;
+import utils.datastructures.Pair;
 import utils.StringUtil;
 
 import java.io.File;

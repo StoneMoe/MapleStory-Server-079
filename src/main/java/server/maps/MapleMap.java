@@ -22,7 +22,7 @@ import server.events.MapleEvent;
 import server.life.*;
 import utils.FileoutputUtil;
 import networking.packet.MaplePacketCreator;
-import tools.Pair;
+import utils.datastructures.Pair;
 import utils.StringUtil;
 import networking.packet.MTSCSPacket;
 import networking.packet.MobPacket;

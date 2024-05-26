@@ -22,9 +22,9 @@ import server.maps.MapScriptMethods;
 import server.maps.MapleMap;
 import server.maps.MapleMapObject;
 import server.maps.MapleMapObjectType;
-import tools.ConcurrentEnumMap;
+import utils.datastructures.ConcurrentEnumMap;
 import networking.packet.MaplePacketCreator;
-import tools.Pair;
+import utils.datastructures.Pair;
 import networking.packet.MobPacket;
 
 import java.lang.ref.WeakReference;

@@ -14,7 +14,7 @@ import server.maps.MapleMap;
 import server.movement.LifeMovementFragment;
 import utils.FileoutputUtil;
 import networking.packet.MaplePacketCreator;
-import tools.Pair;
+import utils.datastructures.Pair;
 import networking.input.SeekableLittleEndianAccessor;
 import networking.packet.MobPacket;
 

@@ -1,4 +1,4 @@
-package tools;
+package utils.datastructures;
 
 import java.io.Serializable;
 import java.util.Collection;

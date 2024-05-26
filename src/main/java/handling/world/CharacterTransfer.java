@@ -16,7 +16,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import server.quest.MapleQuest;
-import tools.Pair;
+import utils.datastructures.Pair;
 
 public class CharacterTransfer implements Externalizable
 {

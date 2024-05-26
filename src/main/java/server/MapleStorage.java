@@ -9,7 +9,7 @@ import database.DatabaseConnection;
 import database.DatabaseException;
 import lombok.extern.slf4j.Slf4j;
 import networking.packet.MaplePacketCreator;
-import tools.Pair;
+import utils.datastructures.Pair;
 
 import java.io.Serializable;
 import java.sql.Connection;

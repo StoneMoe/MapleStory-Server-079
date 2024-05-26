@@ -3,7 +3,7 @@ package server.maps;
 import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
-import tools.Pair;
+import utils.datastructures.Pair;
 
 
 public class MapleReactorStats

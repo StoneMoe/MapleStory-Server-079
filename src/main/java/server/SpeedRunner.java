@@ -8,7 +8,7 @@ import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import server.maps.SpeedRunType;
-import tools.Pair;
+import utils.datastructures.Pair;
 import utils.StringUtil;
 
 public class SpeedRunner

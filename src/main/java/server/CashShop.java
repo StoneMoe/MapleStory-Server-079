@@ -19,7 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import tools.Pair;
+import utils.datastructures.Pair;
 import networking.packet.MTSCSPacket;
 
 public class CashShop implements Serializable
