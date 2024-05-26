@@ -47,8 +47,7 @@ public class EventScriptManager extends AbstractScriptManager {
                 ((ScriptEngine) entry.iv).put("em", entry.em);
                 entry.iv.invokeFunction("init", null);
             } catch (Exception ex) {
-                log.info("Error initiating event: " + entry.script + ":" + ex);
-                FileoutputUtil.log(FileoutputUtil.ScriptEx_Log, "Error initiating event: " + entry.script + ":" + ex);
+                log.info("Error initiating event \"{}\"", entry.script, ex);
             }
         }
     }

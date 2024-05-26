@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,8 +14,8 @@ import java.util.Properties;
 
 @Slf4j
 public class ServerProperties {
-    public static boolean showPacket;
-    private static Properties props;
+    public static boolean showPacket = true;
+    private static Properties props = new Properties();
     private static String[] toLoad;
 
     public static boolean ShowPacket() {
@@ -37,15 +38,13 @@ public class ServerProperties {
     }
 
     static {
-        ServerProperties.showPacket = true;
-        ServerProperties.props = new Properties();
         try {
             String path = System.getProperty("server_property_file_path");
-            final InputStreamReader fr = new InputStreamReader(new FileInputStream(path), "UTF-8");
+            final InputStreamReader fr = new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8);
             ServerProperties.props.load(fr);
             fr.close();
         } catch (IOException ex) {
-            log.info("加载Settings错误：" + ex);
+            log.info("加载Settings错误", ex);
         }
         try {
             PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM auth_server_channel_ip");
@@ -54,8 +53,8 @@ public class ServerProperties {
                 props.put(rs.getString("name") + rs.getInt("channelid"), rs.getString("value"));
             rs.close();
             ps.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (Exception ex) {
+            log.error("Channel config loading failed", ex);
             System.exit(0);
         }
     }

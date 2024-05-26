@@ -30,7 +30,7 @@ public class MaplePacketDecoder extends CumulativeProtocolDecoder {
             if (in.remaining() >= 4) {
                 final int packetHeader = in.getInt();
                 if (!client.getReceiveCrypto().checkPacket(packetHeader)) {
-                    session.close(true);
+                    session.closeNow();
                     return false;
                 }
                 decoderState.packetlength = MapleAESOFB.getPacketLength(packetHeader);
@@ -51,36 +51,16 @@ public class MaplePacketDecoder extends CumulativeProtocolDecoder {
                 final int pHeader = this.readFirstShort(decryptedPacket);
                 final String pHeaderStr = Integer.toHexString(pHeader).toUpperCase();
                 final String op = this.lookupSend(pHeader);
-                boolean show = true;
-                final String s = op;
-                switch (s) {
-                    case "PONG":
-                    case "NPC_ACTION":
-                    case "MOVE_LIFE":
-                    case "MOVE_PLAYER":
-                    case "MOVE_ANDROID":
-                    case "MOVE_SUMMON":
-                    case "AUTO_AGGRO":
-                    case "HEAL_OVER_TIME":
-                    case "BUTTON_PRESSED":
-                    case "STRANGE_DATA": {
-                        show = false;
-                        break;
-                    }
-                }
                 final String Send = "客户端发送 " + op + " [" + pHeaderStr + "] (" + packetLen + ")\r\n";
                 if (packetLen <= 3000) {
                     final String SendTo = Send + HexTool.toString(decryptedPacket) + "\r\n" + HexTool.toStringFromAscii(decryptedPacket);
-                    if (show) {
-                        FileoutputUtil.packetLog("logs/客户端封包.log", SendTo);
-                        log.info(SendTo);
-                    }
+                    log.info("客户端封包 - {}", SendTo);
                     final String SendTos = "\r\n时间：" + FileoutputUtil.CurrentReadable_Time() + "  ";
                     if (op.equals("UNKNOWN")) {
                         FileoutputUtil.packetLog("logs/未知客服端封包.log", SendTos + SendTo);
                     }
                 } else {
-                    MaplePacketDecoder.log.info(HexTool.toString(new byte[]{decryptedPacket[0], decryptedPacket[1]}) + "...");
+                    log.info("{}...", HexTool.toString(new byte[]{decryptedPacket[0], decryptedPacket[1]}));
                 }
             }
             return true;

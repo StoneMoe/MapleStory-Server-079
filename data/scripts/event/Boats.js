@@ -1,5 +1,5 @@
 importPackage(Packages.client);
-importPackage(Packages.tools);
+importPackage(Packages.networking.packet);
 importPackage(Packages.server.life);
 
 var closeTime = 120000; //船关闭搭乘的时间

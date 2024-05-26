@@ -219,19 +219,23 @@ public enum RecvPacketOpcode implements WritableIntValueHolder
     }
     
     public static boolean isSpamHeader(final RecvPacketOpcode header) {
-        final String name = header.name();
-        switch (name) {
-            case "PONG":
-            case "NPC_ACTION":
-            case "MOVE_LIFE":
-            case "MOVE_PLAYER":
-            case "MOVE_ANDROID":
-            case "MOVE_SUMMON":
-            case "AUTO_AGGRO":
-            case "HEAL_OVER_TIME":
-            case "BUTTON_PRESSED":
-            case "STRANGE_DATA":
-            case "TAKE_DAMAGE": {
+        switch (header) {
+            case PONG:
+            case NPC_ACTION:
+            case MOVE_LIFE:
+            case MOVE_PLAYER:
+            case MOVE_PET:
+//            case MOVE_ANDROID:
+            case MOVE_SUMMON:
+            case SPECIAL_MOVE:
+            case QUEST_ACTION:
+            case AUTO_AGGRO:
+            case HEAL_OVER_TIME:
+//            case BUTTON_PRESSED:
+            case STRANGE_DATA:
+            case CHANGE_KEYMAP:
+            case USE_INNER_PORTAL:
+            case TAKE_DAMAGE: {
                 return true;
             }
             default: {

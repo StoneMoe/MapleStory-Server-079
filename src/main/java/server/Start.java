@@ -33,8 +33,8 @@ import java.util.*;
 
 @Slf4j
 public class Start {
-    public static boolean Check;
-    public static Start instance;
+    public static boolean Check = true;
+    public static Start instance = new Start();
 
     public static void main(final String[] args) throws InterruptedException {
         String cfgPath = System.getProperty("cfgPath", "./config");
@@ -66,7 +66,7 @@ public class Start {
             try (final PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("UPDATE accounts SET lastGainHM = 0")) {
                 ps.executeUpdate();
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             throw new RuntimeException("[数据库异常] 请检查数据库链接。目前无法连接到MySQL数据库.");
         }
         log.info("服务端 开始启动...版本号：079");
@@ -76,19 +76,17 @@ public class Start {
         World.init();
         runThread();
         loadData();
-        log.info("加载\"登入\"服务...");
+        log.info("正在加载登录服务...");
         LoginServer.run_startup_configurations();
         log.info("正在加载频道...");
         ChannelServer.startChannel_Main();
-        log.info("频道加载完成!");
         log.info("正在加载商城...");
         CashShopServer.run_startup_configurations();
-        log.info("刷怪线程");
+        log.info("正在加载刷怪线程...");
         World.registerRespawn();
         Timer.CheatTimer.getInstance().register(AutobanManager.getInstance(), 60000L);
         onlineTime(1);
         memoryGC(10);
-        MapleServerHandler.registerMBean();
         LoginServer.setOn();
         log.info("经验倍率：{}  物品倍率：{}  金币倍率：{}  BOSS爆率：{}", Integer.parseInt(ServerProperties.getProperty("RoyMS.Exp")), Integer.parseInt(ServerProperties.getProperty("RoyMS.Drop")), Integer.parseInt(ServerProperties.getProperty("RoyMS.Meso")), Integer.parseInt(ServerProperties.getProperty("RoyMS.BDrop")));
         if (Boolean.parseBoolean(ServerProperties.getProperty("RoyMS.检测复制装备", "false"))) {
@@ -293,12 +291,7 @@ public class Start {
             }
         }, 60000L * time);
     }
-    
-    static {
-        Start.Check = true;
-        Start.instance = new Start();
-    }
-    
+
     public static class Shutdown implements Runnable
     {
         @Override

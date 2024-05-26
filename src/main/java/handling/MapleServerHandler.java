@@ -35,26 +35,10 @@ import handling.login.handler.PacketErrorHandler;
 import handling.mina.MaplePacketDecoder;
 import handling.world.World;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.RejectedExecutionException;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-import javax.management.InstanceAlreadyExistsException;
-import javax.management.MBeanRegistrationException;
-import javax.management.MBeanServer;
-import javax.management.MalformedObjectNameException;
-import javax.management.NotCompliantMBeanException;
-import javax.management.ObjectName;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.mina.core.service.IoHandlerAdapter;
@@ -73,124 +57,26 @@ import networking.input.SeekableLittleEndianAccessor;
 import networking.packet.LoginPacket;
 
 @Slf4j
-public class MapleServerHandler extends IoHandlerAdapter implements MapleServerHandlerMBean {
-    private static boolean Log_Packets;
-    private static String nl;
-    private static File loggedIPs;
-    private static HashMap<String, FileWriter> logIPMap;
-    private static boolean debugMode;
-    private static EnumSet<RecvPacketOpcode> blocked;
-    private static int Log_Size;
-    private static ArrayList<LoggedPacket> Packet_Log;
-    private static ReentrantReadWriteLock Packet_Log_Lock;
-    private static File Packet_Log_Output;
+public class MapleServerHandler extends IoHandlerAdapter {
+    private static boolean debugMode = Boolean.parseBoolean(ServerProperties.getProperty("RoyMS.Debug", "false"));
     private int channel;
     private boolean cs;
     private List<String> BlockedIP;
-    private Map<String, Pair<Long, Byte>> tracker;
-
-    public static void reloadLoggedIPs() {
-        for (final FileWriter fw : MapleServerHandler.logIPMap.values()) {
-            if (fw != null) {
-                try {
-                    fw.write("=== Closing Log ===");
-                    fw.write(MapleServerHandler.nl);
-                    fw.flush();
-                    fw.close();
-                } catch (IOException ex) {
-                    log.info("Error closing Packet Log.", ex);
-                }
-            }
-        }
-        MapleServerHandler.logIPMap.clear();
-        try {
-            final Scanner sc = new Scanner(MapleServerHandler.loggedIPs);
-            while (sc.hasNextLine()) {
-                final String line = sc.nextLine().trim();
-                if (line.length() > 0) {
-                    final FileWriter fw2 = new FileWriter(new File("PacketLog_" + line + ".txt"), true);
-                    fw2.write("=== Creating Log ===");
-                    fw2.write(MapleServerHandler.nl);
-                    fw2.flush();
-                    MapleServerHandler.logIPMap.put(line, fw2);
-                }
-            }
-        } catch (IOException e) {
-            log.info("无法加载登录IP数据包。", e);
-        }
-    }
-
-    private static FileWriter isLoggedIP(final IoSession sess) {
-        final String a = (String) sess.getAttribute("REMOTE_ADDRESS");
-        final String realIP = a.substring(a.indexOf(47) + 1, a.indexOf(58));
-        return MapleServerHandler.logIPMap.get(realIP);
-    }
+    private Map<String, Pair<Long, Byte>> loginTracker;
 
     public static void log(final SeekableLittleEndianAccessor packet, final RecvPacketOpcode op, final MapleClient c, final IoSession io) {
-        if (MapleServerHandler.blocked.contains(op)) {
-            return;
-        }
-        try {
-            MapleServerHandler.Packet_Log_Lock.writeLock().lock();
-            LoggedPacket logged = null;
-            if (MapleServerHandler.Packet_Log.size() == MapleServerHandler.Log_Size) {
-                logged = MapleServerHandler.Packet_Log.remove(0);
-            }
-            if (logged == null) {
-                logged = new LoggedPacket(packet, op, io.getRemoteAddress().toString(), (c == null) ? -1 : c.getAccID(), (c == null || c.getAccountName() == null) ? "[Null]" : c.getAccountName(), (c == null || c.getPlayer() == null || c.getPlayer().getName() == null) ? "[Null]" : c.getPlayer().getName());
-            } else {
-                logged.setInfo(packet, op, io.getRemoteAddress().toString(), (c == null) ? -1 : c.getAccID(), (c == null || c.getAccountName() == null) ? "[Null]" : c.getAccountName(), (c == null || c.getPlayer() == null || c.getPlayer().getName() == null) ? "[Null]" : c.getPlayer().getName());
-            }
-            MapleServerHandler.Packet_Log.add(logged);
-        } finally {
-            MapleServerHandler.Packet_Log_Lock.writeLock().unlock();
-        }
-    }
-
-    public static void registerMBean() {
-        final MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
-        try {
-            final MapleServerHandler mbean = new MapleServerHandler();
-            mBeanServer.registerMBean(mbean, new ObjectName("handling:type=MapleServerHandler"));
-        } catch (InstanceAlreadyExistsException | MBeanRegistrationException | MalformedObjectNameException |
-                 NotCompliantMBeanException e) {
-            log.info("Error registering PacketLog MBean");
-            e.printStackTrace();
-        }
-    }
-
-    public MapleServerHandler() {
-        this.channel = -1;
-        this.BlockedIP = new ArrayList<String>();
-        this.tracker = new ConcurrentHashMap<String, Pair<Long, Byte>>();
+        String ip = io.getRemoteAddress().toString();
+        String accountName = (c == null || c.getAccountName() == null) ? "[Null]" : c.getAccountName();
+        String characterName = (c == null || c.getPlayer() == null || c.getPlayer().getName() == null) ? "[Null]" : c.getPlayer().getName();
+        int accountID = (c == null) ? -1 : c.getAccID();
+        log.info("[IP: {}] [{}|{}|{}] [Op: {}] [Data: {}]", ip, accountID, accountName, characterName, op.toString(), packet.toString());
     }
 
     public MapleServerHandler(final int channel, final boolean cs) {
-        this.channel = -1;
         this.BlockedIP = new ArrayList<String>();
-        this.tracker = new ConcurrentHashMap<String, Pair<Long, Byte>>();
+        this.loginTracker = new ConcurrentHashMap<String, Pair<Long, Byte>>();
         this.channel = channel;
         this.cs = cs;
-    }
-
-    public void writeLog() {
-        try {
-            final FileWriter fw = new FileWriter(MapleServerHandler.Packet_Log_Output, true);
-            try {
-                MapleServerHandler.Packet_Log_Lock.readLock().lock();
-                final String nl = System.getProperty("line.separator");
-                for (final LoggedPacket loggedPacket : MapleServerHandler.Packet_Log) {
-                    fw.write(loggedPacket.toString());
-                    fw.write(nl);
-                }
-                fw.flush();
-                fw.close();
-            } finally {
-                MapleServerHandler.Packet_Log_Lock.readLock().unlock();
-            }
-        } catch (IOException ex) {
-            log.info("Error writing log to file.");
-        }
     }
 
     public void messageSent(final IoSession session, final Object message) throws Exception {
@@ -206,8 +92,8 @@ public class MapleServerHandler extends IoHandlerAdapter implements MapleServerH
 
     public void sessionOpened(final IoSession session) throws Exception {
         final String address = session.getRemoteAddress().toString().split(":")[0];
-        session.setAttribute("REMOTE_ADDRESS",  session.getRemoteAddress().toString());
-        final Pair<Long, Byte> track = this.tracker.get(address);
+        session.setAttribute("REMOTE_ADDRESS", session.getRemoteAddress().toString());
+        final Pair<Long, Byte> track = this.loginTracker.get(address);
         byte count;
         if (track == null) {
             count = 1;
@@ -220,29 +106,29 @@ public class MapleServerHandler extends IoHandlerAdapter implements MapleServerH
                 count = 1;
             }
             if (count >= 10) {
-                log.info("自动断开连接A2");
+                log.info("Login rate limit reached");
                 this.BlockedIP.add(address);
-                this.tracker.remove(address);
-                session.close(true);
+                this.loginTracker.remove(address);
+                session.closeNow();
                 return;
             }
         }
-        this.tracker.put(address, new Pair<Long, Byte>(System.currentTimeMillis(), count));
+        this.loginTracker.put(address, new Pair<Long, Byte>(System.currentTimeMillis(), count));
         if (this.channel > -1) {
             if (ChannelServer.getInstance(this.channel).isShutdown()) {
                 log.info("频道服务器尚未开启,发现连接进入，该连接被断开");
-                session.close(true);
+                session.closeNow();
                 return;
             }
         } else if (this.cs) {
             if (CashShopServer.isShutdown()) {
                 log.info("商城服务器尚未开启,发现连接进入，该连接被断开");
-                session.close(true);
+                session.closeNow();
                 return;
             }
         } else if (LoginServer.isShutdown()) {
             log.info("登录服务器尚未开启,发现连接进入，该连接被断开");
-            session.close(true);
+            session.closeNow();
             return;
         }
         final byte[] serverRecv = {70, 114, 122, (byte) Randomizer.nextInt(255)};
@@ -268,41 +154,18 @@ public class MapleServerHandler extends IoHandlerAdapter implements MapleServerH
         sb.append("IoSession opened ").append(address);
         log.info(sb.toString());
         World.Client.addClient(client);
-        final FileWriter fw = isLoggedIP(session);
-        if (fw != null) {
-            if (this.channel > -1) {
-                fw.write("=== Logged Into Channel " + this.channel + " ===");
-                fw.write(MapleServerHandler.nl);
-            } else if (this.cs) {
-                fw.write("=== Logged Into CashShop Server ===");
-                fw.write(MapleServerHandler.nl);
-            } else {
-                fw.write("=== Logged Into Login Server ===");
-                fw.write(MapleServerHandler.nl);
-            }
-            fw.flush();
-        }
     }
 
     public void sessionClosed(final IoSession session) throws Exception {
         final MapleClient client = (MapleClient) session.getAttribute(MapleClient.CLIENT_KEY);
         if (client != null) {
             try {
-                final FileWriter fw = isLoggedIP(session);
-                if (fw != null) {
-                    fw.write("=== Session Closed ===");
-                    fw.write(MapleServerHandler.nl);
-                    fw.flush();
-                }
                 client.disconnect(true, this.cs);
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 log.error("sessionClosed", ex);
-            }
-            finally {
+            } finally {
                 World.Client.removeClient(client);
-                session.close(true);
+                session.closeNow();
                 session.removeAttribute(MapleClient.CLIENT_KEY);
             }
         }
@@ -322,10 +185,8 @@ public class MapleServerHandler extends IoHandlerAdapter implements MapleServerH
             while (i < length) {
                 final RecvPacketOpcode recv = values[i];
                 if (recv.getValue() == header_num) {
-                    if (MapleServerHandler.debugMode && !RecvPacketOpcode.isSpamHeader(recv)) {
-                        final StringBuilder sb = new StringBuilder("Received data 已處理 :" + String.valueOf(recv) + "\n");
-                        sb.append(HexTool.toString((byte[]) message)).append("\n").append(HexTool.toStringFromAscii((byte[]) message));
-                        log.info(sb.toString());
+                    if (log.isDebugEnabled() && !RecvPacketOpcode.isSpamHeader(recv)) {
+                        log.info("Received data 已處理 :{}\n{}\n{}", recv, HexTool.toString((byte[]) message), HexTool.toStringFromAscii((byte[]) message));
                     }
                     final MapleClient c = (MapleClient) session.getAttribute(MapleClient.CLIENT_KEY);
                     if (!c.isReceiving()) {
@@ -334,37 +195,20 @@ public class MapleServerHandler extends IoHandlerAdapter implements MapleServerH
                     if (recv.NeedsChecking() && !c.isLoggedIn()) {
                         return;
                     }
-                    if (c.getPlayer() == null || !c.isMonitored() || !MapleServerHandler.blocked.contains(recv)) {
-                    }
-                    if (MapleServerHandler.Log_Packets) {
+                    if (log.isDebugEnabled()) {
                         log(slea, recv, c, session);
                     }
                     handlePacket(recv, slea, c, this.cs);
-                    final FileWriter fw = isLoggedIP(session);
-                    if (fw != null && !MapleServerHandler.blocked.contains(recv)) {
-                        if (recv == RecvPacketOpcode.PLAYER_LOGGEDIN && c != null) {
-                            fw.write(">> [AccountName: " + ((c.getAccountName() == null) ? "null" : c.getAccountName()) + "] | [IGN: " + ((c.getPlayer() == null || c.getPlayer().getName() == null) ? "null" : c.getPlayer().getName()) + "] | [Time: " + FileoutputUtil.CurrentReadable_Time() + "]");
-                            fw.write(MapleServerHandler.nl);
-                        }
-                        fw.write("[" + recv.toString() + "]" + slea.toString(true));
-                        fw.write(MapleServerHandler.nl);
-                        fw.flush();
-                    }
                     return;
                 } else {
                     ++i;
                 }
             }
             if (MapleServerHandler.debugMode) {
-                final StringBuilder sb2 = new StringBuilder("Received data 未處理 : ");
-                sb2.append(HexTool.toString((byte[]) message)).append("\n").append(HexTool.toStringFromAscii((byte[]) message));
-                log.info(sb2.toString());
+                log.info("Received data 未處理 : {}\n{}", HexTool.toString((byte[]) message), HexTool.toStringFromAscii((byte[]) message));
             }
-        } catch (RejectedExecutionException ex) {
-            ex.printStackTrace();
-        } catch (Exception e) {
-            FileoutputUtil.outputFileError(FileoutputUtil.PacketEx_Log, e);
-            e.printStackTrace();
+        } catch (Exception ex) {
+            log.error("messageReceived", ex);
         }
     }
 
@@ -375,29 +219,7 @@ public class MapleServerHandler extends IoHandlerAdapter implements MapleServerH
             super.sessionIdle(session, status);
             return;
         }
-        session.close(true);
-    }
-
-    public static boolean isSpamHeader(final RecvPacketOpcode header) {
-        switch (header) {
-            case PONG:
-            case NPC_ACTION:
-            case MOVE_SUMMON:
-            case MOVE_LIFE:
-            case MOVE_PLAYER:
-            case MOVE_PET:
-            case SPECIAL_MOVE:
-            case QUEST_ACTION:
-            case HEAL_OVER_TIME:
-            case STRANGE_DATA:
-            case CHANGE_KEYMAP:
-            case USE_INNER_PORTAL: {
-                return true;
-            }
-            default: {
-                return false;
-            }
-        }
+        session.closeNow();
     }
 
     public static void handlePacket(final RecvPacketOpcode header, final SeekableLittleEndianAccessor slea, final MapleClient c, final boolean cs) throws Exception {
@@ -984,60 +806,6 @@ public class MapleServerHandler extends IoHandlerAdapter implements MapleServerH
                 PlayerHandler.Rabbit(slea, c);
                 break;
             }
-        }
-    }
-
-    static {
-        MapleServerHandler.Log_Packets = true;
-        MapleServerHandler.nl = System.getProperty("line.separator");
-        MapleServerHandler.loggedIPs = new File("logs/LogIPs.txt");
-        MapleServerHandler.logIPMap = new HashMap<String, FileWriter>();
-        MapleServerHandler.debugMode = Boolean.parseBoolean(ServerProperties.getProperty("RoyMS.Debug", "false"));
-        MapleServerHandler.blocked = EnumSet.noneOf(RecvPacketOpcode.class);
-        MapleServerHandler.Log_Size = 10000;
-        MapleServerHandler.Packet_Log = new ArrayList<LoggedPacket>(MapleServerHandler.Log_Size);
-        MapleServerHandler.Packet_Log_Lock = new ReentrantReadWriteLock();
-        MapleServerHandler.Packet_Log_Output = new File("logs/PacketLog.txt");
-        reloadLoggedIPs();
-        final RecvPacketOpcode[] block = {RecvPacketOpcode.NPC_ACTION, RecvPacketOpcode.MOVE_PLAYER, RecvPacketOpcode.MOVE_PET, RecvPacketOpcode.MOVE_SUMMON, RecvPacketOpcode.MOVE_LIFE, RecvPacketOpcode.HEAL_OVER_TIME, RecvPacketOpcode.STRANGE_DATA};
-        MapleServerHandler.blocked.addAll(Arrays.asList(block));
-    }
-
-    private static class LoggedPacket {
-        private static final String nl;
-        private String ip;
-        private String accName;
-        private String accId;
-        private String chrName;
-        private SeekableLittleEndianAccessor packet;
-        private long timestamp;
-        private RecvPacketOpcode op;
-
-        public LoggedPacket(final SeekableLittleEndianAccessor p, final RecvPacketOpcode op, final String ip, final int id, final String accName, final String chrName) {
-            this.setInfo(p, op, ip, id, accName, chrName);
-        }
-
-        public void setInfo(final SeekableLittleEndianAccessor p, final RecvPacketOpcode op, final String ip, final int id, final String accName, final String chrName) {
-            this.ip = ip;
-            this.op = op;
-            this.packet = p;
-            this.accName = accName;
-            this.chrName = chrName;
-            this.timestamp = System.currentTimeMillis();
-        }
-
-        @Override
-        public String toString() {
-            final StringBuilder sb = new StringBuilder();
-            sb.append("[IP: ").append(this.ip).append("] [").append(this.accId).append('|').append(this.accName).append('|').append(this.chrName).append("] [Time: ").append(this.timestamp).append(']');
-            sb.append(LoggedPacket.nl);
-            sb.append("[Op: ").append(this.op.toString()).append(']');
-            sb.append(" [Data: ").append(this.packet.toString()).append(']');
-            return sb.toString();
-        }
-
-        static {
-            nl = System.getProperty("line.separator");
         }
     }
 }
