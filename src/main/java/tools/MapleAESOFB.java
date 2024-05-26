@@ -1,6 +1,8 @@
 package tools;
 
 import lombok.extern.slf4j.Slf4j;
+import utils.BitTools;
+import utils.HexTool;
 
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;

@@ -3,8 +3,8 @@ package tools.wztosql;
 import java.util.*;
 
 import lombok.extern.slf4j.Slf4j;
-import tools.*;
 import handling.*;
+import utils.HexTool;
 
 import java.io.*;
 

@@ -6,9 +6,9 @@ import client.MapleCharacterUtil;
 import constants.GameConstants;
 import handling.world.World;
 import server.Timer;
-import tools.FileoutputUtil;
+import utils.FileoutputUtil;
 import tools.MaplePacketCreator;
-import tools.StringUtil;
+import utils.StringUtil;
 
 import java.awt.Point;
 import java.lang.ref.WeakReference;

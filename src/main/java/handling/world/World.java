@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import server.Timer;
 import server.maps.MapleMap;
 import server.maps.MapleMapItem;
-import tools.CollectionUtil;
+import utils.CollectionUtil;
 import tools.MaplePacketCreator;
 import tools.packet.PetPacket;
 

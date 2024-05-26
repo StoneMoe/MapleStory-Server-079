@@ -1,4 +1,4 @@
-package tools;
+package utils;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -47,7 +47,7 @@ public class Eval
     
     public static class Tokeniser
     {
-        static Character START_NEW_EXPRESSION;
+        static Character START_NEW_EXPRESSION = '(';
         private final String string;
         private int position;
         private Operator pushedBackOperator;
@@ -253,10 +253,7 @@ public class Eval
         public String toString() {
             return this.string.substring(0, this.position) + ">>>" + this.string.substring(this.position);
         }
-        
-        static {
-            Tokeniser.START_NEW_EXPRESSION = '(';
-        }
+
     }
     
     public enum Operator

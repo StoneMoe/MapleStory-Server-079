@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +14,7 @@ import provider.MapleData;
 import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
 import provider.MapleDataTool;
-import tools.StringUtil;
+import utils.StringUtil;
 
 @Slf4j
 public class DumpNpcNames {

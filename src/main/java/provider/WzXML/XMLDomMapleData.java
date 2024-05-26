@@ -16,7 +16,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import provider.MapleData;
 import provider.MapleDataEntity;
-import tools.FileoutputUtil;
+import utils.FileoutputUtil;
 
 public class XMLDomMapleData implements MapleData, Serializable
 {

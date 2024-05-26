@@ -1,5 +1,7 @@
 package tools;
 
+import utils.BitTools;
+
 public class MapleCustomEncryption
 {
     public static byte[] encryptData(final byte[] data) {

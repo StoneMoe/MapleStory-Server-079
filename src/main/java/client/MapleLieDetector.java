@@ -4,7 +4,7 @@ import scripting.LieDetectorScript;
 import server.Timer;
 import server.maps.MapleMap;
 import server.quest.MapleQuest;
-import tools.HexTool;
+import utils.HexTool;
 import tools.MaplePacketCreator;
 import tools.Pair;
 

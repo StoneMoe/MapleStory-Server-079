@@ -9,7 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import server.maps.SpeedRunType;
 import tools.Pair;
-import tools.StringUtil;
+import utils.StringUtil;
 
 public class SpeedRunner
 {

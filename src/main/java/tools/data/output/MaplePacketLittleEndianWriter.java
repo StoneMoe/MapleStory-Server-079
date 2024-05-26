@@ -4,7 +4,7 @@ import handling.ByteArrayMaplePacket;
 import handling.MaplePacket;
 import lombok.extern.slf4j.Slf4j;
 import server.ServerProperties;
-import tools.HexTool;
+import utils.HexTool;
 
 import java.io.ByteArrayOutputStream;
 

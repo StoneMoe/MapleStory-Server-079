@@ -1,7 +1,9 @@
 package client;
 
 import java.util.*;
-import tools.*;
+
+import utils.HexTool;
+
 import java.security.*;
 import java.io.*;
 

@@ -31,7 +31,7 @@ import server.maps.MapleMapItem;
 import server.maps.MapleMapObject;
 import server.maps.MapleMapObjectType;
 import tools.AttackPair;
-import tools.FileoutputUtil;
+import utils.FileoutputUtil;
 import tools.MaplePacketCreator;
 import tools.Pair;
 import tools.data.input.LittleEndianAccessor;

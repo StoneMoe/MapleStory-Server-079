@@ -24,7 +24,7 @@ import server.events.*;
 import server.life.PlayerNPC;
 import server.maps.MapleMapFactory;
 import server.shops.HiredMerchant;
-import tools.CollectionUtil;
+import utils.CollectionUtil;
 import tools.ConcurrentEnumMap;
 import tools.MaplePacketCreator;
 

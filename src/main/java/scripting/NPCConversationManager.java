@@ -82,7 +82,7 @@ import server.maps.SpeedRunType;
 import server.quest.MapleQuest;
 import tools.MaplePacketCreator;
 import tools.Pair;
-import tools.StringUtil;
+import utils.StringUtil;
 import tools.packet.PlayerShopPacket;
 
 @Slf4j

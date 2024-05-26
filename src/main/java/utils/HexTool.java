@@ -1,4 +1,4 @@
-package tools;
+package utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
@@ -6,7 +6,7 @@ import org.apache.mina.core.buffer.IoBuffer;
 
 public class HexTool
 {
-    private static final char[] HEX;
+    private static final char[] HEX = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
     
     public static String toString(final byte byteValue) {
         final int tmp = byteValue << 8;
@@ -111,8 +111,5 @@ public class HexTool
     public static String getOpcodeToString(final int op) {
         return "0x" + StringUtil.getLeftPaddedStr(Integer.toHexString(op).toUpperCase(), '0', 4);
     }
-    
-    static {
-        HEX = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
-    }
+
 }

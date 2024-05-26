@@ -1,4 +1,4 @@
-package tools;
+package utils;
 
 import java.util.Date;
 import java.util.TimeZone;
@@ -9,9 +9,9 @@ public class KoreanDateUtil
     private static final long REAL_YEAR2000 = 946681229830L;
     private static final int QUEST_UNIXAGE = 27111908;
     private static final long FT_UT_OFFSET = 116444736000000000L;
-    public static long MAX_TIME;
-    public static long ZERO_TIME;
-    public static long PERMANENT;
+    public static long MAX_TIME = 150842304000000000L;
+    public static long ZERO_TIME = 94354848000000000L;
+    public static long PERMANENT = 150841440000000000L;
     
     public static long getKoreanTimestamp(final long realTimestamp) {
         return getTime(realTimestamp);
@@ -60,11 +60,5 @@ public class KoreanDateUtil
             time = timeStampinMillis * 10000L;
         }
         return time + 116444736000000000L;
-    }
-    
-    static {
-        KoreanDateUtil.MAX_TIME = 150842304000000000L;
-        KoreanDateUtil.ZERO_TIME = 94354848000000000L;
-        KoreanDateUtil.PERMANENT = 150841440000000000L;
     }
 }

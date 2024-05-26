@@ -1,4 +1,4 @@
-package tools;
+package utils;
 
 import client.MapleCharacter;
 import lombok.extern.slf4j.Slf4j;

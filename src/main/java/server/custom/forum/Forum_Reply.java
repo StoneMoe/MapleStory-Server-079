@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import tools.FileoutputUtil;
+import utils.FileoutputUtil;
 
 public class Forum_Reply
 {

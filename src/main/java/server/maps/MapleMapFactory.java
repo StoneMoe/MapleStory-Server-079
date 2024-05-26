@@ -11,7 +11,7 @@ import server.life.AbstractLoadedMapleLife;
 import server.life.MapleLifeFactory;
 import server.life.MapleMonster;
 import server.life.MapleNPC;
-import tools.StringUtil;
+import utils.StringUtil;
 
 import java.awt.*;
 import java.io.File;

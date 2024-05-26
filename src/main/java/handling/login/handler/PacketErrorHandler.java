@@ -2,8 +2,8 @@ package handling.login.handler;
 
 import client.MapleClient;
 import handling.SendPacketOpcode;
-import tools.FileoutputUtil;
-import tools.StringUtil;
+import utils.FileoutputUtil;
+import utils.StringUtil;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public class PacketErrorHandler

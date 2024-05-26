@@ -1,6 +1,6 @@
 package handling;
 
-import tools.HexTool;
+import utils.HexTool;
 
 public class ByteArrayMaplePacket implements MaplePacket
 {

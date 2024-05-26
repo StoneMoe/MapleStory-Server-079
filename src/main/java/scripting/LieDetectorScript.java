@@ -2,7 +2,7 @@ package scripting;
 
 import lombok.extern.slf4j.Slf4j;
 import server.Randomizer;
-import tools.HexTool;
+import utils.HexTool;
 import tools.Pair;
 
 import java.io.ByteArrayOutputStream;

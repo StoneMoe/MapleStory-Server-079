@@ -1,4 +1,4 @@
-package tools;
+package utils;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class CPUSampler
 {
-    private static final CPUSampler instance;
+    private static final CPUSampler instance = new CPUSampler();
     private final List<String> included;
     private long interval;
     private SamplerThread sampler;
@@ -124,11 +124,7 @@ public class CPUSampler
         }
         return firstIncluded;
     }
-    
-    static {
-        instance = new CPUSampler();
-    }
-    
+
     private static class StackTrace
     {
         private final StackTraceElement[] trace;

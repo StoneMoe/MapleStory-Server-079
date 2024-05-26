@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import server.maps.MapleMapObject;
-import tools.FileoutputUtil;
+
+import utils.FileoutputUtil;
 import tools.MaplePacketCreator;
 import tools.packet.MTSCSPacket;
 

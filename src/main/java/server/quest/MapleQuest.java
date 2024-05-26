@@ -9,7 +9,7 @@ import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
 import provider.MapleDataTool;
 import scripting.NPCScriptManager;
-import tools.FileoutputUtil;
+import utils.FileoutputUtil;
 import tools.MaplePacketCreator;
 import tools.Pair;
 
