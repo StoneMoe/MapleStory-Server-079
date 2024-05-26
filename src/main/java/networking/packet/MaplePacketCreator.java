@@ -8,6 +8,7 @@ import handling.ByteArrayMaplePacket;
 import handling.MaplePacket;
 import handling.SendPacketOpcode;
 import handling.channel.MapleGuildRanking;
+import handling.channel.handler.DamageParse;
 import handling.channel.handler.InventoryHandler;
 import handling.world.MapleParty;
 import handling.world.MaplePartyCharacter;
@@ -29,7 +30,6 @@ import server.shops.HiredMerchant;
 import server.shops.MaplePlayerShopItem;
 import networking.output.LittleEndianWriter;
 import networking.output.MaplePacketLittleEndianWriter;
-import tools.AttackPair;
 import tools.Pair;
 import utils.*;
 
@@ -1075,7 +1075,7 @@ public class MaplePacketCreator {
         return mplew.getPacket();
     }
 
-    public static MaplePacket closeRangeAttack(final int cid, final int tbyte, final int skill, final int level, final byte display, final byte animation, final byte speed, final List<AttackPair> damage, final boolean energy, final int lvl, final byte mastery, final byte unk, final int charge) {
+    public static MaplePacket closeRangeAttack(final int cid, final int tbyte, final int skill, final int level, final byte display, final byte animation, final byte speed, final List<DamageParse.AttackPair> damage, final boolean energy, final int lvl, final byte mastery, final byte unk, final int charge) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
         if (ServerConstants.调试输出封包) {
             log.info("closeRangeAttack--------------------");
@@ -1097,7 +1097,7 @@ public class MaplePacketCreator {
         mplew.write(mastery);
         mplew.writeInt(0);
         if (skill == 4211006) {
-            for (final AttackPair oned : damage) {
+            for (final DamageParse.AttackPair oned : damage) {
                 if (oned.attack != null) {
                     mplew.writeInt(oned.objectid);
                     mplew.write(7);
@@ -1108,7 +1108,7 @@ public class MaplePacketCreator {
                 }
             }
         } else {
-            for (final AttackPair oned : damage) {
+            for (final DamageParse.AttackPair oned : damage) {
                 if (oned.attack != null) {
                     mplew.writeInt(oned.objectid);
                     mplew.write(7);
@@ -1129,7 +1129,7 @@ public class MaplePacketCreator {
         return mplew.getPacket();
     }
 
-    public static MaplePacket rangedAttack(final int cid, final byte tbyte, final int skill, final int level, final byte display, final byte animation, final byte speed, final int itemid, final List<AttackPair> damage, final Point pos, final int lvl, final byte mastery, final byte unk) {
+    public static MaplePacket rangedAttack(final int cid, final byte tbyte, final int skill, final int level, final byte display, final byte animation, final byte speed, final int itemid, final List<DamageParse.AttackPair> damage, final Point pos, final int lvl, final byte mastery, final byte unk) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
         if (ServerConstants.调试输出封包) {
             log.info("rangedAttack--------------------");
@@ -1150,7 +1150,7 @@ public class MaplePacketCreator {
         mplew.write(speed);
         mplew.write(mastery);
         mplew.writeInt(itemid);
-        for (final AttackPair oned : damage) {
+        for (final DamageParse.AttackPair oned : damage) {
             if (oned.attack != null) {
                 mplew.writeInt(oned.objectid);
                 mplew.write(7);
@@ -1171,7 +1171,7 @@ public class MaplePacketCreator {
         return mplew.getPacket();
     }
 
-    public static MaplePacket magicAttack(final int cid, final int tbyte, final int skill, final int level, final byte display, final byte animation, final byte speed, final List<AttackPair> damage, final int charge, final int lvl, final byte unk) {
+    public static MaplePacket magicAttack(final int cid, final int tbyte, final int skill, final int level, final byte display, final byte animation, final byte speed, final List<DamageParse.AttackPair> damage, final int charge, final int lvl, final byte unk) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
         if (ServerConstants.调试输出封包) {
             log.info("magicAttack--------------------");
@@ -1188,7 +1188,7 @@ public class MaplePacketCreator {
         mplew.write(speed);
         mplew.write(0);
         mplew.writeInt(0);
-        for (final AttackPair oned : damage) {
+        for (final DamageParse.AttackPair oned : damage) {
             if (oned.attack != null) {
                 mplew.writeInt(oned.objectid);
                 mplew.write(-1);

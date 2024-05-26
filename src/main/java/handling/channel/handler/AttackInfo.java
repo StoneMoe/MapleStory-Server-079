@@ -7,14 +7,13 @@ import constants.GameConstants;
 import java.awt.Point;
 import java.util.List;
 import server.MapleStatEffect;
-import tools.AttackPair;
 
 public class AttackInfo
 {
     public int skill;
     public int charge;
     public int lastAttackTickCount;
-    public List<AttackPair> allDamage;
+    public List<DamageParse.AttackPair> allDamage;
     public Point position;
     public byte hits;
     public byte targets;
