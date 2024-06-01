@@ -689,7 +689,7 @@ public class MapleClient implements Serializable {
             rs.close();
             ps.close();
         } catch (SQLException e) {
-            log.error("ERROR" + e);
+            log.error("ERROR", e);
         }
         return loginok;
     }

@@ -1,6 +1,7 @@
 package networking.packet;
 
 import client.MapleCharacter;
+import configuration.ServerProperties;
 import constants.ServerConstants;
 import handling.MaplePacket;
 import handling.SendPacketOpcode;
@@ -19,8 +20,8 @@ import networking.output.MaplePacketLittleEndianWriter;
 public class FamilyPacket {
     public static MaplePacket getFamilyData() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getFamilyData--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getFamilyData");
         }
         mplew.writeShort(SendPacketOpcode.FAMILY.getValue());
         final List<MapleFamilyBuff.MapleFamilyBuffEntry> entries = MapleFamilyBuff.getBuffEntry();
@@ -32,32 +33,30 @@ public class FamilyPacket {
             mplew.writeMapleAsciiString(entry.name);
             mplew.writeMapleAsciiString(entry.desc);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("FamilyPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("FamilyPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket changeRep(final int r) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("changeRep--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("changeRep");
         }
         mplew.writeShort(SendPacketOpcode.REP_INCREASE.getValue());
         mplew.writeInt(r);
         mplew.writeInt(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("FamilyPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("FamilyPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getFamilyInfo(final MapleCharacter chr) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getFamilyInfo--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getFamilyInfo");
         }
         mplew.writeShort(SendPacketOpcode.OPEN_FAMILY.getValue());
         mplew.writeInt(chr.getCurrentRep());
@@ -80,16 +79,15 @@ public class FamilyPacket {
             mplew.writeInt(ii.getLeft());
             mplew.writeInt(ii.getRight());
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("getFamilyInfo FamilyPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("getFamilyInfo FamilyPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static void addFamilyCharInfo(final MapleFamilyCharacter ldr, final MaplePacketLittleEndianWriter mplew) {
-        if (ServerConstants.调试输出封包) {
-            log.info("addFamilyCharInfo--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("addFamilyCharInfo");
         }
         mplew.writeInt(ldr.getId());
         mplew.writeInt(ldr.getSeniorId());
@@ -106,8 +104,8 @@ public class FamilyPacket {
 
     public static MaplePacket getFamilyPedigree(final MapleCharacter chr) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getFamilyPedigree--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getFamilyPedigree");
         }
         mplew.writeShort(SendPacketOpcode.SEND_PEDIGREE.getValue());
         mplew.writeInt(chr.getId());
@@ -207,61 +205,57 @@ public class FamilyPacket {
             mplew.writeInt(ii.getRight());
         }
         mplew.writeShort(2);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("FamilyPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("FamilyPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket sendFamilyInvite(final int cid, final int otherLevel, final int otherJob, final String inviter) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("sendFamilyInvite--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("sendFamilyInvite");
         }
         mplew.writeShort(SendPacketOpcode.FAMILY_INVITE.getValue());
         mplew.writeInt(cid);
         mplew.writeMapleAsciiString(inviter);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("FamilyPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("FamilyPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getSeniorMessage(final String name) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getSeniorMessage--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getSeniorMessage");
         }
         mplew.writeShort(SendPacketOpcode.SENIOR_MESSAGE.getValue());
         mplew.writeMapleAsciiString(name);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("FamilyPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("FamilyPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket sendFamilyJoinResponse(final boolean accepted, final String added) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("sendFamilyJoinResponse--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("sendFamilyJoinResponse");
         }
         mplew.writeShort(SendPacketOpcode.FAMILY_JUNIOR.getValue());
         mplew.write(accepted ? 1 : 0);
         mplew.writeMapleAsciiString(added);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("FamilyPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("FamilyPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket familyBuff(final int type, final int buffnr, final int amount, final int time) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("familyBuff--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("familyBuff");
         }
         mplew.writeShort(SendPacketOpcode.FAMILY_BUFF.getValue());
         mplew.write(type);
@@ -272,46 +266,43 @@ public class FamilyPacket {
             mplew.write(0);
             mplew.writeInt(time);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("FamilyPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("FamilyPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket cancelFamilyBuff() {
-        if (ServerConstants.调试输出封包) {
-            log.info("cancelFamilyBuff--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("cancelFamilyBuff");
         }
         return familyBuff(0, 0, 0, 0);
     }
 
     public static MaplePacket familyLoggedIn(final boolean online, final String name) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("familyLoggedIn--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("familyLoggedIn");
         }
         mplew.writeShort(SendPacketOpcode.FAMILY_LOGGEDIN.getValue());
         mplew.write(online ? 1 : 0);
         mplew.writeMapleAsciiString(name);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("FamilyPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("FamilyPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket familySummonRequest(final String name, final String mapname) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("familySummonRequest--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("familySummonRequest");
         }
         mplew.writeShort(SendPacketOpcode.FAMILY_USE_REQUEST.getValue());
         mplew.writeMapleAsciiString(name);
         mplew.writeMapleAsciiString(mapname);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("FamilyPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("FamilyPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }

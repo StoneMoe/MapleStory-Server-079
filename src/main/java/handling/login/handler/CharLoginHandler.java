@@ -11,10 +11,13 @@ import handling.channel.ChannelServer;
 import handling.login.LoginInformationProvider;
 import handling.login.LoginServer;
 import handling.login.LoginWorker;
+
 import java.util.Calendar;
 import java.util.List;
+
+import lombok.extern.slf4j.Slf4j;
 import server.MapleItemInformationProvider;
-import server.ServerProperties;
+import configuration.ServerProperties;
 import server.quest.MapleQuest;
 import utils.FileoutputUtil;
 import utils.KoreanDateUtil;
@@ -23,13 +26,13 @@ import utils.StringUtil;
 import networking.input.SeekableLittleEndianAccessor;
 import networking.packet.LoginPacket;
 
-public class CharLoginHandler
-{
+@Slf4j
+public class CharLoginHandler {
     private static boolean loginFailCount(final MapleClient c) {
         ++c.loginAttempt;
         return c.loginAttempt > 5;
     }
-    
+
     public static final void login(final SeekableLittleEndianAccessor slea, final MapleClient c) {
         final String login = slea.readMapleAsciiString();
         final String pwd = slea.readMapleAsciiString();
@@ -58,7 +61,7 @@ public class CharLoginHandler
         final boolean macBan = c.isBannedMac(macData);
         final boolean banned = ipBan || macBan || 防万能;
         int loginok = 0;
-        if (!Boolean.parseBoolean(ServerProperties.getProperty("RoyMS.AutoRegister")) || !AutoRegister.autoRegister || AutoRegister.getAccountExists(login) || banned) {
+        if (!ServerProperties.AutoRegister || !AutoRegister.autoRegister || AutoRegister.getAccountExists(login) || banned) {
             AutoRegister.success = true;
             AutoRegister.mac = true;
             loginok = c.login(login, pwd, ipBan || macBan || 防万能);
@@ -78,14 +81,12 @@ public class CharLoginHandler
                 if (!loginFailCount(c)) {
                     c.getSession().write(LoginPacket.getLoginFailed(loginok));
                 }
-            }
-            else if (tempbannedTill.getTimeInMillis() != 0L) {
+            } else if (tempbannedTill.getTimeInMillis() != 0L) {
                 if (!loginFailCount(c)) {
                     c.getSession().write(LoginPacket.getTempBan(KoreanDateUtil.getTempBanTimestamp(tempbannedTill.getTimeInMillis()), c.getBanReason()));
                 }
-            }
-            else {
-                FileoutputUtil.logToFile("logs/ACPW.txt", "ACC: " + login + " PW: " + pwd + " MAC : " + macData + " IP: " + c.getSession().getRemoteAddress().toString() + "\r\n");
+            } else {
+                log.info("\"{}\" logged in at ({})({})", login, macData, c.getSession().getRemoteAddress().toString());
                 c.updateMacs();
                 c.loginAttempt = 0;
                 LoginWorker.registerClient(c);
@@ -100,15 +101,14 @@ public class CharLoginHandler
         AutoRegister.createAccount(login, pwd, c.getSession().getRemoteAddress().toString(), macData);
         if (AutoRegister.success && AutoRegister.mac) {
             c.getSession().write(MaplePacketCreator.serverNotice(1, "友情提示：账号创建成功,请尝试重新登录!\r\n拒绝一切第三方辅助程序\r\n提倡手动从我做起-举报开挂有奖\r\n！"));
-        }
-        else if (!AutoRegister.mac) {
+        } else if (!AutoRegister.mac) {
             c.getSession().write(MaplePacketCreator.serverNotice(1, "友情提示：账号创建失败，你已经注册过账号，一个机器码只能注册一个账号"));
         }
         AutoRegister.success = true;
         AutoRegister.mac = true;
         c.getSession().write(LoginPacket.getLoginFailed(1));
     }
-    
+
     public static final void SetGenderRequest(final SeekableLittleEndianAccessor slea, final MapleClient c) {
         final byte gender = slea.readByte();
         final String username = slea.readMapleAsciiString();
@@ -119,31 +119,28 @@ public class CharLoginHandler
             c.getSession().write(LoginPacket.getGenderChanged(c));
             c.getSession().write(MaplePacketCreator.licenseRequest());
             c.updateLoginState(MapleClient.LOGIN_NOTLOGGEDIN, c.getSessionIPAddress());
-        }
-        else {
+        } else {
             c.getSession().close(true);
         }
     }
-    
+
     public static final void ServerListRequest(final MapleClient c) {
         c.getSession().write(LoginPacket.getServerList(0, LoginServer.getServerName(), LoginServer.getLoad()));
         c.getSession().write(LoginPacket.getEndOfServerList());
     }
-    
+
     public static final void ServerStatusRequest(final MapleClient c) {
         final int numPlayer = LoginServer.getUsersOn();
         final int userLimit = LoginServer.getUserLimit();
         if (numPlayer >= userLimit) {
             c.getSession().write(LoginPacket.getServerStatus(2));
-        }
-        else if (numPlayer * 2 >= userLimit) {
+        } else if (numPlayer * 2 >= userLimit) {
             c.getSession().write(LoginPacket.getServerStatus(1));
-        }
-        else {
+        } else {
             c.getSession().write(LoginPacket.getServerStatus(0));
         }
     }
-    
+
     public static void CharlistRequest(final SeekableLittleEndianAccessor slea, final MapleClient c) {
         final int server = slea.readByte();
         final int channel = slea.readByte() + 1;
@@ -153,25 +150,24 @@ public class CharLoginHandler
         final List<MapleCharacter> chars = c.loadCharacters(server);
         if (chars != null) {
             c.getSession().write(LoginPacket.getCharList(c.getSecondPassword() != null, chars, c.getCharacterSlots()));
-        }
-        else {
+        } else {
             c.getSession().close(true);
         }
     }
-    
+
     public static void CheckCharName(final String name, final MapleClient c) {
         c.getSession().write(LoginPacket.charNameResponse(name, !MapleCharacterUtil.canCreateChar(name) || LoginInformationProvider.getInstance().isForbiddenName(name)));
     }
-    
+
     public static void CreateChar(final SeekableLittleEndianAccessor slea, final MapleClient c) {
         final String name = slea.readMapleAsciiString();
         final int JobType = slea.readInt();
         //冒险家
-        final boolean mxj = Boolean.parseBoolean(ServerProperties.getProperty("RoyMS.mxj"));
+        final boolean mxj = ServerProperties.mxj;
         //骑士团
-        final boolean qst = Boolean.parseBoolean(ServerProperties.getProperty("RoyMS.qst"));
+        final boolean qst = ServerProperties.qst;
         //战神
-        final boolean zs = Boolean.parseBoolean(ServerProperties.getProperty("RoyMS.zs"));
+        final boolean zs = ServerProperties.zs;
         if (!qst && JobType == 0) {
             c.getSession().write(MaplePacketCreator.serverNotice(1, "暂未开放骑士团职业！,请联系GM开放"));
             c.getSession().write(LoginPacket.getLoginFailed(1));
@@ -239,7 +235,7 @@ public class CharLoginHandler
             return;
         }
         final MapleCharacter newchar = MapleCharacter.getDefault(c, JobType);
-        newchar.setWorld((byte)c.getWorld());
+        newchar.setWorld((byte) c.getWorld());
         newchar.setFace(face);
         newchar.setHair(hair + hairColor);
         newchar.setGender(gender);
@@ -248,53 +244,52 @@ public class CharLoginHandler
         final MapleInventory equip = newchar.getInventory(MapleInventoryType.EQUIPPED);
         final MapleItemInformationProvider li = MapleItemInformationProvider.getInstance();
         IItem item = li.getEquipById(top);
-        item.setPosition((short)(-5));
+        item.setPosition((short) (-5));
         equip.addFromDB(item);
         item = li.getEquipById(bottom);
-        item.setPosition((short)(-6));
+        item.setPosition((short) (-6));
         equip.addFromDB(item);
         item = li.getEquipById(shoes);
-        item.setPosition((short)(-7));
+        item.setPosition((short) (-7));
         equip.addFromDB(item);
         item = li.getEquipById(weapon);
-        item.setPosition((short)(-11));
+        item.setPosition((short) (-11));
         equip.addFromDB(item);
         switch (JobType) {
             case 0: {
-                newchar.setQuestAdd(MapleQuest.getInstance(20022), (byte)1, "1");
-                newchar.setQuestAdd(MapleQuest.getInstance(20010), (byte)1, null);
-                newchar.setQuestAdd(MapleQuest.getInstance(20000), (byte)1, null);
-                newchar.setQuestAdd(MapleQuest.getInstance(20015), (byte)1, null);
-                newchar.setQuestAdd(MapleQuest.getInstance(20020), (byte)1, null);
-                newchar.getInventory(MapleInventoryType.ETC).addItem(new Item(4161047, (short)0, (short)1, (byte)0));
-                newchar.getInventory(MapleInventoryType.USE).addItem(new Item(2022336, (short)0, (short)1, (byte)0));
+                newchar.setQuestAdd(MapleQuest.getInstance(20022), (byte) 1, "1");
+                newchar.setQuestAdd(MapleQuest.getInstance(20010), (byte) 1, null);
+                newchar.setQuestAdd(MapleQuest.getInstance(20000), (byte) 1, null);
+                newchar.setQuestAdd(MapleQuest.getInstance(20015), (byte) 1, null);
+                newchar.setQuestAdd(MapleQuest.getInstance(20020), (byte) 1, null);
+                newchar.getInventory(MapleInventoryType.ETC).addItem(new Item(4161047, (short) 0, (short) 1, (byte) 0));
+                newchar.getInventory(MapleInventoryType.USE).addItem(new Item(2022336, (short) 0, (short) 1, (byte) 0));
                 break;
             }
             case 1: {
-                newchar.getInventory(MapleInventoryType.ETC).addItem(new Item(4161001, (short)0, (short)1, (byte)0));
-                newchar.getInventory(MapleInventoryType.USE).addItem(new Item(2022336, (short)0, (short)1, (byte)0));
+                newchar.getInventory(MapleInventoryType.ETC).addItem(new Item(4161001, (short) 0, (short) 1, (byte) 0));
+                newchar.getInventory(MapleInventoryType.USE).addItem(new Item(2022336, (short) 0, (short) 1, (byte) 0));
                 break;
             }
             case 2: {
-                newchar.getInventory(MapleInventoryType.ETC).addItem(new Item(4161048, (short)0, (short)1, (byte)0));
-                newchar.getInventory(MapleInventoryType.USE).addItem(new Item(2022336, (short)0, (short)1, (byte)0));
+                newchar.getInventory(MapleInventoryType.ETC).addItem(new Item(4161048, (short) 0, (short) 1, (byte) 0));
+                newchar.getInventory(MapleInventoryType.USE).addItem(new Item(2022336, (short) 0, (short) 1, (byte) 0));
                 break;
             }
         }
         if (JobType == 0) {
-            newchar.setQuestAdd(MapleQuest.getInstance(20022), (byte)1, "1");
-            newchar.setQuestAdd(MapleQuest.getInstance(20010), (byte)1, null);
+            newchar.setQuestAdd(MapleQuest.getInstance(20022), (byte) 1, "1");
+            newchar.setQuestAdd(MapleQuest.getInstance(20010), (byte) 1, null);
         }
         if (MapleCharacterUtil.canCreateChar(name) && !LoginInformationProvider.getInstance().isForbiddenName(name)) {
             MapleCharacter.saveNewCharToDB(newchar, JobType, JobType == 1 && db == 0);
             c.getSession().write(LoginPacket.addNewCharEntry(newchar, true));
             c.createdChar(newchar.getId());
-        }
-        else {
+        } else {
             c.getSession().write(LoginPacket.addNewCharEntry(newchar, false));
         }
     }
-    
+
     public static void Character_WithoutSecondPassword(final SeekableLittleEndianAccessor slea, final MapleClient c) {
         final int charId = slea.readInt();
         if (!c.isLoggedIn() || loginFailCount(c) || !c.login_Auth(charId)) {
@@ -313,7 +308,7 @@ public class CharLoginHandler
         c.updateLoginState(MapleClient.LOGIN_SERVER_TRANSITION, ip);
         c.getSession().write(MaplePacketCreator.getServerIP(Integer.parseInt(ChannelServer.getInstance(c.getChannel()).getIP().split(":")[1]), charId));
     }
-    
+
     public static void Welcome(final MapleClient c) {
     }
 }

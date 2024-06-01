@@ -1,5 +1,6 @@
 package tools.wztosql;
 
+import configuration.EnvProperties;
 import lombok.extern.slf4j.Slf4j;
 import provider.MapleData;
 import provider.MapleDataProvider;
@@ -16,6 +17,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.rmi.NotBoundException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,9 +39,9 @@ public class MonsterDropCreator {
 
     protected static Map<Integer, Boolean> bossCache = new HashMap<>();
 
-    protected static MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/String.wz"));
+    protected static MapleDataProvider data = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "String.wz"));
 
-    protected static MapleDataProvider mobData = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/Mob.wz"));
+    protected static MapleDataProvider mobData = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "Mob.wz"));
 
     public static void main(String[] args) throws FileNotFoundException, IOException, NotBoundException, InstanceAlreadyExistsException, MBeanRegistrationException, NotCompliantMBeanException, MalformedObjectNameException {
         log.info("准备提取怪物爆率数据!");

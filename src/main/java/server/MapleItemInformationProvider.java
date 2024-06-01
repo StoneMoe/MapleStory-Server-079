@@ -6,9 +6,11 @@ import client.inventory.Equip;
 import client.inventory.IItem;
 import client.inventory.ItemFlag;
 import client.inventory.MapleInventoryType;
+import configuration.EnvProperties;
 import constants.GameConstants;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -91,10 +93,10 @@ public class MapleItemInformationProvider {
 
     protected MapleItemInformationProvider() {
         this.onEquipUntradableCache = new HashMap<Integer, Boolean>();
-        this.etcData = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/Etc.wz"));
-        this.itemData = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/Item.wz"));
-        this.equipData = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/Character.wz"));
-        this.stringData = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/String.wz"));
+        this.etcData = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "Etc.wz"));
+        this.itemData = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "Item.wz"));
+        this.equipData = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "Character.wz"));
+        this.stringData = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "String.wz"));
         this.cashStringData = this.stringData.getData("Cash.img");
         this.consumeStringData = this.stringData.getData("Consume.img");
         this.eqpStringData = this.stringData.getData("Eqp.img");

@@ -1,5 +1,6 @@
 package tools.wztosql;
 
+import configuration.EnvProperties;
 import database.DatabaseConnection;
 import lombok.extern.slf4j.Slf4j;
 import provider.MapleData;
@@ -11,6 +12,7 @@ import server.quest.MapleQuestRequirementType;
 import utils.datastructures.Pair;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,7 +33,7 @@ public class DumpQuests {
         this.id = 0;
         this.con = DatabaseConnection.getConnection();
         this.update = update;
-        this.quest = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/Quest.wz"));
+        this.quest = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "Quest.wz"));
         if (this.quest == null) {
             this.hadError = true;
         }

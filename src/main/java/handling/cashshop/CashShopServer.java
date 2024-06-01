@@ -10,7 +10,7 @@ import org.apache.mina.core.service.IoAcceptor;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.SocketSessionConfig;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
-import server.ServerProperties;
+import configuration.ServerProperties;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -20,15 +20,14 @@ public class CashShopServer {
     private static String ip;
     private static InetSocketAddress InetSocketadd;
     private static int PORT;
-    private static final short DEFAULT_PORT = 5200;
     private static IoAcceptor acceptor;
     private static PlayerStorage players;
     private static PlayerStorage playersMTS;
     private static boolean finishedShutdown;
 
     public static void run_startup_configurations() {
-        CashShopServer.PORT = Short.parseShort(ServerProperties.getProperty("RoyMS.CSPort", String.valueOf(DEFAULT_PORT)));
-        CashShopServer.ip = ServerProperties.getProperty("RoyMS.IP") + ":" + CashShopServer.PORT;
+        CashShopServer.PORT = ServerProperties.CSPort;
+        CashShopServer.ip = ServerProperties.IP + ":" + CashShopServer.PORT;
         IoBuffer.setUseDirectBuffer(false);
         IoBuffer.setAllocator(new SimpleBufferAllocator());
         CashShopServer.acceptor = new NioSocketAcceptor();

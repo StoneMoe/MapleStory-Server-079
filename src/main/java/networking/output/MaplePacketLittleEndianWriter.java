@@ -3,14 +3,14 @@ package networking.output;
 import handling.ByteArrayMaplePacket;
 import handling.MaplePacket;
 import lombok.extern.slf4j.Slf4j;
-import server.ServerProperties;
+import configuration.ServerProperties;
 import utils.HexTool;
 
 import java.io.ByteArrayOutputStream;
 
 @Slf4j
 public class MaplePacketLittleEndianWriter extends GenericLittleEndianWriter {
-    private static boolean debugMode;
+    private static boolean debugMode = ServerProperties.Debug;
     private ByteArrayOutputStream baos;
 
     public MaplePacketLittleEndianWriter() {
@@ -35,7 +35,4 @@ public class MaplePacketLittleEndianWriter extends GenericLittleEndianWriter {
         return HexTool.toString(this.baos.toByteArray());
     }
 
-    static {
-        MaplePacketLittleEndianWriter.debugMode = Boolean.parseBoolean(ServerProperties.getProperty("RoyMS.Debug", "false"));
-    }
 }

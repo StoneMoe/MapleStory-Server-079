@@ -2,8 +2,8 @@ package networking.packet;
 
 import client.*;
 import client.inventory.*;
+import configuration.ServerProperties;
 import constants.GameConstants;
-import constants.ServerConstants;
 import lombok.extern.slf4j.Slf4j;
 import server.MapleItemInformationProvider;
 import server.movement.LifeMovementFragment;
@@ -137,23 +137,23 @@ public class PacketHelper {
         mplew.writeInt(chr.getBeans());
         mplew.writeInt(0);
         mplew.write(chr.getInventory(MapleInventoryType.EQUIP).getSlotLimit());
-        if (ServerConstants.调试输出封包) {
+        if (ServerProperties.LogPktCall) {
             log.info("-------背包装备格子数据输出：" + chr.getInventory(MapleInventoryType.EQUIP).getSlotLimit());
         }
         mplew.write(chr.getInventory(MapleInventoryType.USE).getSlotLimit());
-        if (ServerConstants.调试输出封包) {
+        if (ServerProperties.LogPktCall) {
             log.info("-------背包消耗格子数据输出：" + chr.getInventory(MapleInventoryType.USE).getSlotLimit());
         }
         mplew.write(chr.getInventory(MapleInventoryType.SETUP).getSlotLimit());
-        if (ServerConstants.调试输出封包) {
+        if (ServerProperties.LogPktCall) {
             log.info("-------背包特殊格子数据输出：" + chr.getInventory(MapleInventoryType.SETUP).getSlotLimit());
         }
         mplew.write(chr.getInventory(MapleInventoryType.ETC).getSlotLimit());
-        if (ServerConstants.调试输出封包) {
+        if (ServerProperties.LogPktCall) {
             log.info("-------背包其他格子数据输出：" + chr.getInventory(MapleInventoryType.ETC).getSlotLimit());
         }
         mplew.write(chr.getInventory(MapleInventoryType.CASH).getSlotLimit());
-        if (ServerConstants.调试输出封包) {
+        if (ServerProperties.LogPktCall) {
             log.info("-------背包现金格子数据输出：" + chr.getInventory(MapleInventoryType.CASH).getSlotLimit());
         }
         mplew.writeLong(getTime(System.currentTimeMillis()));

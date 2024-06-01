@@ -1,8 +1,11 @@
 package server.life;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+
+import configuration.EnvProperties;
 import provider.MapleData;
 import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
@@ -10,16 +13,15 @@ import provider.MapleDataTool;
 import utils.datastructures.Pair;
 import utils.StringUtil;
 
-public class MobAttackInfoFactory
-{
-    private static final MobAttackInfoFactory instance;
-    private static final MapleDataProvider dataSource;
-    private static final Map<Pair<Integer, Integer>, MobAttackInfo> mobAttacks;
-    
+public class MobAttackInfoFactory {
+    private static final MobAttackInfoFactory instance = new MobAttackInfoFactory();
+    private static final MapleDataProvider dataSource = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "Mob.wz"));
+    private static final Map<Pair<Integer, Integer>, MobAttackInfo> mobAttacks = new HashMap<Pair<Integer, Integer>, MobAttackInfo>();
+
     public static MobAttackInfoFactory getInstance() {
         return MobAttackInfoFactory.instance;
     }
-    
+
     public MobAttackInfo getMobAttackInfo(final MapleMonster mob, final int attack) {
         MobAttackInfo ret = MobAttackInfoFactory.mobAttacks.get(new Pair(mob.getId(), attack));
         if (ret != null) {
@@ -44,11 +46,5 @@ public class MobAttackInfoFactory
         }
         MobAttackInfoFactory.mobAttacks.put(new Pair<Integer, Integer>(mob.getId(), attack), ret);
         return ret;
-    }
-    
-    static {
-        instance = new MobAttackInfoFactory();
-        dataSource = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/Mob.wz"));
-        mobAttacks = new HashMap<Pair<Integer, Integer>, MobAttackInfo>();
     }
 }

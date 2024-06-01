@@ -1,17 +1,14 @@
 package constants;
 
+import configuration.ServerProperties;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Properties;
-
+@Getter
 @Slf4j
 public class OtherSettings {
-    private static OtherSettings instance;
+    private static OtherSettings instance = null;
     private static boolean CANLOG;
-    private Properties itempb_cfg;
     private String[] itempb_id;
     private String[] itemjy_id;
     private String[] itemgy_id;
@@ -25,35 +22,9 @@ public class OtherSettings {
     }
 
     public OtherSettings() {
-        this.itempb_cfg = new Properties();
-        try {
-            String path = System.getProperty("server_property_file_path");
-            final InputStreamReader is = new FileReader(path);
-//            final InputStreamReader is = new FileReader("HuaiMS_服务端配置.properties");
-            this.itempb_cfg.load(is);
-            is.close();
-            this.itempb_id = this.itempb_cfg.getProperty("cashban").split(",");
-            this.itemjy_id = this.itempb_cfg.getProperty("cashjy", "0").split(",");
-            this.itemgy_id = this.itempb_cfg.getProperty("gysj", "0").split(",");
-        } catch (IOException e) {
-            log.error("Could not configuration", (Throwable) e);
-        }
-    }
-
-    public String[] getItempb_id() {
-        return this.itempb_id;
-    }
-
-    public String[] getItemgy_id() {
-        return this.itemgy_id;
-    }
-
-    public String[] getItemjy_id() {
-        return this.itemjy_id;
-    }
-
-    public String[] getMappb_id() {
-        return this.mappb_id;
+        this.itempb_id = ServerProperties.cashban.split(",");
+        this.itemjy_id = ServerProperties.cashjy.split(",");
+        this.itemgy_id = ServerProperties.gysj.split(",");
     }
 
     public boolean isCANLOG() {
@@ -64,7 +35,4 @@ public class OtherSettings {
         OtherSettings.CANLOG = CANLOG;
     }
 
-    static {
-        OtherSettings.instance = null;
-    }
 }

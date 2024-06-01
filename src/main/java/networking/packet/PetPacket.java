@@ -4,6 +4,7 @@ import client.MapleCharacter;
 import client.MapleStat;
 import client.inventory.IItem;
 import client.inventory.MaplePet;
+import configuration.ServerProperties;
 import constants.ServerConstants;
 import handling.MaplePacket;
 import handling.SendPacketOpcode;
@@ -20,8 +21,8 @@ public class PetPacket {
 
     public static MaplePacket updatePet(final MaplePet pet, final IItem item, final boolean active) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updatePet--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updatePet");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
         mplew.write(pet.getInventoryPosition());
@@ -37,32 +38,30 @@ public class PetPacket {
         mplew.write(1);
         mplew.writeLong(pet.getUniqueId());
         PacketHelper.addPetItemInfo(mplew, item, pet, active);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("PetPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("PetPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket removePet(final MapleCharacter chr, final int slot) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("removePet--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("removePet");
         }
         mplew.writeShort(SendPacketOpcode.SPAWN_PET.getValue());
         mplew.writeInt(chr.getId());
         mplew.writeShort(slot);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("PetPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("PetPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showPet(final MapleCharacter chr, final MaplePet pet, final boolean remove, final boolean hunger) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showPet--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showPet");
         }
         mplew.writeShort(SendPacketOpcode.SPAWN_PET.getValue());
         mplew.writeInt(chr.getId());
@@ -81,9 +80,8 @@ public class PetPacket {
             mplew.write(pet.getStance());
             mplew.writeLong(pet.getFh());
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("PetPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("PetPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -104,41 +102,39 @@ public class PetPacket {
 
     public static MaplePacket removePet(final int cid, final int index) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("removePet--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("removePet");
         }
         mplew.writeShort(SendPacketOpcode.SPAWN_PET.getValue());
         mplew.writeInt(cid);
         mplew.write(index);
         mplew.writeShort(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("PetPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("PetPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket movePet(final int cid, final int pid, final byte slot, final List<LifeMovementFragment> moves) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("movePet--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("movePet");
         }
         mplew.writeShort(SendPacketOpcode.MOVE_PET.getValue());
         mplew.writeInt(cid);
         mplew.write(slot);
         mplew.writeInt(pid);
         PacketHelper.serializeMovementList(mplew, moves);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("PetPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("PetPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket petChat(final int cid, final int un, final String text, final byte slot) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("petChat--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("petChat");
         }
         mplew.writeShort(SendPacketOpcode.PET_CHAT.getValue());
         mplew.writeInt(cid);
@@ -146,17 +142,16 @@ public class PetPacket {
         mplew.writeShort(un);
         mplew.writeMapleAsciiString(text);
         mplew.write(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("PetPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("PetPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket commandResponse(final int cid, final byte command, final byte slot, final boolean success, final boolean food) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("commandResponse--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("commandResponse");
         }
         mplew.writeShort(SendPacketOpcode.PET_COMMAND.getValue());
         mplew.writeInt(cid);
@@ -168,73 +163,69 @@ public class PetPacket {
         } else {
             mplew.writeShort(success ? 1 : 0);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("PetPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("PetPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showOwnPetLevelUp(final byte index) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showOwnPetLevelUp--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showOwnPetLevelUp");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_ITEM_GAIN_INCHAT.getValue());
         mplew.write(4);
         mplew.write(0);
         mplew.write(index);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("PetPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("PetPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showPetLevelUp(final MapleCharacter chr, final byte index) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showPetLevelUp--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showPetLevelUp");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_FOREIGN_EFFECT.getValue());
         mplew.writeInt(chr.getId());
         mplew.write(4);
         mplew.write(0);
         mplew.write(index);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("PetPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("PetPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket emptyStatUpdate() {
-        if (ServerConstants.调试输出封包) {
-            log.info("emptyStatUpdate--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("emptyStatUpdate");
         }
         return MaplePacketCreator.enableActions();
     }
 
     public static MaplePacket petStatUpdate_Empty() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("petStatUpdate_Empty--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("petStatUpdate_Empty");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_STATS.getValue());
         mplew.write(0);
         mplew.writeInt(MapleStat.PET.getValue());
         mplew.writeZeroBytes(25);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("PetPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("PetPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket petStatUpdate(final MapleCharacter chr) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("petStatUpdate--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("petStatUpdate");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_STATS.getValue());
         mplew.write(0);
@@ -251,9 +242,8 @@ public class PetPacket {
             ++count;
         }
         mplew.write(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("PetPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("PetPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }

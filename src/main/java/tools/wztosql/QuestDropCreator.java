@@ -1,8 +1,10 @@
 package tools.wztosql;
 
+import configuration.EnvProperties;
 import database.DatabaseConnection;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -80,7 +82,7 @@ public class QuestDropCreator {
     }
 
     public static void loadQuests() {
-        QuestDropCreator.questData = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/Quest.wz"));
+        QuestDropCreator.questData = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "Quest.wz"));
         QuestDropCreator.requirements = QuestDropCreator.questData.getData("Check.img");
         QuestDropCreator.info = QuestDropCreator.questData.getData("QuestInfo.img");
         for (final MapleData quest : QuestDropCreator.info.getChildren()) {

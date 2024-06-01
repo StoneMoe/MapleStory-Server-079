@@ -1,10 +1,13 @@
 package constants;
 
+import configuration.EnvProperties;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 @Slf4j
@@ -34,9 +37,8 @@ public class FishingConstants {
     public FishingConstants() {
         this.itempb_cfg = new Properties();
         try {
-            String path = System.getProperty("server_property_fish_path");
+            String path = Paths.get(EnvProperties.cfgPath, "fish.properties").toString();
             final InputStreamReader is = new FileReader(path);
-//            final InputStreamReader is = new FileReader("HuaiMS_钓鱼设置.properties");
             Throwable localThrowable2 = null;
             try {
                 this.itempb_cfg.load(is);

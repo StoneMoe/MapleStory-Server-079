@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 import scripting.EventInstanceManager;
 import scripting.EventManager;
 import scripting.NPCScriptManager;
-import server.ServerProperties;
+import configuration.ServerProperties;
 import server.maps.FieldLimitType;
 import utils.DateUtil;
 import utils.FileoutputUtil;
@@ -308,7 +308,7 @@ public class InterServerHandler {
             }
         }
         if (player.haveItem(2022336)) {
-            player.dropMessage(5, "欢迎来到" + ServerProperties.getProperty("RoyMS.ServerName") + ",请按“I”键，打开背包，双击使用神秘箱子，领取新人礼包");
+            player.dropMessage(5, "欢迎来到" + ServerProperties.ServerName + ",请按“I”键，打开背包，双击使用神秘箱子，领取新人礼包");
         }
         if (player.getLevel() == 1) {
             player.dropMessage(1, "欢迎来到 " + c.getChannelServer().getServerName() + ", " + player.getName() + " ！\r\n使用 @help 可以查看您当前能使用的命令\r\n祝您玩的愉快！");

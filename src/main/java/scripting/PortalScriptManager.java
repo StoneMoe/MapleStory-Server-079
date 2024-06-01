@@ -1,6 +1,7 @@
 package scripting;
 
 import client.MapleClient;
+import configuration.EnvProperties;
 import lombok.extern.slf4j.Slf4j;
 import server.MaplePortal;
 import utils.FileoutputUtil;
@@ -17,6 +18,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,8 +41,7 @@ public class PortalScriptManager {
             this.scripts.clear();
             return this.scripts.get(scriptName);
         }
-        String scriptsPath = System.getProperty("scripts_path");
-        final File scriptFile = new File(scriptsPath + File.separator + "portal" + File.separator + scriptName + ".js");
+        final File scriptFile = Paths.get(EnvProperties.scriptsPath, "portal", scriptName + ".js").toFile();
         if (!scriptFile.exists()) {
             return null;
         }

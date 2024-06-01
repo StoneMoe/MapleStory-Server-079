@@ -1,10 +1,12 @@
 package client;
 
+import configuration.EnvProperties;
 import lombok.extern.slf4j.Slf4j;
 import provider.*;
 import utils.StringUtil;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.*;
 
 @Slf4j
@@ -15,9 +17,8 @@ public class SkillFactory {
     private static final MapleData stringData;
     private static final MapleDataProvider datasource;
 
-    public static Integer Initialize()
-    {
-        final MapleDataProvider datasource = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/Skill.wz"));
+    public static Integer Initialize() {
+        final MapleDataProvider datasource = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "Skill.wz"));
         final MapleDataDirectoryEntry root = datasource.getRoot();
         for (final MapleDataFileEntry topDir : root.getFiles()) {
             if (topDir.getName().length() <= 8) {
@@ -107,7 +108,7 @@ public class SkillFactory {
         skills = new HashMap<Integer, ISkill>();
         skillsByJob = new HashMap<Integer, List<Integer>>();
         SummonSkillInformation = new HashMap<Integer, SummonSkillEntry>();
-        stringData = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/String.wz")).getData("Skill.img");
-        datasource = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/Skill.wz"));
+        stringData = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "String.wz")).getData("Skill.img");
+        datasource = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "Skill.wz"));
     }
 }

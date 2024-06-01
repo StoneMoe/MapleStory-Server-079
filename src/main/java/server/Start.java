@@ -3,11 +3,11 @@ package server;
 import client.MapleCharacter;
 import client.SkillFactory;
 import client.commands.CommandProcessor;
+import configuration.ServerProperties;
 import constants.GameConstants;
 import constants.OtherSettings;
 import constants.ServerConstants;
 import database.DatabaseConnection;
-import handling.MapleServerHandler;
 import handling.cashshop.CashShopServer;
 import handling.channel.ChannelServer;
 import handling.channel.MapleGuildRanking;
@@ -37,26 +37,16 @@ public class Start {
     public static Start instance = new Start();
 
     public static void main(final String[] args) throws InterruptedException {
-        String cfgPath = System.getProperty("cfgPath", "./config");
-        String scriptsPath = System.getProperty("scriptsPath", "./data/scripts");
-        String wzPath = System.getProperty("wzPath", "./data/wz");
-        System.setProperty("server_property_file_path", cfgPath + "/server.properties");
-        System.setProperty("server_property_db_path", cfgPath + "/db.properties");
-        System.setProperty("server_property_shop_path", cfgPath + "/shop.properties");
-        System.setProperty("server_property_fish_path", cfgPath + "/fish.properties");
-        System.setProperty("wzPath", wzPath);
-        System.setProperty("scripts_path", scriptsPath);
-        System.setProperty("server_name", "冒险岛");
         OtherSettings.getInstance();
         Start.instance.run();
     }
 
     public void run() throws InterruptedException {
         final long start = System.currentTimeMillis();
-        if (Boolean.parseBoolean(ServerProperties.getProperty("RoyMS.Admin"))) {
+        if (ServerProperties.Admin) {
             log.info("[!!! 已开启只能管理员登录模式 !!!]");
         }
-        if (Boolean.parseBoolean(ServerProperties.getProperty("RoyMS.AutoRegister"))) {
+        if (ServerProperties.AutoRegister) {
             log.info("加载 自动注册完成");
         }
         try {
@@ -69,9 +59,9 @@ public class Start {
         } catch (Exception ex) {
             throw new RuntimeException("[数据库异常] 请检查数据库链接。目前无法连接到MySQL数据库.");
         }
-        log.info("服务端 开始启动...版本号：079");
-        log.info("服务器地址: {}:{}", ServerProperties.getProperty("RoyMS.IP"), LoginServer.PORT);
-        log.info("游戏版本: {} v.{}.{}", ServerConstants.MAPLE_TYPE, ServerConstants.MAPLE_VERSION, ServerConstants.MAPLE_PATCH);
+        log.info("Starting");
+        log.info("登录服务: {}:{}", ServerProperties.IP, LoginServer.PORT);
+        log.info("游戏版本: {} v{}.{}", ServerConstants.MAPLE_TYPE, ServerConstants.MAPLE_VERSION, ServerConstants.MAPLE_PATCH);
         log.info("主服务器: 蓝蜗牛");
         World.init();
         runThread();
@@ -88,11 +78,14 @@ public class Start {
         onlineTime(1);
         memoryGC(10);
         LoginServer.setOn();
-        log.info("经验倍率：{}  物品倍率：{}  金币倍率：{}  BOSS爆率：{}", Integer.parseInt(ServerProperties.getProperty("RoyMS.Exp")), Integer.parseInt(ServerProperties.getProperty("RoyMS.Drop")), Integer.parseInt(ServerProperties.getProperty("RoyMS.Meso")), Integer.parseInt(ServerProperties.getProperty("RoyMS.BDrop")));
-        if (Boolean.parseBoolean(ServerProperties.getProperty("RoyMS.检测复制装备", "false"))) {
+        log.info(
+                "经验倍率：{}  物品倍率：{}  金币倍率：{}  BOSS爆率：{}",
+                ServerProperties.Exp, ServerProperties.Drop, ServerProperties.Meso, ServerProperties.BDrop
+        );
+        if (ServerProperties.DetectEquipCloning) {
             checkCopyItemFromSql();
         }
-        if (Boolean.parseBoolean(ServerProperties.getProperty("RoyMS.防万能检测", "false"))) {
+        if (ServerProperties.防万能检测) {
             log.info("启动防万能检测");
             startCheck();
         }
@@ -101,7 +94,7 @@ public class Start {
         final long ms = now % 1000L;
         log.info("Load commands: {}", CommandProcessor.Initialize());
         log.info("加载完成, 耗时: {}秒{}毫秒\r\n", seconds, ms);
-        AutoSave(Integer.parseInt(ServerProperties.getProperty("Server.AutoSaveMinutes", "5")));
+        AutoSave(ServerProperties.AutoSaveMinutes);
     }
 
     public static void runThread() {
@@ -134,14 +127,14 @@ public class Start {
         log.info("加载爆物数据");
         MapleMonsterInformationProvider.getInstance().retrieveGlobal();
         log.info("加载脏话检测系统");
-        log.info("Load LoginInformationProvider: {}", LoginInformationProvider.getInstance() != null? "Success": "Failed");
+        log.info("Load LoginInformationProvider: {}", LoginInformationProvider.getInstance() != null ? "Success" : "Failed");
         log.info("加载道具数据");
-        log.info("Load ItemMakerFactory: {}", ItemMakerFactory.getInstance() != null? "Success": "Failed");
-        log.info("Load MapleItemInformationProvider: {}", MapleItemInformationProvider.getInstance() != null? "Success": "Failed");
+        log.info("Load ItemMakerFactory: {}", ItemMakerFactory.getInstance() != null ? "Success" : "Failed");
+        log.info("Load MapleItemInformationProvider: {}", MapleItemInformationProvider.getInstance() != null ? "Success" : "Failed");
         log.info("加载技能数据");
         log.info("Load SkillFactory: {} skills", SkillFactory.Initialize());
-        log.info("Load MobSkillFactory: {}", MobSkillFactory.getInstance() != null? "Success": "Failed");
-        log.info("Load MapleFamilyBuff: {}", MapleFamilyBuff.getBuffEntry() != null? "Success": "Failed");
+        log.info("Load MobSkillFactory: {}", MobSkillFactory.getInstance() != null ? "Success" : "Failed");
+        log.info("Load MapleFamilyBuff: {}", MapleFamilyBuff.getBuffEntry() != null ? "Success" : "Failed");
         log.info("加载SpeedRunner");
         Runtime.getRuntime().addShutdownHook(new Thread(new Shutdown()));
         try {
@@ -149,10 +142,10 @@ public class Start {
         } catch (SQLException ex) {
             log.info("SpeedRunner错误: {}", ex.getMessage());
         }
-        log.info("加载随机奖励系统: {}", RandomRewards.getInstance() != null? "Success": "Failed");
+        log.info("加载随机奖励系统: {}", RandomRewards.getInstance() != null ? "Success" : "Failed");
         log.info("加载0X问答系统");
         MapleOxQuizFactory.getInstance().initialize();
-        log.info("加载嘉年华数据: {}", MapleCarnivalFactory.getInstance() != null? "Success": "Failed");
+        log.info("加载嘉年华数据: {}", MapleCarnivalFactory.getInstance() != null ? "Success" : "Failed");
         log.info("加载角色类排名数据");
         log.info("加载商城道具数据，数据较为庞大，请耐心等待");
         CashItemFactory.getInstance().initialize();
@@ -292,8 +285,7 @@ public class Start {
         }, 60000L * time);
     }
 
-    public static class Shutdown implements Runnable
-    {
+    public static class Shutdown implements Runnable {
         @Override
         public void run() {
             new Thread(ShutdownServer.getInstance()).start();

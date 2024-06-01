@@ -1,8 +1,10 @@
 package tools.wztosql;
 
+import configuration.EnvProperties;
 import database.DatabaseConnection;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -33,8 +35,8 @@ public class DumpNpcNames {
     }
 
     public void dumpNpcNameData() throws SQLException {
-        final File dataFile = new File(System.getProperty("wzPath") + "/Npc.wz");
-        final File strDataFile = new File(System.getProperty("wzPath") + "/String.wz");
+        final File dataFile = Paths.get(EnvProperties.wzPath, "Npc.wz").toFile();
+        final File strDataFile = Paths.get(EnvProperties.wzPath, "String.wz").toFile();
         final MapleDataProvider npcData = MapleDataProviderFactory.getDataProvider(dataFile);
         final MapleDataProvider stringDataWZ = MapleDataProviderFactory.getDataProvider(strDataFile);
         final MapleData npcStringData = stringDataWZ.getData("Npc.img");

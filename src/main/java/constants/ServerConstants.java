@@ -1,68 +1,35 @@
 package constants;
 
-import client.inventory.MapleInventoryType;
 import lombok.Getter;
-import server.ServerProperties;
+import configuration.ServerProperties;
 
 public class ServerConstants
 {
-    public static boolean PollEnabled;
-    public static String Poll_Question;
-    public static String[] Poll_Answers;
-    public static MapleType MAPLE_TYPE;
-    public static short MAPLE_VERSION;
-    public static String MAPLE_PATCH;
-    public static boolean Use_Fixed_IV;
-    public static int MIN_MTS;
-    public static int MTS_BASE;
-    public static int MTS_TAX;
-    public static int MTS_MESO;
-    public static int CHANNEL_COUNT;
-    public static boolean 封包显示;
-    public static boolean 调试输出封包;
-    public static boolean 自动注册;
-    public static boolean PACKET_ERROR_OFF;
-    public static boolean Super_password;
-    public static boolean clientAutoDisconnect;
-    public static String superpw;
-    public static String PACKET_ERROR;
-    public static int Channel;
-    public static int removePlayerFromMap;
-    public static boolean loadop;
+    public static boolean PollEnabled = false;
+    public static String Poll_Question = "Are you mudkiz?";
+    public static String[] Poll_Answers = new String[] { "test1", "test2", "test3" };
+    public static MapleType MAPLE_TYPE = MapleType.CMS;
+    public static short MAPLE_VERSION = 79;
+    public static String MAPLE_PATCH = "1";
+    public static boolean Use_Fixed_IV = false;
+    public static int MIN_MTS = 110;
+    public static int MTS_BASE = 100;
+    public static int MTS_TAX = 10;
+    public static int MTS_MESO = 5000;
+    public static boolean Super_password = false;
+    public static boolean clientAutoDisconnect = true;
+    public static String superpw = "";
+    public static String PACKET_ERROR = "";
+    public static boolean loadop = true;
     
-    public void setPACKET_ERROR(final String ERROR) {
+    public static void setPACKET_ERROR(final String ERROR) {
         ServerConstants.PACKET_ERROR = ERROR;
     }
     
-    public String getPACKET_ERROR() {
+    public static String getPACKET_ERROR() {
         return ServerConstants.PACKET_ERROR;
     }
-    
-    public void setChannel(final int ERROR) {
-        ServerConstants.Channel = ERROR;
-    }
-    
-    public int getChannel() {
-        return ServerConstants.Channel;
-    }
-    
-    public void setRemovePlayerFromMap(final int ERROR) {
-        ServerConstants.removePlayerFromMap = ERROR;
-    }
-    
-    public int getRemovePlayerFromMap() {
-        return ServerConstants.removePlayerFromMap;
-    }
-    
-    public static boolean getAutoReg() {
-        return ServerConstants.自动注册;
-    }
-    
-    public static String ChangeAutoReg() {
-        ServerConstants.自动注册 = !getAutoReg();
-        return ServerConstants.自动注册 ? "开启" : "关闭";
-    }
-    
+
     public static byte Class_Bonus_EXP(final int job) {
         switch (job) {
             case 3000:
@@ -85,33 +52,7 @@ public class ServerConstants
             }
         }
     }
-    
-    static {
-        ServerConstants.PollEnabled = false;
-        ServerConstants.Poll_Question = "Are you mudkiz?";
-        ServerConstants.Poll_Answers = new String[] { "test1", "test2", "test3" };
-        ServerConstants.MAPLE_TYPE = MapleType.中国;
-        ServerConstants.MAPLE_VERSION = 79;
-        ServerConstants.MAPLE_PATCH = "1";
-        ServerConstants.Use_Fixed_IV = false;
-        ServerConstants.MIN_MTS = 110;
-        ServerConstants.MTS_BASE = 100;
-        ServerConstants.MTS_TAX = 10;
-        ServerConstants.MTS_MESO = 5000;
-        ServerConstants.CHANNEL_COUNT = 200;
-        ServerConstants.封包显示 = Boolean.parseBoolean(ServerProperties.getProperty("RoyMS.封包显示", "false"));
-        ServerConstants.调试输出封包 = Boolean.parseBoolean(ServerProperties.getProperty("RoyMS.调试输出封包", "false"));
-        ServerConstants.自动注册 = Boolean.parseBoolean(ServerProperties.getProperty("RoyMS.AutoRegister", "false"));
-        ServerConstants.PACKET_ERROR_OFF = Boolean.parseBoolean(ServerProperties.getProperty("RoyMS.记录38错误", "false"));
-        ServerConstants.Super_password = false;
-        ServerConstants.clientAutoDisconnect = true;
-        ServerConstants.superpw = "";
-        ServerConstants.PACKET_ERROR = "";
-        ServerConstants.Channel = 0;
-        ServerConstants.removePlayerFromMap = 0;
-        ServerConstants.loadop = true;
-    }
-    
+
     public enum PlayerGMRank
     {
         NORMAL('@', 0), 
@@ -162,7 +103,7 @@ public class ServerConstants
     
     public enum MapleType
     {
-        中国(4, "GB18030");
+        CMS(4, "GB18030");
         
         final byte type;
         final String ascii;
@@ -186,7 +127,7 @@ public class ServerConstants
                     return l;
                 }
             }
-            return MapleType.中国;
+            return MapleType.CMS;
         }
     }
 }

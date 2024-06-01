@@ -1,10 +1,13 @@
 package server;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import configuration.EnvProperties;
 import provider.MapleData;
 import provider.MapleDataProviderFactory;
 import provider.MapleDataTool;
@@ -23,7 +26,7 @@ public class ItemMakerFactory
     protected ItemMakerFactory() {
         this.createCache = new HashMap<Integer, ItemMakerCreateEntry>();
         this.gemCache = new HashMap<Integer, GemCreateEntry>();
-        final MapleData info = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/Etc.wz")).getData("ItemMake.img");
+        final MapleData info = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "Etc.wz")).getData("ItemMake.img");
         for (final MapleData dataType : info.getChildren()) {
             final int type = Integer.parseInt(dataType.getName());
             switch (type) {

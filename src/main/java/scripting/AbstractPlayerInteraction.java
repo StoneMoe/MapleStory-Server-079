@@ -4,6 +4,7 @@ import KinMS.db.CherryMSLottery;
 import KinMS.db.CherryMScustomEventFactory;
 import client.*;
 import client.inventory.*;
+import configuration.ServerProperties;
 import constants.GameConstants;
 import database.DatabaseConnection;
 import handling.channel.ChannelServer;
@@ -2081,7 +2082,7 @@ public abstract class AbstractPlayerInteraction {
     }
 
     public String getServerName() {
-        return ServerProperties.getProperty("RoyMS.ServerName");
+        return ServerProperties.ServerName;
     }
 
     public static int 获取最高玩家等级() {

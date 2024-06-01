@@ -8,6 +8,7 @@ import client.inventory.IItem;
 import client.inventory.Item;
 import client.inventory.MapleInventory;
 import client.inventory.MapleInventoryType;
+import configuration.ServerProperties;
 import constants.ServerConstants;
 import database.DatabaseConnection;
 import handling.MaplePacket;
@@ -36,8 +37,8 @@ public class MTSCSPacket {
     public static MaplePacket warpCS(final MapleClient c) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
         final MapleCharacter chr = c.getPlayer();
-        if (ServerConstants.调试输出封包) {
-            log.info("warpCS--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("warpCS");
         }
         mplew.writeShort(SendPacketOpcode.CS_OPEN.getValue());
         mplew.writeLong(-1L);
@@ -132,9 +133,8 @@ public class MTSCSPacket {
             }
         }
         mplew.write(HexTool.getByteArrayFromHexString("00 00 00 00 00"));
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("warpCS-201：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("warpCS-201：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -142,8 +142,8 @@ public class MTSCSPacket {
     public static MaplePacket warpCSS(final MapleClient c) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
         final MapleCharacter chr = c.getPlayer();
-        if (ServerConstants.调试输出封包) {
-            log.info("warpCS--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("warpCS");
         }
         mplew.writeShort(SendPacketOpcode.CS_OPEN.getValue());
         mplew.writeLong(-1L);
@@ -197,16 +197,15 @@ public class MTSCSPacket {
             }
         }
         mplew.write(HexTool.getByteArrayFromHexString("00 00 00 00 00"));
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static void addModCashItemInfo(final MaplePacketLittleEndianWriter mplew, final CashItemInfo.CashModInfo item) {
-        if (ServerConstants.调试输出封包) {
-            log.info("addModCashItemInfo--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("addModCashItemInfo");
         }
         final int flags = item.flags;
         mplew.writeInt(item.sn);
@@ -250,36 +249,34 @@ public class MTSCSPacket {
 
     public static MaplePacket sendBlockedMessage(final int type) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("sendBlockedMessage--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("sendBlockedMessage");
         }
         mplew.writeShort(SendPacketOpcode.BLOCK_MSG.getValue());
         mplew.write(type);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket playCashSong(final int itemid, final String name) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("playCashSong--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("playCashSong");
         }
         mplew.writeShort(SendPacketOpcode.CASH_SONG.getValue());
         mplew.writeInt(itemid);
         mplew.writeMapleAsciiString(name);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket show塔罗牌(final String name, final String otherName, final int love, final int cardId, final int commentId) {
-        if (ServerConstants.调试输出封包) {
-            log.info("playCashSong--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("playCashSong");
         }
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
         mplew.writeShort(SendPacketOpcode.SHOW_PREDICT_CARD.getValue());
@@ -288,64 +285,60 @@ public class MTSCSPacket {
         mplew.writeInt(love);
         mplew.writeInt(cardId);
         mplew.writeInt(commentId);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket useCharm(final byte charmsleft, final byte daysleft) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("useCharm--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("useCharm");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_ITEM_GAIN_INCHAT.getValue());
         mplew.write(6);
         mplew.write(1);
         mplew.write(charmsleft);
         mplew.write(daysleft);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket useWheel(final int charmsleft) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("useWheel--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("useWheel");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_ITEM_GAIN_INCHAT.getValue());
         mplew.write(21);
         mplew.writeLong(charmsleft);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket itemExpired(final int itemid) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("itemExpired--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("itemExpired");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_STATUS_INFO.getValue());
         mplew.write(2);
         mplew.writeInt(itemid);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket ViciousHammer(final boolean start, final int hammered) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("ViciousHammer--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("ViciousHammer");
         }
         mplew.writeShort(SendPacketOpcode.VICIOUS_HAMMER.getValue());
         if (start) {
@@ -356,50 +349,47 @@ public class MTSCSPacket {
             mplew.write(53);
             mplew.writeInt(0);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket changePetFlag(final int uniqueId, final boolean added, final int flagAdded) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("changePetFlag--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("changePetFlag");
         }
         mplew.writeShort(SendPacketOpcode.PET_FLAG_CHANGE.getValue());
         mplew.writeLong(uniqueId);
         mplew.write(added ? 1 : 0);
         mplew.writeShort(flagAdded);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket changePetName(final MapleCharacter chr, final String newname, final int slot) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("changePetName--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("changePetName");
         }
         mplew.writeShort(SendPacketOpcode.PET_NAMECHANGE.getValue());
         mplew.writeInt(chr.getId());
         mplew.write(0);
         mplew.writeMapleAsciiString(newname);
         mplew.write(slot);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showNotes(final ResultSet notes, final int count) throws SQLException {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showNotes--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showNotes");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_NOTES.getValue());
         mplew.write(3);
@@ -412,17 +402,16 @@ public class MTSCSPacket {
             mplew.write(notes.getInt("gift"));
             notes.next();
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket useChalkboard(final int charid, final String msg) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("useChalkboard--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("useChalkboard");
         }
         mplew.writeShort(SendPacketOpcode.CHALKBOARD.getValue());
         mplew.writeInt(charid);
@@ -432,17 +421,16 @@ public class MTSCSPacket {
             mplew.write(1);
             mplew.writeMapleAsciiString(msg);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getTrockRefresh(final MapleCharacter chr, final boolean vip, final boolean delete) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getTrockRefresh--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getTrockRefresh");
         }
         mplew.writeShort(SendPacketOpcode.TROCK_LOCATIONS.getValue());
         mplew.write(delete ? 2 : 3);
@@ -458,17 +446,16 @@ public class MTSCSPacket {
                 mplew.writeInt(map[i]);
             }
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket sendWishList(final MapleCharacter chr, final boolean update) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("sendWishList--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("sendWishList");
         }
         mplew.writeShort(SendPacketOpcode.CS_OPERATION.getValue());
         mplew.write(70);
@@ -491,9 +478,8 @@ public class MTSCSPacket {
             mplew.writeInt(0);
             --i;
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -509,32 +495,30 @@ public class MTSCSPacket {
         }
         mplew.writeShort(c.getPlayer().getStorage().getSlots());
         mplew.writeShort(c.getCharacterSlots());
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showNXMapleTokens(final MapleCharacter chr) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showNXMapleTokens--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showNXMapleTokens");
         }
         mplew.writeShort(SendPacketOpcode.CS_UPDATE.getValue());
         mplew.writeInt(chr.getCSPoints(1));
         mplew.writeInt(chr.getCSPoints(2));
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showBoughtCSPackage(final Map<Integer, IItem> ccc, final int accid) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showBoughtCSPackage--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showBoughtCSPackage");
         }
         mplew.writeShort(SendPacketOpcode.CS_OPERATION.getValue());
         mplew.write(126);
@@ -543,67 +527,64 @@ public class MTSCSPacket {
             addCashItemInfo(mplew, sn.getValue(), accid, sn.getKey());
         }
         mplew.writeShort(1);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showBoughtCSItem(final int itemid, final int sn, final int uniqueid, final int accid, final int quantity, final String giftFrom, final long expire) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showBoughtCSItemA--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showBoughtCSItemA");
         }
         mplew.writeShort(SendPacketOpcode.CS_OPERATION.getValue());
         mplew.write(76);
         addCashItemInfo(mplew, uniqueid, accid, itemid, sn, quantity, giftFrom, expire);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showBoughtCSItem(final IItem item, final int sn, final int accid) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showBoughtCSItemB--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showBoughtCSItemB");
         }
         mplew.writeShort(SendPacketOpcode.CS_OPERATION.getValue());
         mplew.write(76);
         addCashItemInfo(mplew, item, accid, sn);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static void addCashItemInfo(final MaplePacketLittleEndianWriter mplew, final IItem item, final int accId, final int sn) {
-        if (ServerConstants.调试输出封包) {
-            log.info("addCashItemInfoA--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("addCashItemInfoA");
         }
         addCashItemInfo(mplew, item, accId, sn, true);
     }
 
     public static void addCashItemInfo(final MaplePacketLittleEndianWriter mplew, final IItem item, final int accId, final int sn, final boolean isFirst) {
-        if (ServerConstants.调试输出封包) {
-            log.info("addCashItemInfoB--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("addCashItemInfoB");
         }
         addCashItemInfo(mplew, item.getUniqueId(), accId, item.getItemId(), sn, item.getQuantity(), item.getGiftFrom(), item.getExpiration(), isFirst);
     }
 
     public static void addCashItemInfo(final MaplePacketLittleEndianWriter mplew, final int uniqueid, final int accId, final int itemid, final int sn, final int quantity, final String sender, final long expire) {
-        if (ServerConstants.调试输出封包) {
-            log.info("addCashItemInfoC--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("addCashItemInfoC");
         }
         addCashItemInfo(mplew, uniqueid, accId, itemid, sn, quantity, sender, expire, true);
     }
 
     public static void addCashItemInfo(final MaplePacketLittleEndianWriter mplew, final int uniqueid, final int accId, final int itemid, final int sn, final int quantity, final String sender, final long expire, final boolean isFirst) {
-        if (ServerConstants.调试输出封包) {
-            log.info("addCashItemInfoD--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("addCashItemInfoD");
         }
         mplew.writeLong((uniqueid > 0) ? ((long) uniqueid) : 0L);
         mplew.writeLong(accId);
@@ -617,8 +598,8 @@ public class MTSCSPacket {
 
     public static MaplePacket showBoughtCSQuestItem(final int price, final short quantity, final byte position, final int itemid) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showBoughtCSQuestItem--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showBoughtCSQuestItem");
         }
         mplew.writeShort(SendPacketOpcode.CS_OPERATION.getValue());
         mplew.write(111);
@@ -626,32 +607,30 @@ public class MTSCSPacket {
         mplew.writeShort(quantity);
         mplew.writeShort(position);
         mplew.writeInt(itemid);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket sendCSFail(final int err) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("sendCSFail--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("sendCSFail");
         }
         mplew.writeShort(SendPacketOpcode.CS_OPERATION.getValue());
         mplew.write(106);
         mplew.write(err);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showCouponRedeemedItem(final int itemid) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showCouponRedeemedItemA--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showCouponRedeemedItemA");
         }
         mplew.writeShort(SendPacketOpcode.CS_OPERATION.getValue());
         mplew.writeShort(60);
@@ -661,17 +640,16 @@ public class MTSCSPacket {
         mplew.writeShort(26);
         mplew.writeInt(itemid);
         mplew.writeInt(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showCouponRedeemedItem(final Map<Integer, IItem> items, final int mesos, final int maplePoints, final MapleClient c) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showCouponRedeemedItemB--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showCouponRedeemedItemB");
         }
         mplew.writeShort(SendPacketOpcode.CS_OPERATION.getValue());
         mplew.write(60);
@@ -681,37 +659,34 @@ public class MTSCSPacket {
         }
         mplew.writeLong(maplePoints);
         mplew.writeInt(mesos);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket enableCSorMTS() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("enableCSorMTS--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("enableCSorMTS");
         }
         mplew.write(HexTool.getByteArrayFromHexString("15 00 01 00 00 00 00"));
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket enableCSUse() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("enableCSUse--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("enableCSUse");
         }
         mplew.writeShort(18);
         mplew.writeInt(0);
         mplew.writeShort(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -731,7 +706,7 @@ public class MTSCSPacket {
             mplew.writeLong(itemz.getUniqueId());
             mplew.writeLong(c.getAccID());
             mplew.writeInt(itemz.getItemId());
-            mplew.writeInt((sn == null) ? 0 : ((int) sn));
+            mplew.writeInt((sn == null) ? 0 : sn);
             mplew.writeShort(itemz.getQuantity());
             mplew.writeAsciiString(itemz.getGiftFrom());
             for (int i = itemz.getGiftFrom().getBytes().length; i < 13; ++i) {
@@ -742,17 +717,16 @@ public class MTSCSPacket {
         }
         mplew.writeShort(4);
         mplew.writeShort(3);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getCSGifts(final MapleClient c) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getCSGifts--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getCSGifts");
         }
         mplew.writeShort(SendPacketOpcode.CS_OPERATION.getValue());
         mplew.write(68);
@@ -764,80 +738,75 @@ public class MTSCSPacket {
             mplew.writeAsciiString(mcz.getLeft().getGiftFrom(), 13);
             mplew.writeAsciiString(mcz.getRight(), 73);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket cashItemExpired(final int uniqueid) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("cashItemExpired--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("cashItemExpired");
         }
         mplew.writeShort(SendPacketOpcode.CS_OPERATION.getValue());
         mplew.write(82);
         mplew.writeLong(uniqueid);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket sendGift(final int itemid, final int quantity, final String receiver) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("sendGift--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("sendGift");
         }
         mplew.writeShort(SendPacketOpcode.CS_OPERATION.getValue());
         mplew.write(83);
         mplew.writeMapleAsciiString(receiver);
         mplew.writeInt(itemid);
         mplew.writeShort(quantity);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket increasedInvSlots(final int inv, final int slots) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("increasedInvSlots--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("increasedInvSlots");
         }
         mplew.writeShort(SendPacketOpcode.CS_OPERATION.getValue());
         mplew.write(101);
         mplew.write(inv);
         mplew.writeShort(slots);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket increasedStorageSlots(final int slots) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("increasedStorageSlots--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("increasedStorageSlots");
         }
         mplew.writeShort(SendPacketOpcode.CS_OPERATION.getValue());
         mplew.write(103);
         mplew.writeShort(slots);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket confirmToCSInventory(final IItem item, final int accId, final int sn) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("confirmToCSInventory--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("confirmToCSInventory");
         }
         mplew.writeShort(SendPacketOpcode.CS_OPERATION.getValue());
         mplew.write(95);
@@ -849,60 +818,56 @@ public class MTSCSPacket {
         mplew.writeAsciiString(item.getGiftFrom(), 13);
         PacketHelper.addExpirationTime(mplew, item.getExpiration());
         mplew.writeLong(0L);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket confirmFromCSInventory(final IItem item, final short pos) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("confirmFromCSInventory--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("confirmFromCSInventory");
         }
         mplew.writeShort(SendPacketOpcode.CS_OPERATION.getValue());
         mplew.write(93);
         mplew.writeShort(pos);
         PacketHelper.addItemInfo(mplew, item, true, true);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket sendMesobagFailed() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("sendMesobagFailed--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("sendMesobagFailed");
         }
         mplew.writeShort(SendPacketOpcode.MESOBAG_FAILURE.getValue());
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket sendMesobagSuccess(final int mesos) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("sendMesobagSuccess--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("sendMesobagSuccess");
         }
         mplew.writeShort(SendPacketOpcode.MESOBAG_SUCCESS.getValue());
         mplew.writeInt(mesos);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket startMTS(final MapleCharacter chr, final MapleClient c) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("startMTS--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("startMTS");
         }
         mplew.writeShort(SendPacketOpcode.MTS_OPEN.getValue());
         PacketHelper.addCharacterInfo(mplew, chr);
@@ -913,17 +878,16 @@ public class MTSCSPacket {
         mplew.writeInt(24);
         mplew.writeInt(168);
         mplew.writeLong(PacketHelper.getTime(System.currentTimeMillis()));
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket sendMTS(final List<MTSStorage.MTSItemInfo> items, final int tab, final int type, final int page, final int pages) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("sendMTS--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("sendMTS");
         }
         mplew.writeShort(SendPacketOpcode.MTS_OPERATION.getValue());
         mplew.write(21);
@@ -938,149 +902,139 @@ public class MTSCSPacket {
             addMTSItemInfo(mplew, item);
         }
         mplew.write(1);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showMTSCash(final MapleCharacter p) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showMTSCash--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showMTSCash");
         }
         mplew.writeShort(SendPacketOpcode.GET_MTS_TOKENS.getValue());
         mplew.writeInt(p.getCSPoints(2));
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getMTSWantedListingOver(final int nx, final int items) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getMTSWantedListingOver--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getMTSWantedListingOver");
         }
         mplew.writeShort(SendPacketOpcode.MTS_OPERATION.getValue());
         mplew.write(61);
         mplew.writeInt(nx);
         mplew.writeInt(items);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getMTSConfirmSell() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getMTSConfirmSell--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getMTSConfirmSell");
         }
         mplew.writeShort(SendPacketOpcode.MTS_OPERATION.getValue());
         mplew.write(29);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getMTSFailSell() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getMTSFailSell--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getMTSFailSell");
         }
         mplew.writeShort(SendPacketOpcode.MTS_OPERATION.getValue());
         mplew.write(30);
         mplew.write(66);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getMTSConfirmBuy() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getMTSConfirmBuy--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getMTSConfirmBuy");
         }
         mplew.writeShort(SendPacketOpcode.MTS_OPERATION.getValue());
         mplew.write(51);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getMTSFailBuy() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getMTSFailBuy--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getMTSFailBuy");
         }
         mplew.writeShort(SendPacketOpcode.MTS_OPERATION.getValue());
         mplew.write(52);
         mplew.write(66);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getMTSConfirmCancel() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getMTSConfirmCancel--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getMTSConfirmCancel");
         }
         mplew.writeShort(SendPacketOpcode.MTS_OPERATION.getValue());
         mplew.write(37);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getMTSFailCancel() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getMTSFailCancel--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getMTSFailCancel");
         }
         mplew.writeShort(SendPacketOpcode.MTS_OPERATION.getValue());
         mplew.write(38);
         mplew.write(66);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getMTSConfirmTransfer(final int quantity, final int pos) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getMTSConfirmTransfer--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getMTSConfirmTransfer");
         }
         mplew.writeShort(SendPacketOpcode.MTS_OPERATION.getValue());
         mplew.write(39);
         mplew.writeInt(quantity);
         mplew.writeInt(pos);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     private static void addMTSItemInfo(final MaplePacketLittleEndianWriter mplew, final MTSStorage.MTSItemInfo item) {
-        if (ServerConstants.调试输出封包) {
-            log.info("addMTSItemInfo--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("addMTSItemInfo");
         }
         PacketHelper.addItemInfo(mplew, item.getItem(), true, true);
         mplew.writeInt(item.getId());
@@ -1096,8 +1050,8 @@ public class MTSCSPacket {
 
     public static MaplePacket getNotYetSoldInv(final List<MTSStorage.MTSItemInfo> items) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getNotYetSoldInv--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getNotYetSoldInv");
         }
         mplew.writeShort(SendPacketOpcode.MTS_OPERATION.getValue());
         mplew.write(35);
@@ -1105,17 +1059,16 @@ public class MTSCSPacket {
         for (final MTSStorage.MTSItemInfo item : items) {
             addMTSItemInfo(mplew, item);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getTransferInventory(final List<IItem> items, final boolean changed) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getTransferInventory--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getTransferInventory");
         }
         mplew.writeShort(SendPacketOpcode.MTS_OPERATION.getValue());
         mplew.write(33);
@@ -1131,17 +1084,16 @@ public class MTSCSPacket {
         }
         mplew.writeInt(-47 + i - 1);
         mplew.write(changed ? 1 : 0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket addToCartMessage(final boolean fail, final boolean remove) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("addToCartMessage--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("addToCartMessage");
         }
         mplew.writeShort(SendPacketOpcode.MTS_OPERATION.getValue());
         if (remove) {
@@ -1157,9 +1109,8 @@ public class MTSCSPacket {
         } else {
             mplew.write(41);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MTSCSPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }

@@ -1,5 +1,6 @@
 package server.life;
 
+import configuration.EnvProperties;
 import database.DatabaseConnection;
 import lombok.extern.slf4j.Slf4j;
 import provider.*;
@@ -9,6 +10,7 @@ import utils.datastructures.Pair;
 import utils.StringUtil;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -239,9 +241,9 @@ public class MapleLifeFactory {
     }
 
     static {
-        data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/Mob.wz"));
-        stringDataWZ = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/String.wz"));
-        etcDataWZ = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/Etc.wz"));
+        data = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "Mob.wz"));
+        stringDataWZ = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "String.wz"));
+        etcDataWZ = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "Etc.wz"));
         mobStringData = MapleLifeFactory.stringDataWZ.getData("Mob.img");
         npcStringData = MapleLifeFactory.stringDataWZ.getData("Npc.img");
         npclocData = MapleLifeFactory.etcDataWZ.getData("NpcLocation.img");

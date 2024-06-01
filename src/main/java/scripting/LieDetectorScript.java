@@ -1,5 +1,6 @@
 package scripting;
 
+import configuration.EnvProperties;
 import lombok.extern.slf4j.Slf4j;
 import server.Randomizer;
 import utils.HexTool;
@@ -11,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Paths;
 
 @Slf4j
 public class LieDetectorScript {
@@ -32,8 +34,7 @@ public class LieDetectorScript {
             return new Pair<String, String>(imgByte.substring(39, imgByte.length()), output.toString().split("CAPTCHA")[0]);
         } catch (IOException ex) {
             ex.printStackTrace();
-            String scriptsPath = System.getProperty("scripts_path");
-            final File directory = new File(scriptsPath + File.separator + "lieDetector");
+            final File directory = Paths.get(EnvProperties.scriptsPath, "lieDetector").toFile();
             if (!directory.exists()) {
                 log.error("lieDetector folder does not exist!");
                 return null;
@@ -42,7 +43,7 @@ public class LieDetectorScript {
             String answer = filename[Randomizer.nextInt(filename.length)];
             answer = answer.substring(0, answer.length() - 4);
             try {
-                return new Pair<String, String>(HexTool.toString(getBytesFromFile(new File(scriptsPath + File.separator + "lieDetector" + File.separator + answer + ".jpg"))), answer);
+                return new Pair<String, String>(HexTool.toString(getBytesFromFile(Paths.get(EnvProperties.scriptsPath, "lieDetector", answer + ".jpg").toFile())), answer);
             } catch (IOException ex2) {
                 ex2.printStackTrace();
                 return null;

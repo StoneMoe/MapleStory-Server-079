@@ -1,9 +1,8 @@
 package database;
 
+import configuration.DBProperties;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.FileReader;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -14,22 +13,21 @@ import java.util.concurrent.locks.ReentrantLock;
 
 @Slf4j
 public class DatabaseConnection {
-    private static final HashMap<Integer, ConWrapper> connections;
-    private static final ReentrantLock lock;
+    private static final HashMap<Integer, ConWrapper> connections = new HashMap<Integer, ConWrapper>();
+    private static final ReentrantLock lock = new ReentrantLock();
     private static String dbDriver;
     private static String dbUrl;
     private static String dbUser;
     private static String dbPass;
-    private static boolean propsInited;
-    private static final Properties dbProps;
-    private static long connectionTimeOut;
-    public static int CLOSE_CURRENT_RESULT;
-    public static int KEEP_CURRENT_RESULT;
-    public static int CLOSE_ALL_RESULTS;
-    public static int SUCCESS_NO_INFO;
-    public static int EXECUTE_FAILED;
-    public static int RETURN_GENERATED_KEYS;
-    public static int NO_GENERATED_KEYS;
+    private static boolean propsInited = false;
+    private static long connectionTimeOut = 300000L;
+    public static int CLOSE_CURRENT_RESULT = 1;
+    public static int KEEP_CURRENT_RESULT = 2;
+    public static int CLOSE_ALL_RESULTS = 3;
+    public static int SUCCESS_NO_INFO = -2;
+    public static int EXECUTE_FAILED = -3;
+    public static int RETURN_GENERATED_KEYS = 1;
+    public static int NO_GENERATED_KEYS = 2;
 
     public static Connection getConnection() {
         final Thread cThread = Thread.currentThread();
@@ -95,19 +93,10 @@ public class DatabaseConnection {
 
     private static Connection connectToDB() {
         if (!DatabaseConnection.propsInited) {
-            try {
-                String path = System.getProperty("server_property_db_path");
-//                log.info("load db pro"+path);
-                final FileReader fR = new FileReader(path);
-                DatabaseConnection.dbProps.load(fR);
-                fR.close();
-            } catch (IOException ex) {
-                throw new DatabaseException(ex);
-            }
-            DatabaseConnection.dbDriver = DatabaseConnection.dbProps.getProperty("driverClassName");
-            DatabaseConnection.dbUrl = DatabaseConnection.dbProps.getProperty("url");
-            DatabaseConnection.dbUser = DatabaseConnection.dbProps.getProperty("username");
-            DatabaseConnection.dbPass = DatabaseConnection.dbProps.getProperty("password");
+            DatabaseConnection.dbDriver = DBProperties.driverClassName;
+            DatabaseConnection.dbUrl = DBProperties.url;
+            DatabaseConnection.dbUser = DBProperties.username;
+            DatabaseConnection.dbPass = DBProperties.password;
 
             var params = new HashMap<String, String>();
             params.put("serverTimezone", "UTC");
@@ -132,11 +121,10 @@ public class DatabaseConnection {
                 paramStrings.add(key + "=" + params.get(key));
             }
             DatabaseConnection.dbUrl = parts[0] + "?" + String.join("&", paramStrings);
-
             try {
-                DatabaseConnection.connectionTimeOut = Long.parseLong(DatabaseConnection.dbProps.getProperty("timeout"));
+                DatabaseConnection.connectionTimeOut = DBProperties.timeout;
             } catch (NumberFormatException e2) {
-                log.info("[DB信息] 无法读取超时信息，使用默认值: " + DatabaseConnection.connectionTimeOut + " ");
+                log.info("[DB信息] 无法读取超时信息，使用默认值: {} ", DatabaseConnection.connectionTimeOut);
             }
         }
         try {
@@ -183,21 +171,6 @@ public class DatabaseConnection {
         } finally {
             DatabaseConnection.lock.unlock();
         }
-    }
-
-    static {
-        connections = new HashMap<Integer, ConWrapper>();
-        lock = new ReentrantLock();
-        DatabaseConnection.propsInited = false;
-        dbProps = new Properties();
-        DatabaseConnection.connectionTimeOut = 300000L;
-        DatabaseConnection.CLOSE_CURRENT_RESULT = 1;
-        DatabaseConnection.KEEP_CURRENT_RESULT = 2;
-        DatabaseConnection.CLOSE_ALL_RESULTS = 3;
-        DatabaseConnection.SUCCESS_NO_INFO = -2;
-        DatabaseConnection.EXECUTE_FAILED = -3;
-        DatabaseConnection.RETURN_GENERATED_KEYS = 1;
-        DatabaseConnection.NO_GENERATED_KEYS = 2;
     }
 
     public static class ConWrapper {

@@ -1,15 +1,17 @@
 package scripting;
 
 import client.MapleClient;
+import configuration.EnvProperties;
 import constants.GameConstants;
 import lombok.extern.slf4j.Slf4j;
+import networking.packet.MaplePacketCreator;
 import server.quest.MapleQuest;
 import utils.FileoutputUtil;
-import networking.packet.MaplePacketCreator;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.concurrent.locks.Lock;
@@ -250,17 +252,16 @@ public class NPCScriptManager extends AbstractScriptManager {
     public final void dispose(final MapleClient c) {
         final NPCConversationManager npccm = this.mapleClientNPCConversationManagerMap.get(c);
         if (npccm != null) {
-            String scriptsPath = System.getProperty("scripts_path");
             this.mapleClientNPCConversationManagerMap.remove(c);
             if (npccm.getType() == -1) {
                 if (npccm.getwh() == 0) {
-                    c.removeScriptEngine(scriptsPath + File.separator + "npc" + File.separator + npccm.getNpc() + ".js");
+                    c.removeScriptEngine(Paths.get(EnvProperties.scriptsPath, "npc", npccm.getNpc() + ".js").toString());
                 } else {
-                    c.removeScriptEngine(scriptsPath + File.separator + "npc" + File.separator + npccm.getNpc() + "_" + npccm.getwh() + ".js");
+                    c.removeScriptEngine(Paths.get(EnvProperties.scriptsPath, "npc", npccm.getNpc() + "_" + npccm.getwh() + ".js").toString());
                 }
-                c.removeScriptEngine(scriptsPath + File.separator + "npc" + File.separator + "notcoded.js");
+                c.removeScriptEngine(Paths.get(EnvProperties.scriptsPath, "npc", "notcoded.js").toString());
             } else {
-                c.removeScriptEngine(scriptsPath + File.separator + "quest" + File.separator + npccm.getQuest() + ".js");
+                c.removeScriptEngine(Paths.get(EnvProperties.scriptsPath, "quest", npccm.getQuest() + ".js").toString());
             }
         }
         if (c.getPlayer() != null && c.getPlayer().getConversation() == 1) {

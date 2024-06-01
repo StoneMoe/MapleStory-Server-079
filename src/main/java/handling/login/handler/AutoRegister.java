@@ -1,6 +1,7 @@
 package handling.login.handler;
 
 import client.LoginCrypto;
+import configuration.ServerProperties;
 import constants.ServerConstants;
 import database.DatabaseConnection;
 import lombok.extern.slf4j.Slf4j;
@@ -13,9 +14,9 @@ import java.sql.SQLException;
 @Slf4j
 public class AutoRegister {
     private static final int ACCOUNTS_PER_MAC = 100;
-    public static boolean autoRegister;
-    public static boolean success;
-    public static boolean mac;
+    public static boolean autoRegister = ServerProperties.AutoRegister;
+    public static boolean success = false;
+    public static boolean mac = true;
 
     public static boolean getAccountExists(final String login) {
         boolean accountExists = false;
@@ -30,7 +31,7 @@ public class AutoRegister {
             rs.close();
             ps.close();
         } catch (SQLException ex) {
-            log.info("getAccountExists   " + ex);
+            log.info("getAccountExists SQL err", ex);
         }
         return accountExists;
     }
@@ -48,7 +49,7 @@ public class AutoRegister {
             rs.close();
             ps.close();
         } catch (SQLException ex) {
-            log.info("getAccountExists   " + ex);
+            log.info("getAccountExists SQL error", ex);
         }
         return accountExists;
     }
@@ -84,11 +85,5 @@ public class AutoRegister {
         } catch (SQLException ex2) {
             log.info("Err during account creation", ex2);
         }
-    }
-
-    static {
-        AutoRegister.autoRegister = ServerConstants.getAutoReg();
-        AutoRegister.success = false;
-        AutoRegister.mac = true;
     }
 }

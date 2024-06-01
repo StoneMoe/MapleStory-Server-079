@@ -1,7 +1,7 @@
 package handling.mina;
 
 import client.MapleClient;
-import constants.ServerConstants;
+import configuration.ServerProperties;
 import handling.RecvPacketOpcode;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.mina.core.buffer.IoBuffer;
@@ -46,19 +46,13 @@ public class MaplePacketDecoder extends CumulativeProtocolDecoder {
             client.getReceiveCrypto().crypt(decryptedPacket);
             MapleCustomEncryption.decryptData(decryptedPacket);
             out.write(decryptedPacket);
-            if (ServerConstants.封包显示) {
+            if (ServerProperties.LogPkt) {
                 final int packetLen = decryptedPacket.length;
                 final int pHeader = this.readFirstShort(decryptedPacket);
                 final String pHeaderStr = Integer.toHexString(pHeader).toUpperCase();
                 final String op = this.lookupSend(pHeader);
-                final String Send = "客户端发送 " + op + " [" + pHeaderStr + "] (" + packetLen + ")\r\n";
                 if (packetLen <= 3000) {
-                    final String SendTo = Send + HexTool.toString(decryptedPacket) + "\r\n" + HexTool.toStringFromAscii(decryptedPacket);
-                    log.info("客户端封包 - {}", SendTo);
-                    final String SendTos = "\r\n时间：" + FileoutputUtil.CurrentReadable_Time() + "  ";
-                    if (op.equals("UNKNOWN")) {
-                        FileoutputUtil.packetLog("logs/未知客服端封包.log", SendTos + SendTo);
-                    }
+                    log.info("客户端发送 {} [{}] ({})\r\n{}\r\n{}", op, pHeaderStr, packetLen, HexTool.toString(decryptedPacket), HexTool.toStringFromAscii(decryptedPacket));
                 } else {
                     log.info("{}...", HexTool.toString(new byte[]{decryptedPacket[0], decryptedPacket[1]}));
                 }

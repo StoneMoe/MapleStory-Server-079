@@ -1,5 +1,6 @@
 package tools.wztosql;
 
+import configuration.EnvProperties;
 import database.DatabaseConnection;
 import lombok.extern.slf4j.Slf4j;
 import provider.MapleData;
@@ -9,6 +10,7 @@ import provider.MapleDataTool;
 
 import java.awt.*;
 import java.io.File;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -60,7 +62,7 @@ public class DumpMobSkills {
         this.id = 0;
         this.con = DatabaseConnection.getConnection();
         this.update = update;
-        this.skill = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/Skill.wz"));
+        this.skill = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "Skill.wz"));
         if (this.skill == null) {
             this.hadError = true;
         }

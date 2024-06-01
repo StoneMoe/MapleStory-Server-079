@@ -46,7 +46,7 @@ import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 import server.MTSStorage;
 import server.Randomizer;
-import server.ServerProperties;
+import configuration.ServerProperties;
 import utils.FileoutputUtil;
 import utils.HexTool;
 import networking.MapleAESOFB;
@@ -58,7 +58,7 @@ import networking.packet.LoginPacket;
 
 @Slf4j
 public class MapleServerHandler extends IoHandlerAdapter {
-    private static boolean debugMode = Boolean.parseBoolean(ServerProperties.getProperty("RoyMS.Debug", "false"));
+    private static boolean debugMode = ServerProperties.Debug;
     private int channel;
     private boolean cs;
     private List<String> BlockedIP;
@@ -376,7 +376,7 @@ public class MapleServerHandler extends IoHandlerAdapter {
             }
             case CHANGE_MAP: {
                 if (cs) {
-                    if (ServerConstants.调试输出封包) {
+                    if (ServerProperties.LogPktCall) {
                         log.info("退出商城");
                     }
                     CashShopOperation.LeaveCS(slea, c, c.getPlayer());

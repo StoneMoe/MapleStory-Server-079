@@ -1,5 +1,6 @@
 package tools.wztosql;
 
+import configuration.EnvProperties;
 import database.DatabaseConnection;
 
 import java.io.File;
@@ -7,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -34,7 +36,7 @@ public class DumpOxQuizData {
     }
 
     public void dumpOxData() throws SQLException {
-        final MapleDataProvider stringProvider = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/Etc.wz"));
+        final MapleDataProvider stringProvider = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "Etc.wz"));
         final MapleData ox = stringProvider.getData("OXQuiz.img");
         PreparedStatement ps = this.con.prepareStatement("DELETE FROM `wz_oxdata`");
         ps.execute();

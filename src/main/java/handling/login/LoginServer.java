@@ -10,7 +10,7 @@ import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.SocketSessionConfig;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
-import server.ServerProperties;
+import configuration.ServerProperties;
 import utils.datastructures.Triple;
 
 import java.io.IOException;
@@ -74,16 +74,16 @@ public class LoginServer {
     }
 
     public static void run_startup_configurations() {
-        LoginServer.userLimit = Integer.valueOf(ServerProperties.getProperty("RoyMS.userLimit"));
-        LoginServer.serverName = ServerProperties.getProperty("RoyMS.ServerName");
-        LoginServer.eventMessage = ServerProperties.getProperty("RoyMS.EventMessage");
-        LoginServer.flag = Byte.parseByte(ServerProperties.getProperty("RoyMS.Flag"));
-        LoginServer.PORT = Integer.parseInt(ServerProperties.getProperty("RoyMS.LPort"));
-        LoginServer.adminOnly = Boolean.parseBoolean(ServerProperties.getProperty("RoyMS.Admin", "false"));
-        LoginServer.maxCharacters = Integer.parseInt(ServerProperties.getProperty("RoyMS.MaxCharacters"));
-        LoginServer.个人PK地图 = Integer.parseInt(ServerProperties.getProperty("RoyMS.personPVP"));
-        LoginServer.组队PK地图 = Integer.parseInt(ServerProperties.getProperty("RoyMS.teamPVP"));
-        LoginServer.家族PK地图 = Integer.parseInt(ServerProperties.getProperty("RoyMS.familyPVP"));
+        LoginServer.userLimit = ServerProperties.userLimit;
+        LoginServer.serverName = ServerProperties.ServerName;
+        LoginServer.eventMessage = ServerProperties.EventMessage;
+        LoginServer.flag = ServerProperties.Flag;
+        LoginServer.PORT = ServerProperties.LPort;
+        LoginServer.adminOnly = ServerProperties.Admin;
+        LoginServer.maxCharacters = ServerProperties.MaxCharacters;
+        LoginServer.个人PK地图 = ServerProperties.personPVP;
+        LoginServer.组队PK地图 = ServerProperties.teamPVP;
+        LoginServer.家族PK地图 = ServerProperties.familyPVP;
         IoBuffer.setUseDirectBuffer(false);
         IoBuffer.setAllocator(new SimpleBufferAllocator());
         LoginServer.acceptor = new NioSocketAcceptor();

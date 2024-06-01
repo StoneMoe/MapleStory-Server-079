@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import server.ServerProperties;
+import configuration.ServerProperties;
 import server.maps.MapleMap;
 import server.maps.MapleMapFactory;
 import networking.packet.MaplePacketCreator;
@@ -222,8 +222,7 @@ public class CherryMSLotteryImpl implements CherryMSLottery
         int peoplecount = 0;
         if (drawchars != null)
             peoplecount = drawchars.size();
-        getChannelServer().broadcastPacket(MaplePacketCreator.serverNotice(6, ServerProperties.getProperty("RoyMS.赌博公告")));
-        if ("".equals(zjNames6));
+        getChannelServer().broadcastPacket(MaplePacketCreator.serverNotice(6, ServerProperties.LotteryMessage));
     }
 
     static {

@@ -1,8 +1,10 @@
 package client.inventory;
 
-import java.io.File;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+
+import configuration.EnvProperties;
 import provider.MapleData;
 import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
@@ -10,7 +12,7 @@ import provider.MapleDataTool;
 import utils.datastructures.Pair;
 
 public class PetDataFactory {
-    private static final MapleDataProvider dataRoot = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/Item.wz"));
+    private static final MapleDataProvider dataRoot = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "Item.wz"));
 
     private static final Map<Pair<Integer, Integer>, PetCommand> petCommands = new HashMap<>();
 

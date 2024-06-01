@@ -1,33 +1,31 @@
 package provider;
 
 import java.io.File;
+import java.nio.file.Path;
+
+import configuration.EnvProperties;
 import provider.WzXML.XMLWZFile;
 
 public class MapleDataProviderFactory
 {
-    private static final String wzPath;
+    private static final String wzPath = EnvProperties.wzPath;
     
-    private static MapleDataProvider getWZ(final Object in, final boolean provideImages) {
-        if (in instanceof File) {
-            final File fileIn = (File)in;
-            return new XMLWZFile(fileIn);
-        }
-        throw new IllegalArgumentException("Can't create data provider for input " + in);
+    private static MapleDataProvider getWZ(final File in, final boolean provideImages) {
+        return new XMLWZFile(in);
     }
     
-    public static MapleDataProvider getDataProvider(final Object in) {
-        return getWZ(in, false);
+    public static MapleDataProvider getDataProvider(final File file) {
+        return getWZ(file, false);
+    }
+    public static MapleDataProvider getDataProvider(final Path path) {
+        return getWZ(path.toFile(), false);
     }
     
-    public static MapleDataProvider getImageProvidingDataProvider(final Object in) {
+    public static MapleDataProvider getImageProvidingDataProvider(final File in) {
         return getWZ(in, true);
     }
     
-    public static File fileInwzPath(final String filename) {
-        return new File(MapleDataProviderFactory.wzPath, filename);
-    }
-    
-    static {
-        wzPath = System.getProperty("wzPath", "wz");
+    public static File fileInWZPath(final String filename) {
+        return new File(wzPath, filename);
     }
 }

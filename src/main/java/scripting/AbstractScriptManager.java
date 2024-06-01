@@ -1,6 +1,7 @@
 package scripting;
 
 import client.MapleClient;
+import configuration.EnvProperties;
 import lombok.extern.slf4j.Slf4j;
 import utils.FileoutputUtil;
 import networking.packet.MaplePacketCreator;
@@ -10,6 +11,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 
 @Slf4j
 public abstract class AbstractScriptManager {
@@ -22,8 +24,7 @@ public abstract class AbstractScriptManager {
     protected Invocable getInvocable(String path, final MapleClient c, final boolean npc) {
         InputStream fr = null;
         try {
-            String scriptsPath = System.getProperty("scripts_path");
-            path = scriptsPath + File.separator + path;
+            path = Paths.get(EnvProperties.scriptsPath, path).toString();
             ScriptEngine engine = null;
             if (c != null) {
                 engine = c.getScriptEngine(path);

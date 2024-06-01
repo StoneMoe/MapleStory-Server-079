@@ -18,7 +18,7 @@ import org.apache.mina.transport.socket.SocketSessionConfig;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 import scripting.EventScriptManager;
 import server.MapleSquad;
-import server.ServerProperties;
+import configuration.ServerProperties;
 import server.Timer;
 import server.events.*;
 import server.life.PlayerNPC;
@@ -95,22 +95,19 @@ public class ChannelServer implements Serializable {
 
     public static void startChannel_Main() {
         ChannelServer.serverStartTime = System.currentTimeMillis();
-        int ch = Integer.parseInt(ServerProperties.getProperty("RoyMS.Count", "0"));
+        int ch = ServerProperties.Count;
         if (ch > 10) {
             ch = 10;
         }
-        for (int i = 0; i < ch; ++i) {
-            newInstance(i + 1).run_startup_configurations();
+        for (int i = 1; i <= ch; ++i) {
+            newInstance(i).run_startup_configurations();
         }
     }
 
     public static void startChannel(final int channel) {
         ChannelServer.serverStartTime = System.currentTimeMillis();
-        for (int i = 0; i < Integer.parseInt(ServerProperties.getProperty("RoyMS.Count", "0")); ++i) {
-            if (channel == i + 1) {
-                newInstance(i + 1).run_startup_configurations();
-                break;
-            }
+        if (channel <= ServerProperties.Count) {
+            newInstance(channel).run_startup_configurations();
         }
     }
 
@@ -263,34 +260,23 @@ public class ChannelServer implements Serializable {
     public void run_startup_configurations() {
         this.setChannel(this.channel);
         try {
-            this.expRate = Integer.parseInt(ServerProperties.getProperty("RoyMS.Exp"));
-            this.mesoRate = Integer.parseInt(ServerProperties.getProperty("RoyMS.Meso"));
-            this.dropRate = Integer.parseInt(ServerProperties.getProperty("RoyMS.Drop"));
-            this.BossdropRate = Integer.parseInt(ServerProperties.getProperty("RoyMS.BDrop"));
-            this.cashRate = Integer.parseInt(ServerProperties.getProperty("RoyMS.Cash"));
-            this.serverMessage = ServerProperties.getProperty("RoyMS.ServerMessage");
-            this.serverName = ServerProperties.getProperty("RoyMS.ServerName");
-            this.flags = Integer.parseInt(ServerProperties.getProperty("RoyMS.WFlags", "0"));
-            this.adminOnly = Boolean.parseBoolean(ServerProperties.getProperty("RoyMS.Admin", "false"));
-            this.eventSM = new EventScriptManager(this, ServerProperties.getProperty("RoyMS.Events").split(","));
+            this.expRate = ServerProperties.Exp;
+            this.mesoRate = ServerProperties.Meso;
+            this.dropRate = ServerProperties.Drop;
+            this.BossdropRate = ServerProperties.BDrop;
+            this.cashRate = ServerProperties.Cash;
+            this.serverMessage = ServerProperties.ServerMessage;
+            this.serverName = ServerProperties.ServerName;
+            this.flags = ServerProperties.WFlags;
+            this.adminOnly = ServerProperties.Admin;
+            this.eventSM = new EventScriptManager(this, ServerProperties.Events.split(","));
             this.port = Short.parseShort(ServerProperties.getProperty("RoyMS.Port" + this.channel, String.valueOf(2524 + this.channel)));
-            this.warpcsshop = Boolean.parseBoolean(ServerProperties.getProperty("RoyMS.warpcsshop", "false"));
-            this.warpmts = Boolean.parseBoolean(ServerProperties.getProperty("RoyMS.warpmts", "false"));
-            this.ip = ServerProperties.getProperty("RoyMS.IP") + ":" + this.port;
-//            this.ip = "49.235.142.128:"+ this.port;
+            this.warpcsshop = ServerProperties.warpcsshop;
+            this.warpmts = ServerProperties.warpmts;
+            this.ip = ServerProperties.IP + ":" + this.port;
         } catch (NumberFormatException e) {
             throw new RuntimeException(e);
         }
-//        switch (GameConstants.game) {
-//            case 0: {
-//                this.ip = "127.0.0.1:" + this.port;
-//                break;
-//            }
-//            default: {
-//                this.ip = "127.0.0.1:" + this.port;
-//                break;
-//            }
-//        }
         IoBuffer.setUseDirectBuffer(false);
         IoBuffer.setAllocator(new SimpleBufferAllocator());
         this.acceptor = new NioSocketAcceptor();
@@ -302,10 +288,10 @@ public class ChannelServer implements Serializable {
             this.acceptor.setHandler(new MapleServerHandler(this.channel, false));
             this.acceptor.bind(new InetSocketAddress(this.port));
             ((SocketSessionConfig) this.acceptor.getSessionConfig()).setTcpNoDelay(true);
-            log.info("频道 " + this.channel + ": 启动端口 " + this.port + ": 服务器IP " + this.ip + "");
+            log.info("频道 {}: 启动端口 {}: 服务器IP {}", this.channel, this.port, this.ip);
             this.eventSM.init();
         } catch (IOException e2) {
-            log.info("Binding to port " + this.port + " failed (ch: " + this.getChannel() + ")" + e2);
+            log.info("Failed to bind port {} for channel{}", this.port, this.getChannel(), e2);
         }
     }
 
@@ -425,7 +411,7 @@ public class ChannelServer implements Serializable {
 
     public void reloadEvents() {
         this.eventSM.cancel();
-        (this.eventSM = new EventScriptManager(this, ServerProperties.getProperty("RoyMS.Events").split(","))).init();
+        (this.eventSM = new EventScriptManager(this, ServerProperties.Events.split(","))).init();
     }
 
     public int getBossDropRate() {

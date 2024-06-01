@@ -1,5 +1,6 @@
 package server.maps;
 
+import configuration.EnvProperties;
 import database.DatabaseConnection;
 import lombok.extern.slf4j.Slf4j;
 import provider.MapleData;
@@ -15,6 +16,7 @@ import utils.StringUtil;
 
 import java.awt.*;
 import java.io.File;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -792,8 +794,8 @@ public class MapleMapFactory {
     }
 
     static {
-        source = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/Map.wz"));
-        nameData = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/String.wz")).getData("Map.img");
+        source = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "Map.wz"));
+        nameData = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "String.wz")).getData("Map.img");
         mapInfos = new HashMap<Integer, MapleNodes>();
         customLife = new HashMap<Integer, List<AbstractLoadedMapleLife>>();
     }

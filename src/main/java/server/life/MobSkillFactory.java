@@ -2,10 +2,13 @@ package server.life;
 
 import java.awt.Point;
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import configuration.EnvProperties;
 import provider.MapleData;
 import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
@@ -63,7 +66,7 @@ public class MobSkillFactory
     
     static {
         mobSkills = new HashMap<Pair<Integer, Integer>, MobSkill>();
-        dataSource = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/Skill.wz"));
+        dataSource = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "Skill.wz"));
         skillRoot = MobSkillFactory.dataSource.getData("MobSkill.img");
     }
     

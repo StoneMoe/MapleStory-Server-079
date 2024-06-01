@@ -2,6 +2,7 @@ package networking.packet;
 
 import client.*;
 import client.inventory.*;
+import configuration.ServerProperties;
 import constants.GameConstants;
 import constants.ServerConstants;
 import handling.ByteArrayMaplePacket;
@@ -36,7 +37,6 @@ import utils.*;
 import java.awt.*;
 import java.io.*;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -50,49 +50,40 @@ public class MaplePacketCreator {
 
     public static MaplePacket getServerIP(final int port, final int clientId) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getServerIP--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getServerIP");
         }
         mplew.writeShort(SendPacketOpcode.SERVER_IP.getValue());
         mplew.writeShort(0);
-        try {
-            mplew.write(InetAddress.getByName(ServerProperties.getProperty("RoyMS.IP")).getAddress());
-        } catch (UnknownHostException e) {
-            log.info("登录服务器IP：" + e);
-        }
+        mplew.write(ServerProperties.IP.getAddress());
         mplew.writeShort(port);
         mplew.writeInt(clientId);
         mplew.write(new byte[]{1, 0, 0, 0, 0});
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getChannelChange(final InetAddress inetAddr, final int port) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getChannelChange--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getChannelChange");
         }
         mplew.writeShort(SendPacketOpcode.CHANGE_CHANNEL.getValue());
         mplew.write(1);
-        try {
-            mplew.write(InetAddress.getByName(ServerProperties.getProperty("RoyMS.IP")).getAddress());
-        } catch (UnknownHostException ex) {
-        }
+        mplew.write(ServerProperties.IP.getAddress());
         mplew.writeShort(port);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getCharInfo(final MapleCharacter chr) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getCharInfo--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getCharInfo");
         }
         mplew.writeShort(SendPacketOpcode.WARP_TO_MAP.getValue());
         mplew.writeInt(chr.getClient().getChannel() - 1);
@@ -103,31 +94,30 @@ public class MaplePacketCreator {
         chr.CRand().connectData(mplew);
         PacketHelper.addCharacterInfo(mplew, chr);
         mplew.writeLong(PacketHelper.getTime(System.currentTimeMillis()));
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket enableActions() {
-        if (ServerConstants.调试输出封包) {
-            log.info("enableActions--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("enableActions");
         }
         return updatePlayerStats(MaplePacketCreator.EMPTY_STATUPDATE, true, 0);
     }
 
     public static MaplePacket updatePlayerStats(final List<Pair<MapleStat, Integer>> stats, final int evan) {
-        if (ServerConstants.调试输出封包) {
-            log.info("updatePlayerStatsA--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updatePlayerStatsA");
         }
         return updatePlayerStats(stats, false, evan);
     }
 
     public static MaplePacket updatePlayerStats(final List<Pair<MapleStat, Integer>> stats, final boolean itemReaction, final int evan) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updatePlayerStats--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updatePlayerStats");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_STATS.getValue());
         mplew.write(itemReaction ? 1 : 0);
@@ -163,32 +153,30 @@ public class MaplePacketCreator {
             }
         }
         mplew.writeShort(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket blockedPortal() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("blockedPortal--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("blockedPortal");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_STATS.getValue());
         mplew.write(1);
         mplew.writeInt(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket weirdStatUpdate() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("weirdStatUpdate--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("weirdStatUpdate");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_STATS.getValue());
         mplew.write(0);
@@ -199,24 +187,23 @@ public class MaplePacketCreator {
         mplew.writeLong(0L);
         mplew.write(0);
         mplew.write(1);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket updateSp(final MapleCharacter chr, final boolean itemReaction) {
-        if (ServerConstants.调试输出封包) {
-            log.info("updateSpA--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateSpA");
         }
         return updateSp(chr, itemReaction, false);
     }
 
     public static MaplePacket updateSp(final MapleCharacter chr, final boolean itemReaction, final boolean overrideJob) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateSp--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateSp");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_STATS.getValue());
         mplew.write(itemReaction ? 1 : 0);
@@ -228,8 +215,8 @@ public class MaplePacketCreator {
 
     public static MaplePacket getWarpToMap(final MapleMap to, final int spawnPoint, final MapleCharacter chr) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getWarpToMap--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getWarpToMap");
         }
         mplew.writeShort(SendPacketOpcode.WARP_TO_MAP.getValue());
         mplew.writeInt(chr.getClient().getChannel() - 1);
@@ -241,17 +228,16 @@ public class MaplePacketCreator {
         mplew.write(spawnPoint);
         mplew.writeShort(chr.getStat().getHp());
         mplew.writeLong(PacketHelper.getTime(System.currentTimeMillis()));
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket spawnPortal(final int townId, final int targetId, final int skillId, final Point pos) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("spawnPortal--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("spawnPortal");
         }
         mplew.writeShort(SendPacketOpcode.SPAWN_PORTAL.getValue());
         mplew.writeInt(townId);
@@ -259,33 +245,31 @@ public class MaplePacketCreator {
         if (pos != null) {
             mplew.writePos(pos);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket spawnDoor(final int oid, final Point pos, final boolean town) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("spawnDoor--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("spawnDoor");
         }
         mplew.writeShort(SendPacketOpcode.SPAWN_DOOR.getValue());
         mplew.write(town ? 1 : 0);
         mplew.writeInt(oid);
         mplew.writePos(pos);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket removeDoor(final int oid, final boolean town) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("removeDoor--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("removeDoor");
         }
         if (town) {
             mplew.writeShort(SendPacketOpcode.SPAWN_PORTAL.getValue());
@@ -296,17 +280,16 @@ public class MaplePacketCreator {
             mplew.write(0);
             mplew.writeInt(oid);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket spawnSummon(final MapleSummon summon, final boolean animated) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("spawnSummon--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("spawnSummon");
         }
         mplew.writeShort(SendPacketOpcode.SPAWN_SUMMON.getValue());
         mplew.writeInt(summon.getOwnerId());
@@ -320,61 +303,59 @@ public class MaplePacketCreator {
         mplew.write(summon.getMovementType().getValue());
         mplew.write(summon.getSummonType());
         mplew.write(animated ? 0 : 1);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket removeSummon(final MapleSummon summon, final boolean animated) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("removeSummon--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("removeSummon");
         }
         mplew.writeShort(SendPacketOpcode.REMOVE_SUMMON.getValue());
         mplew.writeInt(summon.getOwnerId());
         mplew.writeInt(summon.getObjectId());
         mplew.write(animated ? 4 : 1);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket serverMessage(final String message) {
-        if (ServerConstants.调试输出封包) {
-            log.info("serverMessageA--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("serverMessageA");
         }
         return serverMessage(4, 0, message, false);
     }
 
     public static MaplePacket serverNotice(final int type, final String message) {
-        if (ServerConstants.调试输出封包) {
-            log.info("serverNoticeA--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("serverNoticeA");
         }
         return serverMessage(type, 0, message, false);
     }
 
     public static MaplePacket serverNotice(final int type, final int channel, final String message) {
-        if (ServerConstants.调试输出封包) {
-            log.info("serverNoticeB--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("serverNoticeB");
         }
         return serverMessage(type, channel, message, false);
     }
 
     public static MaplePacket serverNotice(final int type, final int channel, final String message, final boolean smegaEar) {
-        if (ServerConstants.调试输出封包) {
-            log.info("serverNoticeC--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("serverNoticeC");
         }
         return serverMessage(type, channel, message, smegaEar);
     }
 
     private static MaplePacket serverMessage(final int type, final int channel, final String message, final boolean megaEar) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("serverMessage--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("serverMessage");
         }
         mplew.writeShort(SendPacketOpcode.SERVERMESSAGE.getValue());
         mplew.write(type);
@@ -398,34 +379,32 @@ public class MaplePacketCreator {
                 break;
             }
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getGachaponMega(final String name, final String message, final IItem item, final byte rareness, final int channel) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getGachaponMega--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getGachaponMega");
         }
         mplew.writeShort(SendPacketOpcode.SERVERMESSAGE.getValue());
         mplew.write(14);
         mplew.writeMapleAsciiString(name + message);
         mplew.writeInt(channel - 1);
         PacketHelper.addItemInfo(mplew, item, true, true);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket tripleSmega(final List<String> message, final boolean ear, final int channel) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("tripleSmega--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("tripleSmega");
         }
         mplew.writeShort(SendPacketOpcode.SERVERMESSAGE.getValue());
         mplew.write(10);
@@ -440,17 +419,16 @@ public class MaplePacketCreator {
         }
         mplew.write(channel - 1);
         mplew.write(ear ? 1 : 0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getAvatarMega(final MapleCharacter chr, final int channel, final int itemId, final String message, final boolean ear) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getAvatarMega--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getAvatarMega");
         }
         mplew.writeShort(SendPacketOpcode.AVATAR_MEGA.getValue());
         mplew.writeInt(itemId);
@@ -459,17 +437,16 @@ public class MaplePacketCreator {
         mplew.writeInt(channel - 1);
         mplew.write(ear ? 1 : 0);
         PacketHelper.addCharLook(mplew, chr, true);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket itemMegaphone(final String msg, final boolean whisper, final int channel, final IItem item) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("itemMegaphone--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("itemMegaphone");
         }
         mplew.writeShort(SendPacketOpcode.SERVERMESSAGE.getValue());
         mplew.write(8);
@@ -481,17 +458,16 @@ public class MaplePacketCreator {
         } else {
             PacketHelper.addItemInfo(mplew, item, false, false, true);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket spawnNPC(final MapleNPC life, final boolean show) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("spawnNPC--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("spawnNPC");
         }
         mplew.writeShort(SendPacketOpcode.SPAWN_NPC.getValue());
         mplew.writeInt(life.getObjectId());
@@ -503,9 +479,8 @@ public class MaplePacketCreator {
         mplew.writeShort(life.getRx0());
         mplew.writeShort(life.getRx1());
         mplew.write(show ? 1 : 0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -515,31 +490,29 @@ public class MaplePacketCreator {
         mplew.writeShort(SendPacketOpcode.SPAWN_NPC_REQUEST_CONTROLLER.getValue());
         mplew.write(0);
         mplew.writeInt(objectid);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket removeNPC(final int objectid) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("removeNPC--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("removeNPC");
         }
         mplew.writeShort(SendPacketOpcode.REMOVE_NPC.getValue());
         mplew.writeLong(objectid);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket spawnNPCRequestController(final MapleNPC life, final boolean MiniMap) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("spawnNPCRequestController--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("spawnNPCRequestController");
         }
         mplew.writeShort(SendPacketOpcode.SPAWN_NPC_REQUEST_CONTROLLER.getValue());
         mplew.write(1);
@@ -552,17 +525,16 @@ public class MaplePacketCreator {
         mplew.writeShort(life.getRx0());
         mplew.writeShort(life.getRx1());
         mplew.write(MiniMap ? 1 : 0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket spawnPlayerNPC(final PlayerNPC npc) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("spawnPlayerNPC--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("spawnPlayerNPC");
         }
         mplew.writeShort(SendPacketOpcode.PLAYER_NPC.getValue());
         mplew.write((npc.getF() != 1) ? 1 : 0);
@@ -612,56 +584,53 @@ public class MaplePacketCreator {
         for (int i = 0; i < 3; ++i) {
             mplew.writeInt(npc.getPet(i));
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getChatText(final int cidfrom, final String text, final boolean whiteBG, final int show) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getChatText--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getChatText");
         }
         mplew.writeShort(SendPacketOpcode.CHATTEXT.getValue());
         mplew.writeInt(cidfrom);
         mplew.write(whiteBG ? 1 : 0);
         mplew.writeMapleAsciiString(text);
         mplew.write(show);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket GameMaster_Func(final int value) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("GameMaster_Func--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("GameMaster_Func");
         }
         mplew.writeShort(SendPacketOpcode.GM_EFFECT.getValue());
         mplew.write(value);
         mplew.writeZeroBytes(17);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getPacketFromHexString(final String hex) {
-        if (ServerConstants.调试输出封包) {
-            log.info("getPacketFromHexString--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getPacketFromHexString");
         }
         return new ByteArrayMaplePacket(HexTool.getByteArrayFromHexString(hex));
     }
 
     public static MaplePacket GainEXP_Monster(final int gain, final boolean white, final int 结婚奖励经验值, final int 组队经验值, final int Class_Bonus_EXP, final int 道具佩戴附加经验值, final int 网吧特别经验) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("GainEXP_Monster--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("GainEXP_Monster");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_STATUS_INFO.getValue());
         mplew.write(3);
@@ -675,17 +644,16 @@ public class MaplePacketCreator {
         mplew.writeInt(组队经验值);
         mplew.writeInt(道具佩戴附加经验值);
         mplew.writeInt(网吧特别经验);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket GainEXP_Others(final int gain, final boolean inChat, final boolean white) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("GainEXP_Others--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("GainEXP_Others");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_STATUS_INFO.getValue());
         mplew.write(3);
@@ -700,32 +668,30 @@ public class MaplePacketCreator {
         } else {
             mplew.writeZeroBytes(13);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getShowFameGain(final int gain) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getShowFameGain--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getShowFameGain");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_STATUS_INFO.getValue());
         mplew.write(4);
         mplew.writeInt(gain);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showMesoGain(final int gain, final boolean inChat) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showMesoGain--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showMesoGain");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_STATUS_INFO.getValue());
         if (!inChat) {
@@ -737,24 +703,23 @@ public class MaplePacketCreator {
         }
         mplew.writeInt(gain);
         mplew.writeShort(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getShowItemGain(final int itemId, final short quantity) {
-        if (ServerConstants.调试输出封包) {
-            log.info("getShowItemGainA--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getShowItemGainA");
         }
         return getShowItemGain(itemId, quantity, false);
     }
 
     public static MaplePacket getShowItemGain(final int itemId, final short quantity, final boolean inChat) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getShowItemGain--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getShowItemGain");
         }
         if (inChat) {
             mplew.writeShort(SendPacketOpcode.SHOW_ITEM_GAIN_INCHAT.getValue());
@@ -770,17 +735,16 @@ public class MaplePacketCreator {
             mplew.writeInt(0);
             mplew.writeInt(0);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showRewardItemAnimation(final int itemId, final String effect) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showRewardItemAnimationA--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showRewardItemAnimationA");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_ITEM_GAIN_INCHAT.getValue());
         mplew.write(11);
@@ -789,17 +753,16 @@ public class MaplePacketCreator {
         if (effect != null && effect.length() > 0) {
             mplew.writeMapleAsciiString(effect);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showRewardItemAnimation(final int itemId, final String effect, final int from_playerid) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showRewardItemAnimationB--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showRewardItemAnimationB");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_FOREIGN_EFFECT.getValue());
         mplew.writeInt(from_playerid);
@@ -809,17 +772,16 @@ public class MaplePacketCreator {
         if (effect != null && effect.length() > 0) {
             mplew.writeMapleAsciiString(effect);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket dropItemFromMapObject(final MapleMapItem drop, final Point dropfrom, final Point dropto, final byte mod) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("dropItemFromMapObject--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("dropItemFromMapObject");
         }
         mplew.writeShort(SendPacketOpcode.DROP_ITEM_FROM_MAPOBJECT.getValue());
         mplew.write(mod);
@@ -841,17 +803,16 @@ public class MaplePacketCreator {
         if (drop.getMeso() == 0) {
             PacketHelper.addExpirationTime(mplew, drop.getItem().getExpiration());
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket spawnPlayerMapobject(final MapleCharacter chr) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("spawnPlayerMapobject--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("spawnPlayerMapobject");
         }
         mplew.writeShort(SendPacketOpcode.SPAWN_PLAYER.getValue());
         mplew.writeInt(chr.getId());
@@ -988,23 +949,22 @@ public class MaplePacketCreator {
         } else if (chr.getMapId() == 109080000 || chr.getMapId() == 109080010) {
             mplew.write(chr.getCoconutTeam());
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket removePlayerFromMap(final int cid, final MapleCharacter chr) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("removePlayerFromMap--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("removePlayerFromMap");
         }
         mplew.writeShort(SendPacketOpcode.REMOVE_PLAYER_FROM_MAP.getValue());
         mplew.writeInt(cid);
-        final ServerConstants ERROR = new ServerConstants();
-        if ((ServerConstants.PACKET_ERROR_OFF && ERROR.getChannel() != 1) || ERROR.getRemovePlayerFromMap() != 1) {
-            final String note = "时间：" + FileoutputUtil.CurrentReadable_Time() + " || 玩家名字：" + chr.getName() + "|| 玩家地图：" + chr.getMapId() + "\r\n38错误：" + ERROR.getPACKET_ERROR() + "\r\n\r\n";
+
+        if (ServerProperties.LogClientErr) {
+            final String note = "时间：" + FileoutputUtil.CurrentReadable_Time() + " || 玩家名字：" + chr.getName() + "|| 玩家地图：" + chr.getMapId() + "\r\n38错误：" + ServerConstants.getPACKET_ERROR() + "\r\n\r\n";
             FileoutputUtil.packetLog("logs/38掉线/" + chr.getName() + ".log", note);
         }
         return mplew.getPacket();
@@ -1012,15 +972,14 @@ public class MaplePacketCreator {
 
     public static MaplePacket facialExpression(final MapleCharacter from, final int expression) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("facialExpression--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("facialExpression");
         }
         mplew.writeShort(SendPacketOpcode.FACIAL_EXPRESSION.getValue());
         mplew.writeInt(from.getId());
         mplew.writeInt(expression);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -1036,8 +995,8 @@ public class MaplePacketCreator {
 
     public static MaplePacket moveSummon(final int cid, final int oid, final Point startPos, final List<LifeMovementFragment> moves) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("moveSummon--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("moveSummon");
         }
         mplew.writeShort(SendPacketOpcode.MOVE_SUMMON.getValue());
         mplew.writeInt(cid);
@@ -1045,17 +1004,16 @@ public class MaplePacketCreator {
         mplew.writeShort(startPos.x);
         mplew.writeShort(startPos.y);
         PacketHelper.serializeMovementList(mplew, moves);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket summonAttack(final int cid, final int summonSkillId, final int newStance, final List<SummonAttackEntry> allDamage) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("summonAttack--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("summonAttack");
         }
         mplew.writeShort(SendPacketOpcode.SUMMON_ATTACK.getValue());
         mplew.writeInt(cid);
@@ -1068,17 +1026,16 @@ public class MaplePacketCreator {
             mplew.write(6);
             mplew.writeInt(attackEntry.getDamage());
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("summonAttack-2158：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("summonAttack-2158：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket closeRangeAttack(final int cid, final int tbyte, final int skill, final int level, final byte display, final byte animation, final byte speed, final List<DamageParse.AttackPair> damage, final boolean energy, final int lvl, final byte mastery, final byte unk, final int charge) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("closeRangeAttack--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("closeRangeAttack");
         }
         mplew.writeShort(energy ? SendPacketOpcode.ENERGY_ATTACK.getValue() : SendPacketOpcode.CLOSE_RANGE_ATTACK.getValue());
         mplew.writeInt(cid);
@@ -1122,17 +1079,16 @@ public class MaplePacketCreator {
                 }
             }
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket rangedAttack(final int cid, final byte tbyte, final int skill, final int level, final byte display, final byte animation, final byte speed, final int itemid, final List<DamageParse.AttackPair> damage, final Point pos, final int lvl, final byte mastery, final byte unk) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("rangedAttack--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("rangedAttack");
         }
         mplew.writeShort(SendPacketOpcode.RANGED_ATTACK.getValue());
         mplew.writeInt(cid);
@@ -1164,17 +1120,16 @@ public class MaplePacketCreator {
             }
         }
         mplew.writePos(pos);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket magicAttack(final int cid, final int tbyte, final int skill, final int level, final byte display, final byte animation, final byte speed, final List<DamageParse.AttackPair> damage, final int charge, final int lvl, final byte unk) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("magicAttack--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("magicAttack");
         }
         mplew.writeShort(SendPacketOpcode.MAGIC_ATTACK.getValue());
         mplew.writeInt(cid);
@@ -1204,9 +1159,8 @@ public class MaplePacketCreator {
         if (charge > 0) {
             mplew.writeInt(charge);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -1214,8 +1168,8 @@ public class MaplePacketCreator {
     public static MaplePacket getNPCShop(final MapleClient c, final int sid, final List<MapleShopItem> items) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
         final MapleItemInformationProvider ii = MapleItemInformationProvider.getInstance();
-        if (ServerConstants.调试输出封包) {
-            log.info("getNPCShop--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getNPCShop");
         }
         mplew.writeShort(SendPacketOpcode.OPEN_NPC_SHOP.getValue());
         mplew.writeInt(sid);
@@ -1232,38 +1186,36 @@ public class MaplePacketCreator {
                 mplew.writeShort(ii.getSlotMax(c, item.getItemId()));
             }
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket confirmShopTransaction(final byte code) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("confirmShopTransaction--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("confirmShopTransaction");
         }
         mplew.writeShort(SendPacketOpcode.CONFIRM_SHOP_TRANSACTION.getValue());
         mplew.write(code);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket addInventorySlot(final MapleInventoryType type, final IItem item) {
-        if (ServerConstants.调试输出封包) {
-            log.info("addInventorySlotA--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("addInventorySlotA");
         }
         return addInventorySlot(type, item, false);
     }
 
     public static MaplePacket addInventorySlot(final MapleInventoryType type, final IItem item, final boolean fromDrop) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("addInventorySlot--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("addInventorySlot");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
         mplew.write(fromDrop ? 1 : 0);
@@ -1271,17 +1223,16 @@ public class MaplePacketCreator {
         mplew.write(type.getType());
         mplew.write(item.getPosition());
         PacketHelper.addItemInfo(mplew, item, true, false);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket pet_updateInventorySlot(final MapleInventoryType type, final IItem item, final boolean fromDrop) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateInventorySlot--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateInventorySlot");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
         mplew.write(fromDrop ? 1 : 0);
@@ -1290,17 +1241,16 @@ public class MaplePacketCreator {
         mplew.write(type.getType());
         mplew.writeShort(item.getPosition());
         mplew.writeShort(item.getQuantity());
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket updateInventorySlot(final MapleInventoryType type, final IItem item, final boolean fromDrop) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateInventorySlot--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateInventorySlot");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
         mplew.write(fromDrop ? 1 : 0);
@@ -1309,16 +1259,15 @@ public class MaplePacketCreator {
         mplew.write(type.getType());
         mplew.writeShort(item.getPosition());
         mplew.writeShort(item.getQuantity());
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket moveInventoryItem(final MapleInventoryType type, final short src, final short dst) {
-        if (ServerConstants.调试输出封包) {
-            log.info("moveInventoryItemA--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("moveInventoryItemA");
         }
         return moveInventoryItem(type, src, dst, (short) (-1));
     }
@@ -1327,17 +1276,16 @@ public class MaplePacketCreator {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
         mplew.writeShort(72);
         mplew.writeZeroBytes(20);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket moveInventoryItem(final MapleInventoryType type, final short src, final short dst, final short equipIndicator) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("moveInventoryItemB--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("moveInventoryItemB");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
         mplew.write(HexTool.getByteArrayFromHexString("01 01 02"));
@@ -1347,17 +1295,16 @@ public class MaplePacketCreator {
         if (equipIndicator != -1) {
             mplew.write(equipIndicator);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket moveAndMergeInventoryItem(final MapleInventoryType type, final short src, final short dst, final short total) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("moveAndMergeInventoryItem--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("moveAndMergeInventoryItem");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
         mplew.write(HexTool.getByteArrayFromHexString("01 02 03"));
@@ -1367,17 +1314,16 @@ public class MaplePacketCreator {
         mplew.write(type.getType());
         mplew.writeShort(dst);
         mplew.writeShort(total);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket moveAndMergeWithRestInventoryItem(final MapleInventoryType type, final short src, final short dst, final short srcQ, final short dstQ) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("moveAndMergeWithRestInventoryItem--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("moveAndMergeWithRestInventoryItem");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
         mplew.write(HexTool.getByteArrayFromHexString("01 02 01"));
@@ -1388,41 +1334,39 @@ public class MaplePacketCreator {
         mplew.write(type.getType());
         mplew.writeShort(dst);
         mplew.writeShort(dstQ);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket clearInventoryItem(final MapleInventoryType type, final short slot, final boolean fromDrop) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("clearInventoryItem--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("clearInventoryItem");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
         mplew.write(fromDrop ? 1 : 0);
         mplew.write(HexTool.getByteArrayFromHexString("01 03"));
         mplew.write(type.getType());
         mplew.writeShort(slot);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket updateSpecialItemUse(final IItem item, final byte invType) {
-        if (ServerConstants.调试输出封包) {
-            log.info("updateSpecialItemUseA--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateSpecialItemUseA");
         }
         return updateSpecialItemUse(item, invType, item.getPosition());
     }
 
     public static MaplePacket updateSpecialItemUse(final IItem item, final byte invType, final short pos) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateSpecialItemUseB--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateSpecialItemUseB");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
         mplew.write(0);
@@ -1441,24 +1385,23 @@ public class MaplePacketCreator {
         if (item.getPosition() < 0) {
             mplew.write(2);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket updateSpecialItemUse_(final IItem item, final byte invType) {
-        if (ServerConstants.调试输出封包) {
-            log.info("updateSpecialItemUse_A--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateSpecialItemUse_A");
         }
         return updateSpecialItemUse_(item, invType, item.getPosition());
     }
 
     public static MaplePacket updateSpecialItemUse_(final IItem item, final byte invType, final short pos) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateSpecialItemUse_B--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateSpecialItemUse_B");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
         mplew.write(0);
@@ -1474,17 +1417,16 @@ public class MaplePacketCreator {
         if (item.getPosition() < 0) {
             mplew.write(1);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket scrolledItem(final IItem scroll, final IItem item, final boolean destroyed, final boolean potential) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("scrolledItem--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("scrolledItem");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
         mplew.write(1);
@@ -1509,17 +1451,16 @@ public class MaplePacketCreator {
         if (!potential) {
             mplew.write(1);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getScrollEffect(final int chr, final IEquip.ScrollResult scrollSuccess, final boolean legendarySpirit) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getScrollEffect--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getScrollEffect");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_SCROLL_EFFECT.getValue());
         mplew.writeInt(chr);
@@ -1542,71 +1483,67 @@ public class MaplePacketCreator {
             }
         }
         mplew.write(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket ItemMaker_Success() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("ItemMaker_Success--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("ItemMaker_Success");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_ITEM_GAIN_INCHAT.getValue());
         mplew.write(17);
         mplew.writeZeroBytes(4);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket ItemMaker_Success_3rdParty(final int from_playerid) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("ItemMaker_Success_3rdParty--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("ItemMaker_Success_3rdParty");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_FOREIGN_EFFECT.getValue());
         mplew.writeInt(from_playerid);
         mplew.write(17);
         mplew.writeZeroBytes(4);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket explodeDrop(final int oid) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("explodeDrop--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("explodeDrop");
         }
         mplew.writeShort(SendPacketOpcode.REMOVE_ITEM_FROM_MAP.getValue());
         mplew.write(4);
         mplew.writeInt(oid);
         mplew.writeShort(655);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket removeItemFromMap(final int oid, final int animation, final int cid) {
-        if (ServerConstants.调试输出封包) {
-            log.info("removeItemFromMapA--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("removeItemFromMapA");
         }
         return removeItemFromMap(oid, animation, cid, 0);
     }
 
     public static MaplePacket removeItemFromMap(final int oid, final int animation, final int cid, final int slot) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("removeItemFromMapB--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("removeItemFromMapB");
         }
         mplew.writeShort(SendPacketOpcode.REMOVE_ITEM_FROM_MAP.getValue());
         mplew.write(animation);
@@ -1617,17 +1554,16 @@ public class MaplePacketCreator {
                 mplew.write(slot);
             }
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket updateCharLook(final MapleCharacter chr) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateCharLook--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateCharLook");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_CHAR_LOOK.getValue());
         mplew.writeInt(chr.getId());
@@ -1640,9 +1576,8 @@ public class MaplePacketCreator {
         addRingInfo(mplew, allrings);
         addMarriageRingLook(mplew, chr);
         mplew.writeInt(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -1657,8 +1592,8 @@ public class MaplePacketCreator {
     }
 
     public static void addRingInfo(final MaplePacketLittleEndianWriter mplew, final List<MapleRing> rings) {
-        if (ServerConstants.调试输出封包) {
-            log.info("addRingInfo--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("addRingInfo");
         }
         mplew.write((rings.size() > 0) ? 1 : 0);
         mplew.writeInt(rings.size());
@@ -1671,8 +1606,8 @@ public class MaplePacketCreator {
 
     public static MaplePacket dropInventoryItem(final MapleInventoryType type, final short src) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("dropInventoryItem--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("dropInventoryItem");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
         mplew.write(HexTool.getByteArrayFromHexString("01 01 03"));
@@ -1681,34 +1616,32 @@ public class MaplePacketCreator {
         if (src < 0) {
             mplew.write(1);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket dropInventoryItemUpdate(final MapleInventoryType type, final IItem item) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("dropInventoryItemUpdate--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("dropInventoryItemUpdate");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
         mplew.write(HexTool.getByteArrayFromHexString("01 01 01"));
         mplew.write(type.getType());
         mplew.writeShort(item.getPosition());
         mplew.writeShort(item.getQuantity());
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket damagePlayer(final int skill, final int monsteridfrom, final int cid, final int damage, final int fake, final byte direction, final int reflect, final boolean is_pg, final int oid, final int pos_x, final int pos_y) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("damagePlayer--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("damagePlayer");
         }
         mplew.writeShort(SendPacketOpcode.DAMAGE_PLAYER.getValue());
         mplew.writeInt(cid);
@@ -1731,17 +1664,16 @@ public class MaplePacketCreator {
         if (fake > 0) {
             mplew.writeInt(fake);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket updateQuest(final MapleQuestStatus quest) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateQuest--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateQuest");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_STATUS_INFO.getValue());
         mplew.write(1);
@@ -1761,67 +1693,63 @@ public class MaplePacketCreator {
                 break;
             }
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket updateInfoQuest(final int quest, final String data) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateInfoQuest--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateInfoQuest");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_STATUS_INFO.getValue());
         mplew.write(10);
         mplew.writeShort(quest);
         mplew.writeMapleAsciiString(data);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket updateQuestInfo(final MapleCharacter c, final int quest, final int npc, final byte progress) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateQuestInfo--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateQuestInfo");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_QUEST_INFO.getValue());
         mplew.write(progress);
         mplew.writeShort(quest);
         mplew.writeInt(npc);
         mplew.writeInt(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket updateQuestFinish(final int quest, final int npc, final int nextquest) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateQuestFinish--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateQuestFinish");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_QUEST_INFO.getValue());
         mplew.write(8);
         mplew.writeShort(quest);
         mplew.writeInt(npc);
         mplew.writeInt(nextquest);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket charInfo(final MapleCharacter chr, final boolean isSelf) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("charInfo--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("charInfo");
         }
         mplew.writeShort(SendPacketOpcode.CHAR_INFO.getValue());
         mplew.writeInt(chr.getId());
@@ -1910,16 +1838,15 @@ public class MaplePacketCreator {
         for (final IItem item2 : 勋章列表Items) {
             mplew.writeInt(item2.getItemId());
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     private static void writeLongMask(final MaplePacketLittleEndianWriter mplew, final List<Pair<MapleBuffStat, Integer>> statups) {
-        if (ServerConstants.调试输出封包) {
-            log.info("writeLongMask--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("writeLongMask");
         }
         long firstmask = 0L;
         long secondmask = 0L;
@@ -1935,8 +1862,8 @@ public class MaplePacketCreator {
     }
 
     private static void writeLongDiseaseMask(final MaplePacketLittleEndianWriter mplew, final List<Pair<MapleDisease, Integer>> statups) {
-        if (ServerConstants.调试输出封包) {
-            log.info("writeLongDiseaseMask--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("writeLongDiseaseMask");
         }
         long firstmask = 0L;
         long secondmask = 0L;
@@ -1952,8 +1879,8 @@ public class MaplePacketCreator {
     }
 
     private static void writeLongMaskFromListM(final MaplePacketLittleEndianWriter mplew, final List<MapleBuffStat> statups) {
-        if (ServerConstants.调试输出封包) {
-            log.info("writeLongMaskFromList--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("writeLongMaskFromList");
         }
         long firstmask = 0L;
         long secondmask = 0L;
@@ -1971,8 +1898,8 @@ public class MaplePacketCreator {
     }
 
     private static void writeLongMaskFromList(final MaplePacketLittleEndianWriter mplew, final List<MapleBuffStat> statups) {
-        if (ServerConstants.调试输出封包) {
-            log.info("writeLongMaskFromList--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("writeLongMaskFromList");
         }
         long firstmask = 0L;
         long secondmask = 0L;
@@ -1989,14 +1916,13 @@ public class MaplePacketCreator {
 
     public static MaplePacket giveMount(MapleCharacter c, int buffid, int skillid, List<Pair<MapleBuffStat, Integer>> statups) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包)
-            log.info("giveMount--------------------");
+        if (ServerProperties.LogPktCall) log.info("giveMount");
         mplew.writeShort(SendPacketOpcode.GIVE_BUFF.getValue());
         mplew.write(0);
         writeLongMask(mplew, statups);
         for (Pair<MapleBuffStat, Integer> statup : statups) {
-            if (((Integer) statup.getRight()).shortValue() >= 1000 && ((Integer) statup.getRight()).shortValue() != 1002) {
-                mplew.writeShort(((Integer) statup.getRight()).shortValue() + c.getGender() * 100);
+            if (statup.getRight().shortValue() >= 1000 && statup.getRight().shortValue() != 1002) {
+                mplew.writeShort(statup.getRight().shortValue() + c.getGender() * 100);
             } else {
                 mplew.write(0);
             }
@@ -2008,11 +1934,10 @@ public class MaplePacketCreator {
         mplew.write(0);
         mplew.write(2);
         int a = giveBuff(c, buffid);
-        if (a > 0)
-            mplew.write(a);
-        if (ServerConstants.PACKET_ERROR_OFF) {
+        if (a > 0) mplew.write(a);
+        if (ServerProperties.LogClientErr) {
             ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -2084,8 +2009,8 @@ public class MaplePacketCreator {
     public static MaplePacket givePirate(final List<Pair<MapleBuffStat, Integer>> statups, final int duration, final int skillid) {
         final boolean infusion = skillid == 5121009 || skillid == 15111005;
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("givePirate--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("givePirate");
         }
         mplew.writeShort(SendPacketOpcode.GIVE_BUFF.getValue());
         mplew.writeLong(0L);
@@ -2096,9 +2021,8 @@ public class MaplePacketCreator {
         mplew.writeInt(duration);
         mplew.writeZeroBytes(6);
         mplew.writeShort(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -2106,8 +2030,8 @@ public class MaplePacketCreator {
     public static MaplePacket giveForeignPirate(final List<Pair<MapleBuffStat, Integer>> statups, final int duration, final int cid, final int skillid) {
         final boolean infusion = skillid == 5121009 || skillid == 15111005;
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("giveForeignPirate--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("giveForeignPirate");
         }
         mplew.writeShort(SendPacketOpcode.GIVE_FOREIGN_BUFF.getValue());
         mplew.writeInt(cid);
@@ -2120,17 +2044,16 @@ public class MaplePacketCreator {
             mplew.writeShort(duration);
         }
         mplew.writeShort(infusion ? 600 : 0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket giveHoming(final int skillid, final int mobid, final int x) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("giveHoming--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("giveHoming");
         }
         mplew.writeShort(SendPacketOpcode.GIVE_BUFF.getValue());
         mplew.writeLong(MapleBuffStat.导航辅助.getValue());
@@ -2141,17 +2064,16 @@ public class MaplePacketCreator {
         mplew.write(0);
         mplew.writeInt(mobid);
         mplew.writeShort(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket giveEnergyChargeTest(final int bar, final int bufflength) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("giveEnergyChargeTestA--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("giveEnergyChargeTestA");
         }
         mplew.writeShort(SendPacketOpcode.GIVE_BUFF.getValue());
         mplew.writeLong(MapleBuffStat.能量获得.getValue());
@@ -2161,9 +2083,8 @@ public class MaplePacketCreator {
         mplew.writeLong(0L);
         mplew.write(0);
         mplew.writeInt((bar >= 10000) ? bufflength : 0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -2175,7 +2096,7 @@ public class MaplePacketCreator {
         mplew.writeLong(0L);
         mplew.writeShort(0);
         for (Pair<MapleBuffStat, Integer> statup : statups) {
-            mplew.writeShort(((Integer) statup.getRight()).shortValue());
+            mplew.writeShort(statup.getRight().shortValue());
             mplew.writeShort(0);
             mplew.writeInt(buffid);
             mplew.writeInt(0);
@@ -2184,9 +2105,9 @@ public class MaplePacketCreator {
         }
         mplew.writeShort(0);
         mplew.write(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
+        if (ServerProperties.LogClientErr) {
             ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -2199,7 +2120,7 @@ public class MaplePacketCreator {
         mplew.writeLong(0L);
         mplew.write(0);
         for (Pair<MapleBuffStat, Integer> stat : statups) {
-            mplew.writeInt(((Integer) stat.getRight()).shortValue());
+            mplew.writeInt(stat.getRight().shortValue());
             mplew.writeInt(0);
             mplew.writeInt(0);
             mplew.write(0);
@@ -2219,7 +2140,7 @@ public class MaplePacketCreator {
         mplew.writeLong(0L);
         mplew.write(0);
         for (Pair<MapleBuffStat, Integer> stat : statups) {
-            mplew.writeInt(((Integer) stat.getRight()).shortValue());
+            mplew.writeInt(stat.getRight().shortValue());
             mplew.writeInt(0);
             mplew.writeInt(0);
             mplew.write(0);
@@ -2227,17 +2148,17 @@ public class MaplePacketCreator {
         }
         mplew.writeShort(0);
         mplew.write(2);
-        if (ServerConstants.PACKET_ERROR_OFF) {
+        if (ServerProperties.LogClientErr) {
             ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket giveEnergyChargeTest(final int cid, final int bar, final int bufflength) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("giveEnergyChargeTestB--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("giveEnergyChargeTestB");
         }
         mplew.writeShort(SendPacketOpcode.GIVE_FOREIGN_BUFF.getValue());
         mplew.writeInt(cid);
@@ -2247,17 +2168,16 @@ public class MaplePacketCreator {
         mplew.writeInt(Math.min(bar, 10000));
         mplew.writeLong(0L);
         mplew.writeInt((bar >= 10000) ? bufflength : 0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket giveBuff(final int buffid, final int bufflength, final List<Pair<MapleBuffStat, Integer>> statups, final MapleStatEffect effect) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("giveBuff--1------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("giveBuff");
         }
         mplew.writeShort(SendPacketOpcode.GIVE_BUFF.getValue());
         writeLongMask(mplew, statups);
@@ -2271,17 +2191,16 @@ public class MaplePacketCreator {
         if (effect == null || (!effect.is斗气集中() && !effect.isFinalAttack())) {
             mplew.write(0);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket giveDebuff(final List<Pair<MapleDisease, Integer>> statups, final int skillid, final int level, final int duration) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("giveDebuff--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("giveDebuff");
         }
         mplew.writeShort(SendPacketOpcode.GIVE_BUFF.getValue());
         writeLongDiseaseMask(mplew, statups);
@@ -2294,17 +2213,16 @@ public class MaplePacketCreator {
         mplew.writeShort(0);
         mplew.writeShort(900);
         mplew.write(2);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket giveForeignDebuff(final int cid, final List<Pair<MapleDisease, Integer>> statups, final int skillid, final int level) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("giveForeignDebuff--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("giveForeignDebuff");
         }
         mplew.writeShort(SendPacketOpcode.GIVE_FOREIGN_BUFF.getValue());
         mplew.writeInt(cid);
@@ -2314,33 +2232,31 @@ public class MaplePacketCreator {
         mplew.writeShort(0);
         mplew.writeShort(900);
         mplew.write(3);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket cancelForeignDebuff(final int cid, final long mask, final boolean first) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("cancelForeignDebuff--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("cancelForeignDebuff");
         }
         mplew.writeShort(SendPacketOpcode.CANCEL_FOREIGN_BUFF.getValue());
         mplew.writeInt(cid);
         mplew.writeLong(first ? mask : 0L);
         mplew.writeLong(first ? 0L : mask);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showMonsterRiding(final int cid, final List<Pair<MapleBuffStat, Integer>> statups, final int itemId, final int skillId) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showMonsterRiding--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showMonsterRiding");
         }
         mplew.writeShort(SendPacketOpcode.GIVE_FOREIGN_BUFF.getValue());
         mplew.writeInt(cid);
@@ -2352,138 +2268,129 @@ public class MaplePacketCreator {
         mplew.writeInt(0);
         mplew.writeShort(0);
         mplew.write(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket giveForeignBuff(MapleCharacter c, int cid, List<Pair<MapleBuffStat, Integer>> statups, MapleStatEffect effect) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包)
-            log.info("giveForeignBuff--------------------");
+        if (ServerProperties.LogPktCall) log.info("giveForeignBuff");
         mplew.writeShort(SendPacketOpcode.GIVE_FOREIGN_BUFF.getValue());
         mplew.writeInt(cid);
         writeLongMask(mplew, statups);
         for (Pair<MapleBuffStat, Integer> statup : statups) {
-            if (effect.isMorph() && ((Integer) statup.getRight()).intValue() <= 255) {
-                mplew.write(((Integer) statup.getRight()).byteValue());
+            if (effect.isMorph() && statup.getRight().intValue() <= 255) {
+                mplew.write(statup.getRight().byteValue());
                 continue;
             }
             if (effect.isPirateMorph()) {
-                mplew.writeShort(((Integer) statup.getRight()).shortValue() + c.getGender() * 100);
+                mplew.writeShort(statup.getRight().shortValue() + c.getGender() * 100);
                 continue;
             }
-            mplew.writeShort(((Integer) statup.getRight()).shortValue());
+            mplew.writeShort(statup.getRight().shortValue());
         }
         mplew.writeShort(0);
-        if (effect.isMorph() && !effect.isPirateMorph())
-            mplew.writeShort(0);
+        if (effect.isMorph() && !effect.isPirateMorph()) mplew.writeShort(0);
         mplew.write(0);
         mplew.write(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
+        if (ServerProperties.LogClientErr) {
             ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket cancelForeignBuff(final int cid, final List<MapleBuffStat> statups) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("cancelForeignBuff--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("cancelForeignBuff");
         }
         mplew.writeShort(SendPacketOpcode.CANCEL_FOREIGN_BUFF.getValue());
         mplew.writeInt(cid);
         writeLongMaskFromList(mplew, statups);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket cancelForeignBuffMONSTER(final int cid, final List<MapleBuffStat> statups) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("cancelForeignBuff--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("cancelForeignBuff");
         }
         mplew.writeShort(SendPacketOpcode.CANCEL_FOREIGN_BUFF.getValue());
         mplew.writeInt(cid);
         writeLongMaskFromListM(mplew, statups);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket cancelBuffMONSTER(final List<MapleBuffStat> statups) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("cancelBuff--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("cancelBuff");
         }
         mplew.writeShort(SendPacketOpcode.CANCEL_BUFF.getValue());
         writeLongMaskFromListM(mplew, statups);
         mplew.write(3);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket cancelBuff(final List<MapleBuffStat> statups) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("cancelBuff--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("cancelBuff");
         }
         mplew.writeShort(SendPacketOpcode.CANCEL_BUFF.getValue());
         writeLongMaskFromList(mplew, statups);
         mplew.write(3);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket cancelHoming() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("cancelHoming--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("cancelHoming");
         }
         mplew.writeShort(SendPacketOpcode.CANCEL_BUFF.getValue());
         mplew.writeLong(MapleBuffStat.导航辅助.getValue());
         mplew.writeLong(0L);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket cancelDebuff(final long mask, final boolean first) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("cancelDebuff--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("cancelDebuff");
         }
         mplew.writeShort(SendPacketOpcode.CANCEL_BUFF.getValue());
         mplew.writeLong(first ? mask : 0L);
         mplew.writeLong(first ? 0L : mask);
         mplew.write(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket updateMount(final MapleCharacter chr, final boolean levelup) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateMount--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateMount");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_MOUNT.getValue());
         mplew.writeInt(chr.getId());
@@ -2491,17 +2398,16 @@ public class MaplePacketCreator {
         mplew.writeInt(chr.getMount().getExp());
         mplew.writeInt(chr.getMount().getFatigue());
         mplew.write(levelup ? 1 : 0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket mountInfo(final MapleCharacter chr) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("mountInfo--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("mountInfo");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_MOUNT.getValue());
         mplew.writeInt(chr.getId());
@@ -2509,113 +2415,106 @@ public class MaplePacketCreator {
         mplew.writeInt(chr.getMount().getLevel());
         mplew.writeInt(chr.getMount().getExp());
         mplew.writeInt(chr.getMount().getFatigue());
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getPlayerShopNewVisitor(final MapleCharacter c, final int slot) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getPlayerShopNewVisitor--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getPlayerShopNewVisitor");
         }
         mplew.writeShort(SendPacketOpcode.PLAYER_INTERACTION.getValue());
         mplew.write(HexTool.getByteArrayFromHexString("04 0" + slot));
         PacketHelper.addCharLook(mplew, c, false);
         mplew.writeMapleAsciiString(c.getName());
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getPlayerShopRemoveVisitor(final int slot) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getPlayerShopRemoveVisitor--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getPlayerShopRemoveVisitor");
         }
         mplew.writeShort(SendPacketOpcode.PLAYER_INTERACTION.getValue());
         mplew.write(HexTool.getByteArrayFromHexString("0A 0" + slot));
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getTradePartnerAdd(final MapleCharacter c) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getTradePartnerAdd--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getTradePartnerAdd");
         }
         mplew.writeShort(SendPacketOpcode.PLAYER_INTERACTION.getValue());
         mplew.write(4);
         mplew.write(1);
         PacketHelper.addCharLook(mplew, c, false);
         mplew.writeMapleAsciiString(c.getName());
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getTradeInvite(final MapleCharacter c, final boolean 现金交易) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getTradeInvite--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getTradeInvite");
         }
         mplew.writeShort(SendPacketOpcode.PLAYER_INTERACTION.getValue());
         mplew.write(2);
         mplew.write(现金交易 ? 6 : 3);
         mplew.writeMapleAsciiString(c.getName());
         mplew.writeInt(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getTradeMesoSet(final byte number, final int meso) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getTradeMesoSet--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getTradeMesoSet");
         }
         mplew.writeShort(SendPacketOpcode.PLAYER_INTERACTION.getValue());
         mplew.write(15);
         mplew.write(number);
         mplew.writeInt(meso);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getTradeItemAdd(final byte number, final IItem item) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getTradeItemAdd--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getTradeItemAdd");
         }
         mplew.writeShort(SendPacketOpcode.PLAYER_INTERACTION.getValue());
         mplew.write(14);
         mplew.write(number);
         PacketHelper.addItemInfo(mplew, item, false, false, true);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getTradeStart(final MapleClient c, final MapleTrade trade, final byte number, final boolean 现金交易) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getTradeStart--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getTradeStart");
         }
         mplew.writeShort(SendPacketOpcode.PLAYER_INTERACTION.getValue());
         mplew.write(5);
@@ -2631,63 +2530,59 @@ public class MaplePacketCreator {
         PacketHelper.addCharLook(mplew, c.getPlayer(), false);
         mplew.writeMapleAsciiString(c.getPlayer().getName());
         mplew.write(255);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getTradeConfirmation() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getTradeConfirmation--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getTradeConfirmation");
         }
         mplew.writeShort(SendPacketOpcode.PLAYER_INTERACTION.getValue());
         mplew.write(16);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket TradeMessage(final byte UserSlot, final byte message) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("TradeMessage--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("TradeMessage");
         }
         mplew.writeShort(SendPacketOpcode.PLAYER_INTERACTION.getValue());
         mplew.write(10);
         mplew.write(UserSlot);
         mplew.write(message);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getTradeCancel(final byte UserSlot, final int unsuccessful) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getTradeCancel--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getTradeCancel");
         }
         mplew.writeShort(SendPacketOpcode.PLAYER_INTERACTION.getValue());
         mplew.write(10);
         mplew.write(UserSlot);
         mplew.write((unsuccessful == 0) ? 2 : ((unsuccessful == 1) ? 9 : 10));
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getNPCTalk(final int npc, final byte msgType, final String talk, final String endBytes, final byte type) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getNPCTalk--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getNPCTalk");
         }
         mplew.writeShort(SendPacketOpcode.NPC_TALK.getValue());
         mplew.write(4);
@@ -2696,17 +2591,16 @@ public class MaplePacketCreator {
         mplew.write(type);
         mplew.writeMapleAsciiString(talk);
         mplew.write(HexTool.getByteArrayFromHexString(endBytes));
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getMapSelection(final int npcid, final String sel) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getMapSelection--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getMapSelection");
         }
         mplew.writeShort(SendPacketOpcode.NPC_TALK.getValue());
         mplew.write(4);
@@ -2715,17 +2609,16 @@ public class MaplePacketCreator {
         mplew.writeInt(0);
         mplew.writeInt(5);
         mplew.writeMapleAsciiString(sel);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getNPCTalkStyle(final int npc, final String talk, final int card, final int[] args) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getNPCTalkStyle--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getNPCTalkStyle");
         }
         mplew.writeShort(SendPacketOpcode.NPC_TALK.getValue());
         mplew.write(4);
@@ -2737,17 +2630,16 @@ public class MaplePacketCreator {
             mplew.writeInt(args[i]);
         }
         mplew.writeInt(card);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getNPCTalkNum(final int npc, final String talk, final int def, final int min, final int max) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getNPCTalkNum--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getNPCTalkNum");
         }
         mplew.writeShort(SendPacketOpcode.NPC_TALK.getValue());
         mplew.write(4);
@@ -2758,17 +2650,16 @@ public class MaplePacketCreator {
         mplew.writeInt(min);
         mplew.writeInt(max);
         mplew.writeInt(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getNPCTalkText(final int npc, final String talk) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getNPCTalkText--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getNPCTalkText");
         }
         mplew.writeShort(SendPacketOpcode.NPC_TALK.getValue());
         mplew.write(4);
@@ -2777,39 +2668,37 @@ public class MaplePacketCreator {
         mplew.writeMapleAsciiString(talk);
         mplew.writeInt(0);
         mplew.writeInt(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showForeignEffect(final int cid, final int effect) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showForeignEffect--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showForeignEffect");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_FOREIGN_EFFECT.getValue());
         mplew.writeInt(cid);
         mplew.write(effect);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showBuffeffect(final int cid, final int skillid, final int effectid) {
-        if (ServerConstants.调试输出封包) {
-            log.info("showBuffeffect--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showBuffeffect");
         }
         return showBuffeffect(cid, skillid, effectid, (byte) 3);
     }
 
     public static MaplePacket showBuffeffect(final int cid, final int skillid, final int effectid, final byte direction) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showBuffeffectA--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showBuffeffectA");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_FOREIGN_EFFECT.getValue());
         mplew.writeInt(cid);
@@ -2820,24 +2709,23 @@ public class MaplePacketCreator {
         if (direction != 3) {
             mplew.write(direction);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showOwnBuffEffect(final int skillid, final int effectid) {
-        if (ServerConstants.调试输出封包) {
-            log.info("showOwnBuffEffectA--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showOwnBuffEffectA");
         }
         return showOwnBuffEffect(skillid, effectid, (byte) 3);
     }
 
     public static MaplePacket showOwnBuffEffect(final int skillid, final int effectid, final byte direction) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showOwnBuffEffectB--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showOwnBuffEffectB");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_ITEM_GAIN_INCHAT.getValue());
         mplew.write(effectid);
@@ -2847,16 +2735,15 @@ public class MaplePacketCreator {
         if (direction != 3) {
             mplew.write(direction);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showItemLevelupEffect() {
-        if (ServerConstants.调试输出封包) {
-            log.info("showItemLevelupEffect--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showItemLevelupEffect");
         }
         return showSpecialEffect(17);
     }
@@ -2874,45 +2761,43 @@ public class MaplePacketCreator {
     }
 
     public static MaplePacket showForeignItemLevelupEffect(final int cid) {
-        if (ServerConstants.调试输出封包) {
-            log.info("showForeignItemLevelupEffect--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showForeignItemLevelupEffect");
         }
         return showSpecialEffect(cid, 17);
     }
 
     public static MaplePacket showSpecialEffect(final int effect) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showSpecialEffectA--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showSpecialEffectA");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_ITEM_GAIN_INCHAT.getValue());
         mplew.write(effect);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showSpecialEffect(final int cid, final int effect) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showSpecialEffectB--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showSpecialEffectB");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_FOREIGN_EFFECT.getValue());
         mplew.writeInt(cid);
         mplew.write(effect);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket updateSkill(final int skillid, final int level, final int masterlevel, final long expiration) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateSkill--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateSkill");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_SKILLS.getValue());
         mplew.write(1);
@@ -2921,17 +2806,16 @@ public class MaplePacketCreator {
         mplew.writeInt(level);
         mplew.writeInt(masterlevel);
         mplew.write(1);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket updateQuestMobKills(final MapleQuestStatus status) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateQuestMobKills--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateQuestMobKills");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_STATUS_INFO.getValue());
         mplew.write(1);
@@ -2943,17 +2827,16 @@ public class MaplePacketCreator {
         }
         mplew.writeMapleAsciiString(sb.toString());
         mplew.writeZeroBytes(8);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket 游戏屏幕中间黄色字体(final String status) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateQuestMobKills--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateQuestMobKills");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_STATUS_INFO.getValue());
         mplew.write(1);
@@ -2961,17 +2844,16 @@ public class MaplePacketCreator {
         mplew.write(1);
         mplew.writeMapleAsciiString(status);
         mplew.writeZeroBytes(8);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket 游戏屏幕中间黄色字体(final String status, final int id) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateQuestMobKills--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateQuestMobKills");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_STATUS_INFO.getValue());
         mplew.write(1);
@@ -2979,79 +2861,74 @@ public class MaplePacketCreator {
         mplew.write(1);
         mplew.writeMapleAsciiString(status);
         mplew.writeZeroBytes(8);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getShowQuestCompletion(final int id) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getShowQuestCompletion--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getShowQuestCompletion");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_QUEST_COMPLETION.getValue());
         mplew.writeShort(id);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getKeymap(final MapleKeyLayout layout) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getKeymap--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getKeymap");
         }
         mplew.writeShort(SendPacketOpcode.KEYMAP.getValue());
         mplew.write(0);
         layout.writeData(mplew);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getWhisper(final String sender, final int channel, final String text) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getWhisper--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getWhisper");
         }
         mplew.writeShort(SendPacketOpcode.WHISPER.getValue());
         mplew.write(18);
         mplew.writeMapleAsciiString(sender);
         mplew.writeShort(channel - 1);
         mplew.writeMapleAsciiString(text);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getWhisperReply(final String target, final byte reply) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getWhisperReply--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getWhisperReply");
         }
         mplew.writeShort(SendPacketOpcode.WHISPER.getValue());
         mplew.write(10);
         mplew.writeMapleAsciiString(target);
         mplew.write(reply);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getFindReplyWithMap(final String target, final int mapid, final boolean buddy) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getFindReplyWithMap--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getFindReplyWithMap");
         }
         mplew.writeShort(SendPacketOpcode.WHISPER.getValue());
         mplew.write(buddy ? 72 : 9);
@@ -3059,80 +2936,76 @@ public class MaplePacketCreator {
         mplew.write(1);
         mplew.writeInt(mapid);
         mplew.writeZeroBytes(8);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getFindReply(final String target, final int channel, final boolean buddy) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getFindReply--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getFindReply");
         }
         mplew.writeShort(SendPacketOpcode.WHISPER.getValue());
         mplew.write(buddy ? 72 : 9);
         mplew.writeMapleAsciiString(target);
         mplew.write(3);
         mplew.writeInt(channel - 1);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getInventoryFull() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getInventoryFull--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getInventoryFull");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
         mplew.write(1);
         mplew.write(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getShowInventoryFull() {
-        if (ServerConstants.调试输出封包) {
-            log.info("getShowInventoryFull--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getShowInventoryFull");
         }
         return getShowInventoryStatus(255);
     }
 
     public static MaplePacket showItemUnavailable() {
-        if (ServerConstants.调试输出封包) {
-            log.info("showItemUnavailable--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showItemUnavailable");
         }
         return getShowInventoryStatus(254);
     }
 
     public static MaplePacket getShowInventoryStatus(final int mode) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getShowInventoryStatus--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getShowInventoryStatus");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_STATUS_INFO.getValue());
         mplew.write(0);
         mplew.write(mode);
         mplew.writeInt(0);
         mplew.writeInt(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getStorage(final int npcId, final byte slots, final Collection<IItem> items, final int meso) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getStorage--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getStorage");
         }
         mplew.writeShort(SendPacketOpcode.OPEN_STORAGE.getValue());
         mplew.write(22);
@@ -3152,32 +3025,30 @@ public class MaplePacketCreator {
         }
         mplew.writeShort(0);
         mplew.writeShort(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getStorageFull() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getStorageFull--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getStorageFull");
         }
         mplew.writeShort(SendPacketOpcode.OPEN_STORAGE.getValue());
         mplew.write(17);
         mplew.write(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket mesoStorage(final byte slots, final int meso) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("mesoStorage--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("mesoStorage");
         }
         mplew.writeShort(SendPacketOpcode.OPEN_STORAGE.getValue());
         mplew.write(19);
@@ -3186,17 +3057,16 @@ public class MaplePacketCreator {
         mplew.writeShort(0);
         mplew.writeInt(0);
         mplew.writeInt(meso);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket storeStorage(final byte slots, final MapleInventoryType type, final Collection<IItem> items) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("storeStorage--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("storeStorage");
         }
         mplew.writeShort(SendPacketOpcode.OPEN_STORAGE.getValue());
         mplew.write(13);
@@ -3208,17 +3078,16 @@ public class MaplePacketCreator {
         for (final IItem item : items) {
             PacketHelper.addItemInfo(mplew, item, true, true);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket takeOutStorage(final byte slots, final MapleInventoryType type, final Collection<IItem> items) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("takeOutStorage--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("takeOutStorage");
         }
         mplew.writeShort(SendPacketOpcode.OPEN_STORAGE.getValue());
         mplew.write(9);
@@ -3230,17 +3099,16 @@ public class MaplePacketCreator {
         for (final IItem item : items) {
             PacketHelper.addItemInfo(mplew, item, true, true);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket fairyPendantMessage(final int type, final int percent) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("fairyPendantMessage--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("fairyPendantMessage");
         }
         mplew.writeShort(SendPacketOpcode.FAIRY_PEND_MSG.getValue());
         mplew.writeShort(21);
@@ -3248,17 +3116,16 @@ public class MaplePacketCreator {
         mplew.writeShort(0);
         mplew.writeShort(percent);
         mplew.writeShort(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket giveFameResponse(final int mode, final String charname, final int newfame) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("giveFameResponse--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("giveFameResponse");
         }
         mplew.writeShort(SendPacketOpcode.FAME_RESPONSE.getValue());
         mplew.write(0);
@@ -3266,47 +3133,44 @@ public class MaplePacketCreator {
         mplew.write(mode);
         mplew.writeShort(newfame);
         mplew.writeShort(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket giveFameErrorResponse(final int status) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("giveFameErrorResponse--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("giveFameErrorResponse");
         }
         mplew.writeShort(SendPacketOpcode.FAME_RESPONSE.getValue());
         mplew.write(status);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket receiveFame(final int mode, final String charnameFrom) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("receiveFame--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("receiveFame");
         }
         mplew.writeShort(SendPacketOpcode.FAME_RESPONSE.getValue());
         mplew.write(5);
         mplew.writeMapleAsciiString(charnameFrom);
         mplew.write(mode);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket partyCreated(final int partyid) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("partyCreated--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("partyCreated");
         }
         mplew.writeShort(SendPacketOpcode.PARTY_OPERATION.getValue());
         mplew.write(8);
@@ -3314,62 +3178,58 @@ public class MaplePacketCreator {
         mplew.write(MaplePacketCreator.CHAR_INFO_MAGIC);
         mplew.write(MaplePacketCreator.CHAR_INFO_MAGIC);
         mplew.writeInt(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket partyInvite(final MapleCharacter from) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("partyInvite--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("partyInvite");
         }
         mplew.writeShort(SendPacketOpcode.PARTY_OPERATION.getValue());
         mplew.write(4);
         mplew.writeInt(from.getParty().getId());
         mplew.writeMapleAsciiString(from.getName());
         mplew.write(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket partyStatusMessage(final int message) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("partyStatusMessageA--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("partyStatusMessageA");
         }
         mplew.writeShort(SendPacketOpcode.PARTY_OPERATION.getValue());
         mplew.write(message);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket partyStatusMessage(final int message, final String charname) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("partyStatusMessageB--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("partyStatusMessageB");
         }
         mplew.writeShort(SendPacketOpcode.PARTY_OPERATION.getValue());
         mplew.write(message);
         mplew.writeMapleAsciiString(charname);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     private static void addPartyStatus(final int forchannel, final MapleParty party, final LittleEndianWriter lew, final boolean leaving) {
-        if (ServerConstants.调试输出封包) {
-            log.info("addPartyStatus--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("addPartyStatus");
         }
         final List<MaplePartyCharacter> partymembers = new ArrayList<MaplePartyCharacter>(party.getMembers());
         while (partymembers.size() < 6) {
@@ -3419,8 +3279,8 @@ public class MaplePacketCreator {
 
     public static MaplePacket updateParty(final int forChannel, final MapleParty party, final PartyOperation op, final MaplePartyCharacter target) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateParty--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateParty");
         }
         mplew.writeShort(SendPacketOpcode.PARTY_OPERATION.getValue());
         switch (op) {
@@ -3461,98 +3321,92 @@ public class MaplePacketCreator {
                 break;
             }
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket partyPortal(final int townId, final int targetId, final int skillId, final Point position) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("partyPortal--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("partyPortal");
         }
         mplew.writeShort(SendPacketOpcode.PARTY_OPERATION.getValue());
         mplew.writeShort(35);
         mplew.writeInt(townId);
         mplew.writeInt(targetId);
         mplew.writePos(position);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket updatePartyMemberHP(final int cid, final int curhp, final int maxhp) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updatePartyMemberHP--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updatePartyMemberHP");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_PARTYMEMBER_HP.getValue());
         mplew.writeInt(cid);
         mplew.writeInt(curhp);
         mplew.writeInt(maxhp);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket multiChat(final String name, final String chattext, final int mode) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("multiChat--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("multiChat");
         }
         mplew.writeShort(SendPacketOpcode.MULTICHAT.getValue());
         mplew.write(mode);
         mplew.writeMapleAsciiString(name);
         mplew.writeMapleAsciiString(chattext);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getClock(final int time) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getClock--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getClock");
         }
         mplew.writeShort(SendPacketOpcode.CLOCK.getValue());
         mplew.write(2);
         mplew.writeInt(time);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getClockTime(final int hour, final int min, final int sec) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getClockTime--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getClockTime");
         }
         mplew.writeShort(SendPacketOpcode.CLOCK.getValue());
         mplew.write(1);
         mplew.write(hour);
         mplew.write(min);
         mplew.write(sec);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket spawnMist(final MapleMist mist) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("spawnMist--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("spawnMist");
         }
         mplew.writeShort(SendPacketOpcode.SPAWN_MIST.getValue());
         mplew.writeInt(mist.getObjectId());
@@ -3570,31 +3424,29 @@ public class MaplePacketCreator {
         mplew.writeInt(mist.getBox().x + mist.getBox().width);
         mplew.writeInt(mist.getBox().y + mist.getBox().height);
         mplew.writeInt(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket removeMist(final int oid, final boolean eruption) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("removeMist--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("removeMist");
         }
         mplew.writeShort(SendPacketOpcode.REMOVE_MIST.getValue());
         mplew.writeInt(oid);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket damageSummon(final int cid, final int summonSkillId, final int damage, final int unkByte, final int monsterIdFrom) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("damageSummon--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("damageSummon");
         }
         mplew.writeShort(SendPacketOpcode.DAMAGE_SUMMON.getValue());
         mplew.writeInt(cid);
@@ -3603,31 +3455,29 @@ public class MaplePacketCreator {
         mplew.writeInt(damage);
         mplew.writeInt(monsterIdFrom);
         mplew.write(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket buddylistMessage(final byte message) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("buddylistMessage--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("buddylistMessage");
         }
         mplew.writeShort(SendPacketOpcode.BUDDYLIST.getValue());
         mplew.write(message);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket updateBuddylist(final Collection<BuddyEntry> buddylist) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateBuddylist--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateBuddylist");
         }
         mplew.writeShort(SendPacketOpcode.BUDDYLIST.getValue());
         mplew.write(7);
@@ -3644,17 +3494,16 @@ public class MaplePacketCreator {
         for (int x = 0; x < buddylist.size(); ++x) {
             mplew.writeInt(0);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("updateBuddylist MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("updateBuddylist MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket requestBuddylistAdd(final int cidFrom, final String nameFrom, final int levelFrom, final int jobFrom) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("requestBuddylistAdd--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("requestBuddylistAdd");
         }
         mplew.writeShort(SendPacketOpcode.BUDDYLIST.getValue());
         mplew.write(9);
@@ -3668,94 +3517,88 @@ public class MaplePacketCreator {
         mplew.writeShort(0);
         mplew.writeAsciiString("群未定", 17);
         mplew.write(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket updateBuddyChannel(final int characterid, final int channel) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateBuddyChannel--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateBuddyChannel");
         }
         mplew.writeShort(SendPacketOpcode.BUDDYLIST.getValue());
         mplew.write(20);
         mplew.writeInt(characterid);
         mplew.write(0);
         mplew.writeInt(channel);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket itemEffect(final int characterid, final int itemid) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("itemEffect--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("itemEffect");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_ITEM_EFFECT.getValue());
         mplew.writeInt(characterid);
         mplew.writeInt(itemid);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket itemEffects(final int characterid, final int itemid) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("itemEffect--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("itemEffect");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_ITEM_GAIN_INCHAT.getValue());
         mplew.writeInt(characterid);
         mplew.writeInt(itemid);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket updateBuddyCapacity(final int capacity) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateBuddyCapacity--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateBuddyCapacity");
         }
         mplew.writeShort(SendPacketOpcode.BUDDYLIST.getValue());
         mplew.write(21);
         mplew.write(capacity);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showChair(final int characterid, final int itemid) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showChair--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showChair");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_CHAIR.getValue());
         mplew.writeInt(characterid);
         mplew.writeInt(itemid);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket cancelChair(final int id) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("cancelChair--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("cancelChair");
         }
         mplew.writeShort(SendPacketOpcode.CANCEL_CHAIR.getValue());
         if (id == -1) {
@@ -3764,17 +3607,16 @@ public class MaplePacketCreator {
             mplew.write(1);
             mplew.writeShort(id);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket spawnReactor(final MapleReactor reactor) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("spawnReactor--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("spawnReactor");
         }
         mplew.writeShort(SendPacketOpcode.REACTOR_SPAWN.getValue());
         mplew.writeInt(reactor.getObjectId());
@@ -3782,86 +3624,82 @@ public class MaplePacketCreator {
         mplew.write(reactor.getState());
         mplew.writePos(reactor.getPosition());
         mplew.write(reactor.getFacingDirection());
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket triggerReactor(final MapleReactor reactor, final int stance) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("triggerReactor--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("triggerReactor");
         }
         mplew.writeShort(SendPacketOpcode.REACTOR_HIT.getValue());
         mplew.writeInt(reactor.getObjectId());
         mplew.write(reactor.getState());
         mplew.writePos(reactor.getPosition());
         mplew.writeInt(stance);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket destroyReactor(final MapleReactor reactor) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("destroyReactor--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("destroyReactor");
         }
         mplew.writeShort(SendPacketOpcode.REACTOR_DESTROY.getValue());
         mplew.writeInt(reactor.getObjectId());
         mplew.write(reactor.getState());
         mplew.writePos(reactor.getPosition());
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket musicChange(final String song) {
-        if (ServerConstants.调试输出封包) {
-            log.info("musicChange--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("musicChange");
         }
         return environmentChange(song, 6);
     }
 
     public static MaplePacket showEffect(final String effect) {
-        if (ServerConstants.调试输出封包) {
-            log.info("showEffect--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showEffect");
         }
         return environmentChange(effect, 3);
     }
 
     public static MaplePacket playSound(final String sound) {
-        if (ServerConstants.调试输出封包) {
-            log.info("playSound--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("playSound");
         }
         return environmentChange(sound, 4);
     }
 
     public static MaplePacket environmentChange(final String env, final int mode) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("environmentChange--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("environmentChange");
         }
         mplew.writeShort(SendPacketOpcode.BOSS_ENV.getValue());
         mplew.write(mode);
         mplew.writeMapleAsciiString(env);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket startMapEffect(final String msg, final int itemid, final boolean active) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("startMapEffect--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("startMapEffect");
         }
         mplew.writeShort(SendPacketOpcode.MAP_EFFECT.getValue());
         mplew.write(active ? 0 : 1);
@@ -3869,32 +3707,30 @@ public class MaplePacketCreator {
         if (active) {
             mplew.writeMapleAsciiString(msg);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket removeMapEffect() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("removeMapEffect--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("removeMapEffect");
         }
         mplew.writeShort(SendPacketOpcode.MAP_EFFECT.getValue());
         mplew.write(0);
         mplew.writeInt(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket fuckGuildInfo(final MapleCharacter c) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("fuckGuildInfo--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("fuckGuildInfo");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
         mplew.write(26);
@@ -3926,17 +3762,16 @@ public class MaplePacketCreator {
         mplew.write(0);
         mplew.writeInt(0);
         mplew.writeInt(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showGuildInfo(final MapleCharacter c) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showGuildInfo--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showGuildInfo");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
         mplew.write(26);
@@ -3953,16 +3788,15 @@ public class MaplePacketCreator {
         c.setGuildRank(mgc.getGuildRank());
         mplew.write(1);
         getGuildInfo(mplew, g);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     private static void getGuildInfo(final MaplePacketLittleEndianWriter mplew, final MapleGuild guild) {
-        if (ServerConstants.调试输出封包) {
-            log.info("getGuildInfo--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getGuildInfo");
         }
         mplew.writeInt(guild.getId());
         mplew.writeMapleAsciiString(guild.getName());
@@ -3981,8 +3815,8 @@ public class MaplePacketCreator {
     }
 
     private static void getGuildInfo2(final MaplePacketLittleEndianWriter mplew, final MapleGuild guild, final MapleCharacter chr) {
-        if (ServerConstants.调试输出封包) {
-            log.info("getGuildInfo2--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getGuildInfo2");
         }
         mplew.writeInt(guild.getId());
         mplew.writeMapleAsciiString(guild.getName());
@@ -4002,70 +3836,66 @@ public class MaplePacketCreator {
 
     public static MaplePacket guildMemberOnline(final int gid, final int cid, final boolean bOnline) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("guildMemberOnline--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("guildMemberOnline");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
         mplew.write(61);
         mplew.writeInt(gid);
         mplew.writeInt(cid);
         mplew.write(bOnline ? 1 : 0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket guildInvite(final int gid, final String charName, final int levelFrom, final int jobFrom) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("guildInvite--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("guildInvite");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
         mplew.write(5);
         mplew.writeInt(gid);
         mplew.writeMapleAsciiString(charName);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket denyGuildInvitation(final String charname) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("denyGuildInvitation--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("denyGuildInvitation");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
         mplew.write(55);
         mplew.writeMapleAsciiString(charname);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket genericGuildMessage(final byte code) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("genericGuildMessage--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("genericGuildMessage");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
         mplew.write(code);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket newGuildMember(final MapleGuildCharacter mgc) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("newGuildMember--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("newGuildMember");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
         mplew.write(39);
@@ -4078,67 +3908,63 @@ public class MaplePacketCreator {
         mplew.writeInt(mgc.isOnline() ? 1 : 0);
         mplew.writeInt(1);
         mplew.writeInt(mgc.getAllianceRank());
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket memberLeft(final MapleGuildCharacter mgc, final boolean bExpelled) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("memberLeft--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("memberLeft");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
         mplew.write(bExpelled ? 47 : 44);
         mplew.writeInt(mgc.getGuildId());
         mplew.writeInt(mgc.getId());
         mplew.writeMapleAsciiString(mgc.getName());
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket changeRank(final MapleGuildCharacter mgc) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("changeRank--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("changeRank");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
         mplew.write(64);
         mplew.writeInt(mgc.getGuildId());
         mplew.writeInt(mgc.getId());
         mplew.write(mgc.getGuildRank());
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket guildNotice(final int gid, final String notice) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("guildNotice--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("guildNotice");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
         mplew.write(68);
         mplew.writeInt(gid);
         mplew.writeMapleAsciiString(notice);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket guildMemberLevelJobUpdate(final MapleGuildCharacter mgc) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("guildMemberLevelJobUpdate--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("guildMemberLevelJobUpdate");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
         mplew.write(60);
@@ -4146,17 +3972,16 @@ public class MaplePacketCreator {
         mplew.writeInt(mgc.getId());
         mplew.writeInt(mgc.getLevel());
         mplew.writeInt(mgc.getJobId());
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket rankTitleChange(final int gid, final String[] ranks) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("rankTitleChange--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("rankTitleChange");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
         mplew.write(62);
@@ -4164,33 +3989,31 @@ public class MaplePacketCreator {
         for (final String r : ranks) {
             mplew.writeMapleAsciiString(r);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket guildDisband(final int gid) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("guildDisband--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("guildDisband");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
         mplew.write(50);
         mplew.writeInt(gid);
         mplew.write(1);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket guildEmblemChange(final int gid, final short bg, final byte bgcolor, final short logo, final byte logocolor) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("guildEmblemChange--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("guildEmblemChange");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
         mplew.write(66);
@@ -4199,50 +4022,47 @@ public class MaplePacketCreator {
         mplew.write(bgcolor);
         mplew.writeShort(logo);
         mplew.write(logocolor);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket guildCapacityChange(final int gid, final int capacity) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("guildCapacityChange--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("guildCapacityChange");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
         mplew.write(58);
         mplew.writeInt(gid);
         mplew.write(capacity);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket removeGuildFromAlliance(final MapleGuildAlliance alliance, final MapleGuild expelledGuild, final boolean expelled) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("removeGuildFromAlliance--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("removeGuildFromAlliance");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
         mplew.write(16);
         addAllianceInfo(mplew, alliance);
         getGuildInfo(mplew, expelledGuild);
         mplew.write(expelled ? 1 : 0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket changeAlliance(final MapleGuildAlliance alliance, final boolean in) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("changeAlliance--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("changeAlliance");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
         mplew.write(1);
@@ -4263,71 +4083,67 @@ public class MaplePacketCreator {
             mplew.writeInt(members.size());
             for (final MapleGuildCharacter mgc : members) {
                 mplew.writeInt(mgc.getId());
-                mplew.write((byte) (in ? mgc.getAllianceRank() : 0));
+                mplew.write(in ? mgc.getAllianceRank() : 0);
             }
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket changeAllianceLeader(final int allianceid, final int newLeader, final int oldLeader) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("changeAllianceLeaderA--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("changeAllianceLeaderA");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
         mplew.write(2);
         mplew.writeInt(allianceid);
         mplew.writeInt(oldLeader);
         mplew.writeInt(newLeader);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket updateAllianceLeader(final int allianceid, final int newLeader, final int oldLeader) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateAllianceLeaderB--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateAllianceLeaderB");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
         mplew.write(25);
         mplew.writeInt(allianceid);
         mplew.writeInt(oldLeader);
         mplew.writeInt(newLeader);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket sendAllianceInvite(final String allianceName, final MapleCharacter inviter) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("sendAllianceInvite--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("sendAllianceInvite");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
         mplew.write(3);
         mplew.writeInt(inviter.getGuildId());
         mplew.writeMapleAsciiString(inviter.getName());
         mplew.writeMapleAsciiString(allianceName);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket changeGuildInAlliance(final MapleGuildAlliance alliance, final MapleGuild guild, final boolean add) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("changeGuildInAlliance--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("changeGuildInAlliance");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
         mplew.write(4);
@@ -4337,36 +4153,34 @@ public class MaplePacketCreator {
         mplew.writeInt(members.size());
         for (final MapleGuildCharacter mgc : members) {
             mplew.writeInt(mgc.getId());
-            mplew.write((byte) (add ? mgc.getAllianceRank() : 0));
+            mplew.write(add ? mgc.getAllianceRank() : 0);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket changeAllianceRank(final int allianceid, final MapleGuildCharacter player) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("changeAllianceRank--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("changeAllianceRank");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
         mplew.write(5);
         mplew.writeInt(allianceid);
         mplew.writeInt(player.getId());
         mplew.writeInt(player.getAllianceRank());
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket createGuildAlliance(final MapleGuildAlliance alliance) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("createGuildAlliance--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("createGuildAlliance");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
         mplew.write(15);
@@ -4382,17 +4196,16 @@ public class MaplePacketCreator {
         for (final MapleGuild gg : g) {
             getGuildInfo(mplew, gg);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getAllianceInfo(final MapleGuildAlliance alliance) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getAllianceInfo--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getAllianceInfo");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
         mplew.write(12);
@@ -4400,32 +4213,30 @@ public class MaplePacketCreator {
         if (alliance != null) {
             addAllianceInfo(mplew, alliance);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getAllianceUpdate(final MapleGuildAlliance alliance) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getAllianceUpdate--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getAllianceUpdate");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
         mplew.write(23);
         addAllianceInfo(mplew, alliance);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getGuildAlliance(final MapleGuildAlliance alliance) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getGuildAlliance--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getGuildAlliance");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
         mplew.write(13);
@@ -4445,17 +4256,16 @@ public class MaplePacketCreator {
         for (final MapleGuild gg : g) {
             getGuildInfo(mplew, gg);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket addGuildToAlliance(final MapleGuildAlliance alliance, final MapleGuild newGuild) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("addGuildToAlliance--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("addGuildToAlliance");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
         mplew.write(18);
@@ -4463,16 +4273,15 @@ public class MaplePacketCreator {
         mplew.writeInt(newGuild.getId());
         getGuildInfo(mplew, newGuild);
         mplew.write(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     private static void addAllianceInfo(final MaplePacketLittleEndianWriter mplew, final MapleGuildAlliance alliance) {
-        if (ServerConstants.调试输出封包) {
-            log.info("addAllianceInfo--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("addAllianceInfo");
         }
         mplew.writeInt(alliance.getId());
         mplew.writeMapleAsciiString(alliance.getName());
@@ -4489,8 +4298,8 @@ public class MaplePacketCreator {
 
     public static MaplePacket allianceMemberOnline(final int alliance, final int gid, final int id, final boolean online) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("allianceMemberOnline--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("allianceMemberOnline");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
         mplew.write(14);
@@ -4498,17 +4307,16 @@ public class MaplePacketCreator {
         mplew.writeInt(gid);
         mplew.writeInt(id);
         mplew.write(online ? 1 : 0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket updateAlliance(final MapleGuildCharacter mgc, final int allianceid) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateAlliance--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateAlliance");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
         mplew.write(24);
@@ -4517,49 +4325,46 @@ public class MaplePacketCreator {
         mplew.writeInt(mgc.getId());
         mplew.writeInt(mgc.getLevel());
         mplew.writeInt(mgc.getJobId());
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket updateAllianceRank(final int allianceid, final MapleGuildCharacter mgc) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateAllianceRank--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateAllianceRank");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
         mplew.write(27);
         mplew.writeInt(allianceid);
         mplew.writeInt(mgc.getId());
         mplew.writeInt(mgc.getAllianceRank());
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket disbandAlliance(final int alliance) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("disbandAlliance--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("disbandAlliance");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
         mplew.write(29);
         mplew.writeInt(alliance);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket BBSThreadList(final List<MapleBBSThread> bbs, int start) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("BBSThreadList--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("BBSThreadList");
         }
         mplew.writeShort(SendPacketOpcode.BBS_OPERATION.getValue());
         mplew.write(6);
@@ -4591,16 +4396,15 @@ public class MaplePacketCreator {
         for (int i = 0; i < pages; ++i) {
             addThread(mplew, bbs.get(start + i + ret));
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     private static void addThread(final MaplePacketLittleEndianWriter mplew, final MapleBBSThread rs) {
-        if (ServerConstants.调试输出封包) {
-            log.info("addThread--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("addThread");
         }
         mplew.writeInt(rs.localthreadID);
         mplew.writeInt(rs.ownerID);
@@ -4612,8 +4416,8 @@ public class MaplePacketCreator {
 
     public static MaplePacket showThread(final MapleBBSThread thread) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showThread--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showThread");
         }
         mplew.writeShort(SendPacketOpcode.BBS_OPERATION.getValue());
         mplew.write(7);
@@ -4630,17 +4434,16 @@ public class MaplePacketCreator {
             mplew.writeLong(PacketHelper.getKoreanTimestamp(reply.timestamp));
             mplew.writeMapleAsciiString(reply.content);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showGuildRanks(final int npcid, final List<MapleGuildRanking.GuildRankingInfo> all) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showGuildRanks--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showGuildRanks");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
         mplew.write(73);
@@ -4654,9 +4457,8 @@ public class MaplePacketCreator {
             mplew.writeInt(info.getLogoBg());
             mplew.writeInt(info.getLogoBgColor());
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -4675,9 +4477,9 @@ public class MaplePacketCreator {
             mplew.writeInt(info.getInt());
             mplew.writeInt(info.getLuk());
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
+        if (ServerProperties.LogClientErr) {
             ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -4696,9 +4498,8 @@ public class MaplePacketCreator {
             mplew.writeInt(info.getInt());
             mplew.writeInt(info.getLuk());
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -4722,9 +4523,8 @@ public class MaplePacketCreator {
             mplew.writeInt(rs.getInt("logoBG"));
             mplew.writeInt(rs.getInt("logoBGColor"));
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -4748,9 +4548,8 @@ public class MaplePacketCreator {
             mplew.writeInt(0);
             mplew.writeInt(0);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -4774,9 +4573,8 @@ public class MaplePacketCreator {
             mplew.writeInt(0);
             mplew.writeInt(0);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -4866,9 +4664,8 @@ public class MaplePacketCreator {
             mplew.writeInt(0);
             mplew.writeInt(0);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -4892,33 +4689,31 @@ public class MaplePacketCreator {
             mplew.writeInt(0);
             mplew.writeInt(0);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket updateGP(final int gid, final int GP) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateGP--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateGP");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
         mplew.write(72);
         mplew.writeInt(gid);
         mplew.writeInt(GP);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket skillEffect(final MapleCharacter from, final int skillId, final byte level, final byte flags, final byte speed, final byte unk) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("skillEffect--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("skillEffect");
         }
         mplew.writeShort(SendPacketOpcode.SKILL_EFFECT.getValue());
         mplew.writeInt(from.getId());
@@ -4927,47 +4722,44 @@ public class MaplePacketCreator {
         mplew.write(flags);
         mplew.write(speed);
         mplew.write(unk);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket skillCancel(final MapleCharacter from, final int skillId) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("skillCancel--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("skillCancel");
         }
         mplew.writeShort(SendPacketOpcode.CANCEL_SKILL_EFFECT.getValue());
         mplew.writeInt(from.getId());
         mplew.writeInt(skillId);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showMagnet(final int mobid, final byte success) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showMagnet--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showMagnet");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_MAGNET.getValue());
         mplew.writeInt(mobid);
         mplew.write(success);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket sendHint(final String hint, int width, int height) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("sendHint--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("sendHint");
         }
         if (width < 1) {
             width = hint.length() * 10;
@@ -4983,17 +4775,16 @@ public class MaplePacketCreator {
         mplew.writeShort(width);
         mplew.writeShort(height);
         mplew.write(1);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket messengerInvite(final String from, final int messengerid) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("messengerInvite--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("messengerInvite");
         }
         mplew.writeShort(SendPacketOpcode.MESSENGER.getValue());
         mplew.write(3);
@@ -5001,17 +4792,16 @@ public class MaplePacketCreator {
         mplew.write(5);
         mplew.writeInt(messengerid);
         mplew.write(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket addMessengerPlayer(final String from, final MapleCharacter chr, final int position, final int channel) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("addMessengerPlayer--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("addMessengerPlayer");
         }
         mplew.writeShort(SendPacketOpcode.MESSENGER.getValue());
         mplew.write(0);
@@ -5019,32 +4809,30 @@ public class MaplePacketCreator {
         PacketHelper.addCharLook(mplew, chr, true);
         mplew.writeMapleAsciiString(from);
         mplew.writeShort(channel);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket removeMessengerPlayer(final int position) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("removeMessengerPlayer--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("removeMessengerPlayer");
         }
         mplew.writeShort(SendPacketOpcode.MESSENGER.getValue());
         mplew.write(2);
         mplew.write(position);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket updateMessengerPlayer(final String from, final MapleCharacter chr, final int position, final int channel) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateMessengerPlayer--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateMessengerPlayer");
         }
         mplew.writeShort(SendPacketOpcode.MESSENGER.getValue());
         mplew.write(7);
@@ -5052,155 +4840,145 @@ public class MaplePacketCreator {
         PacketHelper.addCharLook(mplew, chr, true);
         mplew.writeMapleAsciiString(from);
         mplew.writeShort(channel);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket joinMessenger(final int position) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("joinMessenger--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("joinMessenger");
         }
         mplew.writeShort(SendPacketOpcode.MESSENGER.getValue());
         mplew.write(1);
         mplew.write(position);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket messengerChat(final String text) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("messengerChat--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("messengerChat");
         }
         mplew.writeShort(SendPacketOpcode.MESSENGER.getValue());
         mplew.write(6);
         mplew.writeMapleAsciiString(text);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket messengerNote(final String text, final int mode, final int mode2) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("messengerNote--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("messengerNote");
         }
         mplew.writeShort(SendPacketOpcode.MESSENGER.getValue());
         mplew.write(mode);
         mplew.writeMapleAsciiString(text);
         mplew.write(mode2);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getFindReplyWithCS(final String target, final boolean buddy) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getFindReplyWithCS--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getFindReplyWithCS");
         }
         mplew.writeShort(SendPacketOpcode.WHISPER.getValue());
         mplew.write(buddy ? 72 : 9);
         mplew.writeMapleAsciiString(target);
         mplew.write(2);
         mplew.writeInt(-1);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getFindReplyWithMTS(final String target, final boolean buddy) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getFindReplyWithMTS--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getFindReplyWithMTS");
         }
         mplew.writeShort(SendPacketOpcode.WHISPER.getValue());
         mplew.write(buddy ? 72 : 9);
         mplew.writeMapleAsciiString(target);
         mplew.write(0);
         mplew.writeInt(-1);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showEquipEffect() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showEquipEffectA--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showEquipEffectA");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_EQUIP_EFFECT.getValue());
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showEquipEffect(final int team) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showEquipEffectB--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showEquipEffectB");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_EQUIP_EFFECT.getValue());
         mplew.writeShort(team);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket summonSkill(final int cid, final int summonSkillId, final int newStance) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("summonSkill--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("summonSkill");
         }
         mplew.writeShort(SendPacketOpcode.SUMMON_SKILL.getValue());
         mplew.writeInt(cid);
         mplew.writeInt(summonSkillId);
         mplew.write(newStance);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket skillCooldown(final int sid, final int time) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("skillCooldown--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("skillCooldown");
         }
         mplew.writeShort(SendPacketOpcode.COOLDOWN.getValue());
         mplew.writeInt(sid);
         mplew.writeShort(time);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket useSkillBook(final MapleCharacter chr, final int skillid, final int maxlevel, final boolean canuse, final boolean success) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("useSkillBook--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("useSkillBook");
         }
         mplew.writeShort(SendPacketOpcode.USE_SKILL_BOOK.getValue());
         mplew.writeInt(chr.getId());
@@ -5209,17 +4987,16 @@ public class MaplePacketCreator {
         mplew.writeInt(maxlevel);
         mplew.write(canuse ? 1 : 0);
         mplew.write(success ? 1 : 0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getMacros(final SkillMacro[] macros) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getMacros--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getMacros");
         }
         mplew.writeShort(SendPacketOpcode.SKILL_MACRO.getValue());
         int count = 0;
@@ -5239,17 +5016,16 @@ public class MaplePacketCreator {
                 mplew.writeInt(macro.getSkill3());
             }
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket updateAriantPQRanking(final String name, final int score, final boolean empty) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateAriantPQRanking--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateAriantPQRanking");
         }
         mplew.writeShort(SendPacketOpcode.ARIANT_SCORE_UPDATE.getValue());
         mplew.write(empty ? 0 : 1);
@@ -5257,17 +5033,16 @@ public class MaplePacketCreator {
             mplew.writeMapleAsciiString(name);
             mplew.writeInt(score);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket catchMonster(final int mobid, final int itemid, final byte success) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("catchMonster--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("catchMonster");
         }
         if (itemid == 2270002) {
         }
@@ -5275,17 +5050,16 @@ public class MaplePacketCreator {
         mplew.writeInt(mobid);
         mplew.writeInt(itemid);
         mplew.write(success);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showAriantScoreBoard() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showAriantScoreBoard--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showAriantScoreBoard");
         }
         mplew.writeShort(SendPacketOpcode.ARIANT_SCOREBOARD.getValue());
         mplew.writeInt(0);
@@ -5293,75 +5067,70 @@ public class MaplePacketCreator {
         mplew.write(0);
         mplew.writeInt(0);
         mplew.writeInt(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket boatPacket(final boolean type) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("boatPacket1--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("boatPacket1");
         }
         mplew.writeShort(SendPacketOpcode.BOAT_PACKET.getValue());
         mplew.writeShort(type ? 1 : 2);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket boatPacket(final int effect) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("boatPacket2--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("boatPacket2");
         }
         mplew.writeShort(SendPacketOpcode.BOAT_PACKET.getValue());
         mplew.writeShort(effect);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket boatEffect(final int effect) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("boatEffect--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("boatEffect");
         }
         mplew.writeShort(SendPacketOpcode.BOAT_EFFECT.getValue());
         mplew.writeShort(effect);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket removeItemFromDuey(final boolean remove, final int Package) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("removeItemFromDuey--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("removeItemFromDuey");
         }
         mplew.writeShort(SendPacketOpcode.DUEY.getValue());
         mplew.write(23);
         mplew.writeInt(Package);
         mplew.write(remove ? 3 : 4);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket sendDuey(final byte operation, final List<MapleDueyActions> packages) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("sendDuey--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("sendDuey");
         }
         mplew.writeShort(SendPacketOpcode.DUEY.getValue());
         mplew.write(operation);
@@ -5390,23 +5159,21 @@ public class MaplePacketCreator {
                 break;
             }
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket Mulung_DojoUp2() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("Mulung_DojoUp2--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("Mulung_DojoUp2");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_ITEM_GAIN_INCHAT.getValue());
         mplew.write(7);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -5416,75 +5183,71 @@ public class MaplePacketCreator {
         mplew.writeShort(SendPacketOpcode.DOJO_WARP_UP.getValue());
         mplew.write(0);
         mplew.write(6);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showQuestMsg(final String msg) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showQuestMsg--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showQuestMsg");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_STATUS_INFO.getValue());
         mplew.write(9);
         mplew.writeMapleAsciiString(msg);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket HSText(final String m) {
-        if (ServerConstants.调试输出封包) {
-            log.info("Mulung_Pts--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("Mulung_Pts");
         }
         return showQuestMsg(m);
     }
 
     public static MaplePacket Mulung_Pts(final int recv, final int total) {
-        if (ServerConstants.调试输出封包) {
-            log.info("Mulung_Pts--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("Mulung_Pts");
         }
         return showQuestMsg("你获得 " + recv + " 修炼点数, 目前累计了 " + total + " 点修炼点数");
     }
 
     public static MaplePacket showOXQuiz(final int questionSet, final int questionId, final boolean askQuestion) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showOXQuiz--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showOXQuiz");
         }
         mplew.writeShort(SendPacketOpcode.OX_QUIZ.getValue());
         mplew.write(askQuestion ? 1 : 0);
         mplew.write(questionSet);
         mplew.writeShort(questionId);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket leftKnockBack() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("leftKnockBack--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("leftKnockBack");
         }
         mplew.writeShort(SendPacketOpcode.LEFT_KNOCK_BACK.getValue());
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket rollSnowball(final int type, final MapleSnowball.MapleSnowballs ball1, final MapleSnowball.MapleSnowballs ball2) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("rollSnowball--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("rollSnowball");
         }
         mplew.writeShort(SendPacketOpcode.ROLL_SNOWBALL.getValue());
         mplew.write(type);
@@ -5494,86 +5257,81 @@ public class MaplePacketCreator {
         mplew.write(0);
         mplew.writeShort((ball2 == null) ? 0 : ball2.getPosition());
         mplew.writeZeroBytes(11);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket enterSnowBall() {
-        if (ServerConstants.调试输出封包) {
-            log.info("enterSnowBall--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("enterSnowBall");
         }
         return rollSnowball(0, null, null);
     }
 
     public static MaplePacket hitSnowBall(final int team, final int damage, final int distance, final int delay) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("hitSnowBall--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("hitSnowBall");
         }
         mplew.writeShort(SendPacketOpcode.HIT_SNOWBALL.getValue());
         mplew.write(team);
         mplew.writeShort(damage);
         mplew.write(distance);
         mplew.write(delay);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket snowballMessage(final int team, final int message) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("snowballMessage--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("snowballMessage");
         }
         mplew.writeShort(SendPacketOpcode.SNOWBALL_MESSAGE.getValue());
         mplew.write(team);
         mplew.writeInt(message);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket finishedSort(final int type) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("finishedSort--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("finishedSort");
         }
         mplew.writeShort(SendPacketOpcode.FINISH_SORT.getValue());
         mplew.write(1);
         mplew.write(type);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket coconutScore(final int[] coconutscore) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("coconutScore--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("coconutScore");
         }
         mplew.writeShort(SendPacketOpcode.COCONUT_SCORE.getValue());
         mplew.writeShort(coconutscore[0]);
         mplew.writeShort(coconutscore[1]);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket hitCoconut(final boolean spawn, final int id, final int type) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("hitCoconut--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("hitCoconut");
         }
         mplew.writeShort(SendPacketOpcode.HIT_COCONUT.getValue());
         if (spawn) {
@@ -5583,167 +5341,156 @@ public class MaplePacketCreator {
             mplew.writeInt(id);
             mplew.write(type);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket finishedGather(final int type) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("finishedGather--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("finishedGather");
         }
         mplew.writeShort(SendPacketOpcode.FINISH_GATHER.getValue());
         mplew.write(1);
         mplew.write(type);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket yellowChat(final String msg) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("yellowChat--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("yellowChat");
         }
         mplew.writeShort(SendPacketOpcode.YELLOW_CHAT.getValue());
         mplew.write(-1);
         mplew.writeMapleAsciiString(msg);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket sendLevelup(final boolean family, final int level, final String name) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("sendLevelup--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("sendLevelup");
         }
         mplew.writeShort(SendPacketOpcode.LEVEL_UPDATE.getValue());
         mplew.write(family ? 1 : 2);
         mplew.writeInt(level);
         mplew.writeMapleAsciiString(name);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket sendMarriage(final boolean family, final String name) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("sendMarriage--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("sendMarriage");
         }
         mplew.writeShort(SendPacketOpcode.MARRIAGE_UPDATE.getValue());
         mplew.write(family ? 1 : 0);
         mplew.writeMapleAsciiString(name);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket sendJobup(final boolean family, final int jobid, final String name) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("sendJobup--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("sendJobup");
         }
         mplew.writeShort(SendPacketOpcode.JOB_UPDATE.getValue());
         mplew.write(family ? 1 : 0);
         mplew.writeInt(jobid);
         mplew.writeMapleAsciiString(name);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showZakumShrine(final boolean spawned, final int time) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showZakumShrine--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showZakumShrine");
         }
         mplew.writeShort(SendPacketOpcode.ZAKUM_SHRINE.getValue());
         mplew.write(spawned ? 1 : 0);
         mplew.writeInt(time);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showHorntailShrine(final boolean spawned, final int time) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showHorntailShrine--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showHorntailShrine");
         }
         mplew.writeShort(SendPacketOpcode.HORNTAIL_SHRINE.getValue());
         mplew.write(spawned ? 1 : 0);
         mplew.writeInt(time);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showChaosZakumShrine(final boolean spawned, final int time) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showChaosZakumShrine--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showChaosZakumShrine");
         }
         mplew.writeShort(SendPacketOpcode.CHAOS_ZAKUM_SHRINE.getValue());
         mplew.write(spawned ? 1 : 0);
         mplew.writeInt(time);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showChaosHorntailShrine(final boolean spawned, final int time) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showChaosHorntailShrine--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showChaosHorntailShrine");
         }
         mplew.writeShort(SendPacketOpcode.CHAOS_HORNTAIL_SHRINE.getValue());
         mplew.write(spawned ? 1 : 0);
         mplew.writeInt(time);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket stopClock() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("stopClock--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("stopClock");
         }
         mplew.writeShort(SendPacketOpcode.STOP_CLOCK.getValue());
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket addTutorialStats() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter(0);
-        if (ServerConstants.调试输出封包) {
-            log.info("addTutorialStats--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("addTutorialStats");
         }
         mplew.writeShort(SendPacketOpcode.TEMP_STATS.getValue());
         mplew.writeInt(3871);
@@ -5756,16 +5503,15 @@ public class MaplePacketCreator {
         mplew.writeShort(999);
         mplew.write(120);
         mplew.write(140);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket temporaryStats_Aran() {
-        if (ServerConstants.调试输出封包) {
-            log.info("temporaryStats_Aran--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("temporaryStats_Aran");
         }
         final List<Pair<MapleStat.Temp, Integer>> stats = new ArrayList<Pair<MapleStat.Temp, Integer>>();
         stats.add(new Pair<MapleStat.Temp, Integer>(MapleStat.Temp.STR, 999));
@@ -5781,8 +5527,8 @@ public class MaplePacketCreator {
     }
 
     public static MaplePacket temporaryStats_Balrog(final MapleCharacter chr) {
-        if (ServerConstants.调试输出封包) {
-            log.info("temporaryStats_Balrog--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("temporaryStats_Balrog");
         }
         final List<Pair<MapleStat.Temp, Integer>> stats = new ArrayList<Pair<MapleStat.Temp, Integer>>();
         final int offset = 1 + (chr.getLevel() - 90) / 20;
@@ -5797,8 +5543,8 @@ public class MaplePacketCreator {
 
     public static MaplePacket temporaryStats(final List<Pair<MapleStat.Temp, Integer>> stats) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("temporaryStats--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("temporaryStats");
         }
         mplew.writeShort(SendPacketOpcode.TEMP_STATS.getValue());
         int updateMask = 0;
@@ -5827,110 +5573,102 @@ public class MaplePacketCreator {
                 }
             }
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket temporaryStats_Reset() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("temporaryStats_Reset--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("temporaryStats_Reset");
         }
         mplew.writeShort(SendPacketOpcode.TEMP_STATS_RESET.getValue());
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showHpHealed(final int cid, final int amount) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showHpHealed--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showHpHealed");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_FOREIGN_EFFECT.getValue());
         mplew.writeInt(cid);
         mplew.write(6);
         mplew.writeInt(amount);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showOwnHpHealed(final int amount) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showOwnHpHealed--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showOwnHpHealed");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_ITEM_GAIN_INCHAT.getValue());
         mplew.write(6);
         mplew.writeInt(amount);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket sendPyramidUpdate(final int amount) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("sendPyramidUpdate--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("sendPyramidUpdate");
         }
         mplew.writeShort(SendPacketOpcode.PYRAMID_UPDATE.getValue());
         mplew.writeInt(amount);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket sendPyramidResult(final byte rank, final int amount) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("sendPyramidResult--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("sendPyramidResult");
         }
         mplew.writeShort(SendPacketOpcode.PYRAMID_RESULT.getValue());
         mplew.write(rank);
         mplew.writeInt(amount);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket sendMarrageEffect() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("sendMarrageEffect--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("sendMarrageEffect");
         }
         mplew.writeShort(71);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket sendPyramidEnergy(final String type, final String amount) {
-        if (ServerConstants.调试输出封包) {
-            log.info("sendPyramidEnergy--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("sendPyramidEnergy");
         }
         return sendString(1, type, amount);
     }
 
     public static MaplePacket sendString(int type, String object, String amount) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包)
-            log.info("sendString--------------------");
+        if (ServerProperties.LogPktCall) log.info("sendString");
         switch (type) {
             case 1:
                 mplew.writeShort(SendPacketOpcode.ENERGY.getValue());
@@ -5944,38 +5682,38 @@ public class MaplePacketCreator {
         }
         mplew.writeMapleAsciiString(object);
         mplew.writeMapleAsciiString(amount);
-        if (ServerConstants.PACKET_ERROR_OFF) {
+        if (ServerProperties.LogClientErr) {
             ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket sendGhostPoint(final String type, final String amount) {
-        if (ServerConstants.调试输出封包) {
-            log.info("sendGhostPoint--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("sendGhostPoint");
         }
         return sendString(2, type, amount);
     }
 
     public static MaplePacket sendGhostStatus(final String type, final String amount) {
-        if (ServerConstants.调试输出封包) {
-            log.info("sendGhostStatus--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("sendGhostStatus");
         }
         return sendString(3, type, amount);
     }
 
     public static MaplePacket MulungEnergy(final int energy) {
-        if (ServerConstants.调试输出封包) {
-            log.info("MulungEnergy--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("MulungEnergy");
         }
         return sendPyramidEnergy("energy", String.valueOf(energy));
     }
 
     public static MaplePacket getEvanTutorial(final String data) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getEvanTutorial--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getEvanTutorial");
         }
         mplew.writeShort(SendPacketOpcode.NPC_TALK.getValue());
         mplew.writeInt(8);
@@ -5984,31 +5722,29 @@ public class MaplePacketCreator {
         mplew.write(1);
         mplew.write(1);
         mplew.writeMapleAsciiString(data);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showEventInstructions() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showEventInstructions--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showEventInstructions");
         }
         mplew.writeShort(SendPacketOpcode.GMEVENT_INSTRUCTIONS.getValue());
         mplew.write(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getOwlOpen() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getOwlOpen--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getOwlOpen");
         }
         mplew.writeShort(SendPacketOpcode.OWL_OF_MINERVA.getValue());
         mplew.write(7);
@@ -6016,17 +5752,16 @@ public class MaplePacketCreator {
         for (final int i : GameConstants.owlItems) {
             mplew.writeInt(i);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getOwlSearched(final int itemSearch, final List<HiredMerchant> hms) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getOwlSearched--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getOwlSearched");
         }
         mplew.writeShort(SendPacketOpcode.OWL_OF_MINERVA.getValue());
         mplew.write(6);
@@ -6067,17 +5802,16 @@ public class MaplePacketCreator {
                 }
             }
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getRPSMode(final byte mode, final int mesos, final int selection, final int answer) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getRPSMode--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getRPSMode");
         }
         mplew.writeShort(SendPacketOpcode.RPS_GAME.getValue());
         mplew.write(mode);
@@ -6099,32 +5833,30 @@ public class MaplePacketCreator {
                 break;
             }
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getSlotUpdate(final byte invType, final byte newSlots) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getSlotUpdate--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getSlotUpdate");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_INVENTORY_SLOT.getValue());
         mplew.write(invType);
         mplew.write(newSlots);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getMovingPlatforms(final MapleMap map) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getMovingPlatforms--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getMovingPlatforms");
         }
         mplew.writeShort(SendPacketOpcode.MOVE_PLATFORM.getValue());
         mplew.writeInt(map.getPlatforms().size());
@@ -6144,17 +5876,16 @@ public class MaplePacketCreator {
             mplew.writeInt(mp.y1);
             mplew.writeShort(mp.r);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket getUpdateEnvironment(final MapleMap map) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("getUpdateEnvironment--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getUpdateEnvironment");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_ENV.getValue());
         mplew.writeInt(map.getEnvironment().size());
@@ -6162,49 +5893,46 @@ public class MaplePacketCreator {
             mplew.writeMapleAsciiString(mp.getKey());
             mplew.writeInt(mp.getValue());
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket sendEngagementRequest(final String name, final int cid) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("sendEngagementRequest--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("sendEngagementRequest");
         }
         mplew.writeShort(SendPacketOpcode.ENGAGE_REQUEST.getValue());
         mplew.write(0);
         mplew.writeMapleAsciiString(name);
         mplew.writeInt(cid);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket trembleEffect(final int type, final int delay) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("trembleEffect--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("trembleEffect");
         }
         mplew.writeShort(SendPacketOpcode.BOSS_ENV.getValue());
         mplew.write(1);
         mplew.write(type);
         mplew.writeInt(delay);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket sendEngagement(final byte msg, final int item, final MapleCharacter male, final MapleCharacter female) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("sendEngagement--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("sendEngagement");
         }
         mplew.writeShort(SendPacketOpcode.ENGAGE_RESULT.getValue());
         mplew.write(msg);
@@ -6221,95 +5949,89 @@ public class MaplePacketCreator {
                 break;
             }
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket englishQuizMsg(final String msg) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("englishQuizMsg--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("englishQuizMsg");
         }
         mplew.writeShort(SendPacketOpcode.ENGLISH_QUIZ.getValue());
         mplew.writeInt(20);
         mplew.writeMapleAsciiString(msg);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket openBeans(final int beansCount, final int type) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("openBeans--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("openBeans");
         }
         mplew.writeShort(SendPacketOpcode.BEANS_GAME1.getValue());
         mplew.writeInt(beansCount);
         mplew.write(type);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket updateBeans(final int cid, final int beansCount) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateBeans--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateBeans");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_BEANS.getValue());
         mplew.writeInt(cid);
         mplew.writeInt(beansCount);
         mplew.writeInt(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showBeans(final int 力度, final int size, final int Pos, final int Type) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showBeans--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showBeans");
         }
         mplew.writeShort(SendPacketOpcode.BEANS_GAME2.getValue());
         mplew.writeShort(力度);
         mplew.write(size);
         mplew.writeShort(Pos);
         mplew.writeInt(Type);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showCharCash(final MapleCharacter chr) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showCharCash--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showCharCash");
         }
         mplew.writeShort(SendPacketOpcode.CHAR_CASH.getValue());
         mplew.writeInt(chr.getId());
         mplew.writeInt(chr.getCSPoints(2));
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket spawnLove(final int oid, final int itemid, final String name, final String msg, final Point pos, final int ft) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("spawnLove--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("spawnLove");
         }
         mplew.writeShort(SendPacketOpcode.SPAWN_LOVE.getValue());
         mplew.writeInt(oid);
@@ -6318,92 +6040,85 @@ public class MaplePacketCreator {
         mplew.writeMapleAsciiString(name);
         mplew.writeShort(pos.x);
         mplew.writeShort(ft);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket removeLove(final int oid) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("removeLove--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("removeLove");
         }
         mplew.writeShort(SendPacketOpcode.REMOVE_LOVE.getValue());
         mplew.writeInt(oid);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket licenseRequest() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("licenseRequest--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("licenseRequest");
         }
         mplew.writeShort(SendPacketOpcode.LOGIN_STATUS.getValue());
         mplew.write(22);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket licenseResult() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("licenseResult--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("licenseResult");
         }
         mplew.writeShort(SendPacketOpcode.LICENSE_RESULT.getValue());
         mplew.write(1);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showForcedEquip() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showForcedEquip--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showForcedEquip");
         }
         mplew.writeShort(SendPacketOpcode.FORCED_MAP_EQUIP.getValue());
         mplew.writeInt(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket removeTutorialStats() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("removeTutorialStats--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("removeTutorialStats");
         }
         mplew.writeShort(SendPacketOpcode.TEMP_STATS_RESET.getValue());
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket spawnTutorialSummon(final int type) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("spawnTutorialSummon--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("spawnTutorialSummon");
         }
         mplew.writeShort(SendPacketOpcode.TUTORIAL_SUMMON.getValue());
         mplew.write(type);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -6422,9 +6137,8 @@ public class MaplePacketCreator {
         mplew.writeShort(0);
         mplew.writeAsciiString("群未定", 17);
         mplew.write(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -6433,9 +6147,8 @@ public class MaplePacketCreator {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
         mplew.writeShort(SendPacketOpcode.AUTO_HP_POT.getValue());
         mplew.writeInt(itemId);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -6444,9 +6157,8 @@ public class MaplePacketCreator {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
         mplew.writeShort(SendPacketOpcode.AUTO_MP_POT.getValue());
         mplew.writeInt(itemId);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -6454,9 +6166,8 @@ public class MaplePacketCreator {
     public static MaplePacket testPacket(final byte[] testmsg) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
         mplew.write(testmsg);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -6471,9 +6182,8 @@ public class MaplePacketCreator {
                 mplew.writeInt(i.getAriantScore());
             }
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -6486,9 +6196,8 @@ public class MaplePacketCreator {
             mplew.writeMapleAsciiString(name);
             mplew.writeInt(score);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -6537,9 +6246,8 @@ public class MaplePacketCreator {
         if (addMovement > -1) {
             mplew.write(addMovement);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -6548,9 +6256,8 @@ public class MaplePacketCreator {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
         mplew.writeShort(SendPacketOpcode.AUTO_HP_POT.getValue());
         mplew.writeInt(itemId);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -6559,9 +6266,8 @@ public class MaplePacketCreator {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
         mplew.writeShort(SendPacketOpcode.AUTO_MP_POT.getValue());
         mplew.writeInt(itemId);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -6572,9 +6278,8 @@ public class MaplePacketCreator {
         mplew.write(success);
         mplew.writeInt(itemid);
         mplew.writeInt(mobid);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -6585,8 +6290,8 @@ public class MaplePacketCreator {
 
     public static MaplePacket updateEquipSlot(final IItem item) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("updateEquipSlot--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("updateEquipSlot");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
         mplew.write(0);
@@ -6597,42 +6302,39 @@ public class MaplePacketCreator {
         mplew.writeShort(item.getPosition());
         PacketHelper.addItemInfo(mplew, item, true, true);
         mplew.writeMapleAsciiString("wat");
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket cancelBuffMONSTERS(final List<MapleBuffStat> statups) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("cancelBuffMONSTERS--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("cancelBuffMONSTERS");
         }
         mplew.writeShort(SendPacketOpcode.CANCEL_BUFF.getValue());
         mplew.write(HexTool.getByteArrayFromHexString("00 00 00 00 00 00 01 00"));
         mplew.write(HexTool.getByteArrayFromHexString("00 00 00 00 00 00 00 00"));
         mplew.write(3);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket cancelForeignBuffMONSTERS(final int cid, final List<MapleBuffStat> statups) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("cancelForeignBuffA--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("cancelForeignBuffA");
         }
         mplew.writeShort(SendPacketOpcode.CANCEL_FOREIGN_BUFF.getValue());
         mplew.writeInt(cid);
         mplew.write(HexTool.getByteArrayFromHexString("00 00 00 00 00 00 01 00"));
         mplew.write(HexTool.getByteArrayFromHexString("00 00 00 00 00 00 00 00"));
         mplew.write(3);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -6643,9 +6345,8 @@ public class MaplePacketCreator {
         mplew.write(1);
         mplew.writeInt(guide);
         mplew.writeInt(12000);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -6655,7 +6356,7 @@ public class MaplePacketCreator {
         final String disk = getHardDiskSerialNumber("C");
         final int newdisk = Integer.parseInt(disk);
         final String s = cpu + newdisk;
-        final String newStr = s.substring(8, s.length());
+        final String newStr = s.substring(8);
         return newStr;
     }
 
@@ -6712,14 +6413,13 @@ public class MaplePacketCreator {
 
     public static MaplePacket openWeb(final String web) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("openWeb--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("openWeb");
         }
         mplew.writeShort(SendPacketOpcode.OPEN_WEB.getValue());
         mplew.writeMapleAsciiString(web);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -6733,9 +6433,8 @@ public class MaplePacketCreator {
         mplew.writeShort(SendPacketOpcode.LIE_DETECTOR.getValue());
         mplew.write(msg);
         mplew.write(msg2);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -6754,9 +6453,8 @@ public class MaplePacketCreator {
         mplew.writeInt(image.length);
         mplew.write(image);
         log.info("调用: " + new Throwable().getStackTrace()[0] + " 测谎仪图片大小: " + image.length + " 换图次数: " + (attempt - 1));
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -6765,9 +6463,8 @@ public class MaplePacketCreator {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
         mplew.writeShort(i);
         mplew.write(HexTool.getByteArrayFromHexString("DC 05 00 00 90 5F 01 00 DC 05 00 00 9B 00 00 00"));
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -6776,9 +6473,8 @@ public class MaplePacketCreator {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
         mplew.writeShort(i);
         mplew.write(HexTool.getByteArrayFromHexString("02 CB 06 00 00 FB 44 00 00"));
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -6794,9 +6490,8 @@ public class MaplePacketCreator {
         } else {
             mplew.writeLong(512L);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -6835,9 +6530,8 @@ public class MaplePacketCreator {
         mplew.writeShort(0);
         mplew.write(0);
         mplew.writeMapleAsciiString(talk);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -6854,9 +6548,8 @@ public class MaplePacketCreator {
         mplew.writeShort(0);
         mplew.write(0);
         mplew.writeMapleAsciiString(talk);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MaplePacketCreator 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
@@ -6878,14 +6571,13 @@ public class MaplePacketCreator {
 
     public static MaplePacket testCombo(final int value) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("testCombo--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("testCombo");
         }
         mplew.writeShort(SendPacketOpcode.ARAN_COMBO.getValue());
         mplew.writeInt(value);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("testCombo-864：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("testCombo-864：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }

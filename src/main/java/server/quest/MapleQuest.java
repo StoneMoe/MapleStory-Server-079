@@ -2,6 +2,7 @@ package server.quest;
 
 import client.MapleCharacter;
 import client.MapleQuestStatus;
+import configuration.EnvProperties;
 import constants.GameConstants;
 import lombok.extern.slf4j.Slf4j;
 import provider.MapleData;
@@ -15,6 +16,7 @@ import utils.datastructures.Pair;
 
 import java.io.File;
 import java.io.Serializable;
+import java.nio.file.Paths;
 import java.util.*;
 
 @Slf4j
@@ -121,7 +123,7 @@ public class MapleQuest implements Serializable {
     }
 
     public static void initQuests() {
-        MapleQuest.questData = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/Quest.wz"));
+        MapleQuest.questData = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "Quest.wz"));
         MapleQuest.actions = MapleQuest.questData.getData("Act.img");
         MapleQuest.requirements = MapleQuest.questData.getData("Check.img");
         MapleQuest.info = MapleQuest.questData.getData("QuestInfo.img");

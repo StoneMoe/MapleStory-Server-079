@@ -59,7 +59,7 @@ import server.MapleSquad;
 import server.MapleStatEffect;
 import server.MerchItemPackage;
 import server.Randomizer;
-import server.ServerProperties;
+import configuration.ServerProperties;
 import server.SpeedRunner;
 import server.StructPotentialItem;
 import server.Timer;
@@ -1054,7 +1054,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 
     public void dc() {
         final MapleCharacter victim = this.c.getChannelServer().getPlayerStorage().getCharacterByName(this.c.getPlayer().getName());
-        victim.getClient().getSession().close(true);
+        victim.getClient().getSession().closeNow();
         victim.getClient().disconnect(true, false);
     }
 
@@ -1567,7 +1567,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
                     if (ii.itemExists(itemId)) {
                         if (num == 0) {
                             name.append("当前怪物 #o").append(mobId).append("# 的爆率为:\r\n");
-                            name.append("--------------------------------------\r\n");
+                            name.append("------------------\r\n");
                         }
                         String namez = "#z" + itemId + "#";
                         if (itemId == 0) {
@@ -1633,7 +1633,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
                     int itemId = de.itemId;
                     if (num == 0) {
                         name.append("当前地图 #r").append(mapid).append("#k - #m").append(mapid).append("# 的全局爆率为:");
-                        name.append("\r\n--------------------------------------\r\n");
+                        name.append("\r\n------------------\r\n");
                     }
                     String names = "#z" + itemId + "#";
                     if (itemId == 0 && cashServerRate != 0) {
@@ -2567,11 +2567,6 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 
     public void 给指定地图发公告(final int mapId, final String msg, final int itemId) {
         this.getMapFactory().getMap(mapId).startMapEffect(msg, itemId);
-    }
-
-    @Override
-    public String getServerName() {
-        return ServerProperties.getProperty("RoyMS.ServerName");
     }
 
     public void 克隆() {

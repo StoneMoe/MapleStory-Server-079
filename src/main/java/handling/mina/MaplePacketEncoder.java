@@ -1,7 +1,7 @@
 package handling.mina;
 
 import client.MapleClient;
-import constants.ServerConstants;
+import configuration.ServerProperties;
 import handling.MaplePacket;
 import handling.SendPacketOpcode;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +26,7 @@ public class MaplePacketEncoder implements ProtocolEncoder {
         if (client != null) {
             final MapleAESOFB send_crypto = client.getSendCrypto();
             final byte[] inputInitialPacket = ((MaplePacket) message).getBytes();
-            if (ServerConstants.封包显示) {
+            if (ServerProperties.LogPkt) {
                 final int packetLen = inputInitialPacket.length;
                 final int pHeader = this.readFirstShort(inputInitialPacket);
                 final String pHeaderStr = Integer.toHexString(pHeader).toUpperCase();
@@ -52,15 +52,12 @@ public class MaplePacketEncoder implements ProtocolEncoder {
                         break;
                     }
                 }
-                final String Recv = "服务端发送 " + op + " [" + pHeaderStr + "] (" + packetLen + ")\r\n";
                 if (packetLen <= 50000) {
-                    final String RecvTo = Recv + HexTool.toString(inputInitialPacket) + "\r\n" + HexTool.toStringFromAscii(inputInitialPacket);
                     if (show) {
-                        FileoutputUtil.packetLog("logs/服务端封包.log", RecvTo);
-                        log.info(RecvTo);
+                        log.info("服务端发送 {} [{}] ({})\r\n{}\r\n{}", op, pHeaderStr, packetLen, HexTool.toString(inputInitialPacket), HexTool.toStringFromAscii(inputInitialPacket));
                     }
                 } else {
-                    MaplePacketEncoder.log.info(HexTool.toString(new byte[]{inputInitialPacket[0], inputInitialPacket[1]}) + " ...");
+                    log.info("{} ...", HexTool.toString(new byte[]{inputInitialPacket[0], inputInitialPacket[1]}));
                 }
             }
             final byte[] unencrypted = new byte[inputInitialPacket.length];

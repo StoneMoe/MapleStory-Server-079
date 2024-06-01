@@ -1,8 +1,11 @@
 package server.maps;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+
+import configuration.EnvProperties;
 import provider.MapleData;
 import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
@@ -74,7 +77,7 @@ public class MapleReactorFactory
     }
     
     static {
-        data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/Reactor.wz"));
+        data = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "Reactor.wz"));
         reactorStats = new HashMap<Integer, MapleReactorStats>();
     }
 }

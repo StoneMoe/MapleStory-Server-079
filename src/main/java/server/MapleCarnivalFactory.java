@@ -2,8 +2,11 @@ package server;
 
 import client.MapleDisease;
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+
+import configuration.EnvProperties;
 import provider.MapleData;
 import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
@@ -25,7 +28,7 @@ public class MapleCarnivalFactory
     public MapleCarnivalFactory() {
         this.skills = new HashMap<Integer, MCSkill>();
         this.guardians = new HashMap<Integer, MCSkill>();
-        this.dataRoot = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/Skill.wz"));
+        this.dataRoot = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "Skill.wz"));
         this.initialize();
     }
     

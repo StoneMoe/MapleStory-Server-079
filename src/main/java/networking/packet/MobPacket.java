@@ -2,6 +2,7 @@ package networking.packet;
 
 import client.status.MonsterStatus;
 import client.status.MonsterStatusEffect;
+import configuration.ServerProperties;
 import constants.ServerConstants;
 import handling.MaplePacket;
 import handling.SendPacketOpcode;
@@ -22,8 +23,8 @@ import java.util.Map;
 public class MobPacket {
     public static MaplePacket damageMonster(final int oid, final long damage) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("damageMonster--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("damageMonster");
         }
         mplew.writeShort(SendPacketOpcode.DAMAGE_MONSTER.getValue());
         mplew.writeInt(oid);
@@ -33,17 +34,16 @@ public class MobPacket {
         } else {
             mplew.writeInt((int) damage);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket damageFriendlyMob(final MapleMonster mob, final long damage, final boolean display) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("damageFriendlyMob--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("damageFriendlyMob");
         }
         mplew.writeShort(SendPacketOpcode.DAMAGE_MONSTER.getValue());
         mplew.writeInt(mob.getObjectId());
@@ -51,17 +51,16 @@ public class MobPacket {
         mplew.writeInt((damage > 2147483647L) ? Integer.MAX_VALUE : ((int) damage));
         mplew.writeInt((mob.getHp() > 2147483647L) ? ((int) (mob.getHp() / mob.getMobMaxHp() * 2.147483647E9)) : ((int) mob.getHp()));
         mplew.writeInt((mob.getMobMaxHp() > 2147483647L) ? Integer.MAX_VALUE : ((int) mob.getMobMaxHp()));
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket killMonster(final int oid, final int animation) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("killMonster--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("killMonster");
         }
         mplew.writeShort(SendPacketOpcode.KILL_MONSTER.getValue());
         mplew.writeInt(oid);
@@ -69,48 +68,45 @@ public class MobPacket {
         if (animation == 4) {
             mplew.writeInt(-1);
         }
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket healMonster(final int oid, final int heal) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("healMonster--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("healMonster");
         }
         mplew.writeShort(SendPacketOpcode.DAMAGE_MONSTER.getValue());
         mplew.writeInt(oid);
         mplew.write(0);
         mplew.writeInt(-heal);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showMonsterHP(final int oid, final int remhppercentage) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showMonsterHP--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showMonsterHP");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_MONSTER_HP.getValue());
         mplew.writeInt(oid);
         mplew.write(remhppercentage);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showBossHP(final MapleMonster mob) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showBossHPA--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showBossHPA");
         }
         mplew.writeShort(SendPacketOpcode.BOSS_ENV.getValue());
         mplew.write(5);
@@ -127,17 +123,16 @@ public class MobPacket {
         }
         mplew.write(mob.getStats().getTagColor());
         mplew.write(mob.getStats().getTagBgColor());
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket showBossHP(final int monsterId, final long currentHp, final long maxHp) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("showBossHPB--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("showBossHPB");
         }
         mplew.writeShort(SendPacketOpcode.BOSS_ENV.getValue());
         mplew.write(5);
@@ -154,17 +149,16 @@ public class MobPacket {
         }
         mplew.write(6);
         mplew.write(5);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket moveMonster(final boolean useskill, final int skill, final int skill1, final int skill2, final int skill3, final int skill4, final int oid, final Point startPos, final Point endPos, final List<LifeMovementFragment> moves) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("moveMonster--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("moveMonster");
         }
         mplew.writeShort(SendPacketOpcode.MOVE_MONSTER.getValue());
         mplew.writeInt(oid);
@@ -181,8 +175,8 @@ public class MobPacket {
     }
 
     private static void serializeMovementList(final LittleEndianWriter lew, final List<LifeMovementFragment> moves) {
-        if (ServerConstants.调试输出封包) {
-            log.info("serializeMovementList--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("serializeMovementList");
         }
         lew.write(moves.size());
         for (final LifeMovementFragment move : moves) {
@@ -228,8 +222,8 @@ public class MobPacket {
     }
 
     public static void addMonsterStatus(final MaplePacketLittleEndianWriter mplew, final MapleMonster life) {
-        if (ServerConstants.调试输出封包) {
-            log.info("addMonsterStatus--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("addMonsterStatus");
         }
         if (life.getStati().size() <= 0) {
             life.addEmpty();
@@ -320,47 +314,44 @@ public class MobPacket {
         }
         mplew.write(life.getCarnivalTeam());
         mplew.writeInt(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket stopControllingMonster(final int oid) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("stopControllingMonster--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("stopControllingMonster");
         }
         mplew.writeShort(SendPacketOpcode.SPAWN_MONSTER_CONTROL.getValue());
         mplew.write(0);
         mplew.writeInt(oid);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket makeMonsterInvisible(final MapleMonster life) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("makeMonsterInvisible--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("makeMonsterInvisible");
         }
         mplew.writeShort(SendPacketOpcode.SPAWN_MONSTER_CONTROL.getValue());
         mplew.write(0);
         mplew.writeInt(life.getObjectId());
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket makeMonsterReal(final MapleMonster life) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("makeMonsterReal--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("makeMonsterReal");
         }
         mplew.writeShort(SendPacketOpcode.SPAWN_MONSTER.getValue());
         mplew.writeInt(life.getObjectId());
@@ -374,17 +365,16 @@ public class MobPacket {
         mplew.writeShort(life.getFh());
         mplew.writeShort(-1);
         mplew.writeInt(0);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket moveMonsterResponse(final int objectid, final short moveid, final int currentMp, final boolean useSkills, final int skillId, final int skillLevel) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("moveMonsterResponse--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("moveMonsterResponse");
         }
         mplew.writeShort(SendPacketOpcode.MOVE_MONSTER_RESPONSE.getValue());
         mplew.writeInt(objectid);
@@ -393,16 +383,15 @@ public class MobPacket {
         mplew.writeShort(currentMp);
         mplew.write(skillId);
         mplew.write(skillLevel);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     private static long getSpecialLongMask(final Collection<MonsterStatus> statups) {
-        if (ServerConstants.调试输出封包) {
-            log.info("getSpecialLongMask--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getSpecialLongMask");
         }
         long mask = 0L;
         for (final MonsterStatus statup : statups) {
@@ -414,8 +403,8 @@ public class MobPacket {
     }
 
     private static long getLongMask(final Collection<MonsterStatus> statups) {
-        if (ServerConstants.调试输出封包) {
-            log.info("getLongMask--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getLongMask");
         }
         long mask = 0L;
         for (final MonsterStatus statup : statups) {
@@ -427,8 +416,8 @@ public class MobPacket {
     }
 
     private static long getLongMask_NoRef(final Collection<MonsterStatus> statups) {
-        if (ServerConstants.调试输出封包) {
-            log.info("getLongMask_NoRef--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("getLongMask_NoRef");
         }
         long mask = 0L;
         boolean ignore_imm = false;
@@ -459,8 +448,8 @@ public class MobPacket {
 
     public static MaplePacket applyMonsterStatus(final int oid, final MonsterStatus mse, final int x, final MobSkill skil) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("applyMonsterStatus--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("applyMonsterStatus");
         }
         mplew.writeShort(SendPacketOpcode.APPLY_MONSTER_STATUS.getValue());
         mplew.writeInt(oid);
@@ -472,17 +461,16 @@ public class MobPacket {
         mplew.writeShort(mse.isEmpty() ? 1 : 0);
         mplew.writeShort(0);
         mplew.write(2);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket applyMonsterStatus(final int oid, final MonsterStatusEffect mse) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("applyMonsterStatusA--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("applyMonsterStatusA");
         }
         mplew.writeShort(SendPacketOpcode.APPLY_MONSTER_STATUS.getValue());
         mplew.writeInt(oid);
@@ -498,17 +486,16 @@ public class MobPacket {
         mplew.writeShort(mse.getStati().isEmpty() ? 1 : 0);
         mplew.writeShort(0);
         mplew.write(2);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket applyMonsterStatus(final int oid, final Map<MonsterStatus, Integer> stati, final List<Integer> reflection, final MobSkill skil) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("applyMonsterStatusB--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("applyMonsterStatusB");
         }
         mplew.writeShort(SendPacketOpcode.APPLY_MONSTER_STATUS.getValue());
         mplew.writeInt(oid);
@@ -530,34 +517,32 @@ public class MobPacket {
             size /= 2;
         }
         mplew.write(size);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket cancelMonsterStatus(final int oid, final MonsterStatus stat) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("cancelMonsterStatus--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("cancelMonsterStatus");
         }
         mplew.writeShort(SendPacketOpcode.CANCEL_MONSTER_STATUS.getValue());
         mplew.writeInt(oid);
         mplew.writeLong(getSpecialLongMask(Collections.singletonList(stat)));
         mplew.writeLong(getLongMask(Collections.singletonList(stat)));
         mplew.write(3);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket talkMonster(final int oid, final int itemId, final String msg) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("talkMonster--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("talkMonster");
         }
         mplew.writeShort(SendPacketOpcode.TALK_MONSTER.getValue());
         mplew.writeInt(oid);
@@ -569,23 +554,21 @@ public class MobPacket {
             mplew.writeMapleAsciiString(msg);
         }
         mplew.writeInt(1);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }
 
     public static MaplePacket removeTalkMonster(final int oid) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
-            log.info("removeTalkMonster--------------------");
+        if (ServerProperties.LogPktCall) {
+            log.info("removeTalkMonster");
         }
         mplew.writeShort(SendPacketOpcode.REMOVE_TALK_MONSTER.getValue());
         mplew.writeInt(oid);
-        if (ServerConstants.PACKET_ERROR_OFF) {
-            final ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
+        if (ServerProperties.LogClientErr) {
+            ServerConstants.setPACKET_ERROR("MobPacket 暂未定义 ：\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }

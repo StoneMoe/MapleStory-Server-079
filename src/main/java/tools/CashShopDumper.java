@@ -1,6 +1,7 @@
 package tools;
 
 import client.inventory.MapleInventoryType;
+import configuration.EnvProperties;
 import database.DatabaseConnection;
 
 import java.io.BufferedWriter;
@@ -9,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,7 +32,7 @@ import server.MapleItemInformationProvider;
 
 @Slf4j
 public class CashShopDumper {
-    private static final MapleDataProvider data;
+    private static final MapleDataProvider data = MapleDataProviderFactory.getDataProvider(Paths.get(EnvProperties.wzPath, "Etc.wz"));
 
     public static CashItemInfo.CashModInfo getModInfo(final int sn) {
         CashItemInfo.CashModInfo ret = null;
@@ -136,9 +138,5 @@ public class CashShopDumper {
                 }
             }
         }
-    }
-
-    static {
-        data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzPath") + "/Etc.wz"));
     }
 }
