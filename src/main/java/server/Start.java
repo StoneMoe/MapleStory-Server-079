@@ -42,13 +42,8 @@ public class Start {
     }
 
     public void run() throws InterruptedException {
+        log.info("Starting");
         final long start = System.currentTimeMillis();
-        if (ServerProperties.Admin) {
-            log.info("[!!! 已开启只能管理员登录模式 !!!]");
-        }
-        if (ServerProperties.AutoRegister) {
-            log.info("加载 自动注册完成");
-        }
         try {
             try (final PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("UPDATE accounts SET loggedin = 0")) {
                 ps.executeUpdate();
@@ -59,10 +54,9 @@ public class Start {
         } catch (Exception ex) {
             throw new RuntimeException("[数据库异常] 请检查数据库链接。目前无法连接到MySQL数据库.");
         }
-        log.info("Starting");
-        log.info("登录服务: {}:{}", ServerProperties.IP, LoginServer.PORT);
+        log.info("仅管理员: {}", ServerProperties.Admin);
+        log.info("自动注册: {}", ServerProperties.AutoRegister);
         log.info("游戏版本: {} v{}.{}", ServerConstants.MAPLE_TYPE, ServerConstants.MAPLE_VERSION, ServerConstants.MAPLE_PATCH);
-        log.info("主服务器: 蓝蜗牛");
         World.init();
         runThread();
         loadData();
@@ -86,15 +80,16 @@ public class Start {
             checkCopyItemFromSql();
         }
         if (ServerProperties.防万能检测) {
-            log.info("启动防万能检测");
             startCheck();
         }
+
+        AutoSave(ServerProperties.AutoSaveMinutes);
+
         final long now = System.currentTimeMillis() - start;
         final long seconds = now / 1000L;
         final long ms = now % 1000L;
         log.info("Load commands: {}", CommandProcessor.Initialize());
-        log.info("加载完成, 耗时: {}秒{}毫秒\r\n", seconds, ms);
-        AutoSave(ServerProperties.AutoSaveMinutes);
+        log.info("加载完成, 耗时: {}秒{}毫秒", seconds, ms);
     }
 
     public static void runThread() {
@@ -222,7 +217,7 @@ public class Start {
     }
 
     protected static void checkCopyItemFromSql() {
-        log.info("服务端启用 防复制系统，发现复制装备.进行删除处理功能");
+        log.info("正在扫描复制的装备");
         final List<Integer> equipOnlyIds = new ArrayList<>();
         final Map<Integer, Integer> checkItems = new HashMap<>();
         try {
@@ -252,7 +247,6 @@ public class Start {
                 ps.executeUpdate();
                 ps.close();
                 log.info("发现复制装备 该装备的唯一ID: {} 已进行删除处理..", i);
-                FileoutputUtil.log("装备复制.txt", "发现复制装备 该装备的唯一ID: " + i + " 已进行删除处理..");
             }
         } catch (SQLException ex) {
             log.error("[EXCEPTION] 清理复制装备出现错误.", ex);

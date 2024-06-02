@@ -31,7 +31,7 @@ public class AutoRegister {
             rs.close();
             ps.close();
         } catch (SQLException ex) {
-            log.info("getAccountExists SQL err", ex);
+            log.error("getAccountExists SQL err", ex);
         }
         return accountExists;
     }
@@ -49,7 +49,7 @@ public class AutoRegister {
             rs.close();
             ps.close();
         } catch (SQLException ex) {
-            log.info("getAccountExists SQL error", ex);
+            log.error("getAccountExists SQL error", ex);
         }
         return accountExists;
     }

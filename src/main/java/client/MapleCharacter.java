@@ -6096,7 +6096,6 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
             final List<Pair<MapleBuffStat, Integer>> stat = Collections.singletonList(new Pair<MapleBuffStat, Integer>(MapleBuffStat.能量获得, energyLevel));
             this.client.getSession().write(MaplePacketCreator.能量条(stat, 0));
         }
-        final String[] socket = this.client.getChannelServer().getIP().split(":");
         final ChannelServer toch = ChannelServer.getInstance(channel);
         if (channel == this.client.getChannel() || toch == null || toch.isShutdown()) {
             return;
@@ -6114,11 +6113,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
         this.client.updateLoginState(MapleClient.CHANGE_CHANNEL, this.client.getSessionIPAddress());
         final String s = this.client.getSessionIPAddress();
         LoginServer.addIPAuth(s.substring(s.indexOf(47) + 1, s.length()));
-        try {
-            this.client.getSession().write(MaplePacketCreator.getChannelChange(InetAddress.getByName(socket[0]), Integer.parseInt(toch.getIP().split(":")[1])));
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(MapleCharacter.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.client.getSession().write(MaplePacketCreator.getChannelChange(toch.getIP(), toch.getPort()));
         this.saveToDB(false, false);
         this.getMap().removePlayer(this);
         this.client.setPlayer(null);

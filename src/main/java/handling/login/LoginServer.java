@@ -92,9 +92,9 @@ public class LoginServer {
         ((SocketSessionConfig) LoginServer.acceptor.getSessionConfig()).setTcpNoDelay(true);
         try {
             LoginServer.acceptor.bind(new InetSocketAddress(LoginServer.PORT));
-            log.info("登录服务器 : 启动端口 " + LoginServer.PORT);
+            log.info("登录服务 at {}", new InetSocketAddress(LoginServer.PORT));
         } catch (IOException e) {
-            log.error("Binding to port " + LoginServer.PORT + " failed" + e);
+            log.error("Binding to port {} failed", LoginServer.PORT, e);
         }
     }
 

@@ -145,7 +145,7 @@ public class MapleServerHandler extends IoHandlerAdapter {
         session.setAttribute(IdleStatus.WRITER_IDLE, 60);
         final StringBuilder sb = new StringBuilder();
         if (this.channel > -1) {
-            sb.append("[频道服务器] 频道 ").append(this.channel).append(" : ");
+            sb.append("[频道服务器]频道 ").append(this.channel).append(": ");
         } else if (this.cs) {
             sb.append("[商城服务器]");
         } else {

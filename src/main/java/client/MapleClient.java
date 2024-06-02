@@ -9,6 +9,7 @@ import handling.channel.ChannelServer;
 import handling.world.*;
 import handling.world.family.MapleFamilyCharacter;
 import handling.world.guild.MapleGuildCharacter;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.mina.core.session.IoSession;
 import server.Timer;
@@ -47,6 +48,7 @@ public class MapleClient implements Serializable {
     private final transient MapleAESOFB receive;
     private final transient IoSession session;
     private MapleCharacter player;
+    @Getter
     private int channel;
     private int accId;
     private int world;
@@ -1130,10 +1132,6 @@ public class MapleClient implements Serializable {
         sb.append(this.isLoggedIn());
         sb.append(" has char: ");
         sb.append(this.getPlayer() != null);
-    }
-
-    public int getChannel() {
-        return this.channel;
     }
 
     public ChannelServer getChannelServer() {

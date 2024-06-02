@@ -1114,12 +1114,11 @@ public class PlayerHandler {
             return;
         }
         if (slea.available() == 0L) {
-            final String[] socket = c.getChannelServer().getIP().split(":");
             chr.saveToDB(false, false);
             c.getChannelServer().removePlayer(c.getPlayer());
             c.updateLoginState(MapleClient.LOGIN_SERVER_TRANSITION);
             try {
-                c.getSession().write(MaplePacketCreator.getChannelChange(InetAddress.getByName(socket[0]), Integer.parseInt(socket[1])));
+                c.getSession().write(MaplePacketCreator.getChannelChange(c.getChannelServer().getIP(), c.getChannelServer().getPort()));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -1182,12 +1181,11 @@ public class PlayerHandler {
             return;
         }
         if (slea.available() == 0L) {
-            final String[] socket = c.getChannelServer().getIP().split(":");
             chr.saveToDB(false, false);
             c.getChannelServer().removePlayer(c.getPlayer());
             c.updateLoginState(MapleClient.LOGIN_SERVER_TRANSITION);
             try {
-                c.getSession().write(MaplePacketCreator.getChannelChange(InetAddress.getByName(socket[0]), Integer.parseInt(socket[1])));
+                c.getSession().write(MaplePacketCreator.getChannelChange(c.getChannelServer().getIP(), c.getChannelServer().getPort()));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

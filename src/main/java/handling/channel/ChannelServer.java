@@ -9,6 +9,8 @@ import handling.cashshop.CashShopServer;
 import handling.login.LoginServer;
 import handling.mina.MapleCodecFactory;
 import handling.world.CheaterData;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.buffer.SimpleBufferAllocator;
@@ -30,6 +32,7 @@ import networking.packet.MaplePacketCreator;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.util.*;
@@ -40,22 +43,29 @@ public class ChannelServer implements Serializable {
     public static long serverStartTime;
     private static final short DEFAULT_PORT = 2524;
     private static final Map<Integer, ChannelServer> instances;
+    @Setter
     private int expRate;
+    @Setter
     private int mesoRate;
+    @Setter
     private int dropRate;
+    @Getter
     private int cashRate;
     private int BossdropRate;
     private int doubleExp;
     private int doubleMeso;
     private int doubleDrop;
     public short port;
+    @Getter
     private final int channel;
     private int running_MerchantID;
     private int flags;
+    @Getter
     private String serverMessage;
     private String key;
-    private String ip;
+    private InetAddress ip;
     private String serverName;
+    @Getter
     private boolean shutdown;
     private boolean finishedShutdown;
     private boolean MegaphoneMuteState;
@@ -63,7 +73,9 @@ public class ChannelServer implements Serializable {
     private PlayerStorage players;
     private MapleServerHandler serverHandler;
     private IoAcceptor acceptor;
+    @Getter
     private final MapleMapFactory mapFactory;
+    @Getter
     private EventScriptManager eventSM;
     private final Map<MapleSquad.MapleSquadType, MapleSquad> mapleSquads;
     private final Map<Integer, HiredMerchant> merchants;
@@ -273,7 +285,7 @@ public class ChannelServer implements Serializable {
             this.port = Short.parseShort(ServerProperties.getProperty("RoyMS.Port" + this.channel, String.valueOf(2524 + this.channel)));
             this.warpcsshop = ServerProperties.warpcsshop;
             this.warpmts = ServerProperties.warpmts;
-            this.ip = ServerProperties.IP + ":" + this.port;
+            this.ip = ServerProperties.IP;
         } catch (NumberFormatException e) {
             throw new RuntimeException(e);
         }
@@ -283,15 +295,14 @@ public class ChannelServer implements Serializable {
         this.acceptor.getFilterChain().addLast("codec", new ProtocolCodecFilter(new MapleCodecFactory()));
         this.players = new PlayerStorage(this.channel);
         this.loadEvents();
-        final Timer tMan = Timer.TimerManager.getInstance();
         try {
             this.acceptor.setHandler(new MapleServerHandler(this.channel, false));
             this.acceptor.bind(new InetSocketAddress(this.port));
             ((SocketSessionConfig) this.acceptor.getSessionConfig()).setTcpNoDelay(true);
-            log.info("频道 {}: 启动端口 {}: 服务器IP {}", this.channel, this.port, this.ip);
+            log.info("频道 {} at {}", this.channel, new InetSocketAddress(this.port));
             this.eventSM.init();
         } catch (IOException e2) {
-            log.info("Failed to bind port {} for channel{}", this.port, this.getChannel(), e2);
+            log.info("Failed to bind port {} for channel {}", this.port, this.getChannel(), e2);
         }
     }
 
@@ -304,19 +315,14 @@ public class ChannelServer implements Serializable {
         log.info("频道 " + this.channel + " 正在清理活动脚本...");
         this.eventSM.cancel();
         log.info("频道 " + this.channel + ", 正在保存所有角色数据...");
-        log.info("频道 " + this.channel + ", Saving characters...");
-        log.info("频道 " + this.channel + ", 解除绑定端口...");
         ChannelServer.instances.remove(this.channel);
+        log.info("频道 " + this.channel + ", 解除绑定端口...");
         LoginServer.removeChannel(this.channel);
         this.setFinishShutdown();
     }
 
     public boolean hasFinishedShutdown() {
         return this.finishedShutdown;
-    }
-
-    public MapleMapFactory getMapFactory() {
-        return this.mapFactory;
     }
 
     public void addPlayer(final MapleCharacter chr) {
@@ -337,10 +343,6 @@ public class ChannelServer implements Serializable {
 
     public void removePlayer(final int idz, final String namez) {
         this.getPlayerStorage().deregisterPlayer(idz, namez);
-    }
-
-    public String getServerMessage() {
-        return this.serverMessage;
     }
 
     public void setServerMessage(final String newMessage) {
@@ -364,49 +366,17 @@ public class ChannelServer implements Serializable {
         return this.expRate * this.doubleExp;
     }
 
-    public void setExpRate(final int expRate) {
-        this.expRate = expRate;
-    }
-
-    public int getCashRate() {
-        return this.cashRate;
-    }
-
-    public void setCashRate(final int cashRate) {
-        this.cashRate = cashRate;
-    }
-
-    public int getChannel() {
-        return this.channel;
-    }
-
     public void setChannel(final int channel) {
         ChannelServer.instances.put(channel, this);
         LoginServer.addChannel(channel);
     }
 
-    public String getSocket() {
+    public InetAddress getIP() {
         return this.ip;
-    }
-
-    public String getIP() {
-        return this.ip;
-    }
-
-    public String getIPA() {
-        return this.ip;
-    }
-
-    public boolean isShutdown() {
-        return this.shutdown;
     }
 
     public int getLoadedMaps() {
         return this.mapFactory.getLoadedMaps();
-    }
-
-    public EventScriptManager getEventSM() {
-        return this.eventSM;
     }
 
     public void reloadEvents() {
@@ -426,16 +396,8 @@ public class ChannelServer implements Serializable {
         return this.mesoRate * this.doubleMeso;
     }
 
-    public void setMesoRate(final int mesoRate) {
-        this.mesoRate = mesoRate;
-    }
-
     public int getDropRate() {
         return this.dropRate * this.doubleDrop;
-    }
-
-    public void setDropRate(final int dropRate) {
-        this.dropRate = dropRate;
     }
 
     public int getDoubleExp() {

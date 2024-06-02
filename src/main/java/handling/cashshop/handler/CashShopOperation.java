@@ -37,7 +37,6 @@ import networking.packet.MTSCSPacket;
 @Slf4j
 public class CashShopOperation {
     public static void LeaveCS(final SeekableLittleEndianAccessor slea, final MapleClient c, final MapleCharacter chr) {
-        final String[] socket = c.getChannelServer().getIP().split(":");
         CashShopServer.getPlayerStorageMTS().deregisterPlayer(chr);
         CashShopServer.getPlayerStorage().deregisterPlayer(chr);
         final String ip = c.getSessionIPAddress();
@@ -47,8 +46,8 @@ public class CashShopOperation {
             chr.saveToDB(false, true);
             c.setReceiving(false);
             World.ChannelChange_Data(new CharacterTransfer(chr), chr.getId(), c.getChannel());
-            c.getSession().write(MaplePacketCreator.getChannelChange(InetAddress.getByName(socket[0]), Integer.parseInt(ChannelServer.getInstance(c.getChannel()).getIP().split(":")[1])));
-        } catch (NumberFormatException | UnknownHostException ex2) {
+            c.getSession().write(MaplePacketCreator.getChannelChange(c.getChannelServer().getIP(), c.getChannelServer().getPort()));
+        } catch (NumberFormatException ex2) {
             throw new RuntimeException(ex2);
         }
     }

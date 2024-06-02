@@ -2891,60 +2891,50 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     }
 
     public void 进入商城1() {
-        try {
-            final MapleCharacter chr = this.c.getPlayer();
-            if (chr.getBuffedValue(MapleBuffStat.召唤兽) != null) {
-                chr.cancelEffectFromBuffStat(MapleBuffStat.召唤兽);
-            }
-            final String[] socket = this.c.getChannelServer().getIP().split(":");
-            final ChannelServer ch = ChannelServer.getInstance(this.c.getChannel());
-            chr.changeRemoval();
-            if (chr.getMessenger() != null) {
-                final MapleMessengerCharacter messengerplayer = new MapleMessengerCharacter(chr);
-                World.Messenger.leaveMessenger(chr.getMessenger().getId(), messengerplayer);
-            }
-            PlayerBuffStorage.addBuffsToStorage(chr.getId(), chr.getAllBuffs());
-            PlayerBuffStorage.addCooldownsToStorage(chr.getId(), chr.getCooldowns());
-            PlayerBuffStorage.addDiseaseToStorage(chr.getId(), chr.getAllDiseases());
-            World.ChannelChange_Data(new CharacterTransfer(chr), chr.getId(), -10);
-            ch.removePlayer(chr);
-            this.c.updateLoginState(MapleClient.CHANGE_CHANNEL, this.c.getSessionIPAddress());
-            this.c.getSession().write(MaplePacketCreator.getChannelChange(InetAddress.getByName(socket[0]), Integer.parseInt(CashShopServer.getIP().split(":")[1])));
-            chr.saveToDB(false, false);
-            chr.getMap().removePlayer(chr);
-            this.c.getPlayer().expirationTask(true, false);
-            this.c.setPlayer(null);
-            this.c.setReceiving(false);
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(NPCConversationManager.class.getName()).log(Level.SEVERE, null, ex);
+        final MapleCharacter chr = this.c.getPlayer();
+        if (chr.getBuffedValue(MapleBuffStat.召唤兽) != null) {
+            chr.cancelEffectFromBuffStat(MapleBuffStat.召唤兽);
         }
+        final ChannelServer ch = ChannelServer.getInstance(this.c.getChannel());
+        chr.changeRemoval();
+        if (chr.getMessenger() != null) {
+            final MapleMessengerCharacter messengerplayer = new MapleMessengerCharacter(chr);
+            World.Messenger.leaveMessenger(chr.getMessenger().getId(), messengerplayer);
+        }
+        PlayerBuffStorage.addBuffsToStorage(chr.getId(), chr.getAllBuffs());
+        PlayerBuffStorage.addCooldownsToStorage(chr.getId(), chr.getCooldowns());
+        PlayerBuffStorage.addDiseaseToStorage(chr.getId(), chr.getAllDiseases());
+        World.ChannelChange_Data(new CharacterTransfer(chr), chr.getId(), -10);
+        ch.removePlayer(chr);
+        this.c.updateLoginState(MapleClient.CHANGE_CHANNEL, this.c.getSessionIPAddress());
+        this.c.getSession().write(MaplePacketCreator.getChannelChange(CashShopServer.getIP(), CashShopServer.getPORT()));
+        chr.saveToDB(false, false);
+        chr.getMap().removePlayer(chr);
+        this.c.getPlayer().expirationTask(true, false);
+        this.c.setPlayer(null);
+        this.c.setReceiving(false);
     }
 
     public void 进入商城2() {
-        try {
-            final MapleCharacter chr = this.c.getPlayer();
-            final String[] socket = this.c.getChannelServer().getIP().split(":");
-            final ChannelServer ch = ChannelServer.getInstance(this.c.getChannel());
-            chr.changeRemoval();
-            if (chr.getMessenger() != null) {
-                final MapleMessengerCharacter messengerplayer = new MapleMessengerCharacter(chr);
-                World.Messenger.leaveMessenger(chr.getMessenger().getId(), messengerplayer);
-            }
-            PlayerBuffStorage.addBuffsToStorage(chr.getId(), chr.getAllBuffs());
-            PlayerBuffStorage.addCooldownsToStorage(chr.getId(), chr.getCooldowns());
-            PlayerBuffStorage.addDiseaseToStorage(chr.getId(), chr.getAllDiseases());
-            World.ChannelChange_Data(new CharacterTransfer(chr), chr.getId(), -20);
-            ch.removePlayer(chr);
-            this.c.updateLoginState(MapleClient.CHANGE_CHANNEL, this.c.getSessionIPAddress());
-            this.c.getSession().write(MaplePacketCreator.getChannelChange(InetAddress.getByName(socket[0]), Integer.parseInt(CashShopServer.getIP().split(":")[1])));
-            chr.saveToDB(false, false);
-            chr.getMap().removePlayer(chr);
-            this.c.getPlayer().expirationTask(true, false);
-            this.c.setPlayer(null);
-            this.c.setReceiving(false);
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(NPCConversationManager.class.getName()).log(Level.SEVERE, null, ex);
+        final MapleCharacter chr = this.c.getPlayer();
+        final ChannelServer ch = ChannelServer.getInstance(this.c.getChannel());
+        chr.changeRemoval();
+        if (chr.getMessenger() != null) {
+            final MapleMessengerCharacter messengerplayer = new MapleMessengerCharacter(chr);
+            World.Messenger.leaveMessenger(chr.getMessenger().getId(), messengerplayer);
         }
+        PlayerBuffStorage.addBuffsToStorage(chr.getId(), chr.getAllBuffs());
+        PlayerBuffStorage.addCooldownsToStorage(chr.getId(), chr.getCooldowns());
+        PlayerBuffStorage.addDiseaseToStorage(chr.getId(), chr.getAllDiseases());
+        World.ChannelChange_Data(new CharacterTransfer(chr), chr.getId(), -20);
+        ch.removePlayer(chr);
+        this.c.updateLoginState(MapleClient.CHANGE_CHANNEL, this.c.getSessionIPAddress());
+        this.c.getSession().write(MaplePacketCreator.getChannelChange(CashShopServer.getIP(), CashShopServer.getPORT()));
+        chr.saveToDB(false, false);
+        chr.getMap().removePlayer(chr);
+        this.c.getPlayer().expirationTask(true, false);
+        this.c.setPlayer(null);
+        this.c.setReceiving(false);
     }
 
     public int 获取分解的矿石() {
@@ -3389,29 +3379,24 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     }
 
     public void EnterCS() {
-        try {
-            final MapleCharacter chr = this.c.getPlayer();
-            final String[] socket = this.c.getChannelServer().getIP().split(":");
-            final ChannelServer ch = ChannelServer.getInstance(this.c.getChannel());
-            chr.changeRemoval();
-            if (chr.getMessenger() != null) {
-                final MapleMessengerCharacter messengerplayer = new MapleMessengerCharacter(chr);
-                World.Messenger.leaveMessenger(chr.getMessenger().getId(), messengerplayer);
-            }
-            PlayerBuffStorage.addBuffsToStorage(chr.getId(), chr.getAllBuffs());
-            PlayerBuffStorage.addCooldownsToStorage(chr.getId(), chr.getCooldowns());
-            PlayerBuffStorage.addDiseaseToStorage(chr.getId(), chr.getAllDiseases());
-            World.ChannelChange_Data(new CharacterTransfer(chr), chr.getId(), -20);
-            ch.removePlayer(chr);
-            this.c.updateLoginState(MapleClient.CHANGE_CHANNEL, this.c.getSessionIPAddress());
-            this.c.getSession().write(MaplePacketCreator.getChannelChange(InetAddress.getByName(socket[0]), Integer.parseInt(CashShopServer.getIP().split(":")[1])));
-            chr.saveToDB(false, false);
-            chr.getMap().removePlayer(chr);
-            this.c.setPlayer(null);
-            this.c.setReceiving(false);
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(NPCConversationManager.class.getName()).log(Level.SEVERE, null, ex);
+        final MapleCharacter chr = this.c.getPlayer();
+        final ChannelServer ch = ChannelServer.getInstance(this.c.getChannel());
+        chr.changeRemoval();
+        if (chr.getMessenger() != null) {
+            final MapleMessengerCharacter messengerplayer = new MapleMessengerCharacter(chr);
+            World.Messenger.leaveMessenger(chr.getMessenger().getId(), messengerplayer);
         }
+        PlayerBuffStorage.addBuffsToStorage(chr.getId(), chr.getAllBuffs());
+        PlayerBuffStorage.addCooldownsToStorage(chr.getId(), chr.getCooldowns());
+        PlayerBuffStorage.addDiseaseToStorage(chr.getId(), chr.getAllDiseases());
+        World.ChannelChange_Data(new CharacterTransfer(chr), chr.getId(), -20);
+        ch.removePlayer(chr);
+        this.c.updateLoginState(MapleClient.CHANGE_CHANNEL, this.c.getSessionIPAddress());
+        this.c.getSession().write(MaplePacketCreator.getChannelChange(CashShopServer.getIP(), CashShopServer.getPORT()));
+        chr.saveToDB(false, false);
+        chr.getMap().removePlayer(chr);
+        this.c.setPlayer(null);
+        this.c.setReceiving(false);
     }
 
     public ArrayList<Forum_Section> getForum() {

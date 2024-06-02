@@ -306,7 +306,7 @@ public class CharLoginHandler {
         final String ip = c.getSessionIPAddress();
         LoginServer.putLoginAuth(charId, ip.substring(ip.indexOf(47) + 1, ip.length()), c.getTempIP(), c.getChannel());
         c.updateLoginState(MapleClient.LOGIN_SERVER_TRANSITION, ip);
-        c.getSession().write(MaplePacketCreator.getServerIP(Integer.parseInt(ChannelServer.getInstance(c.getChannel()).getIP().split(":")[1]), charId));
+        c.getSession().write(MaplePacketCreator.getServerIP(c.getChannelServer().getPort(), charId));
     }
 
     public static void Welcome(final MapleClient c) {
